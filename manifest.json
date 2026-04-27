@@ -24,6 +24,8 @@
         "<all_urls>"
       ],
       "js": [
+        "src/content/engine.js",
+        "src/content/adapters/bilibili.js",
         "src/content/content.js"
       ],
       "run_at": "document_start"
