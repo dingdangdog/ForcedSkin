@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>主题切换</title>
+    <link rel="stylesheet" href="./popup.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1>全局主题</h1>
+      <p class="desc">请选择网页主题应用方式</p>
+
+      <div class="options">
+        <label class="option">
+          <input type="radio" name="themeMode" value="light" />
+          <span>亮色主题</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="themeMode" value="dark" />
+          <span>暗色主题</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="themeMode" value="off" />
+          <span>不修改</span>
+        </label>
+      </div>
+
+      <p id="statusText" class="status"></p>
+    </main>
+    <script src="./popup.js"></script>
+  </body>
+  </html>
