@@ -555,7 +555,8 @@ export const useThemeStore = defineStore("theme", () => {
     isFetchingThemes.value = true;
 
     try {
-      const response: any = await requestFetch("/api/themes");
+      // /api/themes/defaults 返回 { d: { light: Theme, dark: Theme } }
+      const response: any = await requestFetch("/api/themes/defaults");
 
       // 后端统一返回格式：{ c: number, m: string, d: any }
       if (response?.c === 200 && response.d) {

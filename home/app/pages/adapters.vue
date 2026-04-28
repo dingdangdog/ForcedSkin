@@ -88,18 +88,12 @@ onMounted(load);
         <h1 class="text-3xl font-bold text-foreground">网站适配器</h1>
         <p class="text-muted mt-1 text-sm">针对特定网站的精细换肤适配，社区提交，官方审核</p>
       </div>
-      <button
-        v-if="isLoggedIn"
-        @click="showSubmit = true"
-        class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors"
-      >
+      <button v-if="isLoggedIn" @click="showSubmit = true"
+        class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors">
         + 提交适配器
       </button>
-      <NuxtLink
-        v-else
-        to="/login"
-        class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors"
-      >
+      <NuxtLink v-else to="/login"
+        class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
         登录后提交
       </NuxtLink>
     </div>
@@ -115,13 +109,11 @@ onMounted(load);
     </div>
 
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div
-        v-for="adapter in adapters"
-        :key="adapter.id"
-        class="bg-surface border border-border rounded-2xl p-5 hover:border-primary-400 transition-colors"
-      >
+      <div v-for="adapter in adapters" :key="adapter.id"
+        class="bg-surface border border-border rounded-2xl p-5 hover:border-primary-400 transition-colors">
         <div class="flex items-start gap-3">
-          <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 font-bold text-base shrink-0">
+          <div
+            class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 font-bold text-base shrink-0">
             {{ adapter.displayName.charAt(0) }}
           </div>
           <div class="flex-1 min-w-0">
@@ -134,7 +126,8 @@ onMounted(load);
     </div>
 
     <!-- 提交弹窗 -->
-    <div v-if="showSubmit" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" @click.self="showSubmit = false">
+    <div v-if="showSubmit" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      @click.self="showSubmit = false">
       <div class="bg-background border border-border rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
         <h2 class="font-bold text-foreground text-lg mb-4">提交网站适配器</h2>
         <p class="text-muted text-xs mb-5">适配器将经过管理员安全审核后上线，请确保代码安全合规。</p>
@@ -142,46 +135,67 @@ onMounted(load);
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="text-xs text-muted mb-1 block">标识 name * <span class="font-normal">（英文）</span></label>
-              <input v-model="form.name" placeholder="bilibili" class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none" :class="formErrors.name ? 'border-red-400' : 'border-border focus:border-primary-400'" />
+              <input v-model="form.name" placeholder="bilibili"
+                class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none"
+                :class="formErrors.name ? 'border-red-400' : 'border-border focus:border-primary-400'" />
               <p v-if="formErrors.name" class="text-red-500 text-xs mt-0.5">{{ formErrors.name }}</p>
             </div>
             <div>
               <label class="text-xs text-muted mb-1 block">显示名称 *</label>
-              <input v-model="form.displayName" placeholder="哔哩哔哩" class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none" :class="formErrors.displayName ? 'border-red-400' : 'border-border focus:border-primary-400'" />
+              <input v-model="form.displayName" placeholder="哔哩哔哩"
+                class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none"
+                :class="formErrors.displayName ? 'border-red-400' : 'border-border focus:border-primary-400'" />
               <p v-if="formErrors.displayName" class="text-red-500 text-xs mt-0.5">{{ formErrors.displayName }}</p>
             </div>
           </div>
           <div>
             <label class="text-xs text-muted mb-1 block">适配域名 * <span class="font-normal">（多个用逗号分隔）</span></label>
-            <input v-model="form.siteDomain" placeholder="bilibili.com, b23.tv" class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none" :class="formErrors.siteDomain ? 'border-red-400' : 'border-border focus:border-primary-400'" />
+            <input v-model="form.siteDomain" placeholder="bilibili.com, b23.tv"
+              class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none"
+              :class="formErrors.siteDomain ? 'border-red-400' : 'border-border focus:border-primary-400'" />
             <p v-if="formErrors.siteDomain" class="text-red-500 text-xs mt-0.5">{{ formErrors.siteDomain }}</p>
           </div>
           <div>
             <label class="text-xs text-muted mb-1 block">描述</label>
-            <input v-model="form.description" placeholder="简述适配器的功能和效果" class="w-full px-3 py-2 rounded-lg border border-border focus:border-primary-400 text-sm bg-surface text-foreground outline-none" />
+            <input v-model="form.description" placeholder="简述适配器的功能和效果"
+              class="w-full px-3 py-2 rounded-lg border border-border focus:border-primary-400 text-sm bg-surface text-foreground outline-none" />
           </div>
           <div>
             <label class="text-xs text-muted mb-1 block">适配器代码 * <span class="font-normal">（纯 JavaScript）</span></label>
-            <textarea v-model="form.code" rows="8" placeholder="// 在此输入适配器 JS 代码..." class="w-full px-3 py-2 rounded-lg border text-xs font-mono text-foreground bg-surface outline-none resize-y" :class="formErrors.code ? 'border-red-400' : 'border-border focus:border-primary-400'" />
+            <textarea v-model="form.code" rows="8" placeholder="// 在此输入适配器 JS 代码..."
+              class="w-full px-3 py-2 rounded-lg border text-xs font-mono text-foreground bg-surface outline-none resize-y"
+              :class="formErrors.code ? 'border-red-400' : 'border-border focus:border-primary-400'" />
             <p v-if="formErrors.code" class="text-red-500 text-xs mt-0.5">{{ formErrors.code }}</p>
           </div>
         </div>
         <div class="flex gap-3 mt-6">
-          <button @click="submitAdapter" :disabled="submitting" class="flex-1 py-2.5 rounded-xl bg-primary-500 text-white font-medium text-sm hover:bg-primary-600 disabled:opacity-60 transition-colors">
+          <button @click="submitAdapter" :disabled="submitting"
+            class="flex-1 py-2.5 rounded-xl bg-primary-500 text-white font-medium text-sm hover:bg-primary-600 disabled:opacity-60 transition-colors">
             {{ submitting ? '提交中…' : '提交审核' }}
           </button>
-          <button @click="showSubmit = false" class="px-4 py-2.5 rounded-xl border border-border text-muted text-sm hover:text-foreground transition-colors">取消</button>
+          <button @click="showSubmit = false"
+            class="px-4 py-2.5 rounded-xl border border-border text-muted text-sm hover:text-foreground transition-colors">取消</button>
         </div>
       </div>
     </div>
 
     <Transition name="fade">
-      <div v-if="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">{{ toast }}</div>
+      <div v-if="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
+        {{ toast }}</div>
     </Transition>
   </div>
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s, transform 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateX(-50%) translateY(8px); }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
 </style>

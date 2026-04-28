@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
   ],
 
+  // 全局 CSS — 含主题 CSS 变量默认值，确保首屏正确渲染
+  css: ['~/assets/css/main.css'],
+
   // NuxtAuth 配置
   auth: {
     baseURL: process.env.NUXT_AUTH_ORIGIN || "https://www.aitlog.com/api/auth",
@@ -63,16 +66,16 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'ForcedSkin' },
         { property: 'og:locale', content: 'zh_CN' },
-        { property: 'og:image', content: 'https://forcedskin.com/og-image.png' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { name: 'twitter:card', content: 'summary_large_image' },
+        { property: 'og:image', content: 'https://forcedskin.com/LOGO.png' },
+        { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: '@forcedskin' },
-        { name: 'twitter:image', content: 'https://forcedskin.com/og-image.png' },
+        { name: 'twitter:image', content: 'https://forcedskin.com/LOGO.png' },
         { name: 'theme-color', content: '#4CAF50' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/webp', href: '/LOGO.webp', sizes: 'any' },
+        { rel: 'apple-touch-icon', href: '/LOGO.webp' },
         { rel: 'canonical', href: 'https://forcedskin.com' },
       ],
     },

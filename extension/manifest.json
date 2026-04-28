@@ -5,6 +5,11 @@
   "description": "Apply your favorite light or dark color theme to any website. Log in to forcedskin.com to sync custom themes across devices.",
   "version": "0.2.0",
   "homepage_url": "https://forcedskin.com",
+  "icons": {
+    "16": "src/favicon.ico",
+    "48": "src/LOGO.webp",
+    "128": "src/LOGO.webp"
+  },
   "permissions": [
     "storage",
     "scripting",
@@ -18,7 +23,12 @@
   },
   "action": {
     "default_title": "ForcedSkin",
-    "default_popup": "src/popup/popup.html"
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "src/favicon.ico",
+      "48": "src/LOGO.webp",
+      "128": "src/LOGO.webp"
+    }
   },
   "content_scripts": [
     {

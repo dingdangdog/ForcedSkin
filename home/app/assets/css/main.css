@@ -1,0 +1,127 @@
+/*
+ * ForcedSkin — 全局 CSS 变量
+ *
+ * 规则：Tailwind 使用 `rgb(var(--color-xxx) / <alpha>)` 语法，
+ * 因此所有变量值必须是 "R G B" 纯通道数字，不加 rgb() 包装。
+ *
+ * 两套主题直接对齐插件 engine.js 的 DEFAULT_PALETTE：
+ *   亮色 light-mint  → :root
+ *   暗色 dark-forest → .dark
+ */
+
+/* ─── 亮色主题 (light-mint) ─────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* 基础语义色 */
+  --color-background:    248 255 248;   /* #F8FFF8 */
+  --color-foreground:     44  62  44;   /* #2C3E2C */
+  --color-surface:       240 255 240;   /* #F0FFF0 */
+  --color-surface-muted: 245 253 245;   /* #F5FDF5 */
+  --color-border:        216 232 216;   /* #D8E8D8 */
+  --color-muted:         108 126 108;   /* #6C7E6C */
+
+  /* Primary — Material Design Green */
+  --color-primary-50:    232 245 233;   /* #E8F5E9 */
+  --color-primary-100:   200 230 201;   /* #C8E6C9 */
+  --color-primary-200:   165 214 167;   /* #A5D6A7 */
+  --color-primary-300:   129 199 132;   /* #81C784 */
+  --color-primary-400:   102 187 106;   /* #66BB6A */
+  --color-primary-500:    76 175  80;   /* #4CAF50 */
+  --color-primary-600:    67 160  71;   /* #43A047 */
+  --color-primary-700:    56 142  60;   /* #388E3C */
+  --color-primary-800:    46 125  50;   /* #2E7D32 */
+  --color-primary-900:    27  94  32;   /* #1B5E20 */
+  --color-primary-950:    15  61  18;   /* #0F3D12 */
+
+  /* Secondary — 中性灰 */
+  --color-secondary-50:  248 248 248;   /* #F8F8F8 */
+  --color-secondary-100: 238 238 238;   /* #EEEEEE */
+  --color-secondary-200: 221 221 221;   /* #DDDDDD */
+  --color-secondary-300: 204 204 204;   /* #CCCCCC */
+  --color-secondary-400: 187 187 187;   /* #BBBBBB */
+  --color-secondary-500: 170 170 170;   /* #AAAAAA */
+  --color-secondary-600: 153 153 153;   /* #999999 */
+  --color-secondary-700: 119 119 119;   /* #777777 */
+  --color-secondary-800:  85  85  85;   /* #555555 */
+  --color-secondary-900:  51  51  51;   /* #333333 */
+  --color-secondary-950:  17  17  17;   /* #111111 */
+
+  /* Accent — 琥珀黄 */
+  --color-accent-50:     255 253 231;   /* #FFFDE7 */
+  --color-accent-100:    255 249 196;   /* #FFF9C4 */
+  --color-accent-200:    255 245 157;   /* #FFF59D */
+  --color-accent-300:    255 241 118;   /* #FFF176 */
+  --color-accent-400:    255 238  88;   /* #FFEE58 */
+  --color-accent-500:    255 235  59;   /* #FFEB3B */
+  --color-accent-600:    253 216  53;   /* #FDD835 */
+  --color-accent-700:    251 192  45;   /* #FBC02D */
+  --color-accent-800:    249 168  37;   /* #F9A825 */
+  --color-accent-900:    245 127  23;   /* #F57F17 */
+  --color-accent-950:    175  92   0;   /* #AF5C00 */
+}
+
+/* ─── 暗色主题 (dark-forest) ─────────────────────────────────── */
+.dark {
+  color-scheme: dark;
+
+  /* 基础语义色 */
+  --color-background:     16  20  16;   /* #101410 */
+  --color-foreground:    224 224 224;   /* #E0E0E0 */
+  --color-surface:        30  34  30;   /* #1E221E */
+  --color-surface-muted:  22  24  22;   /* #161816 */
+  --color-border:         51  54  51;   /* #333633 */
+  --color-muted:         160 160 160;   /* #A0A0A0 */
+
+  /* Primary — 深林绿（暗色调低亮） */
+  --color-primary-50:    232 245 237;   /* #E8F5ED */
+  --color-primary-100:   193 224 204;   /* #C1E0CC */
+  --color-primary-200:   154 208 171;   /* #9AD0AB */
+  --color-primary-300:   115 191 138;   /* #73BF8A */
+  --color-primary-400:    74 169 107;   /* #4AA96B */
+  --color-primary-500:    74 155 107;   /* #4A9B6B */
+  --color-primary-600:    63 133  92;   /* #3F855C */
+  --color-primary-700:    52 111  77;   /* #346F4D */
+  --color-primary-800:    41  89  62;   /* #29593E */
+  --color-primary-900:    30  67  47;   /* #1E432F */
+  --color-primary-950:    19  45  32;   /* #132D20 */
+
+  /* Secondary — 冷灰 */
+  --color-secondary-50:  249 250 251;   /* #F9FAFB */
+  --color-secondary-100: 243 244 246;   /* #F3F4F6 */
+  --color-secondary-200: 229 231 235;   /* #E5E7EB */
+  --color-secondary-300: 209 213 219;   /* #D1D5DB */
+  --color-secondary-400: 156 163 175;   /* #9CA3AF */
+  --color-secondary-500: 107 114 128;   /* #6B7280 */
+  --color-secondary-600:  75  85  99;   /* #4B5563 */
+  --color-secondary-700:  55  65  81;   /* #374151 */
+  --color-secondary-800:  31  41  55;   /* #1F2937 */
+  --color-secondary-900:  17  24  39;   /* #111827 */
+  --color-secondary-950:  11  15  21;   /* #0B0F15 */
+
+  /* Accent — 橄榄绿 */
+  --color-accent-50:     247 252 239;   /* #F7FCEF */
+  --color-accent-100:    234 245 216;   /* #EAF5D8 */
+  --color-accent-200:    221 238 193;   /* #DDEEC1 */
+  --color-accent-300:    208 231 170;   /* #D0E7AA */
+  --color-accent-400:    195 224 147;   /* #C3E093 */
+  --color-accent-500:    124 179  66;   /* #7CB342 */
+  --color-accent-600:    108 160  58;   /* #6CA03A */
+  --color-accent-700:     92 141  50;   /* #5C8D32 */
+  --color-accent-800:     76 122  42;   /* #4C7A2A */
+  --color-accent-900:     60 103  34;   /* #3C6722 */
+  --color-accent-950:     44  84  26;   /* #2C541A */
+}
+
+/* ─── 基础样式重置 ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

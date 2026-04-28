@@ -52,7 +52,7 @@ async function removeFavorite(theme: Theme) {
     await doApi.post("api/entry/user/themes/favorite", { themeId: theme.id });
     favorites.value = favorites.value.filter((t) => t.id !== theme.id);
     showToast("已移除收藏");
-  } catch {}
+  } catch { }
 }
 
 async function selectTheme(theme: Theme) {
@@ -63,7 +63,7 @@ async function selectTheme(theme: Theme) {
     if (theme.mode === "light") selectedLight.value = theme.name;
     else selectedDark.value = theme.name;
     showToast(`已设置${theme.mode === "light" ? "亮色" : "暗色"}主题：${theme.displayName}`);
-  } catch {} finally { saving.value = false; }
+  } catch { } finally { saving.value = false; }
 }
 
 async function logout() {
@@ -78,8 +78,10 @@ onMounted(load);
     <!-- 用户信息 -->
     <div class="flex items-center justify-between mb-8">
       <div class="flex items-center gap-3">
-        <img v-if="authUser?.image" :src="authUser.image" class="w-12 h-12 rounded-full object-cover border border-border" />
-        <span v-else class="w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold text-lg">
+        <img v-if="authUser?.image" :src="authUser.image"
+          class="w-12 h-12 rounded-full object-cover border border-border" />
+        <span v-else
+          class="w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold text-lg">
           {{ (authUser?.name || "U").charAt(0).toUpperCase() }}
         </span>
         <div>
@@ -87,7 +89,8 @@ onMounted(load);
           <p class="text-muted text-sm mt-0.5">{{ authUser?.email }}</p>
         </div>
       </div>
-      <button @click="logout" class="px-4 py-2 rounded-lg border border-border text-muted hover:text-foreground hover:bg-surface-muted text-sm transition-colors">
+      <button @click="logout"
+        class="px-4 py-2 rounded-lg border border-border text-muted hover:text-foreground hover:bg-surface-muted text-sm transition-colors">
         退出登录
       </button>
     </div>
@@ -125,21 +128,15 @@ onMounted(load);
           <h2 class="font-semibold text-foreground">我的亮色主题</h2>
           <NuxtLink to="/themes?mode=light" class="text-primary-500 text-sm hover:underline">浏览更多</NuxtLink>
         </div>
-        <div v-if="lightFavorites.length === 0" class="text-center py-8 text-muted text-sm border border-border rounded-2xl border-dashed">
+        <div v-if="lightFavorites.length === 0"
+          class="text-center py-8 text-muted text-sm border border-border rounded-2xl border-dashed">
           还没有收藏亮色主题 →
           <NuxtLink to="/themes" class="text-primary-500 hover:underline">去收藏</NuxtLink>
         </div>
         <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <ThemeThemeCard
-            v-for="theme in lightFavorites"
-            :key="theme.id"
-            :theme="theme"
-            :favorited="true"
-            :selected="selectedLight === theme.name"
-            :show-actions="true"
-            @favorite="removeFavorite"
-            @select="selectTheme"
-          />
+          <ThemeCard v-for="theme in lightFavorites" :key="theme.id" :theme="theme" :favorited="true"
+            :selected="selectedLight === theme.name" :show-actions="true" @favorite="removeFavorite"
+            @select="selectTheme" />
         </div>
       </section>
 
@@ -149,27 +146,22 @@ onMounted(load);
           <h2 class="font-semibold text-foreground">我的暗色主题</h2>
           <NuxtLink to="/themes?mode=dark" class="text-primary-500 text-sm hover:underline">浏览更多</NuxtLink>
         </div>
-        <div v-if="darkFavorites.length === 0" class="text-center py-8 text-muted text-sm border border-border rounded-2xl border-dashed">
+        <div v-if="darkFavorites.length === 0"
+          class="text-center py-8 text-muted text-sm border border-border rounded-2xl border-dashed">
           还没有收藏暗色主题 →
           <NuxtLink to="/themes" class="text-primary-500 hover:underline">去收藏</NuxtLink>
         </div>
         <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <ThemeThemeCard
-            v-for="theme in darkFavorites"
-            :key="theme.id"
-            :theme="theme"
-            :favorited="true"
-            :selected="selectedDark === theme.name"
-            :show-actions="true"
-            @favorite="removeFavorite"
-            @select="selectTheme"
-          />
+          <ThemeCard v-for="theme in darkFavorites" :key="theme.id" :theme="theme" :favorited="true"
+            :selected="selectedDark === theme.name" :show-actions="true" @favorite="removeFavorite"
+            @select="selectTheme" />
         </div>
       </section>
     </template>
 
     <Transition name="fade">
-      <div v-if="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
+      <div v-if="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
         {{ toast }}
       </div>
     </Transition>
@@ -177,6 +169,14 @@ onMounted(load);
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s, transform 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateX(-50%) translateY(8px); }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
 </style>

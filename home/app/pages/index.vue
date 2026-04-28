@@ -10,28 +10,19 @@ useHead({
     { property: "og:title", content: "ForcedSkin — 强制换肤" },
     { property: "og:description", content: "为任意网站应用你喜欢的主题配色。浏览器扩展 + 主题商城，支持亮色 / 暗色自由切换，登录后跨设备同步。" },
     { property: "og:url", content: "https://forcedskin.com/" },
-    { name: "twitter:title", content: "ForcedSkin — 强制换肤" },
-    { name: "twitter:description", content: "为任意网站应用你喜欢的主题配色。" },
   ],
   link: [{ rel: "canonical", href: "https://forcedskin.com/" }],
-  script: [
-    {
-      type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "ForcedSkin",
-        "url": "https://forcedskin.com",
-        "description": "ForcedSkin 是一款浏览器扩展 + 主题商城平台，为任意网站强制应用自定义主题配色。",
-        "inLanguage": "zh-CN",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://forcedskin.com/themes?q={search_term_string}",
-          "query-input": "required name=search_term_string",
-        },
-      }),
-    },
-  ],
+  script: [{
+    type: "application/ld+json",
+    innerHTML: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ForcedSkin",
+      "url": "https://forcedskin.com",
+      "description": "ForcedSkin 是一款浏览器扩展 + 主题商城平台，为任意网站强制应用自定义主题配色。",
+      "inLanguage": "zh-CN",
+    }),
+  }],
 });
 
 interface Theme {
@@ -40,177 +31,293 @@ interface Theme {
   displayName: string;
   description: string;
   mode: string;
-  colors: string;
+  colors: any;
   isDefault: boolean;
+  sortOrder: number;
 }
 
-const themes = ref<Theme[]>([]);
-const loading = ref(true);
-const previewMode = ref<"light" | "dark">("light");
+interface Adapter {
+  id: string;
+  name: string;
+  displayName: string;
+  description: string;
+  siteDomain: string;
+  sortOrder: number;
+}
 
-const filteredThemes = computed(() =>
-  themes.value.filter((t) => t.mode === previewMode.value)
-);
+// 热门主题：亮色2个 + 暗色2个
+const lightThemes = ref<Theme[]>([]);
+const darkThemes = ref<Theme[]>([]);
+const adapters = ref<Adapter[]>([]);
+const loading = ref(true);
+
+// 解析颜色 JSON
+function parseColors(theme: Theme): Record<string, any> | null {
+  if (!theme.colors) return null;
+  try {
+    return typeof theme.colors === "string" ? JSON.parse(theme.colors) : theme.colors;
+  } catch { return null; }
+}
+
+// 获取适配器的主域名（用于展示图标）
+function getMainDomain(siteDomain: string): string {
+  const domains = siteDomain.split(",").map(d => d.trim()).filter(Boolean);
+  return domains[0] || "";
+}
+
+function getFaviconUrl(siteDomain: string): string {
+  const domain = getMainDomain(siteDomain);
+  if (!domain) return "";
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+}
+
+// 颜色预览：从 colors 里取出代表性的几个色块
+function getSwatches(colors: Record<string, any> | null): string[] {
+  if (!colors) return [];
+  const p = colors.primary;
+  const primary500 = typeof p === "object" ? (p?.["500"] || "") : (p || "");
+  const primary300 = typeof p === "object" ? (p?.["300"] || "") : "";
+  return [
+    colors.background,
+    colors.surface,
+    primary500,
+    primary300,
+    colors.foreground,
+  ].filter(Boolean);
+}
 
 onMounted(async () => {
   try {
-    const res = await doApi.get<any>("api/themes", { pageSize: 50 });
-    themes.value = res.list || [];
-  } catch {
-    /* ignore */
-  } finally {
-    loading.value = false;
-  }
+    const [themesRes, adaptersRes] = await Promise.all([
+      doApi.get<any>("api/themes", { pageSize: 50 }),
+      doApi.get<any>("api/adapters", { pageSize: 100 }),
+    ]);
+    const list: Theme[] = themesRes.list || [];
+    lightThemes.value = list.filter(t => t.mode === "light").slice(0, 2);
+    darkThemes.value = list.filter(t => t.mode === "dark").slice(0, 2);
+    adapters.value = adaptersRes.list || [];
+  } catch { /* ignore */ }
+  finally { loading.value = false; }
 });
-
-const features = [
-  { icon: "🎨", title: "主题商城", desc: "浏览由社区和官方维护的精选配色方案，收藏你喜欢的，随时切换。" },
-  { icon: "🌐", title: "全局强制换肤", desc: "基于 CSS + JS 双重注入，一键覆盖任意网站的背景色与文字颜色。" },
-  { icon: "🔌", title: "网站适配器", desc: "针对 B站、知乎等常见网站提供精细适配，社区提交，管理员审核后上线。" },
-  { icon: "☁️", title: "跨设备同步", desc: "登录账号后，你的主题选择自动同步到所有安装了 ForcedSkin 扩展的浏览器。" },
-  { icon: "🌙", title: "亮 / 暗双模式", desc: "亮色和暗色各选一套主题，跟随时间、系统偏好或手动一键切换。" },
-  { icon: "🔒", title: "白名单管理", desc: "对不想换肤的网站一键加入白名单，精准控制生效范围。" },
-];
 </script>
 
 <template>
   <div>
-    <!-- Hero -->
+    <!-- ══════ Hero ══════════════════════════════════════════════ -->
     <section class="relative py-24 px-4 text-center overflow-hidden border-b border-border">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-500/5 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-primary-700/5 pointer-events-none" />
       <div class="relative max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/10 text-primary-600 text-sm font-medium mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"></span>
-          浏览器主题扩展 · 强制换肤平台
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-500/10 text-primary-600 text-sm font-medium mb-6">
+          <img src="/LOGO.webp" alt="" class="w-4 h-4 object-contain" />
+          浏览器主题扩展 · 强制换肤
         </div>
         <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-5 leading-tight tracking-tight">
-          让每个网站都有<br />
-          <span class="text-primary-500">你喜欢的颜色</span>
+          <span class="text-primary-500">强制！让每个网站</span><br />
+          都变成你喜欢的颜色
         </h1>
         <p class="text-muted text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">
-          <strong class="text-foreground">ForcedSkin</strong> 强制为任意网站应用你选定的主题配色，
-          无需网站支持，亮色 / 暗色自由切换，登录后跨设备同步。
+          <strong class="text-foreground">ForcedSkin</strong> 无需网站支持，强制覆盖任意页面的背景与文字颜色，
+          亮色 / 暗色自由切换，登录后跨设备同步。
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href="#themes"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold text-base hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/25"
-          >
-            🎨 浏览主题
-          </a>
-          <NuxtLink
-            to="/login"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold text-base hover:bg-surface-muted transition-colors"
-          >
-            免费注册
+          <NuxtLink to="/themes"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold text-base hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20">
+            🎨 浏览主题商城
+          </NuxtLink>
+          <NuxtLink to="/auth/login"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold text-base hover:bg-surface-muted transition-colors">
+            免费注册 / 登录
           </NuxtLink>
         </div>
         <p class="text-muted text-xs mt-5">支持 Chrome · Edge · Arc 等 Chromium 内核浏览器</p>
       </div>
     </section>
 
-    <!-- 功能亮点 -->
-    <section class="py-20 px-4 bg-surface-muted/30 border-b border-border">
+    <!-- ══════ 热门主题 ══════════════════════════════════════════ -->
+    <section class="py-20 px-4 border-b border-border">
       <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-2">为什么选择 ForcedSkin？</h2>
-          <p class="text-muted">强制换肤，不依赖网站支持，真正做到全局生效</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div
-            v-for="feat in features"
-            :key="feat.title"
-            class="bg-surface rounded-2xl p-6 border border-border hover:border-primary-400 transition-colors group"
-          >
-            <div class="text-3xl mb-3">{{ feat.icon }}</div>
-            <h3 class="font-semibold text-foreground mb-1.5 group-hover:text-primary-600 transition-colors">{{ feat.title }}</h3>
-            <p class="text-muted text-sm leading-relaxed">{{ feat.desc }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 主题画廊 -->
-    <section id="themes" class="py-20 px-4">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <!-- 标题行 -->
+        <div class="flex items-end justify-between mb-10">
           <div>
-            <h2 class="text-2xl md:text-3xl font-bold text-foreground">主题画廊</h2>
-            <p class="text-muted text-sm mt-1">预览并选择适合你的配色方案，登录后一键应用</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-foreground">热门主题</h2>
+            <p class="text-muted text-sm mt-1">精选亮色与暗色方案，预览后一键收藏应用</p>
           </div>
-          <div class="flex rounded-xl border border-border overflow-hidden self-start sm:self-auto">
-            <button
-              v-for="m in [{ key: 'light', label: '☀️ 亮色' }, { key: 'dark', label: '🌙 暗色' }]"
-              :key="m.key"
-              @click="previewMode = m.key as any"
-              class="px-4 py-2 text-sm font-medium transition-colors"
-              :class="previewMode === m.key ? 'bg-primary-500 text-white' : 'text-muted hover:text-foreground hover:bg-surface-muted'"
-            >
-              {{ m.label }}
-            </button>
-          </div>
-        </div>
-
-        <div v-if="loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <div v-for="i in 8" :key="i" class="rounded-2xl bg-surface-muted animate-pulse h-52"></div>
-        </div>
-
-        <div v-else-if="filteredThemes.length === 0" class="text-center py-16 text-muted">
-          暂无{{ previewMode === 'light' ? '亮色' : '暗色' }}主题
-        </div>
-
-        <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <ThemeThemeCard
-            v-for="theme in filteredThemes"
-            :key="theme.id"
-            :theme="theme"
-            :show-actions="false"
-          />
-        </div>
-
-        <div class="text-center mt-10">
-          <NuxtLink
-            to="/themes"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border text-foreground font-medium hover:bg-surface-muted transition-colors"
-          >
+          <NuxtLink to="/themes"
+            class="hidden sm:inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors">
             查看全部主题
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </NuxtLink>
+        </div>
+
+        <!-- 加载骨架 -->
+        <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div v-for="i in 4" :key="i" class="rounded-2xl bg-surface-muted animate-pulse h-44" />
+        </div>
+
+        <!-- 主题卡片 2×2 -->
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <template v-for="theme in [...lightThemes, ...darkThemes]" :key="theme.id">
+            <div class="rounded-2xl border border-border overflow-hidden group hover:border-primary-400 transition-all duration-200 hover:shadow-md hover:shadow-primary-500/10">
+
+              <!-- 色块预览区 -->
+              <div
+                class="h-28 relative overflow-hidden"
+                :style="{ backgroundColor: parseColors(theme)?.background || '#F0F0F0' }"
+              >
+                <!-- 模拟页面布局 -->
+                <div class="absolute inset-3 rounded-lg opacity-80"
+                  :style="{ backgroundColor: parseColors(theme)?.surface || '#E8E8E8' }">
+                  <div class="absolute top-2 left-2 right-2 flex gap-1.5">
+                    <div class="h-1.5 rounded-full flex-1"
+                      :style="{ backgroundColor: parseColors(theme)?.muted || '#999', opacity: 0.5 }" />
+                    <div class="h-1.5 rounded-full w-8"
+                      :style="{ backgroundColor: parseColors(theme)?.muted || '#999', opacity: 0.3 }" />
+                  </div>
+                  <div class="absolute bottom-2 left-2 right-2 flex gap-1">
+                    <div class="h-2 rounded-sm flex-1"
+                      :style="{ backgroundColor: parseColors(theme)?.foreground || '#333', opacity: 0.15 }" />
+                    <div class="h-2 rounded-sm w-10"
+                      :style="{ backgroundColor: parseColors(theme)?.foreground || '#333', opacity: 0.1 }" />
+                  </div>
+                </div>
+                <!-- 色卡条 -->
+                <div class="absolute bottom-0 left-0 right-0 h-4 flex">
+                  <div v-for="(swatch, i) in getSwatches(parseColors(theme))" :key="i"
+                    class="flex-1" :style="{ backgroundColor: swatch }" />
+                </div>
+                <!-- 模式徽章 -->
+                <span
+                  class="absolute top-2 right-2 text-xs px-1.5 py-0.5 rounded-md font-medium"
+                  :style="{
+                    backgroundColor: parseColors(theme)?.surface || '#eee',
+                    color: parseColors(theme)?.muted || '#666',
+                    border: `1px solid ${parseColors(theme)?.border || '#ccc'}`,
+                  }"
+                >
+                  {{ theme.mode === 'light' ? '☀️ 亮色' : '🌙 暗色' }}
+                </span>
+              </div>
+
+              <!-- 信息区 -->
+              <div class="p-3.5 bg-surface">
+                <div class="font-semibold text-foreground text-sm mb-0.5">{{ theme.displayName }}</div>
+                <div class="text-muted text-xs line-clamp-1 mb-3">{{ theme.description || '点击预览效果' }}</div>
+                <NuxtLink
+                  to="/themes"
+                  class="inline-flex items-center gap-1 text-xs font-medium text-primary-600 hover:text-primary-500 transition-colors"
+                >
+                  预览 / 收藏
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </NuxtLink>
+              </div>
+            </div>
+          </template>
+
+          <!-- 空状态 -->
+          <div v-if="!loading && lightThemes.length === 0 && darkThemes.length === 0"
+            class="col-span-4 text-center py-12 text-muted">
+            暂无主题数据
+          </div>
+        </div>
+
+        <!-- 查看更多（移动端） -->
+        <div class="mt-8 text-center sm:hidden">
+          <NuxtLink to="/themes"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-surface-muted transition-colors">
+            查看全部主题
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
           </NuxtLink>
         </div>
       </div>
     </section>
 
-    <!-- CTA 底部 -->
+    <!-- ══════ 已适配网站 ════════════════════════════════════════ -->
+    <section class="py-20 px-4 bg-surface-muted/30 border-b border-border">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-2xl md:text-3xl font-bold text-foreground">已精细适配的网站</h2>
+          <p class="text-muted text-sm mt-2">
+            社区与官方针对以下网站提供了精细适配方案，换肤效果更自然
+          </p>
+        </div>
+
+        <!-- 加载中 -->
+        <div v-if="loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          <div v-for="i in 10" :key="i" class="rounded-xl bg-surface animate-pulse h-20" />
+        </div>
+
+        <!-- 适配器卡片 -->
+        <div v-else-if="adapters.length > 0"
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          <div v-for="adapter in adapters" :key="adapter.id"
+            class="group rounded-xl border border-border bg-surface px-3 py-4 flex flex-col items-center gap-2 hover:border-primary-400 hover:bg-surface-muted transition-all duration-150 cursor-default">
+            <!-- favicon -->
+            <div class="w-8 h-8 rounded-lg bg-surface-muted flex items-center justify-center overflow-hidden">
+              <img
+                v-if="getMainDomain(adapter.siteDomain)"
+                :src="getFaviconUrl(adapter.siteDomain)"
+                :alt="adapter.displayName"
+                class="w-6 h-6 object-contain"
+                loading="lazy"
+                @error="($event.target as HTMLImageElement).style.display='none'"
+              />
+              <span v-else class="text-xs font-bold text-muted">
+                {{ adapter.displayName.charAt(0) }}
+              </span>
+            </div>
+            <!-- 名称 -->
+            <div class="text-center">
+              <div class="text-sm font-semibold text-foreground leading-tight">{{ adapter.displayName }}</div>
+              <div class="text-xs text-muted mt-0.5 truncate max-w-full">
+                {{ getMainDomain(adapter.siteDomain) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 空状态 -->
+        <div v-else class="text-center py-16">
+          <div class="text-4xl mb-3">🔌</div>
+          <p class="text-muted text-sm">暂无已适配网站，欢迎提交适配器</p>
+          <NuxtLink to="/adapters"
+            class="mt-4 inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors">
+            前往提交 →
+          </NuxtLink>
+        </div>
+
+        <!-- 提交入口 -->
+        <div class="mt-8 text-center">
+          <p class="text-muted text-sm mb-3">没有找到你常用的网站？</p>
+          <NuxtLink to="/adapters"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-surface-muted transition-colors">
+            🔌 提交新的网站适配器
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════ CTA ═══════════════════════════════════════════════ -->
     <section class="py-20 px-4 bg-primary-500/5 border-t border-border">
       <div class="max-w-2xl mx-auto text-center">
         <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4">立即开始使用 ForcedSkin</h2>
         <p class="text-muted mb-8">免费注册，收藏你喜欢的主题，安装扩展后登录即可同步</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <NuxtLink to="/login" class="px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
+          <NuxtLink to="/auth/login"
+            class="px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
             免费注册 / 登录
           </NuxtLink>
-          <NuxtLink to="/themes" class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
+          <NuxtLink to="/themes"
+            class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
             浏览主题商城
           </NuxtLink>
         </div>
       </div>
     </section>
-
-    <!-- 页脚 -->
-    <footer class="border-t border-border py-10 px-4">
-      <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted">
-        <div class="flex items-center gap-2">
-          <span class="w-5 h-5 rounded bg-primary-500 flex items-center justify-center text-white text-xs font-black">F</span>
-          <span class="font-semibold text-foreground">ForcedSkin</span>
-          <span>© {{ new Date().getFullYear() }}</span>
-        </div>
-        <nav class="flex flex-wrap gap-4 justify-center">
-          <NuxtLink to="/themes" class="hover:text-foreground transition-colors">主题商城</NuxtLink>
-          <NuxtLink to="/adapters" class="hover:text-foreground transition-colors">适配器</NuxtLink>
-          <NuxtLink to="/privacy" class="hover:text-foreground transition-colors">隐私政策</NuxtLink>
-          <NuxtLink to="/terms" class="hover:text-foreground transition-colors">用户协议</NuxtLink>
-        </nav>
-      </div>
-    </footer>
   </div>
 </template>

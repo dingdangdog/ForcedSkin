@@ -12,6 +12,27 @@ useHead({
 const { signIn, status, data } = useAuth();
 const route = useRoute();
 
+// ⚠️ TODO: 测试工具变量 — 测试通过后删除以下代码块（到 END TODO 注释处）
+const runtimeConfig = useRuntimeConfig();
+const isDev = computed(() => runtimeConfig.public?.siteUrl?.includes("localhost") || false);
+const testLoading = ref<string | null>(null);
+const testError = ref("");
+async function doTestLogin(userId: string) {
+  testLoading.value = userId;
+  testError.value = "";
+  try {
+    await $fetch("/api/dev/test-login", { method: "POST", body: { userId } });
+    // 刷新 session 后跳转
+    await refreshNuxtData();
+    await navigateTo((route.query.callbackUrl as string) || "/");
+  } catch (e: any) {
+    testError.value = e?.data?.message || "测试登录失败";
+  } finally {
+    testLoading.value = null;
+  }
+}
+// ⚠️ END TODO
+
 // 读取错误信息（NuxtAuth 通过 ?error= 传递）
 const authError = computed(() => {
   const e = route.query.error as string | undefined;
@@ -77,7 +98,7 @@ const themeStore = useThemeStore();
 
     <!-- Logo -->
     <NuxtLink to="/" class="flex items-center gap-2.5 mb-10">
-      <span class="w-10 h-10 rounded-2xl bg-[#4CAF50] flex items-center justify-center text-white font-black text-xl shadow-lg shadow-[#4CAF50]/30">F</span>
+      <img src="/LOGO.webp" alt="ForcedSkin" class="w-10 h-10 object-contain rounded-2xl shadow-lg shadow-[#4CAF50]/20" />
       <span class="font-bold text-2xl">ForcedSkin</span>
     </NuxtLink>
 
@@ -165,5 +186,42 @@ const themeStore = useThemeStore();
     >
       ← 返回 ForcedSkin 首页
     </NuxtLink>
+
+    <!-- ⚠️ TODO: 测试一键登录区块 — 测试通过后删除此整个 div -->
+    <div
+      class="w-full max-w-sm mt-6 rounded-2xl border-2 border-dashed border-yellow-400/60 overflow-hidden"
+      :class="themeStore.isDark ? 'bg-yellow-900/10' : 'bg-yellow-50'"
+    >
+      <div class="px-4 py-3 bg-yellow-400/20 flex items-center gap-2 border-b border-yellow-400/30">
+        <span class="text-yellow-600 font-bold text-xs">⚠️ 仅开发环境可见 · 测试通过后删除</span>
+      </div>
+      <div class="px-4 py-4 space-y-2">
+        <p class="text-xs text-yellow-700 dark:text-yellow-400 mb-3">测试账号一键登录（不走 OAuth）</p>
+
+        <button
+          @click="doTestLogin('test-user-001')"
+          :disabled="testLoading !== null"
+          class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium bg-yellow-400 text-yellow-900 hover:bg-yellow-300 disabled:opacity-60 transition-colors"
+        >
+          <span v-if="testLoading === 'test-user-001'" class="w-4 h-4 border-2 border-yellow-800 border-t-transparent rounded-full animate-spin" />
+          <span v-else>👤</span>
+          以「测试用户」登录
+        </button>
+
+        <button
+          @click="doTestLogin('test-admin-001')"
+          :disabled="testLoading !== null"
+          class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium bg-orange-400 text-orange-900 hover:bg-orange-300 disabled:opacity-60 transition-colors"
+        >
+          <span v-if="testLoading === 'test-admin-001'" class="w-4 h-4 border-2 border-orange-800 border-t-transparent rounded-full animate-spin" />
+          <span v-else>🛡️</span>
+          以「测试管理员」登录
+        </button>
+
+        <p v-if="testError" class="text-xs text-red-600 mt-1">{{ testError }}</p>
+      </div>
+    </div>
+    <!-- ⚠️ END TODO -->
+
   </div>
 </template>

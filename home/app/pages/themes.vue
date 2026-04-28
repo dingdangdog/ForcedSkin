@@ -123,7 +123,7 @@ onMounted(load);
     </div>
 
     <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <ThemeThemeCard
+      <ThemeCard
         v-for="theme in filtered"
         :key="theme.id"
         :theme="theme"
