@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n();
+
 interface ThemeColors {
   background?: string;
   foreground?: string;
@@ -77,8 +79,8 @@ const primary = computed(() => {
           <div class="h-1.5 w-3/4 rounded" :style="{ backgroundColor: fg, opacity: 0.3 }"></div>
         </div>
         <div class="flex gap-1.5">
-          <div class="px-2 py-0.5 rounded text-xs font-medium" :style="{ backgroundColor: primary, color: bg }">按钮</div>
-          <div class="px-2 py-0.5 rounded text-xs" :style="{ backgroundColor: 'transparent', color: muted, border: `1px solid ${border}` }">次要</div>
+          <div class="px-2 py-0.5 rounded text-xs font-medium" :style="{ backgroundColor: primary, color: bg }">{{ t('card.mock_btn') }}</div>
+          <div class="px-2 py-0.5 rounded text-xs" :style="{ backgroundColor: 'transparent', color: muted, border: `1px solid ${border}` }">{{ t('card.mock_secondary') }}</div>
         </div>
       </div>
 
@@ -99,8 +101,8 @@ const primary = computed(() => {
           <span
             class="text-xs px-1.5 py-0.5 rounded font-medium"
             :class="theme.mode === 'dark' ? 'bg-slate-700 text-slate-200' : 'bg-amber-100 text-amber-800'"
-          >{{ theme.mode === 'dark' ? '暗色' : '亮色' }}</span>
-          <span v-if="selected" class="text-xs px-1.5 py-0.5 rounded bg-primary-100 text-primary-700 font-medium">已选</span>
+          >{{ theme.mode === 'dark' ? t('card.dark_badge') : t('card.light_badge') }}</span>
+          <span v-if="selected" class="text-xs px-1.5 py-0.5 rounded bg-primary-100 text-primary-700 font-medium">{{ t('card.selected') }}</span>
         </div>
       </div>
     </div>
@@ -114,7 +116,7 @@ const primary = computed(() => {
         class="w-7 h-7 flex items-center justify-center rounded-full shadow-md transition-colors"
         :class="favorited ? 'bg-red-500 text-white' : 'bg-surface text-muted hover:text-red-500'"
         @click.stop="emit('favorite', theme)"
-        :title="favorited ? '取消收藏' : '收藏'"
+        :title="favorited ? t('card.unfavorite') : t('card.favorite')"
       >
         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
           <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>

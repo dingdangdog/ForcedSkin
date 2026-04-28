@@ -3,6 +3,8 @@ import { doApi } from "~/utils/api";
 
 definePageMeta({ layout: "default" });
 
+const { t } = useI18n();
+
 useHead({
   title: "主题商城 — ForcedSkin",
   meta: [
@@ -71,25 +73,23 @@ async function load() {
 }
 
 async function toggleFavorite(theme: Theme) {
-  if (!isLoggedIn.value) { showToast("请先登录"); return; }
+  if (!isLoggedIn.value) { showToast(t("themes.need_login")); return; }
   try {
     const res = await doApi.post<any>("api/entry/user/themes/favorite", { themeId: theme.id });
-    if (res.favorited) { favorites.value.add(theme.id); showToast(`已收藏 ${theme.displayName}`); }
-    else { favorites.value.delete(theme.id); showToast(`已取消收藏`); }
+    if (res.favorited) { favorites.value.add(theme.id); showToast(t("themes.favorited", { name: theme.displayName })); }
+    else { favorites.value.delete(theme.id); showToast(t("themes.unfavorited")); }
   } catch {}
 }
 
 async function selectTheme(theme: Theme) {
-  if (!isLoggedIn.value) { showToast("请先登录后选择主题"); return; }
+  if (!isLoggedIn.value) { showToast(t("themes.need_login_select")); return; }
   try {
     saving.value = true;
-    const payload = theme.mode === "light"
-      ? { lightTheme: theme.name }
-      : { darkTheme: theme.name };
+    const payload = theme.mode === "light" ? { lightTheme: theme.name } : { darkTheme: theme.name };
     await doApi.patch<any>("api/entry/user/themes/select", payload);
     if (theme.mode === "light") selectedLight.value = theme.name;
     else selectedDark.value = theme.name;
-    showToast(`已将 ${theme.displayName} 设为${theme.mode === "light" ? "亮色" : "暗色"}主题`);
+    showToast(t("themes.set_as", { name: theme.displayName, mode: theme.mode === "light" ? t("themes.mode_light") : t("themes.mode_dark") }));
   } catch {} finally { saving.value = false; }
 }
 
@@ -99,14 +99,14 @@ onMounted(load);
 <template>
   <div class="max-w-6xl mx-auto px-4 py-10">
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-foreground">主题</h1>
-      <p class="text-muted mt-1">选择你喜欢的配色，登录后可同步到扩展</p>
+      <h1 class="text-3xl font-bold text-foreground">{{ t('themes.title') }}</h1>
+      <p class="text-muted mt-1">{{ t('themes.subtitle') }}</p>
     </div>
 
     <!-- 筛选 -->
     <div class="flex items-center gap-3 mb-6">
       <button
-        v-for="opt in [{ k: 'all', l: '全部' }, { k: 'light', l: '亮色' }, { k: 'dark', l: '暗色' }]"
+        v-for="opt in [{ k: 'all', l: t('themes.all') }, { k: 'light', l: t('themes.light') }, { k: 'dark', l: t('themes.dark') }]"
         :key="opt.k"
         @click="filterMode = opt.k as any"
         class="px-4 py-1.5 rounded-full text-sm font-medium transition-colors border"

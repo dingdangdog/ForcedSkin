@@ -1,0 +1,119 @@
+{
+  "extName": {
+    "message": "ForcedSkin — 强制换肤"
+  },
+  "extShortName": {
+    "message": "ForcedSkin"
+  },
+  "extDescription": {
+    "message": "为任意网站强制应用你喜欢的亮色或暗色主题。登录 forcedskin.com 跨设备同步主题。"
+  },
+  "logoutTitle": {
+    "message": "退出登录"
+  },
+  "optionLight": {
+    "message": "亮色主题"
+  },
+  "optionDark": {
+    "message": "暗色主题"
+  },
+  "optionOff": {
+    "message": "不修改"
+  },
+  "optionOffSub": {
+    "message": "保持网站原样"
+  },
+  "currentSite": {
+    "message": "当前网站"
+  },
+  "whitelistStatus": {
+    "message": "白名单状态："
+  },
+  "whitelistAdded": {
+    "message": "已加入"
+  },
+  "whitelistNotAdded": {
+    "message": "未加入"
+  },
+  "whitelistNotApplicable": {
+    "message": "不可操作"
+  },
+  "addWhitelist": {
+    "message": "加入白名单"
+  },
+  "removeWhitelist": {
+    "message": "移除白名单"
+  },
+  "currentStatus": {
+    "message": "当前状态：{mode}"
+  },
+  "statusLight": {
+    "message": "亮色主题"
+  },
+  "statusDark": {
+    "message": "暗色主题"
+  },
+  "statusOff": {
+    "message": "不修改"
+  },
+  "addedToWhitelist": {
+    "message": "已加入白名单：{host}"
+  },
+  "removedFromWhitelist": {
+    "message": "已移除白名单：{host}"
+  },
+  "siteNotApplicable": {
+    "message": "当前标签页不是可识别的网站"
+  },
+  "loginPrompt": {
+    "message": "登录 forcedskin.com 账号以同步主题"
+  },
+  "loginUsername": {
+    "message": "用户名"
+  },
+  "loginPassword": {
+    "message": "密码"
+  },
+  "loginBtn": {
+    "message": "登录"
+  },
+  "loggingIn": {
+    "message": "登录中…"
+  },
+  "loginSuccess": {
+    "message": "登录成功，主题已同步"
+  },
+  "loginFail": {
+    "message": "登录失败，请检查账号密码"
+  },
+  "loginFillAll": {
+    "message": "请填写用户名和密码"
+  },
+  "accountThemes": {
+    "message": "账号主题"
+  },
+  "syncLight": {
+    "message": "☀️ 亮色"
+  },
+  "syncDark": {
+    "message": "🌙 暗色"
+  },
+  "syncDefault": {
+    "message": "默认"
+  },
+  "syncBtn": {
+    "message": "同步主题配色"
+  },
+  "syncing": {
+    "message": "同步中…"
+  },
+  "synced": {
+    "message": "主题已同步"
+  },
+  "syncFailed": {
+    "message": "同步失败"
+  },
+  "loggedOut": {
+    "message": "已退出登录"
+  }
+}

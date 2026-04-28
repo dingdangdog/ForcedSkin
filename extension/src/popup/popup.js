@@ -1,3 +1,25 @@
+// ── i18n helpers ──────────────────────────────────────────────────────────────
+const i18n = (key, substitutions) => chrome.i18n.getMessage(key, substitutions) || key;
+
+function applyI18n() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    const msg = i18n(key);
+    if (msg) el.textContent = msg;
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    const msg = i18n(key);
+    if (msg) el.placeholder = msg;
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    const key = el.dataset.i18nTitle;
+    const msg = i18n(key);
+    if (msg) el.title = msg;
+  });
+}
+
+// ── DOM refs ───────────────────────────────────────────────────────────────────
 const statusText = document.getElementById("statusText");
 const radios = Array.from(document.querySelectorAll('input[name="themeMode"]'));
 const siteHostText = document.getElementById("siteHostText");
@@ -19,16 +41,23 @@ const syncDarkName = document.getElementById("syncDarkName");
 const lightThemeName = document.getElementById("lightThemeName");
 const darkThemeName = document.getElementById("darkThemeName");
 
-const MODE_LABEL = { light: "亮色主题", dark: "暗色主题", off: "不修改" };
+// ── State ──────────────────────────────────────────────────────────────────────
+const MODE_LABEL = {
+  light: i18n("statusLight"),
+  dark: i18n("statusDark"),
+  off: i18n("statusOff"),
+};
 
 let currentMode = "off";
 let currentWhitelist = [];
 let currentHostname = "";
 
+// ── Popup theme ────────────────────────────────────────────────────────────────
 function setPopupTheme(mode) {
   document.body.setAttribute("data-theme", mode || "off");
 }
 
+// ── Whitelist utils ────────────────────────────────────────────────────────────
 function normalizeWhitelistEntry(entry) {
   if (typeof entry !== "string") return "";
   const trimmed = entry.trim().toLowerCase();
@@ -61,14 +90,14 @@ async function getCurrentTabHostname() {
 function renderWhitelistState() {
   const inWhitelist = isHostInWhitelist(currentHostname, currentWhitelist);
   if (!currentHostname) {
-    siteHostText.textContent = "当前标签页不是可识别的网站";
-    whitelistStateText.textContent = "白名单状态：不可操作";
+    siteHostText.textContent = i18n("siteNotApplicable");
+    whitelistStateText.textContent = i18n("whitelistStatus") + i18n("whitelistNotApplicable");
     addWhitelistBtn.disabled = true;
     removeWhitelistBtn.disabled = true;
     return;
   }
   siteHostText.textContent = currentHostname;
-  whitelistStateText.textContent = `白名单状态：${inWhitelist ? "已加入" : "未加入"}`;
+  whitelistStateText.textContent = i18n("whitelistStatus") + (inWhitelist ? i18n("whitelistAdded") : i18n("whitelistNotAdded"));
   addWhitelistBtn.disabled = inWhitelist;
   removeWhitelistBtn.disabled = !inWhitelist;
 }
@@ -79,6 +108,7 @@ async function saveWhitelist(nextWhitelist) {
   renderWhitelistState();
 }
 
+// ── Load mode ──────────────────────────────────────────────────────────────────
 async function loadCurrentMode() {
   const response = await chrome.runtime.sendMessage({ type: "GET_SETTINGS" });
   currentMode = response?.mode || "off";
@@ -89,14 +119,13 @@ async function loadCurrentMode() {
   updateStatus(currentMode);
   renderWhitelistState();
 
-  // 显示主题名称
   if (response?.lightTheme) lightThemeName.textContent = response.lightTheme;
   if (response?.darkTheme) darkThemeName.textContent = response.darkTheme;
 }
 
 function updateStatus(mode) {
   const label = MODE_LABEL[mode] || MODE_LABEL.off;
-  statusText.textContent = `当前状态：${label}`;
+  statusText.textContent = i18n("currentStatus", [label]);
   setPopupTheme(mode);
 }
 
@@ -111,18 +140,17 @@ async function addCurrentSiteToWhitelist() {
   const normalizedHost = normalizeWhitelistEntry(currentHostname);
   const next = normalizeWhitelist([...currentWhitelist, normalizedHost]);
   await saveWhitelist(next);
-  statusText.textContent = `已加入白名单：${normalizedHost}`;
+  statusText.textContent = i18n("addedToWhitelist", [normalizedHost]);
 }
 
 async function removeCurrentSiteFromWhitelist() {
   if (!currentHostname) return;
   const next = currentWhitelist.filter((entry) => currentHostname !== entry && !currentHostname.endsWith(`.${entry}`));
   await saveWhitelist(next);
-  statusText.textContent = `已移除白名单：${currentHostname}`;
+  statusText.textContent = i18n("removedFromWhitelist", [currentHostname]);
 }
 
-// ---- 登录 / 账号 逻辑 ----
-
+// ── Account ────────────────────────────────────────────────────────────────────
 async function renderAccountState() {
   const response = await chrome.runtime.sendMessage({ type: "GET_USER_INFO" });
   const user = response?.user;
@@ -132,8 +160,8 @@ async function renderAccountState() {
     userNameEl.textContent = user.name || user.username;
     loginSection.classList.add("hidden");
     syncSection.classList.remove("hidden");
-    syncLightName.textContent = user.lightTheme || "默认";
-    syncDarkName.textContent = user.darkTheme || "默认";
+    syncLightName.textContent = user.lightTheme || i18n("syncDefault");
+    syncDarkName.textContent = user.darkTheme || i18n("syncDefault");
   } else {
     userBadge.classList.add("hidden");
     loginSection.classList.remove("hidden");
@@ -145,24 +173,24 @@ loginBtn.addEventListener("click", async () => {
   const username = loginUsernameEl.value.trim();
   const password = loginPasswordEl.value;
   if (!username || !password) {
-    loginError.textContent = "请填写用户名和密码";
+    loginError.textContent = i18n("loginFillAll");
     loginError.classList.remove("hidden");
     return;
   }
   loginBtn.disabled = true;
-  loginBtn.textContent = "登录中…";
+  loginBtn.textContent = i18n("loggingIn");
   loginError.classList.add("hidden");
 
   const response = await chrome.runtime.sendMessage({ type: "LOGIN", username, password });
   loginBtn.disabled = false;
-  loginBtn.textContent = "登录";
+  loginBtn.textContent = i18n("loginBtn");
 
   if (response?.ok) {
     await renderAccountState();
     await chrome.runtime.sendMessage({ type: "SYNC_THEME" });
-    statusText.textContent = "登录成功，主题已同步";
+    statusText.textContent = i18n("loginSuccess");
   } else {
-    loginError.textContent = response?.error || "登录失败，请检查账号密码";
+    loginError.textContent = response?.error || i18n("loginFail");
     loginError.classList.remove("hidden");
   }
 });
@@ -170,28 +198,30 @@ loginBtn.addEventListener("click", async () => {
 logoutBtn.addEventListener("click", async () => {
   await chrome.runtime.sendMessage({ type: "LOGOUT" });
   await renderAccountState();
-  statusText.textContent = "已退出登录";
+  statusText.textContent = i18n("loggedOut");
 });
 
 syncBtn.addEventListener("click", async () => {
   syncBtn.disabled = true;
-  syncBtn.textContent = "同步中…";
+  syncBtn.textContent = i18n("syncing");
   const response = await chrome.runtime.sendMessage({ type: "SYNC_THEME" });
   syncBtn.disabled = false;
-  syncBtn.textContent = "同步主题配色";
+  syncBtn.textContent = i18n("syncBtn");
   if (response?.ok) {
-    statusText.textContent = "主题已同步";
+    statusText.textContent = i18n("synced");
     await renderAccountState();
     if (response.lightTheme) lightThemeName.textContent = response.lightTheme;
     if (response.darkTheme) darkThemeName.textContent = response.darkTheme;
   } else {
-    statusText.textContent = response?.error || "同步失败";
+    statusText.textContent = response?.error || i18n("syncFailed");
   }
 });
 
+// ── Init ───────────────────────────────────────────────────────────────────────
 radios.forEach((radio) => radio.addEventListener("change", onModeChange));
 addWhitelistBtn.addEventListener("click", addCurrentSiteToWhitelist);
 removeWhitelistBtn.addEventListener("click", removeCurrentSiteFromWhitelist);
 
+applyI18n();
 loadCurrentMode();
 renderAccountState();

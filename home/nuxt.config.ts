@@ -2,11 +2,24 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
-    '@sidebase/nuxt-auth',
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@sidebase/nuxt-auth', '@nuxtjs/i18n'],
+
+  i18n: {
+    // lazy: true,
+    langDir: 'locales/',
+    locales: [
+      { code: 'en', file: 'en.json', name: 'English' },
+      { code: 'zh', file: 'zh.json', name: '中文' },
+    ],
+    defaultLocale: 'en',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      redirectOn: 'root',
+      alwaysRedirect: false,
+    },
+  },
 
   // 全局 CSS — 含主题 CSS 变量默认值，确保首屏正确渲染
   css: ['~/assets/css/main.css'],

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>ForcedSkin</title>
@@ -12,7 +12,7 @@
         <h1>ForcedSkin</h1>
         <div id="userBadge" class="user-badge hidden">
           <span id="userName"></span>
-          <button id="logoutBtn" class="logout-btn" title="退出登录">✕</button>
+          <button id="logoutBtn" class="logout-btn" data-i18n-title="logoutTitle">✕</button>
         </div>
       </div>
 
@@ -21,34 +21,34 @@
         <label class="option">
           <input type="radio" name="themeMode" value="light" />
           <div class="option-body">
-            <span class="option-label">亮色主题</span>
+            <span class="option-label" data-i18n="optionLight"></span>
             <span id="lightThemeName" class="option-sub"></span>
           </div>
         </label>
         <label class="option">
           <input type="radio" name="themeMode" value="dark" />
           <div class="option-body">
-            <span class="option-label">暗色主题</span>
+            <span class="option-label" data-i18n="optionDark"></span>
             <span id="darkThemeName" class="option-sub"></span>
           </div>
         </label>
         <label class="option">
           <input type="radio" name="themeMode" value="off" />
           <div class="option-body">
-            <span class="option-label">不修改</span>
-            <span class="option-sub">保持网站原样</span>
+            <span class="option-label" data-i18n="optionOff"></span>
+            <span class="option-sub" data-i18n="optionOffSub"></span>
           </div>
         </label>
       </div>
 
       <!-- 白名单控制 -->
       <section class="whitelist-panel">
-        <p class="field-label">当前网站</p>
+        <p class="field-label" data-i18n="currentSite"></p>
         <p id="siteHostText" class="site-host">-</p>
-        <p id="whitelistStateText" class="whitelist-state">白名单状态：-</p>
+        <p id="whitelistStateText" class="whitelist-state">-</p>
         <div class="button-row">
-          <button id="addWhitelistBtn" class="save-btn" type="button">加入白名单</button>
-          <button id="removeWhitelistBtn" class="save-btn danger" type="button">移除白名单</button>
+          <button id="addWhitelistBtn" class="save-btn" type="button" data-i18n="addWhitelist"></button>
+          <button id="removeWhitelistBtn" class="save-btn danger" type="button" data-i18n="removeWhitelist"></button>
         </div>
       </section>
 
@@ -57,11 +57,11 @@
       <!-- 登录区块 -->
       <section id="loginSection" class="login-section hidden">
         <div class="section-divider"></div>
-        <p class="field-label">登录 forcedskin.com 账号以同步主题</p>
+        <p class="field-label" data-i18n="loginPrompt"></p>
         <div class="login-form">
-          <input id="loginUsername" type="text" placeholder="用户名" class="text-input" autocomplete="username" />
-          <input id="loginPassword" type="password" placeholder="密码" class="text-input" autocomplete="current-password" />
-          <button id="loginBtn" class="save-btn primary-btn" type="button">登录</button>
+          <input id="loginUsername" type="text" class="text-input" autocomplete="username" data-i18n-placeholder="loginUsername" />
+          <input id="loginPassword" type="password" class="text-input" autocomplete="current-password" data-i18n-placeholder="loginPassword" />
+          <button id="loginBtn" class="save-btn primary-btn" type="button" data-i18n="loginBtn"></button>
           <p id="loginError" class="login-error hidden"></p>
         </div>
       </section>
@@ -69,18 +69,18 @@
       <!-- 已登录：主题同步状态 -->
       <section id="syncSection" class="sync-section hidden">
         <div class="section-divider"></div>
-        <p class="field-label">账号主题</p>
+        <p class="field-label" data-i18n="accountThemes"></p>
         <div class="theme-sync-row">
           <div class="theme-sync-item">
-            <span class="theme-sync-label">☀️ 亮色</span>
+            <span class="theme-sync-label" data-i18n="syncLight"></span>
             <span id="syncLightName" class="theme-sync-name">—</span>
           </div>
           <div class="theme-sync-item">
-            <span class="theme-sync-label">🌙 暗色</span>
+            <span class="theme-sync-label" data-i18n="syncDark"></span>
             <span id="syncDarkName" class="theme-sync-name">—</span>
           </div>
         </div>
-        <button id="syncBtn" class="save-btn" type="button" style="margin-top:8px">同步主题配色</button>
+        <button id="syncBtn" class="save-btn" type="button" style="margin-top:8px" data-i18n="syncBtn"></button>
       </section>
     </main>
     <script src="./popup.js"></script>

@@ -1,0 +1,119 @@
+{
+  "extName": {
+    "message": "ForcedSkin — Web Theme Switcher"
+  },
+  "extShortName": {
+    "message": "ForcedSkin"
+  },
+  "extDescription": {
+    "message": "Apply your favorite light or dark color theme to any website. Log in to forcedskin.com to sync custom themes across devices."
+  },
+  "logoutTitle": {
+    "message": "Sign out"
+  },
+  "optionLight": {
+    "message": "Light Theme"
+  },
+  "optionDark": {
+    "message": "Dark Theme"
+  },
+  "optionOff": {
+    "message": "Disabled"
+  },
+  "optionOffSub": {
+    "message": "Keep original site style"
+  },
+  "currentSite": {
+    "message": "Current site"
+  },
+  "whitelistStatus": {
+    "message": "Whitelist:"
+  },
+  "whitelistAdded": {
+    "message": "Added"
+  },
+  "whitelistNotAdded": {
+    "message": "Not added"
+  },
+  "whitelistNotApplicable": {
+    "message": "N/A"
+  },
+  "addWhitelist": {
+    "message": "Add to whitelist"
+  },
+  "removeWhitelist": {
+    "message": "Remove from whitelist"
+  },
+  "currentStatus": {
+    "message": "Status: {mode}"
+  },
+  "statusLight": {
+    "message": "Light Theme"
+  },
+  "statusDark": {
+    "message": "Dark Theme"
+  },
+  "statusOff": {
+    "message": "Disabled"
+  },
+  "addedToWhitelist": {
+    "message": "Added to whitelist: {host}"
+  },
+  "removedFromWhitelist": {
+    "message": "Removed from whitelist: {host}"
+  },
+  "siteNotApplicable": {
+    "message": "Not a recognized website"
+  },
+  "loginPrompt": {
+    "message": "Log in to forcedskin.com to sync themes"
+  },
+  "loginUsername": {
+    "message": "Username"
+  },
+  "loginPassword": {
+    "message": "Password"
+  },
+  "loginBtn": {
+    "message": "Log in"
+  },
+  "loggingIn": {
+    "message": "Signing in…"
+  },
+  "loginSuccess": {
+    "message": "Signed in, theme synced"
+  },
+  "loginFail": {
+    "message": "Sign in failed, please check credentials"
+  },
+  "loginFillAll": {
+    "message": "Please fill in username and password"
+  },
+  "accountThemes": {
+    "message": "Account themes"
+  },
+  "syncLight": {
+    "message": "☀️ Light"
+  },
+  "syncDark": {
+    "message": "🌙 Dark"
+  },
+  "syncDefault": {
+    "message": "Default"
+  },
+  "syncBtn": {
+    "message": "Sync themes"
+  },
+  "syncing": {
+    "message": "Syncing…"
+  },
+  "synced": {
+    "message": "Theme synced"
+  },
+  "syncFailed": {
+    "message": "Sync failed"
+  },
+  "loggedOut": {
+    "message": "Signed out"
+  }
+}

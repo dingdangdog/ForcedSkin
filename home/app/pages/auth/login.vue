@@ -11,6 +11,7 @@ useHead({
 
 const { signIn, status, data } = useAuth();
 const route = useRoute();
+const { t } = useI18n();
 
 // ⚠️ TODO: 测试工具变量 — 测试通过后删除以下代码块（到 END TODO 注释处）
 const runtimeConfig = useRuntimeConfig();
@@ -37,15 +38,10 @@ async function doTestLogin(userId: string) {
 const authError = computed(() => {
   const e = route.query.error as string | undefined;
   if (!e) return null;
-  const map: Record<string, string> = {
-    OAuthSignin: "OAuth 登录失败，请重试",
-    OAuthCallback: "OAuth 回调出错，请重试",
-    OAuthCreateAccount: "账号创建失败，请重试",
-    OAuthAccountNotLinked: "该邮箱已通过其他方式登录，请使用原方式",
-    Callback: "登录回调出错",
-    Default: "登录失败，请重试",
-  };
-  return map[e] ?? map.Default;
+  const key = `auth.error.${e}`;
+  // 尝试用具体 key，fallback 到 Default
+  const msg = t(key);
+  return msg === key ? t("auth.error.Default") : msg;
 });
 
 const loading = ref<"github" | "google" | null>(null);
@@ -109,9 +105,9 @@ const themeStore = useThemeStore();
     >
       <!-- 头部 -->
       <div class="px-6 pt-7 pb-5 text-center border-b" :class="themeStore.isDark ? 'border-[#333633]' : 'border-[#D8E8D8]'">
-        <h1 class="text-xl font-bold mb-1">欢迎回来</h1>
+        <h1 class="text-xl font-bold mb-1">{{ t('auth.title') }}</h1>
         <p class="text-sm" :class="themeStore.isDark ? 'text-[#A0A0A0]' : 'text-[#6C7E6C]'">
-          使用以下账号登录 ForcedSkin
+          {{ t('auth.subtitle') }}
         </p>
       </div>
 
@@ -142,7 +138,7 @@ const themeStore = useThemeStore();
           <svg v-else class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
           </svg>
-          <span>{{ loading === 'github' ? '跳转中…' : '使用 GitHub 登录' }}</span>
+          <span>{{ loading === 'github' ? t('auth.loading') : t('auth.github') }}</span>
         </button>
 
         <!-- Google -->
@@ -161,7 +157,7 @@ const themeStore = useThemeStore();
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
-          <span>{{ loading === 'google' ? '跳转中…' : '使用 Google 登录' }}</span>
+          <span>{{ loading === 'google' ? t('auth.loading') : t('auth.google') }}</span>
         </button>
 
       </div>
@@ -171,10 +167,10 @@ const themeStore = useThemeStore();
         class="px-6 pb-6 text-center text-xs border-t pt-5"
         :class="themeStore.isDark ? 'border-[#333633] text-[#A0A0A0]' : 'border-[#D8E8D8] text-[#6C7E6C]'"
       >
-        登录即表示你同意我们的
-        <NuxtLink to="/terms" class="text-[#4CAF50] hover:underline">用户协议</NuxtLink>
-        和
-        <NuxtLink to="/privacy" class="text-[#4CAF50] hover:underline">隐私政策</NuxtLink>
+        {{ t('auth.agree_prefix') }}
+        <NuxtLink to="/terms" class="text-[#4CAF50] hover:underline">{{ t('auth.terms') }}</NuxtLink>
+        {{ t('auth.and') }}
+        <NuxtLink to="/privacy" class="text-[#4CAF50] hover:underline">{{ t('auth.privacy') }}</NuxtLink>
       </div>
     </div>
 
@@ -184,7 +180,7 @@ const themeStore = useThemeStore();
       class="mt-6 text-sm transition-colors"
       :class="themeStore.isDark ? 'text-[#A0A0A0] hover:text-[#E0E0E0]' : 'text-[#6C7E6C] hover:text-[#2C3E2C]'"
     >
-      ← 返回 ForcedSkin 首页
+      {{ t('auth.back') }}
     </NuxtLink>
 
     <!-- ⚠️ TODO: 测试一键登录区块 — 测试通过后删除此整个 div -->
@@ -193,7 +189,7 @@ const themeStore = useThemeStore();
       :class="themeStore.isDark ? 'bg-yellow-900/10' : 'bg-yellow-50'"
     >
       <div class="px-4 py-3 bg-yellow-400/20 flex items-center gap-2 border-b border-yellow-400/30">
-        <span class="text-yellow-600 font-bold text-xs">⚠️ 仅开发环境可见 · 测试通过后删除</span>
+        <span class="text-yellow-600 font-bold text-xs">⚠️ {{ t('auth.dev_title') }}</span>
       </div>
       <div class="px-4 py-4 space-y-2">
         <p class="text-xs text-yellow-700 dark:text-yellow-400 mb-3">测试账号一键登录（不走 OAuth）</p>
@@ -205,7 +201,7 @@ const themeStore = useThemeStore();
         >
           <span v-if="testLoading === 'test-user-001'" class="w-4 h-4 border-2 border-yellow-800 border-t-transparent rounded-full animate-spin" />
           <span v-else>👤</span>
-          以「测试用户」登录
+          {{ t('auth.dev_user') }}
         </button>
 
         <button
@@ -215,7 +211,7 @@ const themeStore = useThemeStore();
         >
           <span v-if="testLoading === 'test-admin-001'" class="w-4 h-4 border-2 border-orange-800 border-t-transparent rounded-full animate-spin" />
           <span v-else>🛡️</span>
-          以「测试管理员」登录
+          {{ t('auth.dev_admin') }}
         </button>
 
         <p v-if="testError" class="text-xs text-red-600 mt-1">{{ testError }}</p>

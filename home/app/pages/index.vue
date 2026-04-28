@@ -3,26 +3,17 @@ import { doApi } from "~/utils/api";
 
 definePageMeta({ layout: "default" });
 
+const { t } = useI18n();
+
 useHead({
-  title: "ForcedSkin — 强制换肤，为任意网站应用你的主题配色",
+  title: "ForcedSkin — Force Reskin Any Website",
   meta: [
-    { name: "description", content: "ForcedSkin 是一款浏览器扩展 + 主题商城平台，为任意网站强制应用自定义主题配色，支持亮色 / 暗色自由切换，登录后跨设备同步。" },
-    { property: "og:title", content: "ForcedSkin — 强制换肤" },
-    { property: "og:description", content: "为任意网站应用你喜欢的主题配色。浏览器扩展 + 主题商城，支持亮色 / 暗色自由切换，登录后跨设备同步。" },
+    { name: "description", content: "ForcedSkin applies your chosen color theme to any website. Browser extension + theme store, with light/dark mode support and cross-device sync." },
+    { property: "og:title", content: "ForcedSkin — Force Reskin" },
+    { property: "og:description", content: "Apply your favorite theme to any website. Browser extension + theme store, freely switch between light and dark." },
     { property: "og:url", content: "https://forcedskin.com/" },
   ],
   link: [{ rel: "canonical", href: "https://forcedskin.com/" }],
-  script: [{
-    type: "application/ld+json",
-    innerHTML: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ForcedSkin",
-      "url": "https://forcedskin.com",
-      "description": "ForcedSkin 是一款浏览器扩展 + 主题商城平台，为任意网站强制应用自定义主题配色。",
-      "inLanguage": "zh-CN",
-    }),
-  }],
 });
 
 interface Theme {
@@ -86,27 +77,26 @@ onMounted(async () => {
       <div class="relative max-w-3xl mx-auto">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-500/10 text-primary-600 text-sm font-medium mb-6">
           <img src="/LOGO.webp" alt="" class="w-4 h-4 object-contain" />
-          浏览器主题扩展 · 强制换肤
+          {{ t('home.badge') }}
         </div>
         <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-5 leading-tight tracking-tight">
-          <span class="text-primary-500">强制！让每个网站</span><br />
-          都变成你喜欢的颜色
+          <span class="text-primary-500">{{ t('home.h1_1') }}</span><br />
+          {{ t('home.h1_2') }}
         </h1>
         <p class="text-muted text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">
-          <strong class="text-foreground">ForcedSkin</strong> 无需网站支持，强制覆盖任意页面的背景与文字颜色，
-          亮色 / 暗色自由切换，登录后跨设备同步。
+          {{ t('home.desc', { brand: 'ForcedSkin' }) }}
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <NuxtLink to="/themes"
             class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold text-base hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20">
-            🎨 浏览主题商城
+            {{ t('home.cta_themes') }}
           </NuxtLink>
           <NuxtLink to="/auth/login"
             class="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold text-base hover:bg-surface-muted transition-colors">
-            免费注册 / 登录
+            {{ t('home.cta_login') }}
           </NuxtLink>
         </div>
-        <p class="text-muted text-xs mt-5">支持 Chrome · Edge · Arc 等 Chromium 内核浏览器</p>
+        <p class="text-muted text-xs mt-5">{{ t('home.browser_note') }}</p>
       </div>
     </section>
 
@@ -116,12 +106,12 @@ onMounted(async () => {
         <!-- 标题行 -->
         <div class="flex items-end justify-between mb-10">
           <div>
-            <h2 class="text-2xl md:text-3xl font-bold text-foreground">热门主题</h2>
-            <p class="text-muted text-sm mt-1">精选亮色与暗色方案，预览后一键收藏应用</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-foreground">{{ t('home.popular.title') }}</h2>
+            <p class="text-muted text-sm mt-1">{{ t('home.popular.subtitle') }}</p>
           </div>
           <NuxtLink to="/themes"
             class="hidden sm:inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors">
-            查看全部主题
+            {{ t('home.popular.view_all') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -147,13 +137,13 @@ onMounted(async () => {
         </div>
 
         <!-- 空状态 -->
-        <div v-else class="text-center py-12 text-muted">暂无主题数据</div>
+        <div v-else class="text-center py-12 text-muted">{{ t('home.popular.empty') }}</div>
 
         <!-- 查看更多（移动端） -->
         <div class="mt-8 text-center sm:hidden">
           <NuxtLink to="/themes"
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-surface-muted transition-colors">
-            查看全部主题
+            {{ t('home.popular.view_all') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -166,10 +156,8 @@ onMounted(async () => {
     <section class="py-20 px-4 bg-surface-muted/30 border-b border-border">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-10">
-          <h2 class="text-2xl md:text-3xl font-bold text-foreground">已精细适配的网站</h2>
-          <p class="text-muted text-sm mt-2">
-            社区与官方针对以下网站提供了精细适配方案，换肤效果更自然
-          </p>
+          <h2 class="text-2xl md:text-3xl font-bold text-foreground">{{ t('home.adapted.title') }}</h2>
+          <p class="text-muted text-sm mt-2">{{ t('home.adapted.subtitle') }}</p>
         </div>
 
         <!-- 加载中 -->
@@ -209,19 +197,19 @@ onMounted(async () => {
         <!-- 空状态 -->
         <div v-else class="text-center py-16">
           <div class="text-4xl mb-3">🔌</div>
-          <p class="text-muted text-sm">暂无已适配网站，欢迎提交适配器</p>
+          <p class="text-muted text-sm">{{ t('home.adapted.empty_title') }}</p>
           <NuxtLink to="/adapters"
             class="mt-4 inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors">
-            前往提交 →
+            {{ t('home.adapted.go_submit') }}
           </NuxtLink>
         </div>
 
         <!-- 提交入口 -->
         <div class="mt-8 text-center">
-          <p class="text-muted text-sm mb-3">没有找到你常用的网站？</p>
+          <p class="text-muted text-sm mb-3">{{ t('home.adapted.no_site') }}</p>
           <NuxtLink to="/adapters"
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-surface-muted transition-colors">
-            🔌 提交新的网站适配器
+            {{ t('home.adapted.submit_btn') }}
           </NuxtLink>
         </div>
       </div>
@@ -230,16 +218,16 @@ onMounted(async () => {
     <!-- ══════ CTA ═══════════════════════════════════════════════ -->
     <section class="py-20 px-4 bg-primary-500/5 border-t border-border">
       <div class="max-w-2xl mx-auto text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4">立即开始使用 ForcedSkin</h2>
-        <p class="text-muted mb-8">免费注册，收藏你喜欢的主题，安装扩展后登录即可同步</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4">{{ t('home.cta.title') }}</h2>
+        <p class="text-muted mb-8">{{ t('home.cta.desc') }}</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
           <NuxtLink to="/auth/login"
             class="px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
-            免费注册 / 登录
+            {{ t('home.cta.btn_login') }}
           </NuxtLink>
           <NuxtLink to="/themes"
             class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
-            浏览主题商城
+            {{ t('home.cta.btn_themes') }}
           </NuxtLink>
         </div>
       </div>

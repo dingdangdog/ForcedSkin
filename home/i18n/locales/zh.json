@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "home": "首页",
+    "themes": "主题",
+    "adapters": "适配器",
+    "login": "登录",
+    "account": "账号",
+    "admin": "管理",
+    "logout": "退出"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "themes": "主题商城",
+    "adapters": "适配器",
+    "privacy": "隐私政策",
+    "terms": "用户协议",
+    "contact": "联系我们"
+  },
+  "home": {
+    "badge": "浏览器主题扩展 · 强制换肤",
+    "h1_1": "强制！让每个网站都变成",
+    "h1_2": "你喜欢的颜色",
+    "desc": "{brand} 无需网站支持，强制覆盖任意页面的背景与文字颜色，亮色 / 暗色自由切换，登录后跨设备同步。",
+    "cta_themes": "🎨 浏览主题商城",
+    "cta_login": "免费注册 / 登录",
+    "browser_note": "支持 Chrome · Edge · Arc 等 Chromium 内核浏览器",
+    "popular": {
+      "title": "热门主题",
+      "subtitle": "精选亮色与暗色方案，预览后一键收藏应用",
+      "view_all": "查看全部主题",
+      "empty": "暂无主题数据"
+    },
+    "adapted": {
+      "title": "已精细适配的网站",
+      "subtitle": "社区与官方针对以下网站提供了精细适配方案，换肤效果更自然",
+      "empty_title": "暂无已适配网站",
+      "empty_desc": "欢迎提交适配器",
+      "go_submit": "前往提交 →",
+      "no_site": "没有找到你常用的网站？",
+      "submit_btn": "🔌 提交新的网站适配器"
+    },
+    "cta": {
+      "title": "立即开始使用 ForcedSkin",
+      "desc": "免费注册，收藏你喜欢的主题，安装扩展后登录即可同步",
+      "btn_login": "免费注册 / 登录",
+      "btn_themes": "浏览主题商城"
+    }
+  },
+  "themes": {
+    "title": "主题",
+    "subtitle": "选择你喜欢的配色，登录后可同步到扩展",
+    "all": "全部",
+    "light": "亮色",
+    "dark": "暗色",
+    "need_login": "请先登录",
+    "need_login_select": "请先登录后选择主题",
+    "favorited": "已收藏 {name}",
+    "unfavorited": "已取消收藏",
+    "set_as": "已将 {name} 设为{mode}主题",
+    "mode_light": "亮色",
+    "mode_dark": "暗色"
+  },
+  "adapters": {
+    "title": "网站适配器",
+    "subtitle": "社区维护的精细适配方案，让换肤效果更自然",
+    "submit_btn": "提交适配器",
+    "modal_title": "提交新适配器",
+    "no_adapters": "暂无适配器",
+    "login_to_submit": "请先登录后再提交",
+    "field_name": "适配器标识",
+    "field_name_ph": "如 bilibili（英文小写）",
+    "field_display": "显示名称",
+    "field_display_ph": "如 哔哩哔哩",
+    "field_domain": "网站域名",
+    "field_domain_ph": "如 bilibili.com,www.bilibili.com",
+    "field_desc": "简介",
+    "field_code": "适配器代码（JS）",
+    "cancel": "取消",
+    "submit": "提交审核",
+    "submitting": "提交中…",
+    "submit_ok": "已提交，等待审核",
+    "submit_fail": "提交失败"
+  },
+  "account": {
+    "title": "我的账号",
+    "logout": "退出登录",
+    "light_theme": "亮色主题",
+    "dark_theme": "暗色主题",
+    "favorites": "收藏的主题",
+    "no_favorites": "暂无收藏",
+    "change": "更换",
+    "remove": "移除",
+    "default": "默认"
+  },
+  "auth": {
+    "title": "欢迎回来",
+    "subtitle": "使用以下账号登录 ForcedSkin",
+    "github": "使用 GitHub 登录",
+    "google": "使用 Google 登录",
+    "loading": "跳转中…",
+    "agree_prefix": "登录即表示你同意我们的",
+    "terms": "用户协议",
+    "and": "和",
+    "privacy": "隐私政策",
+    "back": "← 返回 ForcedSkin 首页",
+    "dev_title": "仅开发环境可见 · 测试通过后删除",
+    "dev_user": "以「测试用户」登录",
+    "dev_admin": "以「测试管理员」登录",
+    "error": {
+      "OAuthSignin": "OAuth 登录失败，请重试",
+      "OAuthCallback": "OAuth 回调出错，请重试",
+      "OAuthCreateAccount": "账号创建失败，请重试",
+      "OAuthAccountNotLinked": "该邮箱已通过其他方式登录，请使用原方式",
+      "Callback": "登录回调出错",
+      "Default": "登录失败，请重试"
+    }
+  },
+  "card": {
+    "light_badge": "亮色",
+    "dark_badge": "暗色",
+    "selected": "已选",
+    "favorite": "收藏",
+    "unfavorite": "取消收藏",
+    "mock_btn": "按钮",
+    "mock_secondary": "次要"
+  },
+  "common": {
+    "loading": "加载中…",
+    "no_data": "暂无数据",
+    "view_more": "浏览更多"
+  }
+}

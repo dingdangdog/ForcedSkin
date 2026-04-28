@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "home": "Home",
+    "themes": "Themes",
+    "adapters": "Adapters",
+    "login": "Login",
+    "account": "Account",
+    "admin": "Admin",
+    "logout": "Sign out"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "themes": "Theme Store",
+    "adapters": "Adapters",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact"
+  },
+  "home": {
+    "badge": "Browser Theme Extension · Force Reskin",
+    "h1_1": "Force every website into",
+    "h1_2": "your favorite colors",
+    "desc": "{brand} applies your chosen theme to any website — no website support required. Switch freely between light and dark modes, sync across devices after login.",
+    "cta_themes": "🎨 Browse Themes",
+    "cta_login": "Register / Login",
+    "browser_note": "Supports Chrome · Edge · Arc and other Chromium browsers",
+    "popular": {
+      "title": "Popular Themes",
+      "subtitle": "Curated light and dark palettes — preview and collect in one click",
+      "view_all": "View all themes",
+      "empty": "No theme data yet"
+    },
+    "adapted": {
+      "title": "Precisely Adapted Sites",
+      "subtitle": "These sites have fine-tuned adapters from community and official team for a more natural look",
+      "empty_title": "No adapted sites yet",
+      "empty_desc": "Submit one to get started",
+      "go_submit": "Submit →",
+      "no_site": "Don't see your site?",
+      "submit_btn": "🔌 Submit New Site Adapter"
+    },
+    "cta": {
+      "title": "Start Using ForcedSkin Today",
+      "desc": "Sign up for free, collect your favorite themes, and install the extension to sync across devices",
+      "btn_login": "Register / Login",
+      "btn_themes": "Browse Theme Store"
+    }
+  },
+  "themes": {
+    "title": "Themes",
+    "subtitle": "Pick your favorite palette — log in to sync it to the extension",
+    "all": "All",
+    "light": "Light",
+    "dark": "Dark",
+    "need_login": "Please log in first",
+    "need_login_select": "Log in to select a theme",
+    "favorited": "Added: {name}",
+    "unfavorited": "Removed from favorites",
+    "set_as": "Set {name} as {mode} theme",
+    "mode_light": "light",
+    "mode_dark": "dark"
+  },
+  "adapters": {
+    "title": "Site Adapters",
+    "subtitle": "Community-maintained fine-tuned adapters for popular websites",
+    "submit_btn": "Submit Adapter",
+    "modal_title": "Submit New Adapter",
+    "no_adapters": "No adapters yet",
+    "login_to_submit": "Log in to submit an adapter",
+    "field_name": "Adapter ID",
+    "field_name_ph": "e.g. bilibili",
+    "field_display": "Display Name",
+    "field_display_ph": "e.g. Bilibili",
+    "field_domain": "Site Domain(s)",
+    "field_domain_ph": "e.g. bilibili.com,www.bilibili.com",
+    "field_desc": "Description",
+    "field_code": "Adapter Code (JS)",
+    "cancel": "Cancel",
+    "submit": "Submit for Review",
+    "submitting": "Submitting…",
+    "submit_ok": "Submitted, pending review",
+    "submit_fail": "Submission failed"
+  },
+  "account": {
+    "title": "My Account",
+    "logout": "Sign out",
+    "light_theme": "Light Theme",
+    "dark_theme": "Dark Theme",
+    "favorites": "Favorite Themes",
+    "no_favorites": "No favorites yet",
+    "change": "Change",
+    "remove": "Remove",
+    "default": "Default"
+  },
+  "auth": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in with your account to continue",
+    "github": "Continue with GitHub",
+    "google": "Continue with Google",
+    "loading": "Redirecting…",
+    "agree_prefix": "By signing in, you agree to our",
+    "terms": "Terms of Service",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "back": "← Back to ForcedSkin",
+    "dev_title": "Dev Only · Delete After Testing",
+    "dev_user": "Sign in as Test User",
+    "dev_admin": "Sign in as Test Admin",
+    "error": {
+      "OAuthSignin": "OAuth sign-in failed, please try again",
+      "OAuthCallback": "OAuth callback error, please try again",
+      "OAuthCreateAccount": "Failed to create account, please try again",
+      "OAuthAccountNotLinked": "This email is already linked to a different provider",
+      "Callback": "Callback error",
+      "Default": "Sign in failed, please try again"
+    }
+  },
+  "card": {
+    "light_badge": "Light",
+    "dark_badge": "Dark",
+    "selected": "Active",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite",
+    "mock_btn": "Button",
+    "mock_secondary": "Alt"
+  },
+  "common": {
+    "loading": "Loading…",
+    "no_data": "No data",
+    "view_more": "Browse more"
+  }
+}
