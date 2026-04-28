@@ -179,6 +179,9 @@
     if (!tag) return true;
     if (["IMG", "PICTURE", "VIDEO", "CANVAS", "IFRAME"].includes(tag)) return true;
     if (el.closest("video, picture, canvas, iframe")) return true;
+    // 内置网站适配：跳过标记了 data-gts-ignore 的区块（含其所有子元素）
+    // 用途：主题预览卡片、调色板展示区等，防止插件主题覆盖掉原本的展示色
+    if (el.hasAttribute("data-gts-ignore") || el.closest("[data-gts-ignore]")) return true;
     if (computed.backgroundImage && computed.backgroundImage !== "none") return true;
     if (computed.maskImage && computed.maskImage !== "none") return true;
     if (computed.webkitMaskImage && computed.webkitMaskImage !== "none") return true;

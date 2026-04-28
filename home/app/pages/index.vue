@@ -51,14 +51,6 @@ const darkThemes = ref<Theme[]>([]);
 const adapters = ref<Adapter[]>([]);
 const loading = ref(true);
 
-// 解析颜色 JSON
-function parseColors(theme: Theme): Record<string, any> | null {
-  if (!theme.colors) return null;
-  try {
-    return typeof theme.colors === "string" ? JSON.parse(theme.colors) : theme.colors;
-  } catch { return null; }
-}
-
 // 获取适配器的主域名（用于展示图标）
 function getMainDomain(siteDomain: string): string {
   const domains = siteDomain.split(",").map(d => d.trim()).filter(Boolean);
@@ -69,21 +61,6 @@ function getFaviconUrl(siteDomain: string): string {
   const domain = getMainDomain(siteDomain);
   if (!domain) return "";
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
-}
-
-// 颜色预览：从 colors 里取出代表性的几个色块
-function getSwatches(colors: Record<string, any> | null): string[] {
-  if (!colors) return [];
-  const p = colors.primary;
-  const primary500 = typeof p === "object" ? (p?.["500"] || "") : (p || "");
-  const primary300 = typeof p === "object" ? (p?.["300"] || "") : "";
-  return [
-    colors.background,
-    colors.surface,
-    primary500,
-    primary300,
-    colors.foreground,
-  ].filter(Boolean);
 }
 
 onMounted(async () => {
@@ -153,76 +130,24 @@ onMounted(async () => {
 
         <!-- 加载骨架 -->
         <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div v-for="i in 4" :key="i" class="rounded-2xl bg-surface-muted animate-pulse h-44" />
+          <div v-for="i in 4" :key="i" class="rounded-2xl bg-surface-muted animate-pulse h-52" />
         </div>
 
-        <!-- 主题卡片 2×2 -->
-        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <template v-for="theme in [...lightThemes, ...darkThemes]" :key="theme.id">
-            <div class="rounded-2xl border border-border overflow-hidden group hover:border-primary-400 transition-all duration-200 hover:shadow-md hover:shadow-primary-500/10">
-
-              <!-- 色块预览区 -->
-              <div
-                class="h-28 relative overflow-hidden"
-                :style="{ backgroundColor: parseColors(theme)?.background || '#F0F0F0' }"
-              >
-                <!-- 模拟页面布局 -->
-                <div class="absolute inset-3 rounded-lg opacity-80"
-                  :style="{ backgroundColor: parseColors(theme)?.surface || '#E8E8E8' }">
-                  <div class="absolute top-2 left-2 right-2 flex gap-1.5">
-                    <div class="h-1.5 rounded-full flex-1"
-                      :style="{ backgroundColor: parseColors(theme)?.muted || '#999', opacity: 0.5 }" />
-                    <div class="h-1.5 rounded-full w-8"
-                      :style="{ backgroundColor: parseColors(theme)?.muted || '#999', opacity: 0.3 }" />
-                  </div>
-                  <div class="absolute bottom-2 left-2 right-2 flex gap-1">
-                    <div class="h-2 rounded-sm flex-1"
-                      :style="{ backgroundColor: parseColors(theme)?.foreground || '#333', opacity: 0.15 }" />
-                    <div class="h-2 rounded-sm w-10"
-                      :style="{ backgroundColor: parseColors(theme)?.foreground || '#333', opacity: 0.1 }" />
-                  </div>
-                </div>
-                <!-- 色卡条 -->
-                <div class="absolute bottom-0 left-0 right-0 h-4 flex">
-                  <div v-for="(swatch, i) in getSwatches(parseColors(theme))" :key="i"
-                    class="flex-1" :style="{ backgroundColor: swatch }" />
-                </div>
-                <!-- 模式徽章 -->
-                <span
-                  class="absolute top-2 right-2 text-xs px-1.5 py-0.5 rounded-md font-medium"
-                  :style="{
-                    backgroundColor: parseColors(theme)?.surface || '#eee',
-                    color: parseColors(theme)?.muted || '#666',
-                    border: `1px solid ${parseColors(theme)?.border || '#ccc'}`,
-                  }"
-                >
-                  {{ theme.mode === 'light' ? '☀️ 亮色' : '🌙 暗色' }}
-                </span>
-              </div>
-
-              <!-- 信息区 -->
-              <div class="p-3.5 bg-surface">
-                <div class="font-semibold text-foreground text-sm mb-0.5">{{ theme.displayName }}</div>
-                <div class="text-muted text-xs line-clamp-1 mb-3">{{ theme.description || '点击预览效果' }}</div>
-                <NuxtLink
-                  to="/themes"
-                  class="inline-flex items-center gap-1 text-xs font-medium text-primary-600 hover:text-primary-500 transition-colors"
-                >
-                  预览 / 收藏
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </NuxtLink>
-              </div>
-            </div>
-          </template>
-
-          <!-- 空状态 -->
-          <div v-if="!loading && lightThemes.length === 0 && darkThemes.length === 0"
-            class="col-span-4 text-center py-12 text-muted">
-            暂无主题数据
-          </div>
+        <!-- 主题卡片 — 复用 ThemeCard 组件，与主题页保持一致 -->
+        <div v-else-if="lightThemes.length > 0 || darkThemes.length > 0"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <NuxtLink
+            v-for="theme in [...lightThemes, ...darkThemes]"
+            :key="theme.id"
+            to="/themes"
+            class="block"
+          >
+            <ThemeCard :theme="theme" :show-actions="false" />
+          </NuxtLink>
         </div>
+
+        <!-- 空状态 -->
+        <div v-else class="text-center py-12 text-muted">暂无主题数据</div>
 
         <!-- 查看更多（移动端） -->
         <div class="mt-8 text-center sm:hidden">

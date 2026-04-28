@@ -57,8 +57,8 @@ const primary = computed(() => {
     :class="selected ? 'border-primary-500 shadow-lg shadow-primary-500/20' : 'border-border hover:border-primary-400'"
     @click="emit('select', theme)"
   >
-    <!-- 主题预览区 -->
-    <div class="p-4 space-y-2" :style="{ backgroundColor: bg }">
+    <!-- 主题预览区：data-gts-ignore 告知插件跳过此区域，避免主题色覆盖预览效果 -->
+    <div class="p-4 space-y-2" :style="{ backgroundColor: bg }" data-gts-ignore>
       <!-- 模拟导航栏 -->
       <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg" :style="{ backgroundColor: surface, borderColor: border, border: '1px solid' }">
         <div class="w-2 h-2 rounded-full" :style="{ backgroundColor: primary }"></div>
@@ -105,10 +105,10 @@ const primary = computed(() => {
       </div>
     </div>
 
-    <!-- 操作按钮（hover 展示） -->
+    <!-- 操作按钮（始终显示） -->
     <div
       v-if="showActions"
-      class="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+      class="absolute top-2 right-2 flex gap-1.5"
     >
       <button
         class="w-7 h-7 flex items-center justify-center rounded-full shadow-md transition-colors"

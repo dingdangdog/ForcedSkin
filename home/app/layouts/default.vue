@@ -104,7 +104,7 @@ onMounted(() => {
     </main>
 
     <!-- 公共页脚 -->
-    <footer v-if="route.path !== '/'" class="border-t border-border py-8 px-4">
+    <footer class="border-t border-border py-8 px-4">
       <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted">
         <div class="flex items-center gap-1.5">
           <img src="/LOGO.webp" alt="ForcedSkin" class="w-4 h-4 object-contain rounded" />
