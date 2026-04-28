@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.6.0
- * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.6.0",
-  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 /**
@@ -386,6 +386,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Theme: 'Theme',
+  UserThemes: 'UserThemes',
+  SiteAdapter: 'SiteAdapter',
+  UserAdapters: 'UserAdapters',
   AIProvider: 'AIProvider',
   Config: 'Config'
 } as const
@@ -403,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "theme" | "aIProvider" | "config"
+    modelProps: "user" | "theme" | "userThemes" | "siteAdapter" | "userAdapters" | "aIProvider" | "config"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -552,6 +555,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ThemeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ThemeCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserThemes: {
+      payload: Prisma.$UserThemesPayload<ExtArgs>
+      fields: Prisma.UserThemesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserThemesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserThemesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>
+        }
+        findFirst: {
+          args: Prisma.UserThemesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserThemesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>
+        }
+        findMany: {
+          args: Prisma.UserThemesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>[]
+        }
+        create: {
+          args: Prisma.UserThemesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>
+        }
+        createMany: {
+          args: Prisma.UserThemesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserThemesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>[]
+        }
+        delete: {
+          args: Prisma.UserThemesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>
+        }
+        update: {
+          args: Prisma.UserThemesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserThemesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserThemesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserThemesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserThemesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserThemesPayload>
+        }
+        aggregate: {
+          args: Prisma.UserThemesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserThemes>
+        }
+        groupBy: {
+          args: Prisma.UserThemesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserThemesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserThemesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserThemesCountAggregateOutputType> | number
+        }
+      }
+    }
+    SiteAdapter: {
+      payload: Prisma.$SiteAdapterPayload<ExtArgs>
+      fields: Prisma.SiteAdapterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SiteAdapterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SiteAdapterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>
+        }
+        findFirst: {
+          args: Prisma.SiteAdapterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SiteAdapterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>
+        }
+        findMany: {
+          args: Prisma.SiteAdapterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>[]
+        }
+        create: {
+          args: Prisma.SiteAdapterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>
+        }
+        createMany: {
+          args: Prisma.SiteAdapterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SiteAdapterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>[]
+        }
+        delete: {
+          args: Prisma.SiteAdapterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>
+        }
+        update: {
+          args: Prisma.SiteAdapterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>
+        }
+        deleteMany: {
+          args: Prisma.SiteAdapterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SiteAdapterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SiteAdapterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>[]
+        }
+        upsert: {
+          args: Prisma.SiteAdapterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteAdapterPayload>
+        }
+        aggregate: {
+          args: Prisma.SiteAdapterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSiteAdapter>
+        }
+        groupBy: {
+          args: Prisma.SiteAdapterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SiteAdapterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SiteAdapterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SiteAdapterCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserAdapters: {
+      payload: Prisma.$UserAdaptersPayload<ExtArgs>
+      fields: Prisma.UserAdaptersFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserAdaptersFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserAdaptersFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>
+        }
+        findFirst: {
+          args: Prisma.UserAdaptersFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserAdaptersFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>
+        }
+        findMany: {
+          args: Prisma.UserAdaptersFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>[]
+        }
+        create: {
+          args: Prisma.UserAdaptersCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>
+        }
+        createMany: {
+          args: Prisma.UserAdaptersCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserAdaptersCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>[]
+        }
+        delete: {
+          args: Prisma.UserAdaptersDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>
+        }
+        update: {
+          args: Prisma.UserAdaptersUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserAdaptersDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserAdaptersUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserAdaptersUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserAdaptersUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAdaptersPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAdaptersAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserAdapters>
+        }
+        groupBy: {
+          args: Prisma.UserAdaptersGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAdaptersGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserAdaptersCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAdaptersCountAggregateOutputType> | number
         }
       }
     }
@@ -744,16 +969,17 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  password: 'password',
+  githubId: 'githubId',
+  googleId: 'googleId',
   name: 'name',
   email: 'email',
+  avatar: 'avatar',
   roles: 'roles',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  lastLoginAt: 'lastLoginAt',
   lightTheme: 'lightTheme',
-  darkTheme: 'darkTheme'
+  darkTheme: 'darkTheme',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastLoginAt: 'lastLoginAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -763,6 +989,7 @@ export const ThemeScalarFieldEnum = {
   id: 'id',
   name: 'name',
   displayName: 'displayName',
+  description: 'description',
   mode: 'mode',
   colors: 'colors',
   isActive: 'isActive',
@@ -773,6 +1000,43 @@ export const ThemeScalarFieldEnum = {
 } as const
 
 export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
+
+
+export const UserThemesScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  themeId: 'themeId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserThemesScalarFieldEnum = (typeof UserThemesScalarFieldEnum)[keyof typeof UserThemesScalarFieldEnum]
+
+
+export const SiteAdapterScalarFieldEnum = {
+  id: 'id',
+  submitterId: 'submitterId',
+  name: 'name',
+  displayName: 'displayName',
+  description: 'description',
+  siteDomain: 'siteDomain',
+  code: 'code',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SiteAdapterScalarFieldEnum = (typeof SiteAdapterScalarFieldEnum)[keyof typeof SiteAdapterScalarFieldEnum]
+
+
+export const UserAdaptersScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  adapterId: 'adapterId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserAdaptersScalarFieldEnum = (typeof UserAdaptersScalarFieldEnum)[keyof typeof UserAdaptersScalarFieldEnum]
 
 
 export const AIProviderScalarFieldEnum = {
@@ -995,10 +1259,28 @@ export type PrismaClientOptions = ({
    * ```
    */
   comments?: runtime.SqlCommenterPlugin[]
+  /**
+   * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+   * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+   * performance for applications that execute a large number of unique queries, while a smaller
+   * cache size can reduce memory usage.
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   queryPlanCacheMaxSize: 100,
+   * })
+   * ```
+   */
+  queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   theme?: Prisma.ThemeOmit
+  userThemes?: Prisma.UserThemesOmit
+  siteAdapter?: Prisma.SiteAdapterOmit
+  userAdapters?: Prisma.UserAdaptersOmit
   aIProvider?: Prisma.AIProviderOmit
   config?: Prisma.ConfigOmit
 }

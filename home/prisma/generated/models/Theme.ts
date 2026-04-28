@@ -38,6 +38,7 @@ export type ThemeMinAggregateOutputType = {
   id: string | null
   name: string | null
   displayName: string | null
+  description: string | null
   mode: string | null
   colors: string | null
   isActive: boolean | null
@@ -51,6 +52,7 @@ export type ThemeMaxAggregateOutputType = {
   id: string | null
   name: string | null
   displayName: string | null
+  description: string | null
   mode: string | null
   colors: string | null
   isActive: boolean | null
@@ -64,6 +66,7 @@ export type ThemeCountAggregateOutputType = {
   id: number
   name: number
   displayName: number
+  description: number
   mode: number
   colors: number
   isActive: number
@@ -87,6 +90,7 @@ export type ThemeMinAggregateInputType = {
   id?: true
   name?: true
   displayName?: true
+  description?: true
   mode?: true
   colors?: true
   isActive?: true
@@ -100,6 +104,7 @@ export type ThemeMaxAggregateInputType = {
   id?: true
   name?: true
   displayName?: true
+  description?: true
   mode?: true
   colors?: true
   isActive?: true
@@ -113,6 +118,7 @@ export type ThemeCountAggregateInputType = {
   id?: true
   name?: true
   displayName?: true
+  description?: true
   mode?: true
   colors?: true
   isActive?: true
@@ -213,6 +219,7 @@ export type ThemeGroupByOutputType = {
   id: string
   name: string
   displayName: string
+  description: string
   mode: string
   colors: string
   isActive: boolean
@@ -249,6 +256,7 @@ export type ThemeWhereInput = {
   id?: Prisma.StringFilter<"Theme"> | string
   name?: Prisma.StringFilter<"Theme"> | string
   displayName?: Prisma.StringFilter<"Theme"> | string
+  description?: Prisma.StringFilter<"Theme"> | string
   mode?: Prisma.StringFilter<"Theme"> | string
   colors?: Prisma.StringFilter<"Theme"> | string
   isActive?: Prisma.BoolFilter<"Theme"> | boolean
@@ -262,6 +270,7 @@ export type ThemeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -278,6 +287,7 @@ export type ThemeWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ThemeWhereInput[]
   NOT?: Prisma.ThemeWhereInput | Prisma.ThemeWhereInput[]
   displayName?: Prisma.StringFilter<"Theme"> | string
+  description?: Prisma.StringFilter<"Theme"> | string
   mode?: Prisma.StringFilter<"Theme"> | string
   colors?: Prisma.StringFilter<"Theme"> | string
   isActive?: Prisma.BoolFilter<"Theme"> | boolean
@@ -291,6 +301,7 @@ export type ThemeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -312,6 +323,7 @@ export type ThemeScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   name?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   displayName?: Prisma.StringWithAggregatesFilter<"Theme"> | string
+  description?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   mode?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   colors?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Theme"> | boolean
@@ -325,6 +337,7 @@ export type ThemeCreateInput = {
   id?: string
   name: string
   displayName: string
+  description?: string
   mode: string
   colors: string
   isActive?: boolean
@@ -338,6 +351,7 @@ export type ThemeUncheckedCreateInput = {
   id?: string
   name: string
   displayName: string
+  description?: string
   mode: string
   colors: string
   isActive?: boolean
@@ -351,6 +365,7 @@ export type ThemeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -364,6 +379,7 @@ export type ThemeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -377,6 +393,7 @@ export type ThemeCreateManyInput = {
   id?: string
   name: string
   displayName: string
+  description?: string
   mode: string
   colors: string
   isActive?: boolean
@@ -390,6 +407,7 @@ export type ThemeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -403,6 +421,7 @@ export type ThemeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -416,6 +435,7 @@ export type ThemeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -433,6 +453,7 @@ export type ThemeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -446,6 +467,7 @@ export type ThemeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -477,6 +499,7 @@ export type ThemeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   name?: boolean
   displayName?: boolean
+  description?: boolean
   mode?: boolean
   colors?: boolean
   isActive?: boolean
@@ -490,6 +513,7 @@ export type ThemeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   name?: boolean
   displayName?: boolean
+  description?: boolean
   mode?: boolean
   colors?: boolean
   isActive?: boolean
@@ -503,6 +527,7 @@ export type ThemeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   name?: boolean
   displayName?: boolean
+  description?: boolean
   mode?: boolean
   colors?: boolean
   isActive?: boolean
@@ -516,6 +541,7 @@ export type ThemeSelectScalar = {
   id?: boolean
   name?: boolean
   displayName?: boolean
+  description?: boolean
   mode?: boolean
   colors?: boolean
   isActive?: boolean
@@ -525,16 +551,29 @@ export type ThemeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ThemeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "mode" | "colors" | "isActive" | "isDefault" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["theme"]>
+export type ThemeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "description" | "mode" | "colors" | "isActive" | "isDefault" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["theme"]>
 
 export type $ThemePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Theme"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    /**
+     * 主题标识（英文，如 dark-forest）
+     */
     name: string
+    /**
+     * 显示名称（如 深林暗色）
+     */
     displayName: string
+    description: string
+    /**
+     * 'light' | 'dark'
+     */
     mode: string
+    /**
+     * JSON，包含 background/foreground/surface 等色值
+     */
     colors: string
     isActive: boolean
     isDefault: boolean
@@ -967,6 +1006,7 @@ export interface ThemeFieldRefs {
   readonly id: Prisma.FieldRef<"Theme", 'String'>
   readonly name: Prisma.FieldRef<"Theme", 'String'>
   readonly displayName: Prisma.FieldRef<"Theme", 'String'>
+  readonly description: Prisma.FieldRef<"Theme", 'String'>
   readonly mode: Prisma.FieldRef<"Theme", 'String'>
   readonly colors: Prisma.FieldRef<"Theme", 'String'>
   readonly isActive: Prisma.FieldRef<"Theme", 'Boolean'>

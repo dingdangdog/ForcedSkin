@@ -53,6 +53,9 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Theme: 'Theme',
+  UserThemes: 'UserThemes',
+  SiteAdapter: 'SiteAdapter',
+  UserAdapters: 'UserAdapters',
   AIProvider: 'AIProvider',
   Config: 'Config'
 } as const
@@ -75,16 +78,17 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  password: 'password',
+  githubId: 'githubId',
+  googleId: 'googleId',
   name: 'name',
   email: 'email',
+  avatar: 'avatar',
   roles: 'roles',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  lastLoginAt: 'lastLoginAt',
   lightTheme: 'lightTheme',
-  darkTheme: 'darkTheme'
+  darkTheme: 'darkTheme',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastLoginAt: 'lastLoginAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -94,6 +98,7 @@ export const ThemeScalarFieldEnum = {
   id: 'id',
   name: 'name',
   displayName: 'displayName',
+  description: 'description',
   mode: 'mode',
   colors: 'colors',
   isActive: 'isActive',
@@ -104,6 +109,43 @@ export const ThemeScalarFieldEnum = {
 } as const
 
 export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
+
+
+export const UserThemesScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  themeId: 'themeId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserThemesScalarFieldEnum = (typeof UserThemesScalarFieldEnum)[keyof typeof UserThemesScalarFieldEnum]
+
+
+export const SiteAdapterScalarFieldEnum = {
+  id: 'id',
+  submitterId: 'submitterId',
+  name: 'name',
+  displayName: 'displayName',
+  description: 'description',
+  siteDomain: 'siteDomain',
+  code: 'code',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SiteAdapterScalarFieldEnum = (typeof SiteAdapterScalarFieldEnum)[keyof typeof SiteAdapterScalarFieldEnum]
+
+
+export const UserAdaptersScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  adapterId: 'adapterId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserAdaptersScalarFieldEnum = (typeof UserAdaptersScalarFieldEnum)[keyof typeof UserAdaptersScalarFieldEnum]
 
 
 export const AIProviderScalarFieldEnum = {

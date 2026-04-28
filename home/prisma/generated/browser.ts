@@ -19,8 +19,7 @@ export * as $Enums from './enums.js'
 export * from './enums.js';
 /**
  * Model User
- * 用户表
- * 用户表
+ * 用户表（OAuth only：GitHub / Google）
  */
 export type User = Prisma.UserModel
 /**
@@ -28,6 +27,21 @@ export type User = Prisma.UserModel
  * 主题表
  */
 export type Theme = Prisma.ThemeModel
+/**
+ * Model UserThemes
+ * 用户收藏主题
+ */
+export type UserThemes = Prisma.UserThemesModel
+/**
+ * Model SiteAdapter
+ * 网站适配器
+ */
+export type SiteAdapter = Prisma.SiteAdapterModel
+/**
+ * Model UserAdapters
+ * 用户已启用的适配器
+ */
+export type UserAdapters = Prisma.UserAdaptersModel
 /**
  * Model AIProvider
  * AI 服务商配置表

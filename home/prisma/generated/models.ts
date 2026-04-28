@@ -10,6 +10,9 @@
  */
 export type * from './models/User.js'
 export type * from './models/Theme.js'
+export type * from './models/UserThemes.js'
+export type * from './models/SiteAdapter.js'
+export type * from './models/UserAdapters.js'
 export type * from './models/AIProvider.js'
 export type * from './models/Config.js'
 export type * from './commonInputTypes.js'
