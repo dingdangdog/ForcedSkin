@@ -1,0 +1,135 @@
+// Prisma Schema for PostgreSQL matching database-schema.md
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// 用户表（OAuth only：GitHub / Google）
+model User {
+  id          String    @id @default(cuid()) @db.VarChar(36)
+  /// OAuth 关联
+  githubId    String?   @unique @db.VarChar(100)
+  googleId    String?   @unique @db.VarChar(100)
+  /// 基础信息
+  name        String    @default("User") @db.VarChar(100)
+  email       String?   @db.VarChar(255)
+  avatar      String?   @db.VarChar(500) /// OAuth 头像 URL
+  /// 权限：admin,user 逗号分隔
+  roles       String?   @db.VarChar(50)
+  /// 主题偏好
+  lightTheme  String?   @db.VarChar(50)
+  darkTheme   String?   @db.VarChar(50)
+  /// 时间
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+
+  @@index([email])
+  @@map("users")
+}
+
+/// 主题表
+model Theme {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  name        String   @unique @db.VarChar(50) /// 主题标识（英文，如 dark-forest）
+  displayName String   @db.VarChar(100) /// 显示名称（如 深林暗色）
+  description String   @default("") @db.VarChar(500)
+  mode        String   @db.VarChar(20) /// 'light' | 'dark'
+  colors      String   @db.Text /// JSON，包含 background/foreground/surface 等色值
+  isActive    Boolean  @default(true)
+  isDefault   Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([mode, isActive])
+  @@index([isDefault])
+  @@map("system_themes")
+}
+
+/// 用户收藏主题
+model UserThemes {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  userId    String   @db.VarChar(36)
+  themeId   String   @db.VarChar(36)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, themeId])
+  @@index([userId])
+  @@map("user_themes")
+}
+
+/// 网站适配器
+model SiteAdapter {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  submitterId String   @db.VarChar(36) /// 提交者用户 ID
+  name        String   @unique @db.VarChar(50) /// 适配器标识（英文）
+  displayName String   @db.VarChar(100) /// 显示名称
+  description String   @default("") @db.VarChar(500)
+  siteDomain  String   @db.VarChar(200) /// 支持的域名，逗号分隔
+  code        String   @db.Text /// 适配器 JS 代码
+  isActive    Boolean  @default(false) /// false=待审核, true=已上线
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isActive])
+  @@map("site_adapters")
+}
+
+/// 用户已启用的适配器
+model UserAdapters {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  userId    String   @db.VarChar(36)
+  adapterId String   @db.VarChar(36)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, adapterId])
+  @@index([userId])
+  @@map("user_adapters")
+}
+
+/// AI 服务商配置表
+model AIProvider {
+  id          String   @id @default(cuid()) @db.VarChar(36) /// 主键
+  name        String   @db.VarChar(100) /// 显示名称，如 "OpenAI GPT-4"、"DeepL Pro"
+  provider    String   @db.VarChar(50) /// 服务商标识，如 "openai", "deepseek", "gemini"
+  apiProtocol String   @db.VarChar(50) /// API 协议，如 "openai", "gemini", "claude"
+  apiKey      String?  @db.VarChar(500) /// API 密钥
+  apiEndpoint String?  @db.VarChar(500) /// API 端点（可选，某些服务商需自定义端点）
+  apiModel    String?  @db.VarChar(100) /// 模型编号，如 "gpt-4", "gemini-2.0-flash"
+  apiVersion  String?  @db.VarChar(100) /// API 版本，如 "2024-02-15"
+  temperature Float?   @default(0.3) /// 温度参数，如 0.3, 0.5, 1.0, 2.0
+  maxTokens   Int?     @default(3000) /// 最大令牌数，如 1000, 3000
+  timeout     Int      @default(30000) /// 超时时间（毫秒），默认 30 秒
+  extraConfig String?  @db.Text /// 额外配置（JSON 格式），服务商特定配置
+  isActive    Boolean  @default(true) /// 是否启用
+  createdAt   DateTime @default(now()) /// 创建时间
+  updatedAt   DateTime @updatedAt /// 更新时间
+
+  @@index([provider, isActive])
+  @@index([isActive])
+  @@map("system_ai_providers")
+}
+
+// 系统配置字典表 - 用于存储系统级配置（key-value 形式）- 灵活设计，随时增加不同字典、配置
+// 支持存储各种配置，如 R2、Google 广告、Google 分析、OAuth 等
+model Config {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  key         String   @unique @db.VarChar(100) // 配置键（约定式，代码中定义枚举）
+  value       String?  @db.Text // 配置值（可为空，表示未配置）
+  description String?  @db.VarChar(500) // 配置说明
+  category    String?  @db.VarChar(50) // 配置分类（如 "r2", "google", "oauth" 等）
+  isEncrypted Boolean  @default(false) // 是否加密存储（敏感信息如密钥等）
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+  @@index([category])
+  @@map("system_configs")
+}

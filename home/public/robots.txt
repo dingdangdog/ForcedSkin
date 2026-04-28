@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /account/
+Disallow: /account
+Disallow: /api/
+
+# 允许索引的主要页面
+# / — 首页
+# /themes — 主题商城
+# /adapters — 适配器
+# /privacy — 隐私政策
+# /terms — 用户协议
+
+Sitemap: https://forcedskin.com/sitemap.xml
