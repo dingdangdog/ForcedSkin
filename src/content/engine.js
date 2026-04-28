@@ -40,6 +40,7 @@
   const COLOR_PROBE = document.createElement("span");
   COLOR_PROBE.style.display = "none";
   let colorProbeMounted = false;
+  const COLOR_CACHE = new Map();
 
   function mountColorProbe() {
     if (colorProbeMounted) return;
@@ -49,6 +50,8 @@
 
   function parseCssColor(value) {
     if (!value || typeof value !== "string") return null;
+    const cached = COLOR_CACHE.get(value);
+    if (cached) return cached;
     mountColorProbe();
     COLOR_PROBE.style.color = "";
     COLOR_PROBE.style.color = value;
@@ -57,7 +60,9 @@
     if (!match) return null;
     const parts = match[1].split(",").map((s) => Number(s.trim()));
     if (parts.length < 3) return null;
-    return { r: parts[0], g: parts[1], b: parts[2], a: parts[3] ?? 1 };
+    const parsed = { r: parts[0], g: parts[1], b: parts[2], a: parts[3] ?? 1 };
+    COLOR_CACHE.set(value, parsed);
+    return parsed;
   }
 
   function luminance(color) {
@@ -66,14 +71,6 @@
       return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
     };
     return 0.2126 * toLinear(color.r) + 0.7152 * toLinear(color.g) + 0.0722 * toLinear(color.b);
-  }
-
-  function contrastRatio(fg, bg) {
-    const fgL = luminance(fg);
-    const bgL = luminance(bg);
-    const brighter = Math.max(fgL, bgL);
-    const darker = Math.min(fgL, bgL);
-    return (brighter + 0.05) / (darker + 0.05);
   }
 
   function normalizeWhitelistEntry(entry) {
@@ -121,17 +118,22 @@
         --line_light: var(--gts-border) !important;
       }
 
-      html, body {
-        background-color: var(--gts-bg) !important;
-        color: var(--gts-fg) !important;
+      html {
+        background-color: ${palette.background} !important;
+        background-image: none !important;
+        color: ${palette.foreground} !important;
       }
 
       body {
+        background-color: ${palette.background} !important;
+        background-image: none !important;
+        color: ${palette.foreground} !important;
         scrollbar-color: var(--gts-border) var(--gts-surface-muted);
       }
 
       [class*="skeleton"], [class*="placeholder"], [class*="loading"], [class*="shimmer"], [aria-busy="true"] {
         background-color: var(--gts-surface-muted) !important;
+        background-image: none !important;
         border-color: var(--gts-border) !important;
       }
 
@@ -140,6 +142,7 @@
       [class*="loading"]::before, [class*="loading"]::after,
       [class*="shimmer"]::before, [class*="shimmer"]::after {
         background-color: var(--gts-surface) !important;
+        background-image: none !important;
         border-color: var(--gts-border) !important;
       }
     `;
@@ -184,6 +187,7 @@
       if (marks.includes(MARK_BG)) {
         el.style.removeProperty("background-color");
         el.style.removeProperty("background-image");
+        el.style.removeProperty("background");
       }
       if (marks.includes(MARK_TEXT)) el.style.removeProperty("color");
       if (marks.includes(MARK_BORDER)) el.style.removeProperty("border-color");
@@ -215,50 +219,98 @@
     return result;
   }
 
-  function applyGlobalRewrite(palette) {
-    const roots = getAllRoots();
-    roots.forEach((root) => {
-      root.querySelectorAll("*").forEach((el) => {
-        if (!(el instanceof HTMLElement || el instanceof SVGElement)) return;
-        const computed = getComputedStyle(el);
-        if (shouldSkipElement(el, computed)) return;
+  function collectThemeCandidatesFromNode(node, bucket) {
+    if (!node) return;
+    if (node instanceof HTMLElement || node instanceof SVGElement) bucket.push(node);
+    if (node instanceof Element) node.querySelectorAll("*").forEach((el) => bucket.push(el));
+    if (node.shadowRoot) collectThemeCandidatesFromNode(node.shadowRoot, bucket);
+    if (node instanceof ShadowRoot) node.querySelectorAll("*").forEach((el) => bucket.push(el));
+  }
 
-        if (el instanceof HTMLElement) {
-          const bg = parseCssColor(computed.backgroundColor);
-          if (bg && bg.a >= 0.97) {
-            const targetBg = luminance(bg) < 0.2 ? palette.surfaceMuted : palette.surface;
-            el.style.setProperty("background-color", targetBg, "important");
-            markApplied(el, MARK_BG);
-          }
+  function resolveDocumentBgColor() {
+    const body = document.body;
+    if (body) {
+      const parsed = parseCssColor(getComputedStyle(body).backgroundColor);
+      if (parsed) return parsed;
+    }
+    const root = document.documentElement;
+    if (root) {
+      const parsed = parseCssColor(getComputedStyle(root).backgroundColor);
+      if (parsed) return parsed;
+    }
+    return parseCssColor("rgb(255, 255, 255)");
+  }
 
-          const borderWidth = parseFloat(computed.borderTopWidth || "0");
-          if (!Number.isNaN(borderWidth) && borderWidth > 0) {
-            el.style.setProperty("border-color", palette.border, "important");
-            markApplied(el, MARK_BORDER);
-          }
+  function contrastRatio(fg, bg) {
+    const fgL = luminance(fg);
+    const bgL = luminance(bg);
+    const brighter = Math.max(fgL, bgL);
+    const darker = Math.min(fgL, bgL);
+    return (brighter + 0.05) / (darker + 0.05);
+  }
 
-          const fg = parseCssColor(computed.color);
-          const bgForText = parseCssColor(computed.backgroundColor) || parseCssColor(getComputedStyle(document.body).backgroundColor);
-          if (fg && bgForText && contrastRatio(fg, bgForText) < 5) {
-            const target = el.matches("a, [role='link']") ? palette.primary500 : palette.foreground;
-            el.style.setProperty("color", target, "important");
-            markApplied(el, MARK_TEXT);
-          }
+  function applyGlobalRewriteToElements(elements, palette, fallbackBg) {
+    const textFallbackBg = fallbackBg || resolveDocumentBgColor();
+    const rootEls = new Set([document.documentElement, document.body].filter(Boolean));
+    elements.forEach((el) => {
+      if (!(el instanceof HTMLElement || el instanceof SVGElement)) return;
+      if (rootEls.has(el)) return;
+      const computed = getComputedStyle(el);
+      if (shouldSkipElement(el, computed)) return;
+
+      if (el instanceof HTMLElement) {
+        let themedBgColor = null;
+        const bg = parseCssColor(computed.backgroundColor);
+        if (bg && bg.a >= 0.97) {
+          const targetBg = luminance(bg) < 0.2 ? palette.surfaceMuted : palette.surface;
+          el.style.setProperty("background-color", targetBg, "important");
+          markApplied(el, MARK_BG);
+          themedBgColor = parseCssColor(targetBg);
         }
 
-        if (el instanceof SVGElement || el.tagName === "path" || el.tagName === "rect" || el.tagName === "circle") {
-          const fill = el.getAttribute("fill");
-          const stroke = el.getAttribute("stroke");
-          if (fill && fill !== "none" && !fill.startsWith("url(")) el.style.setProperty("fill", "currentColor", "important");
-          if (stroke && stroke !== "none" && !stroke.startsWith("url(")) el.style.setProperty("stroke", "currentColor", "important");
-          const host = el.closest("a,button,span,div");
-          if (host instanceof HTMLElement) {
-            host.style.setProperty("color", palette.foreground, "important");
-            markApplied(host, MARK_TEXT);
-          }
+        const borderWidth = parseFloat(computed.borderTopWidth || "0");
+        if (!Number.isNaN(borderWidth) && borderWidth > 0) {
+          el.style.setProperty("border-color", palette.border, "important");
+          markApplied(el, MARK_BORDER);
         }
-      });
+
+        const fg = parseCssColor(computed.color);
+        const rawBg = parseCssColor(computed.backgroundColor);
+        const bgForText = themedBgColor || (rawBg && rawBg.a > 0.05 ? rawBg : textFallbackBg);
+        if (fg && bgForText && contrastRatio(fg, bgForText) < 5) {
+          const target = el.matches("a, [role='link']") ? palette.primary500 : palette.foreground;
+          el.style.setProperty("color", target, "important");
+          markApplied(el, MARK_TEXT);
+        }
+      }
+
+      if (el instanceof SVGElement || el.tagName === "path" || el.tagName === "rect" || el.tagName === "circle") {
+        const fill = el.getAttribute("fill");
+        const stroke = el.getAttribute("stroke");
+        if (fill && fill !== "none" && !fill.startsWith("url(")) el.style.setProperty("fill", "currentColor", "important");
+        if (stroke && stroke !== "none" && !stroke.startsWith("url(")) el.style.setProperty("stroke", "currentColor", "important");
+        const host = el.closest("a,button,span,div");
+        if (host instanceof HTMLElement) {
+          host.style.setProperty("color", palette.foreground, "important");
+          markApplied(host, MARK_TEXT);
+        }
+      }
     });
+  }
+
+  function applyGlobalRewrite(palette, targetNodes) {
+    if (Array.isArray(targetNodes) && targetNodes.length > 0) {
+      const elements = [];
+      targetNodes.forEach((node) => collectThemeCandidatesFromNode(node, elements));
+      applyGlobalRewriteToElements(elements, palette);
+      return;
+    }
+    const roots = getAllRoots();
+    const allElements = [];
+    roots.forEach((root) => {
+      root.querySelectorAll("*").forEach((el) => allElements.push(el));
+    });
+    applyGlobalRewriteToElements(allElements, palette);
   }
 
   function getStyleElement() {
@@ -285,6 +337,9 @@
       this.activeWhitelist = [];
       this.activeObserver = null;
       this.rerenderTimer = null;
+      this.adapterRefreshTimer = null;
+      this.pendingNodes = [];
+      this.isApplying = false;
     }
 
     registerAdapter(adapter) {
@@ -306,26 +361,78 @@
       document.documentElement.removeAttribute("data-gts-mode");
     }
 
+    forceRootStyles(palette) {
+      const htmlEl = document.documentElement;
+      const bodyEl = document.body;
+      [htmlEl, bodyEl].forEach((el) => {
+        if (!el) return;
+        el.style.setProperty("background-color", palette.background, "important");
+        el.style.setProperty("background-image", "none", "important");
+        el.style.setProperty("color", palette.foreground, "important");
+        markApplied(el, MARK_BG);
+        markApplied(el, MARK_TEXT);
+      });
+    }
+
     run(mode) {
       const palette = PALETTE[mode];
       if (!palette) return;
       const adapters = this.resolveAdapters();
+      this.isApplying = true;
       applyRootCss(mode);
       clearAppliedStyles();
+      this.forceRootStyles(palette);
       applyGlobalRewrite(palette);
       adapters.forEach((adapter) => {
         if (typeof adapter.apply === "function") adapter.apply({ queryAllDeep, palette, markApplied });
       });
+      this.isApplying = false;
+    }
+
+    runIncremental(mode, changedNodes) {
+      const palette = PALETTE[mode];
+      if (!palette) return;
+      if (!Array.isArray(changedNodes) || changedNodes.length === 0) return;
+      this.isApplying = true;
+      this.forceRootStyles(palette);
+      applyGlobalRewrite(palette, changedNodes);
+      this.isApplying = false;
+    }
+
+    refreshAdaptersDebounced() {
+      if (this.adapterRefreshTimer) window.clearTimeout(this.adapterRefreshTimer);
+      this.adapterRefreshTimer = window.setTimeout(() => {
+        if (this.activeMode === MODES.OFF) return;
+        const palette = PALETTE[this.activeMode];
+        if (!palette) return;
+        const adapters = this.resolveAdapters();
+        this.isApplying = true;
+        adapters.forEach((adapter) => {
+          if (typeof adapter.apply === "function") adapter.apply({ queryAllDeep, palette, markApplied });
+        });
+        this.isApplying = false;
+      }, 420);
     }
 
     setupObserver() {
       if (this.activeObserver) this.activeObserver.disconnect();
-      this.activeObserver = new MutationObserver(() => {
+      this.activeObserver = new MutationObserver((mutations) => {
         if (this.activeMode === MODES.OFF) return;
+        if (this.isApplying) return;
+        mutations.forEach((m) => {
+          m.addedNodes.forEach((node) => {
+            if (node instanceof Element || node instanceof ShadowRoot) this.pendingNodes.push(node);
+          });
+        });
+        if (this.pendingNodes.length === 0) return;
         if (this.rerenderTimer) window.clearTimeout(this.rerenderTimer);
-        this.rerenderTimer = window.setTimeout(() => this.run(this.activeMode), 120);
+        this.rerenderTimer = window.setTimeout(() => {
+          const nodes = this.pendingNodes.splice(0, this.pendingNodes.length);
+          this.runIncremental(this.activeMode, nodes);
+          this.refreshAdaptersDebounced();
+        }, 90);
       });
-      this.activeObserver.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
+      this.activeObserver.observe(document.documentElement, { childList: true, subtree: true });
     }
 
     applySettings(mode, whitelist) {
