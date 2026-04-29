@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -31,6 +31,6 @@ export default defineEventHandler(async (event) => {
     return success(theme);
   } catch (err: any) {
     if (err.code === "P2002") return error("主题标识已存在");
-    return error("创建失败", err.message);
+    return serverError("创建失败", err, "admin/themes.post");
   }
 });

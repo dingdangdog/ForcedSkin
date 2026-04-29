@@ -1,6 +1,6 @@
 import { getServerSession } from "#auth";
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, serverError } from "~~/server/utils/result";
 import { getAuthPayload } from "~~/server/utils/jwt";
 
 /**
@@ -64,6 +64,6 @@ export default defineEventHandler(async (event) => {
       dark: darkTheme ? { id: darkTheme.id, name: darkTheme.name, displayName: darkTheme.displayName, colors: parseColors(darkTheme) } : null,
     });
   } catch (err: any) {
-    return error("获取设置失败", err.message);
+    return serverError("获取设置失败", err, "pub/extension-settings.get");
   }
 });

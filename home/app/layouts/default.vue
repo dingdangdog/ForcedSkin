@@ -121,6 +121,8 @@ onMounted(() => {
         <nav class="flex gap-3 flex-wrap justify-center">
           <NuxtLink to="/themes" class="hover:text-foreground">{{ t('footer.themes') }}</NuxtLink>
           <NuxtLink to="/adapters" class="hover:text-foreground">{{ t('footer.adapters') }}</NuxtLink>
+          <NuxtLink to="/guide/theme" class="hover:text-foreground">{{ t('footer.guide_theme') }}</NuxtLink>
+          <NuxtLink to="/guide/adapter" class="hover:text-foreground">{{ t('footer.guide_adapter') }}</NuxtLink>
           <NuxtLink to="/privacy" class="hover:text-foreground">{{ t('footer.privacy') }}</NuxtLink>
           <NuxtLink to="/terms" class="hover:text-foreground">{{ t('footer.terms') }}</NuxtLink>
           <a href="mailto:hello@forcedskin.com" class="hover:text-foreground">{{ t('footer.contact') }}</a>

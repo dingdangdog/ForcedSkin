@@ -184,6 +184,8 @@ import {
   SunIcon,
   MoonIcon,
   ArrowRightOnRectangleIcon,
+  SwatchIcon,
+  PuzzlePieceIcon,
 } from "@heroicons/vue/24/outline";
 
 const route = useRoute();
@@ -203,6 +205,8 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: "控制台", to: "/admin", icon: Squares2X2Icon },
+  { label: "主题管理", to: "/admin/themes", icon: SwatchIcon },
+  { label: "适配器管理", to: "/admin/adapters", icon: PuzzlePieceIcon },
   { label: "设置", to: "/admin/settings", icon: Cog8ToothIcon },
 ];
 

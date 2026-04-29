@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 import { getUserId } from "~~/server/utils/jwt";
 
 export default defineEventHandler(async (event) => {
@@ -19,6 +19,6 @@ export default defineEventHandler(async (event) => {
     await prisma.user.update({ where: { id: userId }, data: updateData });
     return success({ lightTheme: updateData.lightTheme, darkTheme: updateData.darkTheme });
   } catch (err: any) {
-    return error("更新失败", err.message);
+    return serverError("更新失败", err, "entry/user/themes/select.patch");
   }
 });

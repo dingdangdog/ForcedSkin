@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 import { getUserId } from "~~/server/utils/jwt";
 
 export default defineEventHandler(async (event) => {
@@ -22,6 +22,6 @@ export default defineEventHandler(async (event) => {
 
     return success(themes);
   } catch (err: any) {
-    return error("获取收藏主题失败", err.message);
+    return serverError("获取收藏主题失败", err, "entry/user/themes.get");
   }
 });

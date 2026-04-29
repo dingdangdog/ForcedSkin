@@ -101,6 +101,7 @@ export const ThemeScalarFieldEnum = {
   description: 'description',
   mode: 'mode',
   colors: 'colors',
+  submitterId: 'submitterId',
   isActive: 'isActive',
   isDefault: 'isDefault',
   sortOrder: 'sortOrder',

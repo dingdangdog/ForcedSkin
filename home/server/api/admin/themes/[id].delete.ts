@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
@@ -10,6 +10,6 @@ export default defineEventHandler(async (event) => {
     return success(null);
   } catch (err: any) {
     if (err.code === "P2025") return error("主题不存在");
-    return error("删除失败", err.message);
+    return serverError("删除失败", err, "admin/themes/[id].delete");
   }
 });

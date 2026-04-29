@@ -31,7 +31,7 @@ const showSubmit = ref(false);
 const submitting = ref(false);
 const toast = ref("");
 
-const form = reactive({ name: "", displayName: "", description: "", siteDomain: "", code: "" });
+const form = reactive({ displayName: "", description: "", siteDomain: "", code: "" });
 const formErrors = ref<Record<string, string>>({});
 
 const isLoggedIn = computed(() => status.value === "authenticated");
@@ -48,8 +48,6 @@ async function load() {
 
 function validateForm() {
   formErrors.value = {};
-  if (!form.name) formErrors.value.name = t("adapters.field_name");
-  else if (!/^[a-z0-9-]+$/.test(form.name)) formErrors.value.name = "a-z 0-9 -";
   if (!form.displayName) formErrors.value.displayName = t("adapters.field_display");
   if (!form.siteDomain) formErrors.value.siteDomain = t("adapters.field_domain");
   if (!form.code) formErrors.value.code = t("adapters.field_code");
@@ -63,7 +61,7 @@ async function submitAdapter() {
     await doApi.post("api/entry/adapters", { ...form });
     showToast(t("adapters.submit_ok"));
     showSubmit.value = false;
-    Object.assign(form, { name: "", displayName: "", description: "", siteDomain: "", code: "" });
+    Object.assign(form, { displayName: "", description: "", siteDomain: "", code: "" });
   } catch { showToast(t("adapters.submit_fail")); } finally { submitting.value = false; }
 }
 
@@ -77,14 +75,19 @@ onMounted(load);
         <h1 class="text-3xl font-bold text-foreground">{{ t('adapters.title') }}</h1>
         <p class="text-muted mt-1 text-sm">{{ t('adapters.subtitle') }}</p>
       </div>
-      <button v-if="isLoggedIn" @click="showSubmit = true"
-        class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors">
-        + {{ t('adapters.submit_btn') }}
-      </button>
-      <NuxtLink v-else to="/auth/login"
-        class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
-        {{ t('adapters.login_to_submit') }}
-      </NuxtLink>
+      <div class="flex items-center gap-3">
+        <NuxtLink to="/guide/adapter" class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
+          📖 {{ t('adapters.guide_link') }}
+        </NuxtLink>
+        <button v-if="isLoggedIn" @click="showSubmit = true"
+          class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors">
+          + {{ t('adapters.submit_btn') }}
+        </button>
+        <NuxtLink v-else to="/auth/login"
+          class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
+          {{ t('adapters.login_to_submit') }}
+        </NuxtLink>
+      </div>
     </div>
 
     <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -117,24 +120,20 @@ onMounted(load);
     <div v-if="showSubmit" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
       @click.self="showSubmit = false">
       <div class="bg-background border border-border rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
-        <h2 class="font-bold text-foreground text-lg mb-4">{{ t('adapters.modal_title') }}</h2>
+      <div class="flex items-start justify-between mb-4">
+          <h2 class="font-bold text-foreground text-lg">{{ t('adapters.modal_title') }}</h2>
+          <NuxtLink to="/guide/adapter" target="_blank" class="text-xs text-primary-500 hover:underline shrink-0 mt-1">
+            📖 {{ t('adapters.guide_link') }}
+          </NuxtLink>
+        </div>
         <div class="space-y-4">
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs text-muted mb-1 block">{{ t('adapters.field_name') }} *</label>
-              <input v-model="form.name" :placeholder="t('adapters.field_name_ph')"
-                class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none"
-                :class="formErrors.name ? 'border-red-400' : 'border-border focus:border-primary-400'" />
-              <p v-if="formErrors.name" class="text-red-500 text-xs mt-0.5">{{ formErrors.name }}</p>
-            </div>
-            <div>
+          <div>
               <label class="text-xs text-muted mb-1 block">{{ t('adapters.field_display') }} *</label>
               <input v-model="form.displayName" :placeholder="t('adapters.field_display_ph')"
                 class="w-full px-3 py-2 rounded-lg border text-sm bg-surface text-foreground outline-none"
                 :class="formErrors.displayName ? 'border-red-400' : 'border-border focus:border-primary-400'" />
               <p v-if="formErrors.displayName" class="text-red-500 text-xs mt-0.5">{{ formErrors.displayName }}</p>
             </div>
-          </div>
           <div>
             <label class="text-xs text-muted mb-1 block">{{ t('adapters.field_domain') }} *</label>
             <input v-model="form.siteDomain" :placeholder="t('adapters.field_domain_ph')"

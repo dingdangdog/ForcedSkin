@@ -41,6 +41,7 @@ export type ThemeMinAggregateOutputType = {
   description: string | null
   mode: string | null
   colors: string | null
+  submitterId: string | null
   isActive: boolean | null
   isDefault: boolean | null
   sortOrder: number | null
@@ -55,6 +56,7 @@ export type ThemeMaxAggregateOutputType = {
   description: string | null
   mode: string | null
   colors: string | null
+  submitterId: string | null
   isActive: boolean | null
   isDefault: boolean | null
   sortOrder: number | null
@@ -69,6 +71,7 @@ export type ThemeCountAggregateOutputType = {
   description: number
   mode: number
   colors: number
+  submitterId: number
   isActive: number
   isDefault: number
   sortOrder: number
@@ -93,6 +96,7 @@ export type ThemeMinAggregateInputType = {
   description?: true
   mode?: true
   colors?: true
+  submitterId?: true
   isActive?: true
   isDefault?: true
   sortOrder?: true
@@ -107,6 +111,7 @@ export type ThemeMaxAggregateInputType = {
   description?: true
   mode?: true
   colors?: true
+  submitterId?: true
   isActive?: true
   isDefault?: true
   sortOrder?: true
@@ -121,6 +126,7 @@ export type ThemeCountAggregateInputType = {
   description?: true
   mode?: true
   colors?: true
+  submitterId?: true
   isActive?: true
   isDefault?: true
   sortOrder?: true
@@ -222,6 +228,7 @@ export type ThemeGroupByOutputType = {
   description: string
   mode: string
   colors: string
+  submitterId: string | null
   isActive: boolean
   isDefault: boolean
   sortOrder: number
@@ -259,6 +266,7 @@ export type ThemeWhereInput = {
   description?: Prisma.StringFilter<"Theme"> | string
   mode?: Prisma.StringFilter<"Theme"> | string
   colors?: Prisma.StringFilter<"Theme"> | string
+  submitterId?: Prisma.StringNullableFilter<"Theme"> | string | null
   isActive?: Prisma.BoolFilter<"Theme"> | boolean
   isDefault?: Prisma.BoolFilter<"Theme"> | boolean
   sortOrder?: Prisma.IntFilter<"Theme"> | number
@@ -273,6 +281,7 @@ export type ThemeOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
+  submitterId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -290,6 +299,7 @@ export type ThemeWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"Theme"> | string
   mode?: Prisma.StringFilter<"Theme"> | string
   colors?: Prisma.StringFilter<"Theme"> | string
+  submitterId?: Prisma.StringNullableFilter<"Theme"> | string | null
   isActive?: Prisma.BoolFilter<"Theme"> | boolean
   isDefault?: Prisma.BoolFilter<"Theme"> | boolean
   sortOrder?: Prisma.IntFilter<"Theme"> | number
@@ -304,6 +314,7 @@ export type ThemeOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
+  submitterId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -326,6 +337,7 @@ export type ThemeScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   mode?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   colors?: Prisma.StringWithAggregatesFilter<"Theme"> | string
+  submitterId?: Prisma.StringNullableWithAggregatesFilter<"Theme"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Theme"> | boolean
   isDefault?: Prisma.BoolWithAggregatesFilter<"Theme"> | boolean
   sortOrder?: Prisma.IntWithAggregatesFilter<"Theme"> | number
@@ -340,6 +352,7 @@ export type ThemeCreateInput = {
   description?: string
   mode: string
   colors: string
+  submitterId?: string | null
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: number
@@ -354,6 +367,7 @@ export type ThemeUncheckedCreateInput = {
   description?: string
   mode: string
   colors: string
+  submitterId?: string | null
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: number
@@ -368,6 +382,7 @@ export type ThemeUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -382,6 +397,7 @@ export type ThemeUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -396,6 +412,7 @@ export type ThemeCreateManyInput = {
   description?: string
   mode: string
   colors: string
+  submitterId?: string | null
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: number
@@ -410,6 +427,7 @@ export type ThemeUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -424,6 +442,7 @@ export type ThemeUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   colors?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -438,6 +457,7 @@ export type ThemeCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
+  submitterId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -456,6 +476,7 @@ export type ThemeMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
+  submitterId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -470,6 +491,7 @@ export type ThemeMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   colors?: Prisma.SortOrder
+  submitterId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -502,6 +524,7 @@ export type ThemeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   description?: boolean
   mode?: boolean
   colors?: boolean
+  submitterId?: boolean
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: boolean
@@ -516,6 +539,7 @@ export type ThemeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   description?: boolean
   mode?: boolean
   colors?: boolean
+  submitterId?: boolean
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: boolean
@@ -530,6 +554,7 @@ export type ThemeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   description?: boolean
   mode?: boolean
   colors?: boolean
+  submitterId?: boolean
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: boolean
@@ -544,6 +569,7 @@ export type ThemeSelectScalar = {
   description?: boolean
   mode?: boolean
   colors?: boolean
+  submitterId?: boolean
   isActive?: boolean
   isDefault?: boolean
   sortOrder?: boolean
@@ -551,7 +577,7 @@ export type ThemeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ThemeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "description" | "mode" | "colors" | "isActive" | "isDefault" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["theme"]>
+export type ThemeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "description" | "mode" | "colors" | "submitterId" | "isActive" | "isDefault" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["theme"]>
 
 export type $ThemePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Theme"
@@ -575,6 +601,10 @@ export type $ThemePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
      * JSON，包含 background/foreground/surface 等色值
      */
     colors: string
+    /**
+     * 社区提交者用户 ID；null = 官方/管理员创建
+     */
+    submitterId: string | null
     isActive: boolean
     isDefault: boolean
     sortOrder: number
@@ -1009,6 +1039,7 @@ export interface ThemeFieldRefs {
   readonly description: Prisma.FieldRef<"Theme", 'String'>
   readonly mode: Prisma.FieldRef<"Theme", 'String'>
   readonly colors: Prisma.FieldRef<"Theme", 'String'>
+  readonly submitterId: Prisma.FieldRef<"Theme", 'String'>
   readonly isActive: Prisma.FieldRef<"Theme", 'Boolean'>
   readonly isDefault: Prisma.FieldRef<"Theme", 'Boolean'>
   readonly sortOrder: Prisma.FieldRef<"Theme", 'Int'>

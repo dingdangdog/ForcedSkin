@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, serverError } from "~~/server/utils/result";
 
 /**
  * 返回系统默认的亮色和暗色主题，供 theme store 初始化使用。
@@ -20,6 +20,6 @@ export default defineEventHandler(async (event) => {
 
     return success({ light, dark });
   } catch (err: any) {
-    return error("获取默认主题失败", err.message);
+    return serverError("获取默认主题失败", err, "themes/defaults.get");
   }
 });

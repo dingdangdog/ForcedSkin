@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
@@ -31,6 +31,6 @@ export default defineEventHandler(async (event) => {
     const updated = await prisma.theme.update({ where: { id }, data: updateData });
     return success(updated);
   } catch (err: any) {
-    return error("更新失败", err.message);
+    return serverError("更新失败", err, "admin/themes/[id].put");
   }
 });

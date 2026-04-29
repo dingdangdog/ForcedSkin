@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -24,6 +24,6 @@ export default defineEventHandler(async (event) => {
 
     return success({ total, page, pageSize, pages: Math.ceil(total / pageSize), list });
   } catch (err: any) {
-    return error("获取适配器列表失败", err.message);
+    return serverError("获取适配器列表失败", err, "admin/adapters.get");
   }
 });

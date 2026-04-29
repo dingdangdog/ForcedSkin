@@ -22,35 +22,46 @@ export default defineEventHandler(async (event) => {
   if (!userId) return error("未登录");
 
   const body = await readBody(event);
-  const { displayName, description, siteDomain, code } = body || {};
+  const { displayName, description, mode, colors } = body || {};
 
-  if (!displayName || !siteDomain || !code) return error("缺少必要字段");
+  if (!displayName || !mode || !colors) return error("缺少必要字段");
+  if (!["light", "dark"].includes(mode)) return error("mode 只允许 light 或 dark");
 
-  const baseSlug = slugify(displayName) || "adapter";
+  let colorsStr: string;
+  try {
+    colorsStr = typeof colors === "string" ? colors : JSON.stringify(colors);
+    JSON.parse(colorsStr);
+  } catch {
+    return error("colors 必须是合法的 JSON 格式");
+  }
+
+  const baseSlug = slugify(displayName) || mode;
   let name = `${baseSlug}-${randomSuffix()}`;
 
   for (let i = 0; i < 5; i++) {
-    const exists = await prisma.siteAdapter.findUnique({ where: { name } });
+    const exists = await prisma.theme.findUnique({ where: { name } });
     if (!exists) break;
     name = `${baseSlug}-${randomSuffix()}`;
   }
 
   try {
-    const adapter = await prisma.siteAdapter.create({
+    const theme = await prisma.theme.create({
       data: {
-        submitterId: userId,
         name,
         displayName,
         description: description || "",
-        siteDomain,
-        code,
+        mode,
+        colors: colorsStr,
+        submitterId: userId,
         isActive: false,
+        isDefault: false,
+        sortOrder: 0,
       },
     });
 
-    return success(adapter);
+    return success(theme);
   } catch (err: any) {
-    if (err.code === "P2002") return error("适配器标识冲突，请重新提交");
-    return serverError("提交失败", err, "entry/adapters.post");
+    if (err.code === "P2002") return error("主题标识冲突，请重新提交");
+    return serverError("提交失败", err, "entry/themes.post");
   }
 });

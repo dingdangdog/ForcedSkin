@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 import { getUserId } from "~~/server/utils/jwt";
 
 export default defineEventHandler(async (event) => {
@@ -26,6 +26,6 @@ export default defineEventHandler(async (event) => {
       return success({ favorited: true });
     }
   } catch (err: any) {
-    return error("操作失败", err.message);
+    return serverError("操作失败", err, "entry/user/themes/favorite.post");
   }
 });

@@ -1,5 +1,5 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error } from "~~/server/utils/result";
+import { success, error, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
@@ -21,6 +21,6 @@ export default defineEventHandler(async (event) => {
     return success(updated);
   } catch (err: any) {
     if (err.code === "P2025") return error("适配器不存在");
-    return error("更新失败", err.message);
+    return serverError("更新失败", err, "admin/adapters/[id].put");
   }
 });

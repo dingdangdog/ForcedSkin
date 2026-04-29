@@ -37,6 +37,20 @@ export const error = (message: string, data: any = null) => {
   };
 };
 
+/**
+ * 服务端内部错误：将原始异常打印到服务端日志，
+ * 客户端只收到通用提示消息，不暴露任何内部细节。
+ */
+export const serverError = (message: string, err?: unknown, context?: string) => {
+  const tag = context ? `[${context}]` : "[API]";
+  console.error(`${tag} ${message}`, err ?? "");
+  return {
+    c: 500,
+    m: message,
+    d: null,
+  };
+};
+
 export const result = (c: number, m: string, d: any) => {
   return {
     c: c,

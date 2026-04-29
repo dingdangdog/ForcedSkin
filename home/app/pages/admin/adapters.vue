@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { doApi } from "~/utils/api";
 
-definePageMeta({ layout: "default", middleware: "admin" });
+definePageMeta({ layout: "admin", middleware: "admin" });
 useHead({ title: "适配器管理 — ForcedSkin 后台", meta: [{ name: "robots", content: "noindex, nofollow" }] });
 
 interface Adapter { id: string; name: string; displayName: string; description: string; siteDomain: string; code: string; isActive: boolean; sortOrder: number; createdAt: string; }

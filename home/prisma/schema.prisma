@@ -41,6 +41,7 @@ model Theme {
   description String   @default("") @db.VarChar(500)
   mode        String   @db.VarChar(20) /// 'light' | 'dark'
   colors      String   @db.Text /// JSON，包含 background/foreground/surface 等色值
+  submitterId String?  @db.VarChar(36) /// 社区提交者用户 ID；null = 官方/管理员创建
   isActive    Boolean  @default(true)
   isDefault   Boolean  @default(false)
   sortOrder   Int      @default(0)
@@ -49,6 +50,7 @@ model Theme {
 
   @@index([mode, isActive])
   @@index([isDefault])
+  @@index([submitterId])
   @@map("system_themes")
 }
 
