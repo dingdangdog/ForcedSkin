@@ -113,7 +113,16 @@
     "no_favorites": "暂无收藏",
     "change": "更换",
     "remove": "移除",
-    "default": "默认"
+    "default": "默认",
+    "synced_heading": "已保存的亮色 / 暗色方案",
+    "synced_intro": "这是当前账号选用的主题（会同步到已登录的浏览器扩展）。以下为展示名称；技术标识保存在服务端，仅供系统匹配配色。",
+    "slug_hint": "技术标识：{slug}",
+    "my_submissions": "我提交的主题",
+    "submission_review": "待审核 · 通过后会在主题商城中公开展示",
+    "submission_live": "已上线 · 对所有用户可见",
+    "submissions_intro": "以下为你通过主题商城提交的主题投稿；上架后他人也可在商城中收藏使用。上架前仅能在此查看配色预览。",
+    "favorite_section_light": "收藏的亮色主题",
+    "favorite_section_dark": "收藏的暗色主题"
   },
   "auth": {
     "title": "欢迎回来",

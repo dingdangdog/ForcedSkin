@@ -113,7 +113,16 @@
     "no_favorites": "No favorites yet",
     "change": "Change",
     "remove": "Remove",
-    "default": "Default"
+    "default": "Default",
+    "synced_heading": "Saved light / dark themes",
+    "synced_intro": "These are the themes tied to your account (synced to the signed-in browser extension). Names below are labels; technical slugs stay on the server for matching palettes.",
+    "slug_hint": "Technical slug: {slug}",
+    "my_submissions": "Themes you submitted",
+    "submission_review": "Pending review — goes public once approved",
+    "submission_live": "Live — visible to everyone",
+    "submissions_intro": "Themes you submitted via the theme gallery appear here; after approval others can browse and favorite them.",
+    "favorite_section_light": "Saved light themes",
+    "favorite_section_dark": "Saved dark themes"
   },
   "auth": {
     "title": "Welcome Back",

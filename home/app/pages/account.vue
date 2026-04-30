@@ -16,10 +16,12 @@ const authUser = computed(() => authData.value?.user as { name?: string; email?:
 const { t } = useI18n();
 
 interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; }
+interface Submission extends Theme { isActive: boolean; }
 
-const userStore = useUserStore();
 const themeStore = useThemeStore();
 const favorites = ref<Theme[]>([]);
+const submissions = ref<Submission[]>([]);
+const catalogThemes = ref<Theme[]>([]);
 const selectedLight = ref("");
 const selectedDark = ref("");
 const loading = ref(true);
@@ -31,17 +33,31 @@ const showToast = (msg: string) => {
   setTimeout(() => { toast.value = ""; }, 2500);
 };
 
-const lightFavorites = computed(() => favorites.value.filter((t) => t.mode === "light"));
-const darkFavorites = computed(() => favorites.value.filter((t) => t.mode === "dark"));
+const lightFavorites = computed(() => favorites.value.filter((th) => th.mode === "light"));
+const darkFavorites = computed(() => favorites.value.filter((th) => th.mode === "dark"));
+
+function themeLookupBySlug(slug: string): Theme | Submission | undefined {
+  if (!slug) return undefined;
+  return submissions.value.find((x) => x.name === slug)
+    || favorites.value.find((x) => x.name === slug)
+    || catalogThemes.value.find((x) => x.name === slug);
+}
+
+const selectedLightMeta = computed(() => themeLookupBySlug(selectedLight.value));
+const selectedDarkMeta = computed(() => themeLookupBySlug(selectedDark.value));
 
 async function load() {
   loading.value = true;
   try {
-    const [favRes, userInfo] = await Promise.all([
+    const [favRes, userInfo, catalogRes, subRes] = await Promise.all([
       doApi.get<Theme[]>("api/entry/user/themes"),
       doApi.get<any>("api/entry/user/info"),
+      doApi.get<{ list?: Theme[] }>("api/themes", { pageSize: 100 }).catch(() => ({ list: [] })),
+      doApi.get<Submission[]>("api/entry/user/themes/submissions").catch(() => []),
     ]);
     favorites.value = favRes || [];
+    submissions.value = subRes || [];
+    catalogThemes.value = catalogRes?.list || [];
     selectedLight.value = userInfo?.lightTheme || "";
     selectedDark.value = userInfo?.darkTheme || "";
   } finally {
@@ -98,36 +114,71 @@ onMounted(load);
       </button>
     </div>
 
-    <!-- 当前选择的主题 -->
-    <section class="mb-8 p-5 rounded-2xl border border-border bg-surface-muted/40">
-      <h2 class="font-semibold text-foreground mb-3">{{ t('account.title') }}</h2>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-base">☀️</div>
-          <div>
-            <p class="text-xs text-muted">{{ t('account.light_theme') }}</p>
-            <p class="text-sm font-medium text-foreground">{{ selectedLight || t('account.default') }}</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-slate-700 flex items-center justify-center text-base">🌙</div>
-          <div>
-            <p class="text-xs text-muted">{{ t('account.dark_theme') }}</p>
-            <p class="text-sm font-medium text-foreground">{{ selectedDark || t('account.default') }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <div v-if="loading" class="grid grid-cols-2 md:grid-cols-3 gap-4">
       <div v-for="i in 6" :key="i" class="h-48 rounded-2xl bg-surface-muted animate-pulse"></div>
     </div>
 
     <template v-else>
+      <!-- 我提交的主题 -->
+      <section v-if="submissions.length" class="mb-10 rounded-2xl border-2 border-primary-400/50 bg-primary-500/[0.04] p-5">
+        <h2 class="font-semibold text-foreground text-lg mb-1">{{ t('account.my_submissions') }}</h2>
+        <p class="text-muted text-sm mb-4 leading-relaxed">{{ t('account.submissions_intro') }}</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div v-for="th in submissions" :key="th.id" class="relative">
+            <p
+              class="absolute top-14 left-2 z-10 text-[11px] font-medium px-2 py-0.5 rounded-md shadow max-w-[calc(100%-1rem)]"
+              :class="th.isActive
+                ? 'bg-green-600/95 text-white'
+                : 'bg-amber-500/95 text-white'"
+            >
+              {{ th.isActive ? t('account.submission_live') : t('account.submission_review') }}
+            </p>
+            <ThemeCard
+              :theme="th"
+              :as-preview="!th.isActive"
+              :selected="Boolean(th.isActive && ((th.mode === 'light' && selectedLight === th.name) || (th.mode === 'dark' && selectedDark === th.name)))"
+              @select="selectTheme"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- 当前账号选用的亮 / 暗主题（同步扩展）-->
+      <section class="mb-8 p-5 rounded-2xl border border-border bg-surface-muted/40">
+        <h2 class="font-semibold text-foreground mb-1">{{ t('account.synced_heading') }}</h2>
+        <p class="text-muted text-sm mb-4 leading-relaxed">{{ t('account.synced_intro') }}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-start gap-3 rounded-xl border border-border bg-surface p-4">
+            <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-base shrink-0">☀️</div>
+            <div class="min-w-0">
+              <p class="text-xs text-muted">{{ t('account.light_theme') }}</p>
+              <p class="text-sm font-medium text-foreground mt-0.5">
+                {{ selectedLightMeta?.displayName || (!selectedLight ? t('account.default') : selectedLight) }}
+              </p>
+              <p v-if="selectedLight" class="text-[11px] text-muted mt-1 font-mono truncate" :title="selectedLight">
+                {{ t('account.slug_hint', { slug: selectedLight }) }}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 rounded-xl border border-border bg-surface p-4">
+            <div class="w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-base shrink-0">🌙</div>
+            <div class="min-w-0">
+              <p class="text-xs text-muted">{{ t('account.dark_theme') }}</p>
+              <p class="text-sm font-medium text-foreground mt-0.5">
+                {{ selectedDarkMeta?.displayName || (!selectedDark ? t('account.default') : selectedDark) }}
+              </p>
+              <p v-if="selectedDark" class="text-[11px] text-muted mt-1 font-mono truncate" :title="selectedDark">
+                {{ t('account.slug_hint', { slug: selectedDark }) }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 亮色收藏 -->
       <section class="mb-8">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="font-semibold text-foreground">☀️ {{ t('account.light_theme') }}</h2>
+          <h2 class="font-semibold text-foreground">☀️ {{ t('account.favorite_section_light') }}</h2>
           <NuxtLink to="/themes?mode=light" class="text-primary-500 text-sm hover:underline">{{ t('common.view_more') }}</NuxtLink>
         </div>
         <div v-if="lightFavorites.length === 0"
@@ -145,7 +196,7 @@ onMounted(load);
       <!-- 暗色收藏 -->
       <section>
         <div class="flex items-center justify-between mb-4">
-          <h2 class="font-semibold text-foreground">🌙 {{ t('account.dark_theme') }}</h2>
+          <h2 class="font-semibold text-foreground">🌙 {{ t('account.favorite_section_dark') }}</h2>
           <NuxtLink to="/themes?mode=dark" class="text-primary-500 text-sm hover:underline">{{ t('common.view_more') }}</NuxtLink>
         </div>
         <div v-if="darkFavorites.length === 0"
