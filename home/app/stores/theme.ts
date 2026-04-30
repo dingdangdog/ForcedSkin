@@ -705,6 +705,43 @@ export const useThemeStore = defineStore("theme", () => {
     toggleMode();
   };
 
+  /**
+   * 用主题商城/API 返回的一条主题记录更新本地亮或暗色槽位（含完整 colors），
+   * 使页眉等依赖 CSS 变量的区域与选中主题一致。
+   */
+  const applySitePaletteFromThemeRow = (row: {
+    id?: string;
+    name: string;
+    displayName?: string;
+    mode: string;
+    colors?: string | ThemeColors;
+  }) => {
+    if (row.mode !== "light" && row.mode !== "dark") {
+      return;
+    }
+    const entry = transformThemeResponse(row);
+    if (!entry?.colors) {
+      return;
+    }
+    const slot = row.mode as "light" | "dark";
+    themes.value[slot] = entry;
+    themeNames.value[slot] = entry.name;
+  };
+
+  /** 站内预览：写入对应槽位并把界面亮/暗模式切到该主题的 mode */
+  const previewThemeOnSite = (row: {
+    id?: string;
+    name: string;
+    displayName?: string;
+    mode: string;
+    colors?: string | ThemeColors;
+  }) => {
+    applySitePaletteFromThemeRow(row);
+    if (row.mode === "light" || row.mode === "dark") {
+      setMode(row.mode);
+    }
+  };
+
   watch(
     () => ({ ...themeNames.value }),
     (newNames) => {
@@ -741,5 +778,7 @@ export const useThemeStore = defineStore("theme", () => {
     toggleMode,
     cycleMode,
     toggleTheme,
+    applySitePaletteFromThemeRow,
+    previewThemeOnSite,
   };
 });

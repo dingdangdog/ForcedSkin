@@ -18,6 +18,7 @@ const { t } = useI18n();
 interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; }
 
 const userStore = useUserStore();
+const themeStore = useThemeStore();
 const favorites = ref<Theme[]>([]);
 const selectedLight = ref("");
 const selectedDark = ref("");
@@ -57,6 +58,7 @@ async function removeFavorite(theme: Theme) {
 }
 
 async function selectTheme(theme: Theme) {
+  themeStore.previewThemeOnSite(theme);
   saving.value = true;
   try {
     const payload = theme.mode === "light" ? { lightTheme: theme.name } : { darkTheme: theme.name };

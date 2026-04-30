@@ -32,6 +32,7 @@ useHead({
 interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; isDefault: boolean; }
 
 const { status } = useAuth();
+const themeStore = useThemeStore();
 const themes = ref<Theme[]>([]);
 const loading = ref(true);
 const filterMode = ref<"all" | "light" | "dark">("all");
@@ -76,9 +77,23 @@ async function load() {
       favorites.value = new Set((favRes || []).map((t: any) => t.id));
       selectedLight.value = userInfo?.lightTheme || "";
       selectedDark.value = userInfo?.darkTheme || "";
+      syncStorePalettesFromPrefs();
     }
   } finally {
     loading.value = false;
+  }
+}
+
+/** 根据账号里保存的亮/暗主题名，把完整配色写入 Pinia（页眉等 CSS 变量才会一致） */
+function syncStorePalettesFromPrefs() {
+  if (!themes.value.length) return;
+  if (selectedLight.value) {
+    const row = themes.value.find((x) => x.name === selectedLight.value && x.mode === "light");
+    if (row) themeStore.applySitePaletteFromThemeRow(row);
+  }
+  if (selectedDark.value) {
+    const row = themes.value.find((x) => x.name === selectedDark.value && x.mode === "dark");
+    if (row) themeStore.applySitePaletteFromThemeRow(row);
   }
 }
 
@@ -92,7 +107,12 @@ async function toggleFavorite(theme: Theme) {
 }
 
 async function selectTheme(theme: Theme) {
-  if (!isLoggedIn.value) { showToast(t("themes.need_login_select")); return; }
+  themeStore.previewThemeOnSite(theme);
+
+  if (!isLoggedIn.value) {
+    showToast(t("themes.need_login_select"));
+    return;
+  }
   try {
     saving.value = true;
     const payload = theme.mode === "light" ? { lightTheme: theme.name } : { darkTheme: theme.name };

@@ -1,6 +1,6 @@
 import prisma from "~~/server/lib/prisma";
 
-// ── 默认主题色 ────────────────────────────────────────────────
+// ── Default theme palettes ─────────────────────────────────────
 const lightMintColors = {
   background: "#F8FFF8",
   foreground: "#2C3E2C",
@@ -55,92 +55,50 @@ const darkForestColors = {
   },
 };
 
-// ── 示例适配器 ────────────────────────────────────────────────
-const sampleAdapters = [
-  {
-    name: "bilibili",
-    displayName: "哔哩哔哩",
-    description: "修复 B站 顶部导航、侧栏、视频描述区的背景与文字颜色",
-    siteDomain: "bilibili.com,www.bilibili.com",
-    code: "// bilibili adapter placeholder",
-    isActive: true,
-    sortOrder: 0,
+const lightSakuraColors = {
+  background: "#FDF6F7",
+  foreground: "#331A22",
+  surface: "#FCEEF0",
+  surfaceMuted: "#FAF2F4",
+  border: "#fcb8c7",
+  muted: "#8A6A72",
+  primary: {
+    "50": "#FFF9FB", "100": "#FDEEF2", "200": "#FBDDE8", "300": "#F8CDE0",
+    "400": "#F5BBD6", "500": "#f58ec0", "600": "#E88CB0", "700": "#DE6E96",
+    "800": "#D4517C", "900": "#CB3462", "950": "#BF1A4A",
   },
-  {
-    name: "zhihu",
-    displayName: "知乎",
-    description: "优化知乎问答页、专栏页的阅读背景色与正文色",
-    siteDomain: "zhihu.com,www.zhihu.com",
-    code: "// zhihu adapter placeholder",
-    isActive: true,
-    sortOrder: 1,
+  secondary: {
+    "50": "#F8F8F8", "100": "#F0F0F0", "200": "#E0E0E0", "300": "#D0D0D0",
+    "400": "#C0C0C0", "500": "#B0B0B0", "600": "#A0A0A0", "700": "#909090",
+    "800": "#808080", "900": "#707070", "950": "#606060",
   },
-  {
-    name: "github",
-    displayName: "GitHub",
-    description: "为 GitHub 代码页、Issue、PR 提供更舒适的阅读配色",
-    siteDomain: "github.com",
-    code: "// github adapter placeholder",
-    isActive: true,
-    sortOrder: 2,
+  accent: {
+    "50": "#FFFDFE", "100": "#FEF9FA", "200": "#FDF3F5", "300": "#FBF0F3",
+    "400": "#F8EAEF", "500": "#d979c7", "600": "#EEDCDD", "700": "#e6878f",
+    "800": "#DED0D1", "900": "#ed6d7c", "950": "#CDCCCC",
   },
-  {
-    name: "juejin",
-    displayName: "掘金",
-    description: "适配掘金首页卡片、文章页正文区域",
-    siteDomain: "juejin.cn",
-    code: "// juejin adapter placeholder",
-    isActive: true,
-    sortOrder: 3,
-  },
-  {
-    name: "v2ex",
-    displayName: "V2EX",
-    description: "V2EX 帖子列表与详情页的背景和边框色适配",
-    siteDomain: "v2ex.com,www.v2ex.com",
-    code: "// v2ex adapter placeholder",
-    isActive: true,
-    sortOrder: 4,
-  },
-  {
-    name: "sspai",
-    displayName: "少数派",
-    description: "少数派文章页排版与侧栏颜色优化",
-    siteDomain: "sspai.com",
-    code: "// sspai adapter placeholder",
-    isActive: true,
-    sortOrder: 5,
-  },
-  {
-    name: "weibo",
-    displayName: "微博",
-    description: "微博时间线与详情页背景色替换",
-    siteDomain: "weibo.com,www.weibo.com",
-    code: "// weibo adapter placeholder",
-    isActive: true,
-    sortOrder: 6,
-  },
-  {
-    name: "twitter",
-    displayName: "X (Twitter)",
-    description: "推特 / X 时间线背景与卡片颜色适配",
-    siteDomain: "twitter.com,x.com",
-    code: "// twitter adapter placeholder",
-    isActive: true,
-    sortOrder: 7,
-  },
-];
+};
+
+/** Only Bilibili — replace placeholder `code` with real adapter JS when publishing */
+const bilibiliAdapterSeed = {
+  name: "bilibili",
+  displayName: "Bilibili",
+  description: "Fine-tunes header, sidebar, and video detail areas on bilibili.com",
+  siteDomain: "bilibili.com,www.bilibili.com",
+  code: "// bilibili adapter — sync full script from extension build pipeline",
+  isActive: true,
+  sortOrder: 0,
+};
 
 export default defineNitroPlugin(async () => {
-  // ─── 主题初始化 ─────────────────────────────────────────────
   const themeCount = await prisma.theme.count();
   if (themeCount === 0) {
     await prisma.theme.createMany({
       data: [
         {
           name: "light-mint",
-          displayName: "薄荷浅绿",
-          description: "清新薄荷绿为主色调的浅色主题",
+          displayName: "Mint Light",
+          description: "Soft mint-green accents on a fresh light background.",
           mode: "light",
           colors: JSON.stringify(lightMintColors),
           isActive: true,
@@ -148,9 +106,19 @@ export default defineNitroPlugin(async () => {
           sortOrder: 0,
         },
         {
+          name: "light-sakura",
+          displayName: "Sakura Pink",
+          description: "Warm blush and rose tones for a gentle light theme.",
+          mode: "light",
+          colors: JSON.stringify(lightSakuraColors),
+          isActive: true,
+          isDefault: false,
+          sortOrder: 1,
+        },
+        {
           name: "dark-forest",
-          displayName: "深林暗色",
-          description: "深邃森林绿为主色调的暗色主题",
+          displayName: "Forest Dark",
+          description: "Deep forest-green accents for comfortable night reading.",
           mode: "dark",
           colors: JSON.stringify(darkForestColors),
           isActive: true,
@@ -159,24 +127,20 @@ export default defineNitroPlugin(async () => {
         },
       ],
     });
-    console.log("[init-data] 主题数据初始化完成");
+    console.log("[init-data] Theme seed completed (Mint, Sakura, Forest)");
   }
 
-  // ─── 适配器初始化 ────────────────────────────────────────────
   const adapterCount = await prisma.siteAdapter.count();
   if (adapterCount === 0) {
-    // 需要一个系统占位 submitterId（第一个用户，或直接写占位值）
     const firstUser = await prisma.user.findFirst({ select: { id: true } });
     const submitterId = firstUser?.id || "system";
 
     await prisma.siteAdapter.createMany({
-      data: sampleAdapters.map(a => ({ ...a, submitterId })),
+      data: [{ ...bilibiliAdapterSeed, submitterId }],
     });
-    console.log("[init-data] 适配器示例数据初始化完成");
+    console.log("[init-data] Adapter seed completed (Bilibili only)");
   }
 
-  // ─── 测试账号初始化 ──────────────────────────────────────────
-  // ⚠️ TODO: 测试通过后删除此 if 块（包含 test-user / test-admin 的创建逻辑）
   const testUserExists = await prisma.user.findUnique({ where: { id: "test-user-001" } });
   if (!testUserExists) {
     await prisma.user.createMany({
@@ -199,5 +163,4 @@ export default defineNitroPlugin(async () => {
     });
     console.log("[init-data] ⚠️  测试账号初始化完成（测试通过后请删除）");
   }
-  // ⚠️ END TODO: 删除到此处
 });
