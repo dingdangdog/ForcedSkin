@@ -1,18 +1,24 @@
 services:
-  # Nuxt 应用服务
-  app:
-    container_name: loden
-    restart: unless-stopped
-    ports:
-      - 7061:7061
+  main:
+    container_name: forcedskin
+      #depends_on:
+      #- "db"
+    image: forcedskin:0.0.1
+    restart: always
+    # network_mode: "host"
+    volumes:
+      - ./data:/app/data # 数据挂载到本地，不建议修改
     environment:
-      TZ: Asia/Shanghai
-      # 数据库配置
-      DATABASE_MODE: ${DATABASE_MODE:-postgre}
-      DATABASE_URL: "postgresql://postgres:123456@localhost:5432/loden?schema=public"
-      # Nuxt 配置
-      PORT: 7061
-      NODE_ENV: production
+      DATABASE_URL: "postgresql://centospgsql:CPGsql&2025_01@172.17.0.1:20543/forcedskin?schema=public" # 数据库链接，【请自行修改！与你的数据库一致】
+      PORT: 13303
+      NUXT_DATA_PATH: "/app/data" # 数据存储位置（图片）
+      NUXT_AUTH_SECRET: "ForcedSkin_2026" # 前台登录加密使用的密钥 【自行修改！】
+      NUXT_AUTH_ORIGIN: "https://forcedskin.com/api/auth"
+      NUXT_GITHUB_CLIENT_ID: ""
+      NUXT_GITHUB_CLIENT_SECRETS: ""
+      NUXT_GOOGLE_CLIENT_ID: ""
+      NUXT_GOOGLE_CLIENT_SECRETS: ""
 
-  volumes:
-    - ./resources:/app/resources
+    ports:
+      - 13303:13303 # 账本开放端口 【自行修改！】
+
