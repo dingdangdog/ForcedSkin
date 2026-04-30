@@ -19,11 +19,10 @@ const minimalExample = `(() => {
     priority: 100,
     match: (hostname) => hostname === "example.com" || hostname.endsWith(".example.com"),
     apply: ({ queryAllDeep, palette, markApplied }) => {
-      // 精细覆盖特定组件的背景色
       const navEls = queryAllDeep(".site-navbar, .site-header");
       navEls.forEach((el) => {
         el.style.setProperty("background-color", palette.surface, "important");
-        markApplied(el, "bg");
+        markApplied(el, engineApi.MARK_BG);
       });
     },
   };
@@ -35,38 +34,26 @@ const fullExample = `(() => {
   const engineApi = window.__GTS_ENGINE__;
   if (!engineApi) return;
 
+  const MARK_BG = engineApi.MARK_BG;
+  const MARK_TEXT = engineApi.MARK_TEXT;
+  const MARK_BORDER = engineApi.MARK_BORDER;
+
   const adapter = {
     id: "bilibili",
     priority: 100,
-
-    // match：返回 true 表示此页面需要该适配器
     match: (hostname) =>
       hostname === "bilibili.com" || hostname.endsWith(".bilibili.com"),
 
-    // apply：在引擎应用主题颜色后调用，用于精细覆盖
-    apply: ({ queryAllDeep, palette, markApplied, onDomChange }) => {
-      function applyOverrides() {
-        // 覆盖导航栏背景
-        queryAllDeep(".bili-header__bar").forEach((el) => {
-          el.style.setProperty("background-color", palette.surface, "important");
-          markApplied(el, "bg-nav");
-        });
-
-        // 覆盖视频播放器背景（跳过，避免破坏播放器）
-        // queryAllDeep(".bpx-player-container") → 通常不需要覆盖
-
-        // 覆盖评论区背景
-        queryAllDeep(".reply-list").forEach((el) => {
-          el.style.setProperty("background-color", palette.surface, "important");
-          el.style.setProperty("color", palette.foreground, "important");
-          markApplied(el, "bg-reply");
-        });
-      }
-
-      applyOverrides();
-
-      // 监听 DOM 变化（SPA 路由切换后重新覆盖）
-      onDomChange(() => { applyOverrides(); });
+    // 引擎已对新增节点做增量改写，并在其后节流刷新适配器；无需手写 onDomChange
+    apply: ({ queryAllDeep, palette, markApplied }) => {
+      queryAllDeep(".bili-header__bar").forEach((el) => {
+        el.style.setProperty("background-color", palette.surface, "important");
+        el.style.setProperty("border-color", palette.border, "important");
+        el.style.setProperty("color", palette.foreground, "important");
+        markApplied(el, MARK_BG);
+        markApplied(el, MARK_BORDER);
+        markApplied(el, MARK_TEXT);
+      });
     },
   };
 
@@ -80,15 +67,14 @@ const paletteFields = [
   { name: "surfaceMuted", desc: "次级容器/悬浮背景" },
   { name: "border", desc: "边框颜色" },
   { name: "muted", desc: "次要文字颜色" },
-  { name: "primary", desc: "主色调（500 档色值）" },
-  { name: "primaryScale", desc: "完整主色阶对象 { 50, 100, … 950 }" },
+  { name: "primary500", desc: "主色强调（链接等），由官网主题 JSON 的 primary.500 映射而来" },
+  { name: "primary700", desc: "主色更深一档（激活态等），由 primary.700 / 800 映射而来" },
 ];
 
 const apiMethods = [
   { name: "queryAllDeep(selector)", desc: "类似 document.querySelectorAll，但会递归穿透所有 Shadow DOM，返回 Element[]。" },
-  { name: "markApplied(el, mark)", desc: "标记元素已被适配器处理，防止引擎重复覆盖（el 必须是 HTMLElement，mark 为自定义字符串标记）。" },
-  { name: "onDomChange(callback)", desc: "注册 DOM 变化监听器，在 MutationObserver 触发或 SPA 路由切换时执行 callback，用于重新应用覆盖。" },
-  { name: "palette", desc: "当前主题的颜色对象，包含所有 ThemeColors 字段（见上方 palette 字段表）。" },
+  { name: "markApplied(el, mark)", desc: "仅能使用引擎常量 MARK_BG / MARK_TEXT / MARK_BORDER（字符串 \"bg\" / \"text\" / \"border\"）。自定义记号会导致关闭主题时无法清除对应 inline 样式。" },
+  { name: "palette", desc: "当前模式下的扁平调色板（含 primary500、primary700），与引擎 normalizeRemoteColors 输出一致。" },
 ];
 </script>
 
@@ -113,9 +99,9 @@ const apiMethods = [
       <h2 class="text-2xl font-bold text-foreground mb-3">工作原理</h2>
       <div class="p-5 rounded-2xl border border-border bg-surface text-sm text-muted leading-relaxed space-y-2">
         <p>① ForcedSkin 主引擎首先对页面进行全局颜色覆盖（基于 CSS 变量 + inline style）。</p>
-        <p>② 引擎加载与当前域名匹配的所有已启用适配器，依次按 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">priority</code> 从高到低调用其 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">apply()</code> 方法。</p>
-        <p>③ 适配器通过 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">engineApi</code> 提供的方法，精准修正特定元素的样式（跳过视频播放器、广告等不宜覆盖的区域）。</p>
-        <p>④ 适配器可以注册 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">onDomChange</code> 回调，在 SPA 路由切换或异步加载内容后重新执行覆盖。</p>
+        <p>② 引擎加载与当前域名匹配的所有已启用适配器，依次按 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">priority</code> 数值<strong>升序</strong>调用其 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">apply()</code>（数值<strong>越小越先执行</strong>；未写时引擎默认为 50，站点适配建议 100）。</p>
+        <p>③ 适配器通过 <code class="bg-surface-muted px-1 rounded text-foreground text-xs">engineApi</code> 提供的方法，精准修正特定元素的样式；播放器容器、半透明遮罩等应由站点逻辑跳过（参见指南「最佳实践」）。</p>
+        <p>④ 引擎已对 DOM 变更做增量改写，并在其后节流再次调用适配器；无需在适配器内手写 MutationObserver。</p>
       </div>
     </section>
 
@@ -153,13 +139,13 @@ const apiMethods = [
               <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">priority</td>
               <td class="px-3 py-2 border border-border text-muted font-mono text-xs">number</td>
               <td class="px-3 py-2 border border-border text-muted text-xs">可选</td>
-              <td class="px-3 py-2 border border-border text-muted text-xs">优先级（数值越大越先执行），默认 0，建议社区适配器使用 100</td>
+              <td class="px-3 py-2 border border-border text-muted text-xs">执行顺序：<strong>数值越小越早</strong>（升序）。引擎默认 50；站点适配建议 100。</td>
             </tr>
             <tr class="border-b border-border hover:bg-surface-muted/50 transition-colors">
-              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">match(hostname)</td>
+              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">match(hostname, url)</td>
               <td class="px-3 py-2 border border-border text-muted font-mono text-xs">Function → boolean</td>
               <td class="px-3 py-2 border border-border text-primary-600 text-xs font-medium">必填</td>
-              <td class="px-3 py-2 border border-border text-muted text-xs">接收当前页面的 hostname，返回 true 表示该适配器适用于此页面</td>
+              <td class="px-3 py-2 border border-border text-muted text-xs">引擎传入当前 hostname 与完整 url；通常只需判断 hostname</td>
             </tr>
             <tr class="hover:bg-surface-muted/50 transition-colors">
               <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">apply(ctx)</td>
@@ -197,6 +183,63 @@ const apiMethods = [
             </tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- 着色分层公式 -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-foreground mb-3">推荐的「着色分层」公式</h2>
+      <p class="text-muted text-sm mb-4">
+        不必拘泥于 DIV 标签名；按<strong>语义分层</strong>选用 palette 字段，并用选择器圈定区域。
+        官方 B 站适配器采用同一套约定（见扩展源码注释）。
+      </p>
+      <div class="overflow-x-auto mb-4">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-surface-muted text-left">
+              <th class="px-3 py-2 border border-border text-foreground font-semibold">分层 kind</th>
+              <th class="px-3 py-2 border border-border text-foreground font-semibold">用途</th>
+              <th class="px-3 py-2 border border-border text-foreground font-semibold">典型样式映射</th>
+              <th class="px-3 py-2 border border-border text-foreground font-semibold">markApplied</th>
+            </tr>
+          </thead>
+          <tbody class="text-muted">
+            <tr class="border-b border-border">
+              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">surface</td>
+              <td class="px-3 py-2 border border-border text-xs">面板、列表行、导航条容器</td>
+              <td class="px-3 py-2 border border-border text-xs">background→surface，color→foreground，border→border</td>
+              <td class="px-3 py-2 border border-border text-xs">bg + text + border（三项都打）</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">accent</td>
+              <td class="px-3 py-2 border border-border text-xs">选中 Tab、当前列表项</td>
+              <td class="px-3 py-2 border border-border text-xs">background+border→primary700，color→background（保证对比）</td>
+              <td class="px-3 py-2 border border-border text-xs">bg + text + border</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">canvas</td>
+              <td class="px-3 py-2 border border-border text-xs">带大图背景的整块容器</td>
+              <td class="px-3 py-2 border border-border text-xs">去掉 background-image，background→background</td>
+              <td class="px-3 py-2 border border-border text-xs">通常仅 bg</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">richText</td>
+              <td class="px-3 py-2 border border-border text-xs">站内富文本自定义属性</td>
+              <td class="px-3 py-2 border border-border text-xs">写入站点要求的 CSS 变量 + color→foreground</td>
+              <td class="px-3 py-2 border border-border text-xs">text（或按需加 bg）</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border border-border font-mono text-xs text-foreground">svgShapes</td>
+              <td class="px-3 py-2 border border-border text-xs">矢量图标 path 等</td>
+              <td class="px-3 py-2 border border-border text-xs">fill/stroke→currentColor（由父级 color 驱动）</td>
+              <td class="px-3 py-2 border border-border text-xs">可不标记（避免干扰引擎清除逻辑）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-4 rounded-xl border border-border bg-surface text-xs text-muted space-y-2">
+        <p><strong class="text-foreground">不应着色：</strong>引擎已跳过 IMG / VIDEO / CANVAS / IFRAME、复杂背景图、混合模式、backdrop-filter、以及 class 含 mask/overlay 等的节点；适配器内应对半透明遮罩、播放器叠层做额外 skip。</p>
+        <p><strong class="text-foreground">站点隔离：</strong>宿主页面可将预览区等加上 <code class="bg-surface-muted px-1 rounded text-foreground">data-gts-ignore</code>，其子孙不参与全局改写。</p>
       </div>
     </section>
 

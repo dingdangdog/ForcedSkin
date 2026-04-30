@@ -1,4 +1,5 @@
 import prisma from "~~/server/lib/prisma";
+import { resolveBilibiliAdapterCode } from "~~/server/utils/resolve-bilibili-adapter-code";
 
 // ── Default theme palettes ─────────────────────────────────────
 const lightMintColors = {
@@ -79,16 +80,18 @@ const lightSakuraColors = {
   },
 };
 
-/** Only Bilibili — replace placeholder `code` with real adapter JS when publishing */
-const bilibiliAdapterSeed = {
-  name: "bilibili",
-  displayName: "Bilibili",
-  description: "Fine-tunes header, sidebar, and video detail areas on bilibili.com",
-  siteDomain: "bilibili.com,www.bilibili.com",
-  code: "// bilibili adapter — sync full script from extension build pipeline",
-  isActive: true,
-  sortOrder: 0,
-};
+function bilibiliAdapterSeedRow(submitterId: string) {
+  return {
+    name: "bilibili",
+    displayName: "Bilibili",
+    description: "Fine-tunes header, sidebar, and video detail areas on bilibili.com",
+    siteDomain: "bilibili.com,www.bilibili.com",
+    code: resolveBilibiliAdapterCode(),
+    isActive: true,
+    sortOrder: 0,
+    submitterId,
+  };
+}
 
 export default defineNitroPlugin(async () => {
   const themeCount = await prisma.theme.count();
@@ -136,31 +139,8 @@ export default defineNitroPlugin(async () => {
     const submitterId = firstUser?.id || "system";
 
     await prisma.siteAdapter.createMany({
-      data: [{ ...bilibiliAdapterSeed, submitterId }],
+      data: [bilibiliAdapterSeedRow(submitterId)],
     });
     console.log("[init-data] Adapter seed completed (Bilibili only)");
-  }
-
-  const testUserExists = await prisma.user.findUnique({ where: { id: "test-user-001" } });
-  if (!testUserExists) {
-    await prisma.user.createMany({
-      data: [
-        {
-          id: "test-user-001",
-          name: "测试用户",
-          email: "testuser@forcedskin.dev",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=testuser",
-          roles: "user",
-        },
-        {
-          id: "test-admin-001",
-          name: "测试管理员",
-          email: "testadmin@forcedskin.dev",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=testadmin",
-          roles: "admin",
-        },
-      ],
-    });
-    console.log("[init-data] ⚠️  测试账号初始化完成（测试通过后请删除）");
   }
 });

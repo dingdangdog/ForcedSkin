@@ -26,6 +26,8 @@
    *
    * markApplied 仅允许引擎识别的三种记号：MARK_BG、MARK_TEXT、MARK_BORDER（即 "bg","text","border"），
    * 否则 removeTheme 时无法清除对应 inline 样式。
+   *
+   * 【镜像】须与 extension/src/content/adapters/bilibili.js 保持一致。
    */
 
   function shouldSkipOverlayLike(el) {

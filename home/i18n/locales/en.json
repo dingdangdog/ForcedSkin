@@ -125,9 +125,6 @@
     "and": "and",
     "privacy": "Privacy Policy",
     "back": "← Back to ForcedSkin",
-    "dev_title": "Dev Only · Delete After Testing",
-    "dev_user": "Sign in as Test User",
-    "dev_admin": "Sign in as Test Admin",
     "error": {
       "OAuthSignin": "OAuth sign-in failed, please try again",
       "OAuthCallback": "OAuth callback error, please try again",

@@ -2,135 +2,139 @@
 definePageMeta({ layout: "default" });
 
 useHead({
-  title: "隐私政策 — ForcedSkin",
+  title: "Privacy Policy — ForcedSkin",
   meta: [
-    { name: "description", content: "ForcedSkin 隐私政策：了解我们如何收集、使用和保护你的个人信息。" },
-    { property: "og:title", content: "隐私政策 — ForcedSkin" },
-    { property: "og:description", content: "ForcedSkin 隐私政策：了解我们如何收集、使用和保护你的个人信息。" },
+    { name: "description", content: "ForcedSkin Privacy Policy: how we collect, use, and protect your personal information." },
+    { property: "og:title", content: "Privacy Policy — ForcedSkin" },
+    { property: "og:description", content: "ForcedSkin Privacy Policy: how we collect, use, and protect your personal information." },
     { property: "og:url", content: "https://forcedskin.com/privacy" },
   ],
   link: [{ rel: "canonical", href: "https://forcedskin.com/privacy" }],
 });
 
-const effectiveDate = "2026 年 4 月 28 日";
+const effectiveDate = "April 28, 2026";
 </script>
 
 <template>
   <div class="max-w-3xl mx-auto px-4 py-16">
     <div class="mb-10">
-      <p class="text-primary-500 text-sm font-medium mb-2">法律文件</p>
-      <h1 class="text-3xl font-bold text-foreground mb-3">隐私政策</h1>
-      <p class="text-muted text-sm">生效日期：{{ effectiveDate }}｜最近更新：{{ effectiveDate }}</p>
+      <h1 class="text-3xl font-bold text-foreground mb-3">Privacy Policy</h1>
+      <p class="text-muted text-sm">Effective date: {{ effectiveDate }} · Last updated: {{ effectiveDate }}</p>
     </div>
 
     <div class="prose prose-sm max-w-none text-foreground space-y-8">
 
       <section>
         <p class="text-muted leading-relaxed">
-          欢迎使用 <strong class="text-foreground">ForcedSkin</strong>（以下简称"本平台"，网址：forcedskin.com）。
-          本隐私政策描述了我们在你使用 ForcedSkin 网站及浏览器扩展（统称"服务"）时，如何收集、使用、存储和保护你的个人信息。
-          请在使用本服务前仔细阅读本政策。<strong class="text-foreground">使用本服务即表示你同意本政策的条款。</strong>
+          Welcome to <strong class="text-foreground">ForcedSkin</strong> (“the Platform,” forcedskin.com).
+          This Privacy Policy explains how we collect, use, store, and protect your personal information when you use the ForcedSkin website and browser extension (together, the “Service”).
+          Please read it before using the Service. <strong class="text-foreground">By using the Service, you agree to this Policy.</strong>
         </p>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">1. 我们收集哪些信息</h2>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">1. Information we collect</h2>
         <div class="space-y-4">
           <div>
-            <h3 class="font-semibold text-foreground mb-1">1.1 你主动提供的信息</h3>
+            <h3 class="font-semibold text-foreground mb-1">1.1 Information you provide</h3>
             <ul class="list-disc list-inside text-muted space-y-1 text-sm">
-              <li>注册账号时：用户名、密码（加密存储）、昵称、电子邮件（选填）</li>
-              <li>提交网站适配器时：代码内容、适配器说明</li>
+              <li>When you register: username, password (stored hashed), display name, and optional email</li>
+              <li>When you submit a site adapter: code content and description</li>
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-foreground mb-1">1.2 自动收集的信息</h3>
+            <h3 class="font-semibold text-foreground mb-1">1.2 Information collected automatically</h3>
             <ul class="list-disc list-inside text-muted space-y-1 text-sm">
-              <li>登录时间、IP 地址（仅用于安全审计，不对外共享）</li>
-              <li>浏览器扩展中存储的主题偏好设置（仅存于 <code class="bg-surface-muted px-1 rounded">chrome.storage</code>，不上传服务器）</li>
+              <li>Login timestamps and IP address (for security auditing only; not shared externally)</li>
+              <li>Theme preference settings stored in the extension via <code class="bg-surface-muted px-1 rounded">chrome.storage</code> (local only; not uploaded to our servers)</li>
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-foreground mb-1">1.3 不收集的信息</h3>
-            <p class="text-muted text-sm">我们<strong class="text-foreground">不</strong>收集你浏览的网页内容、浏览历史、输入内容或任何与主题应用无关的个人数据。</p>
+            <h3 class="font-semibold text-foreground mb-1">1.3 What we do not collect</h3>
+            <p class="text-muted text-sm">We <strong
+                class="text-foreground">do not</strong> collect the contents of pages you browse, browsing history, keystrokes, or other personal data unrelated to applying themes.</p>
           </div>
         </div>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">2. 我们如何使用信息</h2>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">2. How we use information</h2>
         <ul class="list-disc list-inside text-muted space-y-1.5 text-sm">
-          <li>提供账号登录和身份验证服务</li>
-          <li>保存并同步你的主题收藏和选择（亮色 / 暗色主题偏好）</li>
-          <li>将你提交的适配器代码提交至管理员审核流程</li>
-          <li>改善产品体验和安全性</li>
-          <li>发送与账号直接相关的服务通知（如密码重置）</li>
+          <li>To provide sign-in and authentication</li>
+          <li>To save and sync your theme favorites and selections (light / dark preferences)</li>
+          <li>To route adapter submissions through administrator review</li>
+          <li>To improve product experience and security</li>
+          <li>To send service-related notices tied to your account (e.g., password reset)</li>
         </ul>
-        <p class="text-muted text-sm mt-3">我们<strong class="text-foreground">不会</strong>将你的个人信息用于广告定向、出售给第三方或其他与提供本服务无关的用途。</p>
+        <p class="text-muted text-sm mt-3">We <strong
+            class="text-foreground">do not</strong> use your personal information for ad targeting, sell it to third parties, or use it for purposes unrelated to operating the Service.</p>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">3. 信息的存储与安全</h2>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">3. Storage and security</h2>
         <ul class="list-disc list-inside text-muted space-y-1.5 text-sm">
-          <li>用户密码使用 SHA-256 + 用户名加盐后存储，我们无法还原明文</li>
-          <li>用户会话通过 JWT 实现，有效期 30 天，使用 HttpOnly Cookie 传输</li>
-          <li>浏览器扩展的认证 Token 存储于 <code class="bg-surface-muted px-1 rounded">chrome.storage.local</code>，仅在本设备可访问</li>
-          <li>我们采用 HTTPS 加密所有网络传输</li>
-          <li>服务器数据存储于经过安全加固的云环境</li>
+          <li>Passwords are stored using SHA-256 with a per-user salt; we cannot recover plaintext passwords</li>
+          <li>Sessions use JWT with a 30-day lifetime, delivered via HttpOnly cookies</li>
+          <li>Extension auth tokens are stored in <code class="bg-surface-muted px-1 rounded">chrome.storage.local</code> and are accessible only on your device</li>
+          <li>We use HTTPS for network transport</li>
+          <li>Server data is hosted in a hardened cloud environment</li>
         </ul>
-        <p class="text-muted text-sm mt-3">尽管我们采取了合理的安全措施，但互联网传输并不能保证 100% 安全。如发现账号异常，请立即联系我们。</p>
+        <p class="text-muted text-sm mt-3">No internet transmission is 100% secure. If you notice suspicious account activity, contact us immediately.</p>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">4. Cookies 与本地存储</h2>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">4. Cookies and local storage</h2>
         <div class="space-y-3 text-sm text-muted">
-          <p><strong class="text-foreground">Authorization Cookie：</strong>登录后设置，用于保持会话，HttpOnly、SameSite=Lax，有效期 30 天。</p>
-          <p><strong class="text-foreground">主题偏好 Cookie：</strong>存储你选择的亮/暗模式，无个人身份信息，有效期 1 年。</p>
-          <p><strong class="text-foreground">扩展本地存储：</strong>主题配色数据存储在 <code class="bg-surface-muted px-1 rounded">chrome.storage.local</code>，不会上传至服务器。</p>
+          <p><strong class="text-foreground">Authorization cookie:</strong> Set after login to maintain your session; HttpOnly; SameSite=Lax; 30-day lifetime.</p>
+          <p><strong class="text-foreground">Theme preference cookie:</strong> Stores light/dark mode choice; no personally identifying information; 1-year lifetime.</p>
+          <p><strong class="text-foreground">Extension storage:</strong> Theme data lives in <code
+              class="bg-surface-muted px-1 rounded">chrome.storage.local</code> and is not uploaded to our servers.</p>
         </div>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">5. 第三方服务</h2>
-        <p class="text-muted text-sm">本平台当前不集成任何第三方广告、分析或社交登录服务。如将来引入，我们会更新本政策并提前通知用户。</p>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">5. Third-party services</h2>
+        <p class="text-muted text-sm">The Platform does not currently integrate third-party advertising, analytics, or social login. If that changes, we will update this Policy and notify you in advance.</p>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">6. 未成年人隐私</h2>
-        <p class="text-muted text-sm">本服务不面向 13 岁以下儿童。如发现未成年人账号，我们将予以删除。</p>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">6. Children</h2>
+        <p class="text-muted text-sm">The Service is not directed at children under 13. If we learn of an underage account, we will delete it.</p>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">7. 你的权利</h2>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">7. Your rights</h2>
         <ul class="list-disc list-inside text-muted space-y-1.5 text-sm">
-          <li><strong class="text-foreground">访问与修改：</strong>登录后可在账号设置中查看和修改个人信息</li>
-          <li><strong class="text-foreground">删除账号：</strong>可随时联系我们申请删除账号及相关数据</li>
-          <li><strong class="text-foreground">数据导出：</strong>可申请获取你在本平台存储的数据副本</li>
-          <li><strong class="text-foreground">撤回同意：</strong>可随时停止使用本服务，卸载扩展，数据将不再被处理</li>
+          <li><strong class="text-foreground">Access and correction:</strong> After login, you can view and edit profile information in account settings</li>
+          <li><strong class="text-foreground">Account deletion:</strong> Contact us anytime to request deletion of your account and related data</li>
+          <li><strong class="text-foreground">Data export:</strong> You may request a copy of data we hold about you</li>
+          <li><strong class="text-foreground">Withdraw consent:</strong> Stop using the Service or uninstall the extension; we will cease processing as described here</li>
         </ul>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">8. 政策变更</h2>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">8. Changes to this Policy</h2>
         <p class="text-muted text-sm">
-          我们保留随时修改本隐私政策的权利。重大变更将在网站首页或通过邮件提前 7 天通知。继续使用本服务视为接受修订后的政策。
+          We may update this Privacy Policy from time to time. Material changes will be announced on the website homepage or by email at least 7 days in advance.
+          Continued use after changes constitutes acceptance.
         </p>
       </section>
 
       <section>
-        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">9. 联系我们</h2>
-        <p class="text-muted text-sm">如对本隐私政策有任何疑问，请通过以下方式联系我们：</p>
+        <h2 class="text-lg font-bold text-foreground mb-3 pb-2 border-b border-border">9. Contact</h2>
+        <p class="text-muted text-sm">Questions about this Privacy Policy:</p>
         <ul class="list-none text-sm mt-2 space-y-1 text-muted">
-          <li>📧 邮箱：<a href="mailto:privacy@forcedskin.com" class="text-primary-500 hover:underline">privacy@forcedskin.com</a></li>
-          <li>🌐 官网：<a href="https://forcedskin.com" class="text-primary-500 hover:underline">forcedskin.com</a></li>
+          <li>📧 Email: <a href="mailto:privacy@forcedskin.com"
+              class="text-primary-500 hover:underline">privacy@forcedskin.com</a></li>
+          <li>🌐 Website: <a href="https://forcedskin.com" class="text-primary-500 hover:underline">forcedskin.com</a></li>
         </ul>
       </section>
 
     </div>
 
     <div class="mt-12 pt-8 border-t border-border flex flex-wrap gap-4">
-      <NuxtLink to="/terms" class="text-primary-500 hover:underline text-sm">用户协议 →</NuxtLink>
-      <NuxtLink to="/" class="text-muted hover:text-foreground text-sm">返回首页</NuxtLink>
+      <NuxtLink to="/terms" class="text-primary-500 hover:underline text-sm">Terms of Service →</NuxtLink>
+      <NuxtLink to="/" class="text-muted hover:text-foreground text-sm">Back to home</NuxtLink>
     </div>
   </div>
 </template>

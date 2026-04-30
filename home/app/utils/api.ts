@@ -89,7 +89,7 @@ const intercepterResponse = <T>(res: Result<T>): T => {
       // 清除登陆状态（@sidebase/nuxt-auth框架）
       // useAuth().signOut();
       // const route = useRoute();
-      navigateTo("/login");
+      navigateTo("/auth/login");
     }
     // Alert.error(res.m);
     console.error(res.m);

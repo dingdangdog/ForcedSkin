@@ -125,9 +125,6 @@
     "and": "和",
     "privacy": "隐私政策",
     "back": "← 返回 ForcedSkin 首页",
-    "dev_title": "仅开发环境可见 · 测试通过后删除",
-    "dev_user": "以「测试用户」登录",
-    "dev_admin": "以「测试管理员」登录",
     "error": {
       "OAuthSignin": "OAuth 登录失败，请重试",
       "OAuthCallback": "OAuth 回调出错，请重试",
