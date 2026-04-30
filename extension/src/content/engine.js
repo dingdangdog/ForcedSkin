@@ -371,7 +371,16 @@
     }
 
     registerAdapter(adapter) {
+      const id = adapter?.id;
+      if (typeof id === "string" && id) {
+        this.adapters = this.adapters.filter((a) => a.id !== id);
+      }
       this.adapters.push({ priority: 50, ...adapter });
+    }
+
+    /** 清空已注册适配器（远端脚本更新后重新装载） */
+    resetAdapters() {
+      this.adapters = [];
     }
 
     resolveAdapters() {
@@ -505,6 +514,9 @@
     }
   }
 
+  /** 远端/本地适配器脚本在执行 ThemeEngine 实例化之前，先把定义丢进此队列 */
+  const ADAPTER_PRE_QUEUE = [];
+
   window.__GTS_ENGINE__ = {
     MODES,
     get PALETTE() { return PALETTE; },
@@ -513,6 +525,18 @@
     MARK_BG,
     MARK_TEXT,
     MARK_BORDER,
-    ThemeEngine
+    ThemeEngine,
+    enqueueAdapter(adapter) {
+      ADAPTER_PRE_QUEUE.push(adapter);
+    },
+    clearAdapterPreQueue() {
+      ADAPTER_PRE_QUEUE.length = 0;
+    },
+    drainAdapterPreQueue(engine) {
+      if (!engine || typeof engine.registerAdapter !== "function") return;
+      while (ADAPTER_PRE_QUEUE.length) {
+        engine.registerAdapter(ADAPTER_PRE_QUEUE.shift());
+      }
+    },
   };
 })();

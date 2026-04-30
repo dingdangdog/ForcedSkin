@@ -6,6 +6,8 @@ const PALETTE_KEY = "gtsPalette";
 
 const API_BASE = "https://forcedskin.com";
 
+const ADAPTERS_SCRIPTS_KEY = "gtsRemoteAdapterScripts";
+
 const THEME_MODES = { LIGHT: "light", DARK: "dark", OFF: "off" };
 const DEFAULT_MODE = THEME_MODES.OFF;
 
@@ -105,6 +107,37 @@ async function doOauthLogin() {
   return parseOauthResult(redirectedTo);
 }
 
+async function fetchExtensionAdapters() {
+  const res = await fetch(`${API_BASE}/api/pub/extension-adapters`);
+  if (!res.ok) throw new Error("获取适配器脚本失败");
+  const json = await res.json();
+  if (json.c !== 200) throw new Error(json.m || "获取适配器脚本失败");
+  return json.d;
+}
+
+/** 拉取已上线适配器脚本写入本地缓存，并通知各 Tab 热重载 */
+async function syncAdapters() {
+  try {
+    const data = await fetchExtensionAdapters();
+    const raw = Array.isArray(data?.adapters) ? data.adapters : [];
+    const scripts = raw
+      .filter((a) => a && typeof a.name === "string" && typeof a.code === "string" && a.code.trim())
+      .map((a) => ({ name: a.name, code: a.code }));
+    await chrome.storage.local.set({ [ADAPTERS_SCRIPTS_KEY]: scripts });
+
+    const tabs = await chrome.tabs.query({});
+    for (const tab of tabs) {
+      if (canInjectToUrl(tab.url) && tab.id) {
+        chrome.tabs.sendMessage(tab.id, { type: "ADAPTERS_UPDATE" }, () => void chrome.runtime.lastError);
+      }
+    }
+    return { ok: true, count: scripts.length };
+  } catch (err) {
+    console.warn("[ForcedSkin] syncAdapters:", err?.message || err);
+    return { ok: false, error: err?.message || String(err) };
+  }
+}
+
 // 从官网拉取用户主题配色
 async function fetchExtensionSettings(token) {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
@@ -117,6 +150,7 @@ async function fetchExtensionSettings(token) {
 
 // 同步主题：拉取并存储 palette
 async function syncTheme() {
+  await syncAdapters();
   const { token, user } = await getStoredUser();
   try {
     const settings = await fetchExtensionSettings(token);
@@ -157,6 +191,11 @@ async function syncTheme() {
 chrome.runtime.onInstalled.addListener(async () => {
   const mode = await getMode();
   if (!mode) await setMode(DEFAULT_MODE);
+  await syncAdapters();
+});
+
+chrome.runtime.onStartup?.addListener(() => {
+  void syncAdapters();
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

@@ -148,7 +148,7 @@ onMounted(load);
           </div>
           <div>
             <label class="text-xs text-muted mb-1 block">{{ t('adapters.field_code') }} *</label>
-            <textarea v-model="form.code" rows="8" placeholder="// JS adapter code..."
+            <textarea v-model="form.code" rows="8" :placeholder="t('adapters.field_code_ph')"
               class="w-full px-3 py-2 rounded-lg border text-xs font-mono text-foreground bg-surface outline-none resize-y"
               :class="formErrors.code ? 'border-red-400' : 'border-border focus:border-primary-400'" />
             <p v-if="formErrors.code" class="text-red-500 text-xs mt-0.5">{{ formErrors.code }}</p>

@@ -1,5 +1,19 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import prisma from "~~/server/lib/prisma";
-import { resolveBilibiliAdapterCode } from "~~/server/utils/resolve-bilibili-adapter-code";
+
+const ADAPTER_FORMULA_SEED_FILES = [
+  join(process.cwd(), "server/seeds/bilibili-adapter.formula.json"),
+  join(process.cwd(), "home/server/seeds/bilibili-adapter.formula.json"),
+];
+
+/** SiteAdapter.code 仅存 forcedskin-adapter-formula/v1 的 JSON 文本 */
+function readBilibiliAdapterFormulaSeed(): string {
+  for (const p of ADAPTER_FORMULA_SEED_FILES) {
+    if (existsSync(p)) return readFileSync(p, "utf8");
+  }
+  throw new Error("[init-data] Missing server/seeds/bilibili-adapter.formula.json");
+}
 
 // ── Default theme palettes ─────────────────────────────────────
 const lightMintColors = {
@@ -86,7 +100,7 @@ function bilibiliAdapterSeedRow(submitterId: string) {
     displayName: "Bilibili",
     description: "Fine-tunes header, sidebar, and video detail areas on bilibili.com",
     siteDomain: "bilibili.com,www.bilibili.com",
-    code: resolveBilibiliAdapterCode(),
+    code: readBilibiliAdapterFormulaSeed(),
     isActive: true,
     sortOrder: 0,
     submitterId,

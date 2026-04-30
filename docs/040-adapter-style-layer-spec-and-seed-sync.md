@@ -30,27 +30,34 @@
 
 适配器内应对 **半透明遮罩、播放器相关叠层** 等做额外 `skip`，与引擎跳过逻辑对齐。
 
-## 代码改动
+## 代码改动（摘要）
 
-1. **`extension/src/content/adapters/bilibili.js`**  
-   - 用 `styleLayers` 数组 + `applyStyleLayers` 实现上述分层；文件头注释写明公式表与跳过规则。
+1. **`extension/src/content/engine.js`**  
+   - 适配器预队列 `enqueueAdapter` / `registerAdapter`（别名）、`drainAdapterPreQueue`、`clearAdapterPreQueue`；`ThemeEngine.resetAdapters`、`registerAdapter` 按 `id` 去重。
 
-2. **`home/server/seeds/bilibili-adapter.fallback.js`**  
-   - 与扩展脚本逻辑保持一致（含一行「镜像」说明）；供无 monorepo 路径时的种子读取。
+2. **`extension/src/content/content.js`**  
+   - 从 `chrome.storage.local.gtsRemoteAdapterScripts` 执行服务端下发的脚本；监听 `ADAPTERS_UPDATE` 热重载。
 
-3. **`home/server/utils/resolve-bilibili-adapter-code.ts`**  
-   - 向上遍历目录与 `process.cwd()`，优先读取 `extension/src/content/adapters/bilibili.js`；失败则读 `server/seeds/bilibili-adapter.fallback.js`。
+3. **`extension/src/background.js`**  
+   - `syncAdapters()` 请求 `/api/pub/extension-adapters`，写入本地缓存并广播 `ADAPTERS_UPDATE`；安装、浏览器启动、`syncTheme` 时均会同步。
 
-4. **`home/server/plugins/init-data.ts`**  
-   - 空库写入 B 站适配器时，`code` 使用 `resolveBilibiliAdapterCode()`，与扩展规则同步。
+4. **`extension/manifest.json`**  
+   - 不再打包 `adapters/bilibili.js`，改由服务端下发。
 
-5. **`home/Dockerfile`**  
-   - runner 阶段增加 `COPY ... /app/server/seeds`，保证生产镜像内可读到 fallback 文件。
+5. **`home/server/api/pub/extension-adapters.get.ts`**  
+   - 公开返回全部 `isActive` 适配器的 `name` + `code` + `updatedAt`。
 
-6. **`home/app/pages/guide/adapter.vue`**  
-   - 修正工作原理、`priority`、`match`、palette、`markApplied` 描述；删除不存在的 `onDomChange`；新增「着色分层公式」章节。
+6. **`home/server/plugins/init-data.ts`**  
+   - 空库种子：`code` 直接读取 `server/seeds/bilibili-adapter.fallback.js`（相对 `process.cwd()`），**不再**使用已删除的 resolve 工具。
+
+7. **`home/server/utils/resolve-bilibili-adapter-code.ts`**  
+   - **已删除**。
+
+8. **`home/Dockerfile`**  
+   - runner 仍复制 `server/seeds`（供运行时读取种子文件若需要；init-data 在构建/启动时读 cwd 下 seeds）。
 
 ## 维护说明
 
-- 修改 B 站适配器时：**先改** `extension/src/content/adapters/bilibili.js`，再将同名逻辑同步到 `home/server/seeds/bilibili-adapter.fallback.js`（空库种子与环境无扩展目录时依赖后者）。
+- **运行时**：扩展从服务端拉取已上线适配器的 `code`，不写死在插件包里；管理员在后台改库、`syncTheme`/重装扩展后即可下发新版本脚本。
+- **空库种子**：`init-data` 将 `home/server/seeds/bilibili-adapter.fallback.js` 写入数据库初始记录；开发时请保持该 seeds 文件与 `extension/src/content/adapters/bilibili.js`（参考实现）一致。
 - 已有数据库不会自动覆盖适配器 `code`；需管理员在后台更新或自行迁移。

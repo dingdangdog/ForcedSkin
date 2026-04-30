@@ -1,6 +1,7 @@
 import prisma from "~~/server/lib/prisma";
 import { success, error, serverError } from "~~/server/utils/result";
 import { getUserId } from "~~/server/utils/jwt";
+import { validateAdapterFormulaCodeString } from "~~/server/utils/adapter-formula";
 
 function slugify(str: string): string {
   return str
@@ -25,6 +26,9 @@ export default defineEventHandler(async (event) => {
   const { displayName, description, siteDomain, code } = body || {};
 
   if (!displayName || !siteDomain || !code) return error("缺少必要字段");
+
+  const formulaCheck = validateAdapterFormulaCodeString(code);
+  if (!formulaCheck.ok) return error(formulaCheck.error || "适配器公式无效");
 
   const baseSlug = slugify(displayName) || "adapter";
   let name = `${baseSlug}-${randomSuffix()}`;

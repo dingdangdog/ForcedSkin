@@ -1,5 +1,6 @@
 import prisma from "~~/server/lib/prisma";
 import { success, error, serverError } from "~~/server/utils/result";
+import { validateAdapterFormulaCodeString } from "~~/server/utils/adapter-formula";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
@@ -7,6 +8,11 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody(event);
   const { displayName, description, siteDomain, code, isActive, sortOrder } = body || {};
+
+  if (code !== undefined) {
+    const formulaCheck = validateAdapterFormulaCodeString(code);
+    if (!formulaCheck.ok) return error(formulaCheck.error || "适配器公式无效");
+  }
 
   try {
     const updateData: any = {};

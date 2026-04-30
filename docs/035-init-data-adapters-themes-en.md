@@ -20,4 +20,4 @@
 
 已存在数据的库不会自动删适配器或改主题；需自行清空相关表或换新库才会重新跑种子。
 
-更多适配器「着色分层」约定与种子同步说明见 [`040-adapter-style-layer-spec-and-seed-sync.md`](./040-adapter-style-layer-spec-and-seed-sync.md)。
+更多适配器「着色分层」约定、公式 schema 与下发链路说明见 [`040-adapter-style-layer-spec-and-seed-sync.md`](./040-adapter-style-layer-spec-and-seed-sync.md)、[`041-extension-remote-adapters.md`](./041-extension-remote-adapters.md)、[`042-adapter-declarative-formula-json.md`](./042-adapter-declarative-formula-json.md)。
