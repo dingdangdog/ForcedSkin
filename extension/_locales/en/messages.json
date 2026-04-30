@@ -112,5 +112,68 @@
   },
   "pickDarkTheme": {
     "message": "Dark appearance"
+  },
+  "guestNickname": {
+    "message": "Guest"
+  },
+  "openOfficialSite": {
+    "message": "Open forcedskin.com"
+  },
+  "tabThemes": {
+    "message": "Themes"
+  },
+  "tabWhitelist": {
+    "message": "Whitelist"
+  },
+  "tabAccount": {
+    "message": "Account"
+  },
+  "panelThemesLead": {
+    "message": "Choose a mode. Use the chevron on Light/Dark to expand and pick a palette from the grid."
+  },
+  "panelWhitelistLead": {
+    "message": "Sites on the whitelist keep their original styles."
+  },
+  "whitelistEditorLabel": {
+    "message": "Domains (comma-separated)"
+  },
+  "whitelistPlaceholder": {
+    "message": "e.g. example.com, foo.org"
+  },
+  "whitelistHintComma": {
+    "message": "Use English commas , between domains. Protocols/paths are stripped and entries deduped."
+  },
+  "saveWhitelist": {
+    "message": "Save whitelist"
+  },
+  "whitelistSaved": {
+    "message": "Whitelist saved"
+  },
+  "accountThemeOverview": {
+    "message": "All palettes"
+  },
+  "overviewLight": {
+    "message": "Light palettes"
+  },
+  "overviewDark": {
+    "message": "Dark palettes"
+  },
+  "accountSyncedTitle": {
+    "message": "Synced with account"
+  },
+  "themeFooterHint": {
+    "message": "Controls whether pages are recolored (except sites on the whitelist). Expand Light or Dark to pick a palette."
+  },
+  "expandPickLight": {
+    "message": "Expand or collapse light themes"
+  },
+  "expandPickDark": {
+    "message": "Expand or collapse dark themes"
+  },
+  "pickedPaletteLabel": {
+    "message": "Active palette"
+  },
+  "themeInternalId": {
+    "message": "ID"
   }
 }

@@ -6,90 +6,363 @@
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
-    <main class="app">
-      <div class="header">
-        <img src="../LOGO.webp" alt="ForcedSkin" class="header-logo" />
-        <h1>ForcedSkin</h1>
-        <div id="userBadge" class="user-badge hidden">
-          <span id="userName"></span>
-          <button id="logoutBtn" class="logout-btn" data-i18n-title="logoutTitle">✕</button>
+    <div class="shell">
+      <header class="top-bar">
+        <div class="brand">
+          <img
+            src="../LOGO.webp"
+            alt=""
+            class="brand-logo"
+            width="28"
+            height="28"
+          />
+          <span class="brand-name">ForcedSkin</span>
         </div>
-      </div>
-
-      <!-- 主题模式选择 -->
-      <div class="options">
-        <label class="option">
-          <input type="radio" name="themeMode" value="light" />
-          <div class="option-body">
-            <span class="option-label" data-i18n="optionLight"></span>
-            <span id="lightThemeName" class="option-sub"></span>
+        <div class="top-actions">
+          <div id="headerUserBlock" class="header-user">
+            <img
+              id="headerAvatar"
+              class="header-avatar hidden"
+              alt=""
+              crossorigin="anonymous"
+            />
+            <div
+              id="headerAvatarFallback"
+              class="header-avatar header-avatar--fallback"
+              aria-hidden="true"
+            ></div>
+            <span
+              id="headerUserName"
+              class="header-user-name"
+              data-i18n="guestNickname"
+            ></span>
           </div>
-        </label>
-        <label class="option">
-          <input type="radio" name="themeMode" value="dark" />
-          <div class="option-body">
-            <span class="option-label" data-i18n="optionDark"></span>
-            <span id="darkThemeName" class="option-sub"></span>
-          </div>
-        </label>
-        <label class="option">
-          <input type="radio" name="themeMode" value="off" />
-          <div class="option-body">
-            <span class="option-label" data-i18n="optionOff"></span>
-            <span class="option-sub" data-i18n="optionOffSub"></span>
-          </div>
-        </label>
-      </div>
-
-      <div id="lightThemeStrip" class="theme-strip hidden">
-        <p class="theme-strip-label" data-i18n="pickLightTheme"></p>
-        <div id="lightThemeChips" class="theme-chips" role="listbox" aria-label="Light themes"></div>
-      </div>
-      <div id="darkThemeStrip" class="theme-strip hidden">
-        <p class="theme-strip-label" data-i18n="pickDarkTheme"></p>
-        <div id="darkThemeChips" class="theme-chips" role="listbox" aria-label="Dark themes"></div>
-      </div>
-
-      <!-- 白名单控制 -->
-      <section class="whitelist-panel">
-        <p class="field-label" data-i18n="currentSite"></p>
-        <p id="siteHostText" class="site-host">-</p>
-        <p id="whitelistStateText" class="whitelist-state">-</p>
-        <div class="button-row">
-          <button id="addWhitelistBtn" class="save-btn" type="button" data-i18n="addWhitelist"></button>
-          <button id="removeWhitelistBtn" class="save-btn danger" type="button" data-i18n="removeWhitelist"></button>
+          <button
+            type="button"
+            id="openSiteBtn"
+            class="icon-btn"
+            data-i18n-title="openOfficialSite"
+          >
+            <svg
+              class="icon-svg"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+              />
+            </svg>
+          </button>
         </div>
-      </section>
+      </header>
 
-      <p id="statusText" class="status"></p>
+      <nav class="tab-bar" role="tablist" aria-label="Main">
+        <button
+          type="button"
+          role="tab"
+          class="tab tab--active"
+          data-tab="themes"
+          aria-selected="true"
+          id="tab-btn-themes"
+          data-i18n="tabThemes"
+        ></button>
+        <button
+          type="button"
+          role="tab"
+          class="tab"
+          data-tab="whitelist"
+          aria-selected="false"
+          id="tab-btn-whitelist"
+          data-i18n="tabWhitelist"
+        ></button>
+        <button
+          type="button"
+          role="tab"
+          class="tab"
+          data-tab="account"
+          aria-selected="false"
+          id="tab-btn-account"
+          data-i18n="tabAccount"
+        ></button>
+      </nav>
 
-      <!-- 登录区块 -->
-      <section id="loginSection" class="login-section hidden">
-        <div class="section-divider"></div>
-        <p class="field-label" data-i18n="loginPrompt"></p>
-        <div class="login-form">
-          <button id="loginBtn" class="save-btn primary-btn" type="button" data-i18n="loginBtnOauth"></button>
-          <p id="loginError" class="login-error hidden"></p>
-        </div>
-      </section>
+      <main class="panels">
+        <!-- 1 主题 -->
+        <section
+          id="panel-themes"
+          class="tab-panel tab-panel--active"
+          role="tabpanel"
+          aria-labelledby="tab-btn-themes"
+        >
+          <p class="panel-lead" data-i18n="panelThemesLead"></p>
 
-      <!-- 已登录：主题同步状态 -->
-      <section id="syncSection" class="sync-section hidden">
-        <div class="section-divider"></div>
-        <p class="field-label" data-i18n="accountThemes"></p>
-        <div class="theme-sync-row">
-          <div class="theme-sync-item">
-            <span class="theme-sync-label" data-i18n="syncLight"></span>
-            <span id="syncLightName" class="theme-sync-name">—</span>
+          <div class="mode-stack">
+            <!-- 亮色：可展开 -->
+            <div class="mode-block" id="modeBlockLight">
+              <div class="mode-block__head">
+                <label class="mode-block__radio">
+                  <input type="radio" name="themeMode" value="light" />
+                  <div class="mode-block__radio-body">
+                    <span
+                      class="mode-block__title"
+                      data-i18n="optionLight"
+                    ></span>
+                    <!-- <span
+                      class="mode-block__picked-label"
+                      data-i18n="pickedPaletteLabel"
+                    ></span> -->
+                    <span
+                      id="lightThemeName"
+                      class="mode-block__picked-title"
+                    ></span>
+                    <!-- <span
+                      id="lightThemeSlug"
+                      class="mode-block__picked-id"
+                    ></span> -->
+                  </div>
+                </label>
+                <button
+                  type="button"
+                  class="mode-block__expand"
+                  id="expandLightBtn"
+                  aria-controls="lightSubPanel"
+                  aria-expanded="false"
+                  data-i18n-title="expandPickLight"
+                >
+                  <svg
+                    class="mode-chevron"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path fill="currentColor" d="M7 10l5 5 5-5z" />
+                  </svg>
+                </button>
+              </div>
+              <div id="lightSubPanel" class="mode-block__sub" hidden>
+                <p class="sub-hint" data-i18n="pickLightTheme"></p>
+                <div
+                  id="lightThemeChips"
+                  class="theme-grid"
+                  role="listbox"
+                ></div>
+              </div>
+            </div>
+
+            <!-- 暗色：可展开 -->
+            <div class="mode-block" id="modeBlockDark">
+              <div class="mode-block__head">
+                <label class="mode-block__radio">
+                  <input type="radio" name="themeMode" value="dark" />
+                  <div class="mode-block__radio-body">
+                    <span
+                      class="mode-block__title"
+                      data-i18n="optionDark"
+                    ></span>
+                    <!-- <span
+                      class="mode-block__picked-label"
+                      data-i18n="pickedPaletteLabel"
+                    ></span> -->
+                    <span
+                      id="darkThemeName"
+                      class="mode-block__picked-title"
+                    ></span>
+                    <!-- <span
+                      id="darkThemeSlug"
+                      class="mode-block__picked-id"
+                    ></span> -->
+                  </div>
+                </label>
+                <button
+                  type="button"
+                  class="mode-block__expand"
+                  id="expandDarkBtn"
+                  aria-controls="darkSubPanel"
+                  aria-expanded="false"
+                  data-i18n-title="expandPickDark"
+                >
+                  <svg
+                    class="mode-chevron"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path fill="currentColor" d="M7 10l5 5 5-5z" />
+                  </svg>
+                </button>
+              </div>
+              <div id="darkSubPanel" class="mode-block__sub" hidden>
+                <p class="sub-hint" data-i18n="pickDarkTheme"></p>
+                <div
+                  id="darkThemeChips"
+                  class="theme-grid"
+                  role="listbox"
+                ></div>
+              </div>
+            </div>
+
+            <!-- 不修改 -->
+            <label class="mode-block mode-block--off">
+              <div class="mode-block__head mode-block__head--simple">
+                <input type="radio" name="themeMode" value="off" />
+                <div class="mode-block__radio-body">
+                  <span class="mode-block__title" data-i18n="optionOff"></span>
+                  <span
+                    class="mode-block__picked mode-block__picked--muted"
+                    data-i18n="optionOffSub"
+                  ></span>
+                </div>
+              </div>
+            </label>
           </div>
-          <div class="theme-sync-item">
-            <span class="theme-sync-label" data-i18n="syncDark"></span>
-            <span id="syncDarkName" class="theme-sync-name">—</span>
+
+          <p class="theme-footer-hint" data-i18n="themeFooterHint"></p>
+          <p
+            id="statusText"
+            class="status status--toast hidden"
+            aria-live="polite"
+          ></p>
+        </section>
+
+        <!-- 2 白名单 -->
+        <section
+          id="panel-whitelist"
+          class="tab-panel"
+          role="tabpanel"
+          aria-labelledby="tab-btn-whitelist"
+          hidden
+        >
+          <p class="panel-lead" data-i18n="panelWhitelistLead"></p>
+          <label
+            class="field-label"
+            for="whitelistTextarea"
+            data-i18n="whitelistEditorLabel"
+          ></label>
+          <textarea
+            id="whitelistTextarea"
+            class="whitelist-textarea"
+            spellcheck="false"
+            rows="5"
+            data-i18n-placeholder="whitelistPlaceholder"
+          ></textarea>
+          <p class="hint" data-i18n="whitelistHintComma"></p>
+          <div class="button-row">
+            <button
+              id="saveWhitelistBtn"
+              type="button"
+              class="save-btn primary-btn"
+              data-i18n="saveWhitelist"
+            ></button>
           </div>
-        </div>
-        <button id="syncBtn" class="save-btn" type="button" style="margin-top:8px" data-i18n="syncBtn"></button>
-      </section>
-    </main>
+
+          <div class="whitelist-quick card-block">
+            <p class="field-label" data-i18n="currentSite"></p>
+            <p id="siteHostText" class="site-host">-</p>
+            <p id="whitelistStateText" class="whitelist-state">-</p>
+            <div class="button-row button-row--split">
+              <button
+                id="addWhitelistBtn"
+                type="button"
+                class="save-btn"
+                data-i18n="addWhitelist"
+              ></button>
+              <button
+                id="removeWhitelistBtn"
+                type="button"
+                class="save-btn danger"
+                data-i18n="removeWhitelist"
+              ></button>
+            </div>
+          </div>
+          <p id="whitelistStatusToast" class="status status--sub"></p>
+        </section>
+
+        <!-- 3 账号 -->
+        <section
+          id="panel-account"
+          class="tab-panel"
+          role="tabpanel"
+          aria-labelledby="tab-btn-account"
+          hidden
+        >
+          <div id="accountGuest" class="account-guest">
+            <p class="panel-lead" data-i18n="loginPrompt"></p>
+            <button
+              id="loginBtn"
+              type="button"
+              class="save-btn primary-btn"
+              data-i18n="loginBtnOauth"
+            ></button>
+            <p id="loginError" class="login-error hidden"></p>
+          </div>
+
+          <div id="accountSignedIn" class="account-signed-in hidden">
+            <div class="account-profile card-block">
+              <img
+                id="accountAvatar"
+                class="account-avatar hidden"
+                alt=""
+                crossorigin="anonymous"
+              />
+              <div
+                id="accountAvatarFallback"
+                class="account-avatar account-avatar--lg account-avatar--fallback"
+                aria-hidden="true"
+              ></div>
+              <div class="account-profile-text">
+                <div id="accountDisplayName" class="account-name"></div>
+                <div id="accountEmail" class="account-email"></div>
+              </div>
+            </div>
+
+            <p class="section-title" data-i18n="accountThemeOverview"></p>
+            <div class="card-block">
+              <p class="theme-strip-label" data-i18n="overviewLight"></p>
+              <div
+                id="accountLightChips"
+                class="theme-grid theme-grid--account"
+                role="listbox"
+              ></div>
+            </div>
+            <div class="card-block">
+              <p class="theme-strip-label" data-i18n="overviewDark"></p>
+              <div
+                id="accountDarkChips"
+                class="theme-grid theme-grid--account"
+                role="listbox"
+              ></div>
+            </div>
+
+            <p class="section-title" data-i18n="accountSyncedTitle"></p>
+            <div class="theme-sync-row">
+              <div class="theme-sync-item">
+                <span class="theme-sync-label" data-i18n="syncLight"></span>
+                <span id="syncLightName" class="theme-sync-name">—</span>
+              </div>
+              <div class="theme-sync-item">
+                <span class="theme-sync-label" data-i18n="syncDark"></span>
+                <span id="syncDarkName" class="theme-sync-name">—</span>
+              </div>
+            </div>
+            <button
+              id="syncBtn"
+              type="button"
+              class="save-btn"
+              data-i18n="syncBtn"
+            ></button>
+
+            <button
+              id="logoutBtn"
+              type="button"
+              class="save-btn danger account-logout"
+              data-i18n="logoutTitle"
+            ></button>
+          </div>
+
+          <p id="accountStatusText" class="status"></p>
+        </section>
+      </main>
+    </div>
     <script src="./popup.js"></script>
   </body>
 </html>

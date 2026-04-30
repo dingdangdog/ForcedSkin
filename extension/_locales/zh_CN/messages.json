@@ -112,5 +112,68 @@
   },
   "pickDarkTheme": {
     "message": "暗色外观"
+  },
+  "guestNickname": {
+    "message": "游客"
+  },
+  "openOfficialSite": {
+    "message": "在浏览器中打开 forcedskin.com"
+  },
+  "tabThemes": {
+    "message": "主题"
+  },
+  "tabWhitelist": {
+    "message": "白名单"
+  },
+  "tabAccount": {
+    "message": "账号"
+  },
+  "panelThemesLead": {
+    "message": "选择要对网页生效的模式；点击亮/暗右侧箭头可展开，并在网格里挑选具体主题。"
+  },
+  "panelWhitelistLead": {
+    "message": "列入白名单的网站将保持原样式，不参与强制换肤。"
+  },
+  "whitelistEditorLabel": {
+    "message": "域名列表（英文逗号 , 分隔）"
+  },
+  "whitelistPlaceholder": {
+    "message": "例：example.com, foo.org"
+  },
+  "whitelistHintComma": {
+    "message": "仅使用英文半角逗号 , 分隔多个域名；会自动去重并忽略协议与路径。"
+  },
+  "saveWhitelist": {
+    "message": "保存白名单"
+  },
+  "whitelistSaved": {
+    "message": "白名单已保存"
+  },
+  "accountThemeOverview": {
+    "message": "全部可选主题"
+  },
+  "overviewLight": {
+    "message": "亮色方案"
+  },
+  "overviewDark": {
+    "message": "暗色方案"
+  },
+  "accountSyncedTitle": {
+    "message": "与账号同步"
+  },
+  "themeFooterHint": {
+    "message": "扩展按此处设置改色（白名单站点除外）。展开「亮色」或「暗色」可挑选具体主题。"
+  },
+  "expandPickLight": {
+    "message": "展开或收起亮色主题列表"
+  },
+  "expandPickDark": {
+    "message": "展开或收起暗色主题列表"
+  },
+  "pickedPaletteLabel": {
+    "message": "当前配色"
+  },
+  "themeInternalId": {
+    "message": "标识"
   }
 }

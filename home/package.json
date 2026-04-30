@@ -1,5 +1,6 @@
 {
-  "name": "autowriting",
+  "name": "forcedskin",
+  "version": "0.0.2",
   "type": "module",
   "private": true,
   "scripts": {

@@ -25,7 +25,7 @@ RUN apk add --no-cache openssl libc6-compat
 RUN addgroup -S nodejs && adduser -S nuxtjs -G nodejs
 
 # 复制运行所需产物
-COPY --from=builder --chown=nuxtjs:nodejs /app/.output ./.output
+COPY --from=builder --chown=nuxtjs:nodejs /app/.output ./
 COPY --from=builder --chown=nuxtjs:nodejs /app/package.json ./package.json
 COPY --from=builder --chown=nuxtjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nuxtjs:nodejs /app/prisma.config.ts ./prisma.config.ts
@@ -34,13 +34,11 @@ COPY --from=builder --chown=nuxtjs:nodejs /app/server/seeds ./server/seeds
 # 切换到非 root 用户
 USER nuxtjs
 
-# 暴露端口
-EXPOSE 7061
 
 # 设置环境变量
 ENV TZ=Asia/Shanghai
 ENV NODE_ENV=production
-ENV PORT=7061
+ENV PORT=13303
 
 # 数据库配置（可通过 docker-compose 覆盖）
 ENV DATABASE_MODE=postgre
@@ -52,7 +50,7 @@ ENV NUXT_RESOURCE=/app/resources
 # 认证配置（可通过 docker-compose 覆盖）
 ENV NUXT_AUTH_BASE_URL="https://forcedskin.com/api/auth"
 ENV NUXT_AUTH_SECRET="login123"
-ENV NUXT_SITE_URL="salt123"
+ENV NUXT_SITE_URL="https://forcedskin.com"
 # ENV NUXT_SALT="salt123"
 # ENV NUXT_TOKEN_SECRET=""
 
@@ -67,5 +65,8 @@ ENV GITHUB_CLIENT_SECRET=""
 ENV GOOGLE_CLIENT_ID=""
 ENV GOOGLE_CLIENT_SECRET=""
 
+# 暴露端口
+EXPOSE 13303
+
 # 启动应用
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "./server/index.mjs"]
