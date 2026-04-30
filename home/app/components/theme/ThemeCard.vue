@@ -25,6 +25,8 @@ const props = defineProps<{
   favorited?: boolean;
   selected?: boolean;
   showActions?: boolean;
+  /** 仅展示缩略 UI，不响应点击（后台预览等） */
+  asPreview?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -51,13 +53,21 @@ const primary = computed(() => {
   if (typeof p === "string") return p;
   return p["500"] || p["600"] || "#4CAF50";
 });
+
+function onCardClick() {
+  if (props.asPreview) return;
+  emit("select", props.theme);
+}
 </script>
 
 <template>
   <div
-    class="relative rounded-2xl overflow-hidden border-2 transition-all duration-200 cursor-pointer group"
-    :class="selected ? 'border-primary-500 shadow-lg shadow-primary-500/20' : 'border-border hover:border-primary-400'"
-    @click="emit('select', theme)"
+    class="relative rounded-2xl overflow-hidden border-2 transition-all duration-200 group"
+    :class="[
+      asPreview ? 'cursor-default border-border' : 'cursor-pointer',
+      !asPreview && (selected ? 'border-primary-500 shadow-lg shadow-primary-500/20' : 'border-border hover:border-primary-400'),
+    ]"
+    @click="onCardClick"
   >
     <!-- 主题预览区：data-gts-ignore 告知插件跳过此区域，避免主题色覆盖预览效果 -->
     <div class="p-4 space-y-2" :style="{ backgroundColor: bg }" data-gts-ignore>
@@ -109,7 +119,7 @@ const primary = computed(() => {
 
     <!-- 操作按钮（始终显示） -->
     <div
-      v-if="showActions"
+      v-if="showActions && !asPreview"
       class="absolute top-2 right-2 flex gap-1.5"
     >
       <button
@@ -125,7 +135,7 @@ const primary = computed(() => {
     </div>
 
     <!-- 已选标记 -->
-    <div v-if="selected" class="absolute top-2 left-2">
+    <div v-if="selected && !asPreview" class="absolute top-2 left-2">
       <div class="w-5 h-5 rounded-full bg-primary-500 flex items-center justify-center shadow">
         <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>

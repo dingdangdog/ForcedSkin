@@ -109,6 +109,15 @@ async function remove(theme: Theme) {
   } catch {}
 }
 
+const formPreviewTheme = computed(() => ({
+  id: "admin-form-preview",
+  name: editing.value?.name || "preview",
+  displayName: form.displayName.trim() || "（预览）",
+  description: form.description,
+  mode: form.mode,
+  colors: form.colors,
+}));
+
 watch(() => form.mode, (m) => { if (!editing.value) form.colors = DEFAULT_COLORS[m as "light" | "dark"]; });
 
 onMounted(load);
@@ -143,15 +152,11 @@ onMounted(load);
 
     <div v-else class="space-y-3">
       <div v-for="theme in filtered" :key="theme.id"
-        class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:bg-surface-muted transition-colors"
+        class="flex flex-col sm:flex-row sm:items-start gap-4 p-4 rounded-xl border border-border bg-surface hover:bg-surface-muted transition-colors"
         :class="{ 'border-yellow-300': !theme.isActive && theme.submitterId }"
       >
-        <!-- 色块预览 -->
-        <div class="w-10 h-10 rounded-lg border border-border overflow-hidden grid grid-cols-2 shrink-0">
-          <div :style="{ backgroundColor: tryParseBg(theme.colors) }"></div>
-          <div :style="{ backgroundColor: tryParsePrimary(theme.colors) }"></div>
-          <div :style="{ backgroundColor: tryParseSurface(theme.colors) }"></div>
-          <div :style="{ backgroundColor: tryParseFg(theme.colors) }"></div>
+        <div class="w-[11rem] max-w-full shrink-0 mx-auto sm:mx-0">
+          <ThemeCard :theme="theme" as-preview />
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap">
@@ -164,7 +169,7 @@ onMounted(load);
           </div>
           <p class="text-muted text-xs mt-0.5 truncate">{{ theme.description }}</p>
         </div>
-        <div class="flex items-center gap-2 shrink-0">
+        <div class="flex flex-wrap items-center gap-2 shrink-0 sm:self-center max-sm:w-full max-sm:justify-end">
           <!-- 社区投稿待审核：显示上线/拒绝 -->
           <template v-if="theme.submitterId && !theme.isActive">
             <button @click="openEdit(theme)" class="px-3 py-1 rounded-lg text-xs border border-border text-muted hover:text-foreground hover:bg-surface-muted transition-colors">查看/编辑</button>
@@ -187,9 +192,10 @@ onMounted(load);
 
     <!-- 表单弹窗 -->
     <div v-if="showForm" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" @click.self="showForm = false">
-      <div class="bg-background border border-border rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6">
+      <div class="bg-background border border-border rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto p-6">
         <h2 class="font-bold text-foreground text-lg mb-4">{{ editing ? '编辑主题' : '新建主题' }}</h2>
-        <div class="space-y-4">
+        <div class="lg:grid lg:grid-cols-[1fr_min(18rem,40%)] lg:gap-6 lg:items-start space-y-4 lg:space-y-0">
+          <div class="space-y-4">
           <div v-if="!editing" class="grid grid-cols-2 gap-3">
             <div>
               <label class="text-xs text-muted mb-1 block">标识 name *</label>
@@ -227,6 +233,11 @@ onMounted(load);
               <input type="number" v-model="form.sortOrder" class="w-16 px-2 py-1 rounded-lg border border-border bg-surface text-foreground text-sm focus:outline-none"/>
             </div>
           </div>
+          </div>
+          <div class="lg:sticky lg:top-0 space-y-2">
+            <p class="text-xs text-muted font-medium">前台效果预览</p>
+            <ThemeCard :theme="formPreviewTheme" as-preview />
+          </div>
         </div>
         <div class="flex gap-3 mt-6">
           <button @click="save" :disabled="saving" class="flex-1 py-2.5 rounded-xl bg-primary-500 text-white font-medium hover:bg-primary-600 disabled:opacity-60 transition-colors">
@@ -242,18 +253,6 @@ onMounted(load);
     </Transition>
   </div>
 </template>
-
-<script lang="ts">
-function tryParseField(colorsStr: string, field: string, fallback: string) {
-  try { const c = JSON.parse(colorsStr); return c[field] || fallback; } catch { return fallback; }
-}
-const tryParseBg = (c: string) => tryParseField(c, "background", "#888");
-const tryParseFg = (c: string) => tryParseField(c, "foreground", "#444");
-const tryParseSurface = (c: string) => tryParseField(c, "surface", "#aaa");
-const tryParsePrimary = (c: string) => {
-  try { const colors = JSON.parse(c); const p = colors.primary; return typeof p === "string" ? p : (p?.["500"] || "#4CAF50"); } catch { return "#4CAF50"; }
-};
-</script>
 
 <style scoped>
 .fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
