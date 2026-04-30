@@ -66,28 +66,19 @@
     "message": "Not a recognized website"
   },
   "loginPrompt": {
-    "message": "Log in to forcedskin.com to sync themes"
+    "message": "Use forcedskin.com OAuth login to sync themes"
   },
-  "loginUsername": {
-    "message": "Username"
+  "loginBtnOauth": {
+    "message": "Continue with GitHub / Google"
   },
-  "loginPassword": {
-    "message": "Password"
+  "loggingInOauth": {
+    "message": "Opening sign-in window…"
   },
-  "loginBtn": {
-    "message": "Log in"
-  },
-  "loggingIn": {
-    "message": "Signing in…"
-  },
-  "loginSuccess": {
+  "loginSuccessOauth": {
     "message": "Signed in, theme synced"
   },
-  "loginFail": {
-    "message": "Sign in failed, please check credentials"
-  },
-  "loginFillAll": {
-    "message": "Please fill in username and password"
+  "loginFailOauth": {
+    "message": "Sign in failed, please try again"
   },
   "accountThemes": {
     "message": "Account themes"

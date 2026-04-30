@@ -31,8 +31,6 @@ const userNameEl = document.getElementById("userName");
 const logoutBtn = document.getElementById("logoutBtn");
 const loginSection = document.getElementById("loginSection");
 const syncSection = document.getElementById("syncSection");
-const loginUsernameEl = document.getElementById("loginUsername");
-const loginPasswordEl = document.getElementById("loginPassword");
 const loginBtn = document.getElementById("loginBtn");
 const loginError = document.getElementById("loginError");
 const syncBtn = document.getElementById("syncBtn");
@@ -170,27 +168,20 @@ async function renderAccountState() {
 }
 
 loginBtn.addEventListener("click", async () => {
-  const username = loginUsernameEl.value.trim();
-  const password = loginPasswordEl.value;
-  if (!username || !password) {
-    loginError.textContent = i18n("loginFillAll");
-    loginError.classList.remove("hidden");
-    return;
-  }
   loginBtn.disabled = true;
-  loginBtn.textContent = i18n("loggingIn");
+  loginBtn.textContent = i18n("loggingInOauth");
   loginError.classList.add("hidden");
 
-  const response = await chrome.runtime.sendMessage({ type: "LOGIN", username, password });
+  const response = await chrome.runtime.sendMessage({ type: "LOGIN_WITH_OAUTH" });
   loginBtn.disabled = false;
-  loginBtn.textContent = i18n("loginBtn");
+  loginBtn.textContent = i18n("loginBtnOauth");
 
   if (response?.ok) {
     await renderAccountState();
     await chrome.runtime.sendMessage({ type: "SYNC_THEME" });
-    statusText.textContent = i18n("loginSuccess");
+    statusText.textContent = i18n("loginSuccessOauth");
   } else {
-    loginError.textContent = response?.error || i18n("loginFail");
+    loginError.textContent = response?.error || i18n("loginFailOauth");
     loginError.classList.remove("hidden");
   }
 });

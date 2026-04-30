@@ -67,17 +67,42 @@ function canInjectToUrl(url) {
   return /^https?:\/\//.test(url);
 }
 
-// 登录并获取 token
-async function doLogin(username, password) {
-  const res = await fetch(`${API_BASE}/api/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+function parseOauthResult(redirectedTo) {
+  const url = new URL(redirectedTo);
+  const token = url.searchParams.get("token");
+  if (!token) {
+    const error = url.searchParams.get("error") || "登录失败";
+    throw new Error(error);
+  }
+  return {
+    token,
+    user: {
+      id: url.searchParams.get("id") || "",
+      name: url.searchParams.get("name") || "",
+      email: url.searchParams.get("email") || "",
+      avatar: url.searchParams.get("avatar") || "",
+      roles: url.searchParams.get("roles") || "user",
+      lightTheme: url.searchParams.get("lightTheme") || null,
+      darkTheme: url.searchParams.get("darkTheme") || null,
+    },
+  };
+}
+
+async function doOauthLogin() {
+  if (!chrome.identity?.launchWebAuthFlow) {
+    throw new Error("当前浏览器不支持 OAuth 登录");
+  }
+
+  const redirectUri = chrome.identity.getRedirectURL("forcedskin-auth");
+  const authUrl = `${API_BASE}/api/extension/auth/bridge?redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+  const redirectedTo = await chrome.identity.launchWebAuthFlow({
+    url: authUrl,
+    interactive: true,
   });
-  if (!res.ok) throw new Error("网络错误");
-  const json = await res.json();
-  if (json.c !== 200 || !json.d) throw new Error(json.m || "登录失败");
-  return json.d; // { id, username, name, email, lightTheme, darkTheme, token }
+
+  if (!redirectedTo) throw new Error("未完成登录流程");
+  return parseOauthResult(redirectedTo);
 }
 
 // 从官网拉取用户主题配色
@@ -172,13 +197,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  if (message.type === "LOGIN") {
-    const { username, password } = message;
-    doLogin(username, password)
-      .then(async (userData) => {
+  if (message.type === "LOGIN_WITH_OAUTH") {
+    doOauthLogin()
+      .then(async ({ token, user }) => {
         await chrome.storage.local.set({
-          [USER_KEY]: { id: userData.id, username: userData.username, name: userData.name, lightTheme: userData.lightTheme, darkTheme: userData.darkTheme },
-          [TOKEN_KEY]: userData.token,
+          [USER_KEY]: user,
+          [TOKEN_KEY]: token,
         });
         sendResponse({ ok: true });
       })
