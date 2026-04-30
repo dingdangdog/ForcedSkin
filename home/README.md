@@ -14,9 +14,9 @@ pnpm build
 pnpm preview
 
 # docker
-docker build -t project:0.0.1 .
-docker save -o project.0.0.1.tar project:0.0.1
-docker load -i project.0.0.1.tar
+docker build -t forcedskin:0.0.1 .
+docker save -o forcedskin.0.0.1.tar forcedskin:0.0.1
+docker load -i forcedskin.0.0.1.tar
 
 # prisma
 npx prisma migrate dev --name init-db

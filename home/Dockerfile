@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # 多阶段构建 Dockerfile for Nuxt 4 + Prisma
 FROM node:22.21.1-alpine3.22 AS builder
 
