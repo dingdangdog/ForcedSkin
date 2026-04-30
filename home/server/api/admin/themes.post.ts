@@ -1,5 +1,6 @@
 import prisma from "~~/server/lib/prisma";
 import { success, error, serverError } from "~~/server/utils/result";
+import { normalizeJsonForStorage } from "~~/server/utils/json-storage";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -10,7 +11,7 @@ export default defineEventHandler(async (event) => {
   if (!/^[a-z0-9-]+$/.test(name)) return error("name 只允许小写字母、数字和连字符");
 
   try {
-    const colorsStr = typeof colors === "string" ? colors : JSON.stringify(colors);
+    const colorsStr = normalizeJsonForStorage(colors);
 
     if (isDefault) {
       await prisma.theme.updateMany({ where: { mode, isDefault: true }, data: { isDefault: false } });

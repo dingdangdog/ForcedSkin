@@ -78,6 +78,85 @@ let lightExpanded = false;
 let darkExpanded = false;
 
 // ── Popup chrome (appearance) ─────────────────────────────────────────────────
+/** 与 content/engine.js normalizeRemoteColors 一致的默认值，用于补齐服务端 ThemeColors */
+const POPUP_PALETTE_DEFAULTS = {
+  light: {
+    background: "#F8FFF8",
+    foreground: "#2C3E2C",
+    surface: "#F0FFF0",
+    surfaceMuted: "#F5FDF5",
+    border: "#D8E8D8",
+    muted: "#6C7E6C",
+    primary500: "#4CAF50",
+    primary700: "#388E3C",
+  },
+  dark: {
+    background: "#101410",
+    foreground: "#E0E0E0",
+    surface: "#1E221E",
+    surfaceMuted: "#161816",
+    border: "#333633",
+    muted: "#A0A0A0",
+    primary500: "#4A9B6B",
+    primary700: "#346F4D",
+  },
+};
+
+const POPUP_VARS_FROM_PALETTE = [
+  "--popup-bg",
+  "--popup-fg",
+  "--popup-muted",
+  "--popup-surface",
+  "--popup-border",
+  "--popup-primary",
+  "--popup-primary-strong",
+  "--popup-primary-soft",
+];
+
+function normalizeRemoteColorsForPopup(colors, mode) {
+  if (!colors || typeof colors !== "object") return null;
+  const defaults = POPUP_PALETTE_DEFAULTS[mode];
+  const p = colors.primary;
+  const primary500 =
+    typeof p === "string" ? p : (p?.["500"] || p?.["600"] || defaults?.primary500);
+  const primary700 =
+    typeof p === "string" ? p : (p?.["700"] || p?.["800"] || defaults?.primary700);
+  return {
+    background: colors.background || defaults?.background,
+    foreground: colors.foreground || defaults?.foreground,
+    surface: colors.surface || defaults?.surface,
+    surfaceMuted: colors.surfaceMuted || colors["surface-muted"] || defaults?.surfaceMuted,
+    border: colors.border || defaults?.border,
+    muted: colors.muted || defaults?.muted,
+    primary500,
+    primary700,
+  };
+}
+
+function clearPopupPaletteOverrides() {
+  for (const key of POPUP_VARS_FROM_PALETTE) {
+    document.body.style.removeProperty(key);
+  }
+}
+
+/** 将存储中的 gtsPalette（与网页注入同源）映射到弹窗 CSS 变量 */
+function applyPopupPaletteFromCatalog(mode, palette) {
+  clearPopupPaletteOverrides();
+  if (!palette || (mode !== "light" && mode !== "dark")) return;
+  const raw = palette[mode];
+  if (!raw || typeof raw !== "object") return;
+  const n = normalizeRemoteColorsForPopup(raw, mode);
+  if (!n) return;
+  document.body.style.setProperty("--popup-bg", n.background);
+  document.body.style.setProperty("--popup-fg", n.foreground);
+  document.body.style.setProperty("--popup-muted", n.muted);
+  document.body.style.setProperty("--popup-surface", n.surface);
+  document.body.style.setProperty("--popup-border", n.border);
+  document.body.style.setProperty("--popup-primary", n.primary500);
+  document.body.style.setProperty("--popup-primary-strong", n.primary700);
+  document.body.style.setProperty("--popup-primary-soft", n.surfaceMuted);
+}
+
 function setPopupTheme(mode) {
   document.body.setAttribute("data-theme", mode || "off");
 }
@@ -312,6 +391,7 @@ async function loadCurrentMode() {
 
 function updateStatus(mode) {
   setPopupTheme(mode);
+  applyPopupPaletteFromCatalog(mode, lastSettingsSnapshot?.palette);
 }
 
 async function onModeChange(event) {

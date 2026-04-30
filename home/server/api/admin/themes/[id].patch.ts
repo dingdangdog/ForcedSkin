@@ -1,5 +1,6 @@
 import prisma from "~~/server/lib/prisma";
 import { success, error, serverError } from "~~/server/utils/result";
+import { normalizeJsonForStorage } from "~~/server/utils/json-storage";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
@@ -18,7 +19,7 @@ export default defineEventHandler(async (event) => {
     if (isActive !== undefined) updateData.isActive = !!isActive;
     if (sortOrder !== undefined) updateData.sortOrder = Number(sortOrder);
     if (colors !== undefined) {
-      updateData.colors = typeof colors === "string" ? colors : JSON.stringify(colors);
+      updateData.colors = normalizeJsonForStorage(colors);
     }
 
     if (isDefault) {

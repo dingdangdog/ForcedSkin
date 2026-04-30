@@ -47,10 +47,13 @@ const submitting = ref(false);
 const submitForm = reactive({ displayName: "", description: "", mode: "light", colors: "" });
 const submitErrors = ref<Record<string, string>>({});
 
-const DEFAULT_SUBMIT_COLORS = {
+/** 仅作 textarea placeholder，不写入 v-model，避免误提交未修改的模板 */
+const COLORS_JSON_PLACEHOLDER = {
   light: JSON.stringify({ background: "#F8FFF8", foreground: "#2C3E2C", surface: "#F0FFF0", surfaceMuted: "#F5FDF5", border: "#D8E8D8", muted: "#6C7E6C", primary: { "500": "#4CAF50", "600": "#43A047", "700": "#388E3C" } }, null, 2),
   dark: JSON.stringify({ background: "#101410", foreground: "#E0E0E0", surface: "#1E221E", surfaceMuted: "#161816", border: "#333633", muted: "#A0A0A0", primary: { "500": "#4A9B6B", "600": "#3F855C", "700": "#346F4D" } }, null, 2),
-};
+} as const;
+
+const colorsJsonPlaceholder = computed(() => COLORS_JSON_PLACEHOLDER[submitForm.mode as "light" | "dark"]);
 
 const isLoggedIn = computed(() => status.value === "authenticated");
 
@@ -124,7 +127,7 @@ async function selectTheme(theme: Theme) {
 }
 
 function openSubmit() {
-  Object.assign(submitForm, { displayName: "", description: "", mode: "light", colors: DEFAULT_SUBMIT_COLORS.light });
+  Object.assign(submitForm, { displayName: "", description: "", mode: "light", colors: "" });
   submitErrors.value = {};
   showSubmit.value = true;
 }
@@ -148,10 +151,6 @@ async function submitTheme() {
     showSubmit.value = false;
   } catch { showToast(t("themes.submit_fail")); } finally { submitting.value = false; }
 }
-
-watch(() => submitForm.mode, (m) => {
-  submitForm.colors = DEFAULT_SUBMIT_COLORS[m as "light" | "dark"];
-});
 
 onMounted(load);
 </script>
@@ -248,7 +247,7 @@ onMounted(load);
               {{ t('themes.field_colors') }} *
               <NuxtLink to="/guide/theme" target="_blank" class="ml-1 text-primary-500 hover:underline">{{ t('themes.guide_link') }}</NuxtLink>
             </label>
-            <textarea v-model="submitForm.colors" rows="10"
+            <textarea v-model="submitForm.colors" rows="10" :placeholder="colorsJsonPlaceholder"
               class="w-full px-3 py-2 rounded-lg border text-xs font-mono text-foreground bg-surface outline-none resize-y"
               :class="submitErrors.colors ? 'border-red-400' : 'border-border focus:border-primary-400'" />
             <p v-if="submitErrors.colors" class="text-red-500 text-xs mt-0.5">{{ submitErrors.colors }}</p>

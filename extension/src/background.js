@@ -269,6 +269,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const pickDark = local[PICK_DARK_KEY];
         const lightMeta = catalog.light.find((t) => t.name === pickLight) || catalog.light[0];
         const darkMeta = catalog.dark.find((t) => t.name === pickDark) || catalog.dark[0];
+        const palette = await getStoredPalette();
         sendResponse({
           mode,
           whitelist,
@@ -278,6 +279,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           catalog,
           pickLight: lightMeta?.name || null,
           pickDark: darkMeta?.name || null,
+          palette,
         });
       } catch {
         const [mode, whitelist, { user }] = await Promise.all([getMode(), getWhitelist(), getStoredUser()]);
@@ -290,6 +292,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           catalog: { light: [], dark: [] },
           pickLight: null,
           pickDark: null,
+          palette: null,
         });
       }
     })();

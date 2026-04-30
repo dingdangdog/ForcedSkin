@@ -1,6 +1,7 @@
 import prisma from "~~/server/lib/prisma";
 import { success, error, serverError } from "~~/server/utils/result";
 import { getUserId } from "~~/server/utils/jwt";
+import { normalizeJsonForStorage } from "~~/server/utils/json-storage";
 
 function slugify(str: string): string {
   return str
@@ -29,8 +30,7 @@ export default defineEventHandler(async (event) => {
 
   let colorsStr: string;
   try {
-    colorsStr = typeof colors === "string" ? colors : JSON.stringify(colors);
-    JSON.parse(colorsStr);
+    colorsStr = normalizeJsonForStorage(colors);
   } catch {
     return error("colors 必须是合法的 JSON 格式");
   }
