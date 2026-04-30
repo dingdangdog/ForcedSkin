@@ -106,5 +106,11 @@
   },
   "loggedOut": {
     "message": "Signed out"
+  },
+  "pickLightTheme": {
+    "message": "Light appearance"
+  },
+  "pickDarkTheme": {
+    "message": "Dark appearance"
   }
 }

@@ -161,6 +161,71 @@ h1 {
   color: var(--popup-muted);
 }
 
+.theme-strip {
+  margin-top: 8px;
+}
+
+.theme-strip-label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  color: var(--popup-muted);
+}
+
+.theme-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.theme-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 140px;
+  padding: 4px 8px 4px 5px;
+  border-radius: 999px;
+  border: 1px solid var(--popup-border);
+  background: var(--popup-surface);
+  color: var(--popup-fg);
+  font-size: 11px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.theme-chip:hover {
+  border-color: var(--popup-primary);
+}
+
+.theme-chip-active {
+  border-color: var(--popup-primary);
+  background: var(--popup-primary-soft);
+  color: var(--popup-primary-strong);
+}
+
+.theme-chip-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+body[data-theme="dark"] .theme-chip-swatch {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.theme-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .options {
   display: grid;
   gap: 8px;

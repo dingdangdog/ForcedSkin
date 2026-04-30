@@ -38,6 +38,10 @@ const syncLightName = document.getElementById("syncLightName");
 const syncDarkName = document.getElementById("syncDarkName");
 const lightThemeName = document.getElementById("lightThemeName");
 const darkThemeName = document.getElementById("darkThemeName");
+const lightThemeStrip = document.getElementById("lightThemeStrip");
+const darkThemeStrip = document.getElementById("darkThemeStrip");
+const lightThemeChips = document.getElementById("lightThemeChips");
+const darkThemeChips = document.getElementById("darkThemeChips");
 
 // ── State ──────────────────────────────────────────────────────────────────────
 const MODE_LABEL = {
@@ -49,6 +53,7 @@ const MODE_LABEL = {
 let currentMode = "off";
 let currentWhitelist = [];
 let currentHostname = "";
+let lastSettingsSnapshot = null;
 
 // ── Popup theme ────────────────────────────────────────────────────────────────
 function setPopupTheme(mode) {
@@ -106,9 +111,47 @@ async function saveWhitelist(nextWhitelist) {
   renderWhitelistState();
 }
 
+function renderThemeVariantRows() {
+  const src = lastSettingsSnapshot;
+  if (!src || !lightThemeStrip || !darkThemeStrip) return;
+  const catalog = src.catalog || { light: [], dark: [] };
+
+  const showLight = currentMode === "light" && catalog.light?.length > 0;
+  const showDark = currentMode === "dark" && catalog.dark?.length > 0;
+  lightThemeStrip.classList.toggle("hidden", !showLight);
+  darkThemeStrip.classList.toggle("hidden", !showDark);
+
+  fillThemeChips(lightThemeChips, catalog.light, src.pickLight, "light");
+  fillThemeChips(darkThemeChips, catalog.dark, src.pickDark, "dark");
+}
+
+function fillThemeChips(container, list, selectedName, mode) {
+  if (!container) return;
+  container.innerHTML = "";
+  for (const t of list || []) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "theme-chip" + (t.name === selectedName ? " theme-chip-active" : "");
+    btn.title = t.displayName || t.name;
+    const swatch = document.createElement("span");
+    swatch.className = "theme-chip-swatch";
+    swatch.style.background = t.colors?.background || "#888";
+    btn.appendChild(swatch);
+    const label = document.createElement("span");
+    label.className = "theme-chip-label";
+    label.textContent = t.displayName || t.name;
+    btn.addEventListener("click", async () => {
+      const res = await chrome.runtime.sendMessage({ type: "APPLY_THEME_VARIANT", mode, themeName: t.name });
+      if (res?.ok) await loadCurrentMode();
+    });
+    container.appendChild(btn);
+  }
+}
+
 // ── Load mode ──────────────────────────────────────────────────────────────────
 async function loadCurrentMode() {
   const response = await chrome.runtime.sendMessage({ type: "GET_SETTINGS" });
+  lastSettingsSnapshot = response;
   currentMode = response?.mode || "off";
   currentWhitelist = normalizeWhitelist(response?.whitelist || []);
   currentHostname = await getCurrentTabHostname();
@@ -119,6 +162,7 @@ async function loadCurrentMode() {
 
   if (response?.lightTheme) lightThemeName.textContent = response.lightTheme;
   if (response?.darkTheme) darkThemeName.textContent = response.darkTheme;
+  renderThemeVariantRows();
 }
 
 function updateStatus(mode) {
@@ -130,6 +174,7 @@ function updateStatus(mode) {
 async function onModeChange(event) {
   currentMode = event.target.value;
   updateStatus(currentMode);
+  renderThemeVariantRows();
   await chrome.runtime.sendMessage({ type: "SET_THEME_MODE", mode: currentMode });
 }
 
@@ -179,6 +224,7 @@ loginBtn.addEventListener("click", async () => {
   if (response?.ok) {
     await renderAccountState();
     await chrome.runtime.sendMessage({ type: "SYNC_THEME" });
+    await loadCurrentMode();
     statusText.textContent = i18n("loginSuccessOauth");
   } else {
     loginError.textContent = response?.error || i18n("loginFailOauth");
@@ -201,8 +247,7 @@ syncBtn.addEventListener("click", async () => {
   if (response?.ok) {
     statusText.textContent = i18n("synced");
     await renderAccountState();
-    if (response.lightTheme) lightThemeName.textContent = response.lightTheme;
-    if (response.darkTheme) darkThemeName.textContent = response.darkTheme;
+    await loadCurrentMode();
   } else {
     statusText.textContent = response?.error || i18n("syncFailed");
   }

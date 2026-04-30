@@ -3,6 +3,9 @@ const WHITELIST_KEY = "siteWhitelist";
 const USER_KEY = "gtsUser";
 const TOKEN_KEY = "gtsToken";
 const PALETTE_KEY = "gtsPalette";
+const CATALOG_KEY = "gtsThemeCatalog";
+const PICK_LIGHT_KEY = "gtsPickLight";
+const PICK_DARK_KEY = "gtsPickDark";
 
 const API_BASE = "https://forcedskin.com";
 
@@ -138,51 +141,95 @@ async function syncAdapters() {
   }
 }
 
-// 从官网拉取用户主题配色
+// 从官网拉取用户主题配色与候选列表
 async function fetchExtensionSettings(token) {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
   const res = await fetch(`${API_BASE}/api/pub/extension-settings`, { headers });
   if (!res.ok) throw new Error("获取设置失败");
   const json = await res.json();
   if (json.c !== 200) throw new Error(json.m || "获取设置失败");
-  return json.d; // { isLoggedIn, light: { name, displayName, colors }, dark: { ... } }
+  return json.d;
 }
 
-// 同步主题：拉取并存储 palette
+function buildPaletteFromCatalog(catalog, pickLight, pickDark) {
+  const palette = {};
+  if (!catalog || typeof catalog !== "object") return null;
+  const lightRow = catalog.light?.find((t) => t.name === pickLight) || catalog.light?.[0];
+  const darkRow = catalog.dark?.find((t) => t.name === pickDark) || catalog.dark?.[0];
+  if (lightRow?.colors) palette.light = lightRow.colors;
+  if (darkRow?.colors) palette.dark = darkRow.colors;
+  return Object.keys(palette).length ? palette : null;
+}
+
+/** 将接口结果写入 catalog / 当前选中 / palette；已登录以服务端选中为准，游客保留合法的本机选中 */
+async function persistThemeStateFromApi(settings) {
+  const catalog = {
+    light: Array.isArray(settings.lightOptions) ? settings.lightOptions : [],
+    dark: Array.isArray(settings.darkOptions) ? settings.darkOptions : [],
+  };
+  await chrome.storage.local.set({ [CATALOG_KEY]: catalog });
+
+  const prev = await chrome.storage.local.get([PICK_LIGHT_KEY, PICK_DARK_KEY]);
+  let pickLight = prev[PICK_LIGHT_KEY];
+  let pickDark = prev[PICK_DARK_KEY];
+
+  if (settings.isLoggedIn) {
+    pickLight = settings.light?.name || pickLight;
+    pickDark = settings.dark?.name || pickDark;
+  } else {
+    if (!catalog.light.some((t) => t.name === pickLight)) pickLight = settings.light?.name || catalog.light[0]?.name;
+    if (!catalog.dark.some((t) => t.name === pickDark)) pickDark = settings.dark?.name || catalog.dark[0]?.name;
+  }
+
+  if (!pickLight && catalog.light[0]) pickLight = catalog.light[0].name;
+  if (!pickDark && catalog.dark[0]) pickDark = catalog.dark[0].name;
+
+  await chrome.storage.local.set({ [PICK_LIGHT_KEY]: pickLight, [PICK_DARK_KEY]: pickDark });
+
+  const palette = buildPaletteFromCatalog(catalog, pickLight, pickDark);
+  await chrome.storage.local.set({ [PALETTE_KEY]: palette });
+
+  const { user } = await getStoredUser();
+  if (user && settings.isLoggedIn) {
+    const l = catalog.light.find((t) => t.name === pickLight);
+    const d = catalog.dark.find((t) => t.name === pickDark);
+    await chrome.storage.local.set({
+      [USER_KEY]: {
+        ...user,
+        lightTheme: l?.displayName ?? user.lightTheme,
+        darkTheme: d?.displayName ?? user.darkTheme,
+      },
+    });
+  }
+
+  return { catalog, pickLight, pickDark, palette };
+}
+
+async function broadcastPalette(palette) {
+  const [mode, whitelist] = await Promise.all([getMode(), getWhitelist()]);
+  const tabs = await chrome.tabs.query({});
+  for (const tab of tabs) {
+    if (canInjectToUrl(tab.url) && tab.id) {
+      chrome.tabs.sendMessage(tab.id, { type: "SETTINGS_UPDATE", mode, whitelist, palette }, () => void chrome.runtime.lastError);
+    }
+  }
+}
+
+// 同步主题：拉取并存储 palette + 候选列表
 async function syncTheme() {
   await syncAdapters();
-  const { token, user } = await getStoredUser();
+  const { token } = await getStoredUser();
   try {
     const settings = await fetchExtensionSettings(token);
-
-    const palette = {};
-    if (settings.light?.colors) palette.light = settings.light.colors;
-    if (settings.dark?.colors) palette.dark = settings.dark.colors;
-
-    await chrome.storage.local.set({ [PALETTE_KEY]: Object.keys(palette).length ? palette : null });
-
-    // 更新 user 中的 lightTheme / darkTheme
-    if (user && settings.isLoggedIn) {
-      const updated = {
-        ...user,
-        lightTheme: settings.light?.displayName || user.lightTheme,
-        darkTheme: settings.dark?.displayName || user.darkTheme,
-      };
-      await chrome.storage.local.set({ [USER_KEY]: updated });
-    }
-
-    // 广播给所有页面
-    const [mode, whitelist] = await Promise.all([getMode(), getWhitelist()]);
-    const tabs = await chrome.tabs.query({});
-    for (const tab of tabs) {
-      if (canInjectToUrl(tab.url) && tab.id) {
-        chrome.tabs.sendMessage(tab.id, { type: "SETTINGS_UPDATE", mode, whitelist, palette: Object.keys(palette).length ? palette : null }, () => {
-          void chrome.runtime.lastError;
-        });
-      }
-    }
-
-    return { ok: true, lightTheme: settings.light?.displayName, darkTheme: settings.dark?.displayName };
+    const { catalog, pickLight, pickDark, palette } = await persistThemeStateFromApi(settings);
+    await broadcastPalette(palette);
+    const pl = catalog.light.find((t) => t.name === pickLight);
+    const pd = catalog.dark.find((t) => t.name === pickDark);
+    return {
+      ok: true,
+      lightTheme: pl?.displayName ?? settings.light?.displayName,
+      darkTheme: pd?.displayName ?? settings.dark?.displayName,
+    };
   } catch (err) {
     return { ok: false, error: err.message };
   }
@@ -192,24 +239,60 @@ chrome.runtime.onInstalled.addListener(async () => {
   const mode = await getMode();
   if (!mode) await setMode(DEFAULT_MODE);
   await syncAdapters();
+  await syncTheme();
 });
 
 chrome.runtime.onStartup?.addListener(() => {
   void syncAdapters();
+  void syncTheme();
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (!message || typeof message !== "object") return;
 
   if (message.type === "GET_SETTINGS") {
-    Promise.all([getMode(), getWhitelist(), getStoredUser()]).then(([mode, whitelist, { user }]) => {
-      sendResponse({
-        mode,
-        whitelist,
-        lightTheme: user?.lightTheme || null,
-        darkTheme: user?.darkTheme || null,
-      });
-    });
+    (async () => {
+      try {
+        let local = await chrome.storage.local.get([CATALOG_KEY, PICK_LIGHT_KEY, PICK_DARK_KEY]);
+        const cat = local[CATALOG_KEY];
+        const empty =
+          !cat || ((!cat.light || cat.light.length === 0) && (!cat.dark || cat.dark.length === 0));
+        if (empty) {
+          const { token } = await getStoredUser();
+          const settings = await fetchExtensionSettings(token);
+          await persistThemeStateFromApi(settings);
+          local = await chrome.storage.local.get([CATALOG_KEY, PICK_LIGHT_KEY, PICK_DARK_KEY]);
+        }
+        const [mode, whitelist, { user }] = await Promise.all([getMode(), getWhitelist(), getStoredUser()]);
+        const catalog = local[CATALOG_KEY] || { light: [], dark: [] };
+        const pickLight = local[PICK_LIGHT_KEY];
+        const pickDark = local[PICK_DARK_KEY];
+        const lightMeta = catalog.light.find((t) => t.name === pickLight) || catalog.light[0];
+        const darkMeta = catalog.dark.find((t) => t.name === pickDark) || catalog.dark[0];
+        sendResponse({
+          mode,
+          whitelist,
+          user,
+          lightTheme: lightMeta?.displayName || user?.lightTheme || null,
+          darkTheme: darkMeta?.displayName || user?.darkTheme || null,
+          catalog,
+          pickLight: lightMeta?.name || null,
+          pickDark: darkMeta?.name || null,
+        });
+      } catch {
+        const [mode, whitelist, { user }] = await Promise.all([getMode(), getWhitelist(), getStoredUser()]);
+        sendResponse({
+          mode,
+          whitelist,
+          user,
+          lightTheme: user?.lightTheme || null,
+          darkTheme: user?.darkTheme || null,
+          catalog: { light: [], dark: [] },
+          pickLight: null,
+          pickDark: null,
+        });
+      }
+    })();
     return true;
   }
 
@@ -250,9 +333,70 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === "LOGOUT") {
-    chrome.storage.local.remove([USER_KEY, TOKEN_KEY, PALETTE_KEY]).then(() => {
+    chrome.storage.local.remove([USER_KEY, TOKEN_KEY, PALETTE_KEY, CATALOG_KEY, PICK_LIGHT_KEY, PICK_DARK_KEY]).then(() => {
       sendResponse({ ok: true });
     });
+    return true;
+  }
+
+  if (message.type === "APPLY_THEME_VARIANT") {
+    const { mode, themeName } = message;
+    if (!themeName || (mode !== THEME_MODES.LIGHT && mode !== THEME_MODES.DARK)) {
+      sendResponse({ ok: false, error: "无效参数" });
+      return;
+    }
+    (async () => {
+      const data = await chrome.storage.local.get([CATALOG_KEY, PICK_LIGHT_KEY, PICK_DARK_KEY]);
+      const catalog = data[CATALOG_KEY] || { light: [], dark: [] };
+      const list = mode === THEME_MODES.LIGHT ? catalog.light : catalog.dark;
+      if (!list.some((t) => t.name === themeName)) {
+        sendResponse({ ok: false, error: "主题不在列表中" });
+        return;
+      }
+
+      const { token, user } = await getStoredUser();
+      if (token) {
+        try {
+          const res = await fetch(`${API_BASE}/api/pub/extension-theme-select`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify(mode === THEME_MODES.LIGHT ? { lightTheme: themeName } : { darkTheme: themeName }),
+          });
+          const json = await res.json();
+          if (json.c !== 200) {
+            console.warn("[ForcedSkin] extension-theme-select:", json.m);
+          }
+        } catch (e) {
+          console.warn("[ForcedSkin] extension-theme-select:", e?.message || e);
+        }
+      }
+
+      if (mode === THEME_MODES.LIGHT) {
+        await chrome.storage.local.set({ [PICK_LIGHT_KEY]: themeName });
+      } else {
+        await chrome.storage.local.set({ [PICK_DARK_KEY]: themeName });
+      }
+
+      const nextLocal = await chrome.storage.local.get([CATALOG_KEY, PICK_LIGHT_KEY, PICK_DARK_KEY]);
+      const nextCat = nextLocal[CATALOG_KEY] || { light: [], dark: [] };
+      const palette = buildPaletteFromCatalog(nextCat, nextLocal[PICK_LIGHT_KEY], nextLocal[PICK_DARK_KEY]);
+      await chrome.storage.local.set({ [PALETTE_KEY]: palette });
+
+      if (user) {
+        const l = nextCat.light.find((t) => t.name === nextLocal[PICK_LIGHT_KEY]);
+        const d = nextCat.dark.find((t) => t.name === nextLocal[PICK_DARK_KEY]);
+        await chrome.storage.local.set({
+          [USER_KEY]: {
+            ...user,
+            lightTheme: l?.displayName ?? user.lightTheme,
+            darkTheme: d?.displayName ?? user.darkTheme,
+          },
+        });
+      }
+
+      await broadcastPalette(palette);
+      sendResponse({ ok: true });
+    })();
     return true;
   }
 

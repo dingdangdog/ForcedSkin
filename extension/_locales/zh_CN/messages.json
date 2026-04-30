@@ -106,5 +106,11 @@
   },
   "loggedOut": {
     "message": "已退出登录"
+  },
+  "pickLightTheme": {
+    "message": "亮色外观"
+  },
+  "pickDarkTheme": {
+    "message": "暗色外观"
   }
 }
