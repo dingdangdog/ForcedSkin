@@ -5,8 +5,9 @@ definePageMeta({ layout: "admin", middleware: ["admin"] });
 
 const localePath = useLocalePath();
 
-useHead({ title: "控制台 — ForcedSkin 后台", titleTemplate: false, meta: [{ name: "robots", content: "noindex, nofollow" }] });
+useAdminPageHead("控制台 — ForcedSkin 后台");
 
+const totalUsers = ref(0);
 const pendingThemes = ref(0);
 const pendingAdapters = ref(0);
 const totalThemes = ref(0);
@@ -15,12 +16,14 @@ const loading = ref(true);
 
 onMounted(async () => {
   try {
-    const [tAll, tPending, aAll, aPending] = await Promise.all([
+    const [stats, tAll, tPending, aAll, aPending] = await Promise.all([
+      doApi.get<{ userCount: number }>("api/admin/stats"),
       doApi.get<any>("api/admin/themes", { pageSize: 1, status: "all" }),
       doApi.get<any>("api/admin/themes", { pageSize: 1, status: "pending" }),
       doApi.get<any>("api/admin/adapters", { pageSize: 1, status: "all" }),
       doApi.get<any>("api/admin/adapters", { pageSize: 1, status: "pending" }),
     ]);
+    totalUsers.value = stats.userCount ?? 0;
     totalThemes.value = tAll.total ?? 0;
     pendingThemes.value = tPending.total ?? 0;
     totalAdapters.value = aAll.total ?? 0;
@@ -36,7 +39,15 @@ onMounted(async () => {
     <h1 class="text-2xl font-bold text-foreground mb-1">控制台</h1>
     <p class="text-muted text-sm mb-8">欢迎回来，以下是当前系统概况。</p>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
+      <!-- 注册用户 -->
+      <div class="p-5 rounded-2xl border border-border bg-surface">
+        <p class="text-xs text-muted mb-1">注册用户</p>
+        <p class="text-3xl font-bold text-foreground">
+          <span v-if="loading" class="inline-block w-10 h-8 bg-surface-muted rounded animate-pulse"></span>
+          <span v-else>{{ totalUsers }}</span>
+        </p>
+      </div>
       <!-- 主题总数 -->
       <div class="p-5 rounded-2xl border border-border bg-surface">
         <p class="text-xs text-muted mb-1">主题总数</p>
@@ -78,6 +89,14 @@ onMounted(async () => {
     <!-- 快捷操作 -->
     <h2 class="text-base font-semibold text-foreground mb-3">快捷操作</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <NuxtLink :to="localePath('/admin/users')"
+        class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary-400 hover:bg-surface-muted transition-colors">
+        <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 text-xl shrink-0">👤</div>
+        <div>
+          <p class="font-medium text-foreground text-sm">用户管理</p>
+          <p class="text-xs text-muted mt-0.5">查看注册用户列表</p>
+        </div>
+      </NuxtLink>
       <NuxtLink :to="localePath('/admin/themes')"
         class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary-400 hover:bg-surface-muted transition-colors">
         <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 text-xl shrink-0">🎨</div>

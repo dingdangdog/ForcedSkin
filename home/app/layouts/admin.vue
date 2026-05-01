@@ -181,6 +181,7 @@ import {
   ArrowRightOnRectangleIcon,
   SwatchIcon,
   PuzzlePieceIcon,
+  UsersIcon,
 } from "@heroicons/vue/24/outline";
 
 const route = useRoute();
@@ -201,6 +202,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: "控制台", path: "/admin", icon: Squares2X2Icon },
+  { label: "用户管理", path: "/admin/users", icon: UsersIcon },
   { label: "主题管理", path: "/admin/themes", icon: SwatchIcon },
   { label: "适配器管理", path: "/admin/adapters", icon: PuzzlePieceIcon },
   { label: "设置", path: "/admin/settings", icon: Cog8ToothIcon },
@@ -215,7 +217,7 @@ const isActive = (logicalPath: string) => {
   const target = normalizePathStripLocale(localePath(logicalPath));
   const cur = normalizePathStripLocale(route.path);
   if (target === "/admin") {
-    return cur === "/admin" || cur.startsWith("/admin/");
+    return cur === "/admin";
   }
   return cur === target || cur.startsWith(`${target}/`);
 };

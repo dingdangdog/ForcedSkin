@@ -2,18 +2,20 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const localePath = useLocalePath();
   const { status } = useAuth();
 
-  if (status.value === "authenticated") return;
+  type S = "authenticated" | "unauthenticated" | "loading";
+  let st = status.value as S;
+  if (st === "authenticated") return;
 
-  // 等待 session 加载完成
-  if (status.value === "loading") {
-    await new Promise((resolve) => {
+  if (st === "loading") {
+    await new Promise<void>((resolve) => {
       const stop = watch(status, (s) => {
-        if (s !== "loading") { stop(); resolve(null); }
+        if (s !== "loading") { stop(); resolve(); }
       });
     });
+    st = status.value as S;
   }
 
-  if (status.value !== "authenticated") {
+  if (st !== "authenticated") {
     return navigateTo({ path: localePath("/auth/login"), query: { callbackUrl: to.fullPath } });
   }
 });

@@ -3,7 +3,7 @@ import { doApi } from "~/utils/api";
 import { copyTextToClipboard } from "~/utils/clipboard";
 
 definePageMeta({ layout: "admin", middleware: "admin" });
-useHead({ title: "主题管理 — ForcedSkin 后台", titleTemplate: false, meta: [{ name: "robots", content: "noindex, nofollow" }] });
+useAdminPageHead("主题管理 — ForcedSkin 后台");
 
 const localePath = useLocalePath();
 
@@ -171,8 +171,8 @@ onMounted(load);
         class="flex flex-col sm:flex-row sm:items-start gap-4 p-4 rounded-xl border border-border bg-surface hover:bg-surface-muted transition-colors"
         :class="{ 'border-yellow-300': !theme.isActive && theme.submitterId }"
       >
-        <div class="w-[11rem] max-w-full shrink-0 mx-auto sm:mx-0">
-          <ThemeCard :theme="theme" as-preview />
+        <div class="w-full sm:w-[17.5rem] max-w-full shrink-0 mx-auto sm:mx-0">
+          <AdminThemeCard :theme="theme" />
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap">
