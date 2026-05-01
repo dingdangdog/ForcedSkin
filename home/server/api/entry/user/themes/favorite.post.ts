@@ -20,11 +20,12 @@ export default defineEventHandler(async (event) => {
 
     if (existing) {
       await prisma.userThemes.delete({ where: { userId_themeId: { userId, themeId } } });
-      return success({ favorited: false });
     } else {
       await prisma.userThemes.create({ data: { userId, themeId } });
-      return success({ favorited: true });
     }
+
+    const favoriteCount = await prisma.userThemes.count({ where: { themeId } });
+    return success({ favorited: !existing, favoriteCount });
   } catch (err: any) {
     return serverError("操作失败", err, "entry/user/themes/favorite.post");
   }

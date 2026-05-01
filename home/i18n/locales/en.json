@@ -151,7 +151,8 @@
     "favorite": "Favorite",
     "unfavorite": "Unfavorite",
     "mock_btn": "Button",
-    "mock_secondary": "Alt"
+    "mock_secondary": "Alt",
+    "favorites_count": "{n} favorites"
   },
   "common": {
     "loading": "Loading…",

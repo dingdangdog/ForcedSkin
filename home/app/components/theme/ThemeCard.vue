@@ -25,6 +25,8 @@ const props = defineProps<{
   favorited?: boolean;
   selected?: boolean;
   showActions?: boolean;
+  /** 收藏人数；传入数字即展示（含 0） */
+  favoriteCount?: number;
   /** 仅展示缩略 UI，不响应点击（后台预览等） */
   asPreview?: boolean;
 }>();
@@ -106,6 +108,12 @@ function onCardClick() {
         <div class="min-w-0">
           <p class="font-semibold text-foreground text-sm truncate">{{ theme.displayName }}</p>
           <p class="text-muted text-xs truncate mt-0.5">{{ theme.description || theme.name }}</p>
+          <p v-if="favoriteCount !== undefined" class="text-muted text-[11px] mt-1 flex items-center gap-1 tabular-nums">
+            <svg class="w-3 h-3 shrink-0 opacity-70" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+            </svg>
+            {{ t('card.favorites_count', { n: favoriteCount }) }}
+          </p>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
           <span

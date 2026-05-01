@@ -1,4 +1,5 @@
 import prisma from "~~/server/lib/prisma";
+import { themeFavoriteCountMap } from "~~/server/utils/themeFavoriteCounts";
 import { success, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
@@ -32,7 +33,10 @@ export default defineEventHandler(async (event) => {
       }),
     ]);
 
-    return success({ total, page, pageSize, pages: Math.ceil(total / pageSize), list: themes });
+    const favMap = await themeFavoriteCountMap(themes.map((t) => t.id));
+    const list = themes.map((t) => ({ ...t, favoriteCount: favMap[t.id] ?? 0 }));
+
+    return success({ total, page, pageSize, pages: Math.ceil(total / pageSize), list });
   } catch (err: any) {
     return serverError("获取主题列表失败", err, "themes.get");
   }

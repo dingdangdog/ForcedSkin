@@ -1,5 +1,6 @@
 import prisma from "~~/server/lib/prisma";
-import { success, error, serverError } from "~~/server/utils/result";
+import { themeFavoriteCountMap } from "~~/server/utils/themeFavoriteCounts";
+import { success, serverError } from "~~/server/utils/result";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -18,7 +19,7 @@ export default defineEventHandler(async (event) => {
       where.isActive = true;
     }
 
-    const [total, list] = await Promise.all([
+    const [total, themes] = await Promise.all([
       prisma.theme.count({ where }),
       prisma.theme.findMany({
         where,
@@ -27,6 +28,9 @@ export default defineEventHandler(async (event) => {
         take: pageSize,
       }),
     ]);
+
+    const favMap = await themeFavoriteCountMap(themes.map((t) => t.id));
+    const list = themes.map((t) => ({ ...t, favoriteCount: favMap[t.id] ?? 0 }));
 
     return success({ total, page, pageSize, pages: Math.ceil(total / pageSize), list });
   } catch (err: any) {

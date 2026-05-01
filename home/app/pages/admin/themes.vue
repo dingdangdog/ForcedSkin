@@ -19,6 +19,7 @@ interface Theme {
   sortOrder: number;
   submitterId: string | null;
   createdAt: string;
+  favoriteCount?: number;
 }
 
 const themes = ref<Theme[]>([]);
@@ -179,6 +180,7 @@ onMounted(load);
             <span class="font-medium text-foreground">{{ theme.displayName }}</span>
             <span class="text-xs px-1.5 py-0.5 rounded bg-surface-muted text-muted">{{ theme.name }}</span>
             <span class="text-xs px-1.5 py-0.5 rounded" :class="theme.mode === 'dark' ? 'bg-slate-700 text-slate-200' : 'bg-amber-100 text-amber-800'">{{ theme.mode }}</span>
+            <span class="text-xs px-1.5 py-0.5 rounded bg-surface-muted text-muted tabular-nums">收藏 {{ theme.favoriteCount ?? 0 }}</span>
             <span v-if="theme.isDefault" class="text-xs px-1.5 py-0.5 rounded bg-primary-100 text-primary-700">默认</span>
             <span v-if="theme.submitterId && !theme.isActive" class="text-xs px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 font-medium">社区投稿 · 待审核</span>
             <span v-else-if="theme.submitterId && theme.isActive" class="text-xs px-1.5 py-0.5 rounded bg-green-100 text-green-700">社区投稿 · 已上线</span>

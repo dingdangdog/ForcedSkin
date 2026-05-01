@@ -24,6 +24,15 @@ interface Theme {
   colors: any;
   isDefault: boolean;
   sortOrder: number;
+  favoriteCount?: number;
+}
+
+function sortThemesByPopularity(rows: Theme[]): Theme[] {
+  return [...rows].sort((a, b) => {
+    const d = (b.favoriteCount ?? 0) - (a.favoriteCount ?? 0);
+    if (d !== 0) return d;
+    return (a.sortOrder ?? 0) - (b.sortOrder ?? 0);
+  });
 }
 
 interface Adapter {
@@ -48,8 +57,8 @@ onMounted(async () => {
       doApi.get<any>("api/adapters", { pageSize: 100 }),
     ]);
     const list: Theme[] = themesRes.list || [];
-    lightThemes.value = list.filter(t => t.mode === "light").slice(0, 2);
-    darkThemes.value = list.filter(t => t.mode === "dark").slice(0, 2);
+    lightThemes.value = sortThemesByPopularity(list.filter((t) => t.mode === "light")).slice(0, 2);
+    darkThemes.value = sortThemesByPopularity(list.filter((t) => t.mode === "dark")).slice(0, 2);
     adapters.value = adaptersRes.list || [];
   } catch { /* ignore */ }
   finally { loading.value = false; }
@@ -119,7 +128,7 @@ onMounted(async () => {
             :to="localePath('/themes')"
             class="block"
           >
-            <ThemeCard :theme="theme" :show-actions="false" />
+            <ThemeCard :theme="theme" :show-actions="false" :favorite-count="theme.favoriteCount ?? 0" />
           </NuxtLink>
         </div>
 

@@ -17,7 +17,7 @@ useForcedSkinSeo("/themes", {
   },
 });
 
-interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; isDefault: boolean; }
+interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; isDefault: boolean; favoriteCount?: number; }
 
 const { status } = useAuth();
 const themeStore = useThemeStore();
@@ -92,6 +92,10 @@ async function toggleFavorite(theme: Theme) {
   if (!isLoggedIn.value) { showToast(t("themes.need_login")); return; }
   try {
     const res = await doApi.post<any>("api/entry/user/themes/favorite", { themeId: theme.id });
+    if (typeof res.favoriteCount === "number") {
+      const idx = themes.value.findIndex((x) => x.id === theme.id);
+      if (idx !== -1) themes.value[idx] = { ...themes.value[idx], favoriteCount: res.favoriteCount };
+    }
     if (res.favorited) { favorites.value.add(theme.id); showToast(t("themes.favorited", { name: theme.displayName })); }
     else { favorites.value.delete(theme.id); showToast(t("themes.unfavorited")); }
   } catch { }
@@ -185,6 +189,7 @@ onMounted(load);
     <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <ThemeCard v-for="theme in filtered" :key="theme.id" :theme="theme" :favorited="favorites.has(theme.id)"
         :selected="theme.mode === 'light' ? selectedLight === theme.name : selectedDark === theme.name"
+        :favorite-count="theme.favoriteCount ?? 0"
         :show-actions="true" @favorite="toggleFavorite" @select="selectTheme" />
     </div>
 

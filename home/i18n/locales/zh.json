@@ -151,7 +151,8 @@
     "favorite": "收藏",
     "unfavorite": "取消收藏",
     "mock_btn": "按钮",
-    "mock_secondary": "次要"
+    "mock_secondary": "次要",
+    "favorites_count": "{n} 收藏"
   },
   "common": {
     "loading": "加载中…",
