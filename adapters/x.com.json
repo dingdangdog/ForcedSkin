@@ -24,6 +24,13 @@
   },
   "layers": [
     {
+      "kind": "surface",
+      "backgroundKey": "border",
+      "selectors": [
+        "article [data-testid=\"Tweet-User-Avatar\"] + div"
+      ]
+    },
+    {
       "kind": "richText",
       "selectors": [
         "a[role=\"link\"][aria-label]:not([href*=\"/status/\"]) div[dir=\"ltr\"]",

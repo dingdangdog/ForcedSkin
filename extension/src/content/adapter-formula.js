@@ -66,10 +66,15 @@
     const { queryAllDeep, palette, markApplied } = ctx;
     const sel = joinSelectors(layer.selectors);
     const skip = layer.skipOverlayLike ? shouldSkipOverlayLike : () => false;
+    const bgKey =
+      typeof layer.backgroundKey === "string" && layer.backgroundKey.trim() && PALETTE_KEYS.has(layer.backgroundKey.trim())
+        ? layer.backgroundKey.trim()
+        : "surface";
+    const bgVal = pickPalette(palette, bgKey);
     queryAllDeep(sel).forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
       if (skip(el)) return;
-      el.style.setProperty("background-color", palette.surface, "important");
+      el.style.setProperty("background-color", bgVal, "important");
       el.style.setProperty("border-color", palette.border, "important");
       el.style.setProperty("color", palette.foreground, "important");
       markApplied(el, MARK_BG);

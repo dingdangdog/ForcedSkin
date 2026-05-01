@@ -270,6 +270,12 @@ async function saveWhitelist(nextWhitelist) {
 }
 
 // ── Mode sub-panels (accordion) ───────────────────────────────────────────────
+/** 跟随主题模式：仅展开当前模式对应的列表；off 时全部收起 */
+function syncAccordionExpansionToMode(mode) {
+  lightExpanded = mode === "light";
+  darkExpanded = mode === "dark";
+}
+
 function syncModeSubpanels() {
   const src = lastSettingsSnapshot;
   const catalog = src?.catalog || { light: [], dark: [] };
@@ -462,8 +468,7 @@ async function loadCurrentMode() {
   const target = radios.find((item) => item.value === currentMode);
   if (target) target.checked = true;
 
-  lightExpanded = currentMode === "light";
-  darkExpanded = currentMode === "dark";
+  syncAccordionExpansionToMode(currentMode);
 
   updateStatus(currentMode);
   renderWhitelistState();
@@ -479,8 +484,7 @@ function updateStatus(mode) {
 
 async function onModeChange(event) {
   currentMode = event.target.value;
-  if (currentMode === "light") lightExpanded = true;
-  if (currentMode === "dark") darkExpanded = true;
+  syncAccordionExpansionToMode(currentMode);
   updateStatus(currentMode);
   renderThemeVariantRows();
   await chrome.runtime.sendMessage({ type: "SET_THEME_MODE", mode: currentMode });
