@@ -14,9 +14,9 @@ pnpm build
 pnpm preview
 
 # docker
-docker build -t forcedskin:0.0.3 .
-docker save -o forcedskin.0.0.3.tar forcedskin:0.0.3
-docker load -i forcedskin.0.0.3.tar
+docker build -t forcedskin:0.0.4 .
+docker save -o forcedskin.0.0.4.tar forcedskin:0.0.4
+docker load -i forcedskin.0.0.4.tar
 
 # prisma
 npx prisma migrate dev --name init-db
@@ -24,8 +24,8 @@ npx prisma migrate deploy
 npx prisma generate
 
 # git 
-git tag v0.0.3
-git push origin tag v0.0.3
+git tag v0.0.4
+git push origin tag v0.0.4
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
