@@ -11,6 +11,62 @@ const API_BASE = "https://forcedskin.com";
 
 const ADAPTERS_SCRIPTS_KEY = "gtsRemoteAdapterScripts";
 
+/**
+ * 线上若仍返回旧版负载（仅 name/code/updatedAt），或缓存里缺展示字段时，
+ * 用公式 JSON 与 name 补全 displayName / siteDomain；并兼容 snake_case 键名。
+ */
+function parseAdapterFormulaJson(code) {
+  try {
+    const p = JSON.parse(code);
+    return p && typeof p === "object" && !Array.isArray(p) ? p : null;
+  } catch {
+    return null;
+  }
+}
+
+function hostRulesToSiteDomain(formula) {
+  const match = formula?.match;
+  if (!match || typeof match !== "object" || Array.isArray(match)) return "";
+  const hostname = match.hostname;
+  if (!Array.isArray(hostname)) return "";
+  const values = [];
+  for (const rule of hostname) {
+    if (!rule || typeof rule !== "object") continue;
+    const v = rule.value;
+    if (typeof v === "string" && v.trim()) values.push(v.trim());
+  }
+  return [...new Set(values)].join(", ");
+}
+
+function titleizeSlug(slug) {
+  if (!slug) return "";
+  return slug
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function normalizeAdapterPresentation(a) {
+  const rawDisp = a.displayName ?? a.display_name;
+  const rawDom = a.siteDomain ?? a.site_domain;
+  let displays = typeof rawDisp === "string" ? rawDisp.trim() : "";
+  let siteDomain = typeof rawDom === "string" ? rawDom.trim() : "";
+  const code = typeof a.code === "string" ? a.code : "";
+  const formula = code ? parseAdapterFormulaJson(code) : null;
+
+  if (!siteDomain && formula) siteDomain = hostRulesToSiteDomain(formula);
+  if (!displays && formula && typeof formula.id === "string" && formula.id.trim()) {
+    displays = titleizeSlug(formula.id.trim());
+  }
+  if (!displays && typeof a.name === "string" && a.name.trim()) {
+    displays = titleizeSlug(a.name.split("-")[0] || a.name);
+  }
+  if (!displays && typeof a.name === "string") displays = a.name;
+
+  return { displayName: displays, siteDomain };
+}
+
 const THEME_MODES = { LIGHT: "light", DARK: "dark", OFF: "off" };
 const DEFAULT_MODE = THEME_MODES.OFF;
 
@@ -125,7 +181,16 @@ async function syncAdapters() {
     const raw = Array.isArray(data?.adapters) ? data.adapters : [];
     const scripts = raw
       .filter((a) => a && typeof a.name === "string" && typeof a.code === "string" && a.code.trim())
-      .map((a) => ({ name: a.name, code: a.code }));
+      .map((a) => {
+        const { displayName, siteDomain } = normalizeAdapterPresentation(a);
+        return {
+          name: a.name,
+          code: a.code,
+          displayName,
+          siteDomain,
+          updatedAt: typeof a.updatedAt === "string" ? a.updatedAt : null,
+        };
+      });
     await chrome.storage.local.set({ [ADAPTERS_SCRIPTS_KEY]: scripts });
 
     const tabs = await chrome.tabs.query({});
@@ -215,9 +280,8 @@ async function broadcastPalette(palette) {
   }
 }
 
-// 同步主题：拉取并存储 palette + 候选列表
+// 同步主题：拉取并存储 palette + 候选列表（不含适配器；适配器单独「更新适配器」或安装/启动时拉取）
 async function syncTheme() {
-  await syncAdapters();
   const { token } = await getStoredUser();
   try {
     const settings = await fetchExtensionSettings(token);
@@ -405,6 +469,33 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === "SYNC_THEME") {
     syncTheme().then((result) => sendResponse(result));
+    return true;
+  }
+
+  if (message.type === "SYNC_ADAPTERS") {
+    syncAdapters().then((result) => sendResponse(result));
+    return true;
+  }
+
+  if (message.type === "GET_ADAPTER_LIST") {
+    (async () => {
+      try {
+        const data = await chrome.storage.local.get(ADAPTERS_SCRIPTS_KEY);
+        const raw = Array.isArray(data[ADAPTERS_SCRIPTS_KEY]) ? data[ADAPTERS_SCRIPTS_KEY] : [];
+        const adapters = raw.map((a) => {
+          const { displayName, siteDomain } = normalizeAdapterPresentation(a);
+          return {
+            name: a.name,
+            displayName,
+            siteDomain,
+            updatedAt: a.updatedAt || null,
+          };
+        });
+        sendResponse({ ok: true, adapters });
+      } catch (err) {
+        sendResponse({ ok: false, adapters: [], error: err?.message || String(err) });
+      }
+    })();
     return true;
   }
 

@@ -314,41 +314,49 @@
               </div>
             </div>
 
-            <p class="section-title" data-i18n="accountThemeOverview"></p>
-            <div class="card-block">
-              <p class="theme-strip-label" data-i18n="overviewLight"></p>
-              <div
-                id="accountLightChips"
-                class="theme-grid theme-grid--account"
-                role="listbox"
-              ></div>
-            </div>
-            <div class="card-block">
-              <p class="theme-strip-label" data-i18n="overviewDark"></p>
-              <div
-                id="accountDarkChips"
-                class="theme-grid theme-grid--account"
-                role="listbox"
-              ></div>
+            <div class="card-block account-resource-block">
+              <div class="account-section-head">
+                <h2
+                  class="account-section-title section-title"
+                  data-i18n="accountMyThemesTitle"
+                ></h2>
+                <button
+                  id="syncBtn"
+                  type="button"
+                  class="save-btn account-section-action"
+                  data-i18n="syncBtn"
+                ></button>
+              </div>
+              <div class="account-h-scroll" tabindex="0">
+                <div
+                  id="accountMyThemesStrip"
+                  class="account-theme-strip"
+                  role="list"
+                ></div>
+              </div>
             </div>
 
-            <p class="section-title" data-i18n="accountSyncedTitle"></p>
-            <div class="theme-sync-row">
-              <div class="theme-sync-item">
-                <span class="theme-sync-label" data-i18n="syncLight"></span>
-                <span id="syncLightName" class="theme-sync-name">—</span>
+            <div class="card-block account-resource-block">
+              <div class="account-section-head">
+                <h2
+                  class="account-section-title section-title"
+                  data-i18n="accountAdaptersTitle"
+                ></h2>
+                <button
+                  id="syncAdaptersBtn"
+                  type="button"
+                  class="save-btn account-section-action"
+                  data-i18n="syncAdaptersBtn"
+                ></button>
               </div>
-              <div class="theme-sync-item">
-                <span class="theme-sync-label" data-i18n="syncDark"></span>
-                <span id="syncDarkName" class="theme-sync-name">—</span>
+              <div class="account-h-scroll" tabindex="0">
+                <div
+                  id="accountAdaptersStrip"
+                  class="account-adapter-strip"
+                  role="list"
+                ></div>
               </div>
             </div>
-            <button
-              id="syncBtn"
-              type="button"
-              class="save-btn"
-              data-i18n="syncBtn"
-            ></button>
 
             <button
               id="logoutBtn"

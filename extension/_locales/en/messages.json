@@ -149,6 +149,36 @@
   "whitelistSaved": {
     "message": "Whitelist saved"
   },
+  "accountMyThemesTitle": {
+    "message": "My themes"
+  },
+  "tagThemeLight": {
+    "message": "Light"
+  },
+  "tagThemeDark": {
+    "message": "Dark"
+  },
+  "accountMyThemesEmpty": {
+    "message": "No theme catalog yet — use Sync themes"
+  },
+  "accountAdaptersTitle": {
+    "message": "Site adapters"
+  },
+  "syncAdaptersBtn": {
+    "message": "Refresh adapters"
+  },
+  "syncingAdapters": {
+    "message": "Updating…"
+  },
+  "adaptersSynced": {
+    "message": "Adapters updated ($1)"
+  },
+  "adaptersSyncFailed": {
+    "message": "Adapter update failed"
+  },
+  "accountAdaptersEmpty": {
+    "message": "No cached adapters — tap Refresh adapters"
+  },
   "accountThemeOverview": {
     "message": "All palettes"
   },

@@ -93,7 +93,7 @@
     "message": "默认"
   },
   "syncBtn": {
-    "message": "同步主题配色"
+    "message": "同步主题"
   },
   "syncing": {
     "message": "同步中…"
@@ -148,6 +148,36 @@
   },
   "whitelistSaved": {
     "message": "白名单已保存"
+  },
+  "accountMyThemesTitle": {
+    "message": "我的主题"
+  },
+  "tagThemeLight": {
+    "message": "亮色"
+  },
+  "tagThemeDark": {
+    "message": "暗色"
+  },
+  "accountMyThemesEmpty": {
+    "message": "暂无主题目录，请点击「同步主题」"
+  },
+  "accountAdaptersTitle": {
+    "message": "适配器"
+  },
+  "syncAdaptersBtn": {
+    "message": "更新适配器"
+  },
+  "syncingAdapters": {
+    "message": "正在更新…"
+  },
+  "adaptersSynced": {
+    "message": "适配器已更新（$1 个）"
+  },
+  "adaptersSyncFailed": {
+    "message": "适配器更新失败"
+  },
+  "accountAdaptersEmpty": {
+    "message": "暂无已缓存适配器，请点击「更新适配器」"
   },
   "accountThemeOverview": {
     "message": "全部可选主题"

@@ -120,11 +120,15 @@
   }
 
   function applyLayerSvgRecolor(ctx, layer) {
-    const { queryAllDeep } = ctx;
+    const { queryAllDeep, palette } = ctx;
     const sel = joinSelectors(layer.selectors);
+    const fillKey = typeof layer.fill === "string" && layer.fill.trim() ? layer.fill.trim() : null;
+    const strokeKey = typeof layer.stroke === "string" && layer.stroke.trim() ? layer.stroke.trim() : null;
+    const fillVal = fillKey ? pickPalette(palette, fillKey) : "currentColor";
+    const strokeVal = strokeKey ? pickPalette(palette, strokeKey) : "currentColor";
     queryAllDeep(sel).forEach((shape) => {
-      shape.style.setProperty("fill", "currentColor", "important");
-      shape.style.setProperty("stroke", "currentColor", "important");
+      shape.style.setProperty("fill", fillVal, "important");
+      shape.style.setProperty("stroke", strokeVal, "important");
     });
   }
 

@@ -42,8 +42,7 @@ const whitelistStatusToast = document.getElementById("whitelistStatusToast");
 const loginBtn = document.getElementById("loginBtn");
 const loginError = document.getElementById("loginError");
 const syncBtn = document.getElementById("syncBtn");
-const syncLightName = document.getElementById("syncLightName");
-const syncDarkName = document.getElementById("syncDarkName");
+const syncAdaptersBtn = document.getElementById("syncAdaptersBtn");
 const lightThemeName = document.getElementById("lightThemeName");
 const darkThemeName = document.getElementById("darkThemeName");
 const lightThemeChips = document.getElementById("lightThemeChips");
@@ -52,8 +51,8 @@ const expandLightBtn = document.getElementById("expandLightBtn");
 const expandDarkBtn = document.getElementById("expandDarkBtn");
 const lightSubPanel = document.getElementById("lightSubPanel");
 const darkSubPanel = document.getElementById("darkSubPanel");
-const accountLightChips = document.getElementById("accountLightChips");
-const accountDarkChips = document.getElementById("accountDarkChips");
+const accountMyThemesStrip = document.getElementById("accountMyThemesStrip");
+const accountAdaptersStrip = document.getElementById("accountAdaptersStrip");
 const accountGuest = document.getElementById("accountGuest");
 const accountSignedIn = document.getElementById("accountSignedIn");
 const accountAvatar = document.getElementById("accountAvatar");
@@ -299,6 +298,98 @@ function pickPrimaryForPreview(colors) {
   return p?.["500"] || p?.["600"] || colors.foreground || null;
 }
 
+function createReadonlyThemeCard(t, mode) {
+  const bg = t.colors?.background || "#64748b";
+  const accent = pickPrimaryForPreview(t.colors) || t.colors?.foreground || bg;
+  const wrap = document.createElement("div");
+  wrap.className = "theme-card-readonly";
+  wrap.setAttribute("role", "listitem");
+
+  const tag = document.createElement("span");
+  tag.className =
+    "theme-card-readonly__tag " +
+    (mode === "light" ? "theme-card-readonly__tag--light" : "theme-card-readonly__tag--dark");
+  tag.textContent = mode === "light" ? i18n("tagThemeLight") : i18n("tagThemeDark");
+
+  const banner = document.createElement("div");
+  banner.className = "theme-card-readonly__banner";
+  banner.style.background = `linear-gradient(90deg, ${bg} 0%, ${accent} 100%)`;
+
+  const body = document.createElement("div");
+  body.className = "theme-card-readonly__body";
+  const nameEl = document.createElement("div");
+  nameEl.className = "theme-card-readonly__name";
+  nameEl.textContent = t.displayName || t.name;
+
+  body.appendChild(nameEl);
+  wrap.appendChild(tag);
+  wrap.appendChild(banner);
+  wrap.appendChild(body);
+  return wrap;
+}
+
+function renderAccountMyThemesStrip() {
+  const container = accountMyThemesStrip;
+  if (!container) return;
+  const src = lastSettingsSnapshot;
+  const catalog = src?.catalog || { light: [], dark: [] };
+  container.innerHTML = "";
+  const items = [
+    ...(catalog.light || []).map((t) => ({ t, mode: "light" })),
+    ...(catalog.dark || []).map((t) => ({ t, mode: "dark" })),
+  ];
+  if (items.length === 0) {
+    const p = document.createElement("p");
+    p.className = "account-strip-empty";
+    p.textContent = i18n("accountMyThemesEmpty");
+    container.appendChild(p);
+    return;
+  }
+  for (const { t, mode } of items) {
+    container.appendChild(createReadonlyThemeCard(t, mode));
+  }
+}
+
+function renderAdapterReadonlyCard(a) {
+  const wrap = document.createElement("div");
+  wrap.className = "adapter-card-readonly";
+  wrap.setAttribute("role", "listitem");
+
+  const title = document.createElement("div");
+  title.className = "adapter-card-readonly__title";
+  const disp =
+    typeof a.displayName === "string" && a.displayName.trim() ? a.displayName.trim() : "";
+  title.textContent = disp || "—";
+
+  const domain = document.createElement("div");
+  domain.className = "adapter-card-readonly__domain";
+  const dom =
+    typeof a.siteDomain === "string" && a.siteDomain.trim() ? a.siteDomain.trim() : "";
+  domain.textContent = dom || "—";
+
+  wrap.appendChild(title);
+  wrap.appendChild(domain);
+  return wrap;
+}
+
+async function renderAccountAdaptersStrip() {
+  const container = accountAdaptersStrip;
+  if (!container) return;
+  const res = await chrome.runtime.sendMessage({ type: "GET_ADAPTER_LIST" });
+  const list = res?.ok && Array.isArray(res.adapters) ? res.adapters : [];
+  container.innerHTML = "";
+  if (list.length === 0) {
+    const p = document.createElement("p");
+    p.className = "account-strip-empty";
+    p.textContent = i18n("accountAdaptersEmpty");
+    container.appendChild(p);
+    return;
+  }
+  for (const a of list) {
+    container.appendChild(renderAdapterReadonlyCard(a));
+  }
+}
+
 function fillThemeChips(container, list, selectedName, mode) {
   if (!container) return;
   container.innerHTML = "";
@@ -338,21 +429,13 @@ function fillThemeChips(container, list, selectedName, mode) {
   }
 }
 
-function renderAccountOverviewChips() {
-  const src = lastSettingsSnapshot;
-  if (!src) return;
-  const catalog = src.catalog || { light: [], dark: [] };
-  if (accountLightChips) fillThemeChips(accountLightChips, catalog.light, src.pickLight, "light");
-  if (accountDarkChips) fillThemeChips(accountDarkChips, catalog.dark, src.pickDark, "dark");
-}
-
 function renderThemeVariantRows() {
   const src = lastSettingsSnapshot;
   if (!src) return;
   const catalog = src.catalog || { light: [], dark: [] };
   fillThemeChips(lightThemeChips, catalog.light, src.pickLight, "light");
   fillThemeChips(darkThemeChips, catalog.dark, src.pickDark, "dark");
-  renderAccountOverviewChips();
+  renderAccountMyThemesStrip();
   syncModeSubpanels();
 }
 
@@ -452,8 +535,8 @@ async function renderAccountState() {
       showAccountFallback();
     }
 
-    syncLightName.textContent = user.lightTheme || i18n("syncDefault");
-    syncDarkName.textContent = user.darkTheme || i18n("syncDefault");
+    renderAccountMyThemesStrip();
+    void renderAccountAdaptersStrip();
   } else {
     accountGuest.classList.remove("hidden");
     accountSignedIn.classList.add("hidden");
@@ -463,13 +546,21 @@ async function renderAccountState() {
     accountAvatarFallback.classList.remove("hidden");
     accountAvatarFallback.textContent = "?";
   }
-
-  renderAccountOverviewChips();
 }
 
 // ── Handlers ────────────────────────────────────────────────────────────────
 tabButtons.forEach((btn) => {
-  btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+  btn.addEventListener("click", async () => {
+    const name = btn.dataset.tab;
+    setActiveTab(name);
+    if (name === "account") {
+      const r = await chrome.runtime.sendMessage({ type: "GET_USER_INFO" });
+      if (r?.user) {
+        renderAccountMyThemesStrip();
+        void renderAccountAdaptersStrip();
+      }
+    }
+  });
 });
 
 openSiteBtn.addEventListener("click", () => {
@@ -512,6 +603,7 @@ loginBtn.addEventListener("click", async () => {
   if (response?.ok) {
     await renderAccountState();
     await chrome.runtime.sendMessage({ type: "SYNC_THEME" });
+    await chrome.runtime.sendMessage({ type: "SYNC_ADAPTERS" });
     await loadCurrentMode();
     accountStatusText.textContent = i18n("loginSuccessOauth");
   } else {
@@ -539,6 +631,20 @@ syncBtn.addEventListener("click", async () => {
     await loadCurrentMode();
   } else {
     accountStatusText.textContent = response?.error || i18n("syncFailed");
+  }
+});
+
+syncAdaptersBtn?.addEventListener("click", async () => {
+  syncAdaptersBtn.disabled = true;
+  syncAdaptersBtn.textContent = i18n("syncingAdapters");
+  const response = await chrome.runtime.sendMessage({ type: "SYNC_ADAPTERS" });
+  syncAdaptersBtn.disabled = false;
+  syncAdaptersBtn.textContent = i18n("syncAdaptersBtn");
+  if (response?.ok) {
+    accountStatusText.textContent = i18n("adaptersSynced", [String(response.count ?? 0)]);
+    await renderAccountAdaptersStrip();
+  } else {
+    accountStatusText.textContent = response?.error || i18n("adaptersSyncFailed");
   }
 });
 

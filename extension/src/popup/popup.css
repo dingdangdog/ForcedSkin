@@ -582,38 +582,164 @@ body[data-theme="off"] .mode-block__sub {
   gap: 10px;
 }
 
-.theme-sync-row {
-  display: flex;
-  gap: 8px;
+.account-resource-block {
+  margin-top: 12px;
 }
 
-#syncBtn {
+.account-resource-block:first-of-type {
   margin-top: 10px;
 }
 
-.theme-sync-item {
+.account-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.account-section-title.section-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
   flex: 1;
+  min-width: 0;
+}
+
+.account-section-action.save-btn {
+  width: auto;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+.account-h-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0 -4px;
+  padding: 2px 4px 8px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.account-theme-strip,
+.account-adapter-strip {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.account-strip-empty {
+  margin: 0;
+  font-size: 11px;
+  color: var(--popup-muted);
+  line-height: 1.4;
+  padding: 6px 2px;
+}
+
+/* 账号页只读主题卡（横向，无交互） */
+.theme-card-readonly {
+  position: relative;
+  flex: 0 0 auto;
+  width: 108px;
+  border: 1px solid var(--popup-border);
+  border-radius: 8px;
+  background: var(--popup-bg);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.theme-card-readonly__tag {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.theme-card-readonly__tag--light {
+  color: var(--popup-primary-strong);
+  background: rgba(76, 175, 80, 0.18);
+  border: 1px solid var(--popup-border);
+}
+
+.theme-card-readonly__tag--dark {
+  color: var(--popup-fg);
   background: var(--popup-surface);
   border: 1px solid var(--popup-border);
-  border-radius: 10px;
-  padding: 8px 10px;
+  opacity: 0.95;
 }
 
-.theme-sync-label {
-  display: block;
-  font-size: 10px;
-  color: var(--popup-muted);
-  margin-bottom: 2px;
+body[data-theme="dark"] .theme-card-readonly__tag--light,
+body[data-theme="off"] .theme-card-readonly__tag--light {
+  background: rgba(74, 155, 107, 0.22);
 }
 
-.theme-sync-name {
+.theme-card-readonly__banner {
   display: block;
-  font-size: 12px;
+  height: 22px;
+  width: 100%;
+}
+
+.theme-card-readonly__body {
+  padding: 6px 8px 7px;
+}
+
+.theme-card-readonly__name {
+  font-size: 11px;
+  font-weight: 700;
   color: var(--popup-fg);
-  font-family: ui-monospace, Consolas, monospace;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+/* 账号页适配器只读卡 */
+.adapter-card-readonly {
+  flex: 0 0 auto;
+  width: 132px;
+  border: 1px solid var(--popup-border);
+  border-radius: 8px;
+  background: var(--popup-bg);
+  padding: 8px 9px 9px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.adapter-card-readonly__title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--popup-fg);
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.adapter-card-readonly__domain {
+  font-size: 9px;
+  line-height: 1.35;
+  color: var(--popup-muted);
+  font-family: ui-monospace, Consolas, monospace;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .account-logout {
