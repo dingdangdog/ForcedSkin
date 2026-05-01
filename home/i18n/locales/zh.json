@@ -336,7 +336,7 @@
       "richText_map": "写入站点要求的 CSS 变量 + color→foreground",
       "richText_mark": "text（或按需加 bg）",
       "svgRecolor_use": "SVG path 等矢量图标",
-      "svgRecolor_map": "fill/stroke→currentColor，由父级 color 驱动",
+      "svgRecolor_map": "默认 fill/stroke→currentColor；可填 fill/stroke 调色板键直接着色",
       "svgRecolor_mark": "可不标记（避免干扰引擎清除逻辑）"
     }
   },

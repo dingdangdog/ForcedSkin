@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { doApi } from "~/utils/api";
+import { getAdapterFaviconUrl, getAdapterMainDomain } from "~/utils/adapter-branding";
 
 definePageMeta({ layout: "default" });
 
@@ -101,8 +102,18 @@ onMounted(load);
         class="bg-surface border border-border rounded-2xl p-5 hover:border-primary-400 transition-colors">
         <div class="flex items-start gap-3">
           <div
-            class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 font-bold text-base shrink-0">
-            {{ adapter.displayName.charAt(0) }}
+            class="w-10 h-10 rounded-xl bg-surface-muted flex items-center justify-center overflow-hidden shrink-0">
+            <img
+              v-if="getAdapterMainDomain(adapter.siteDomain)"
+              :src="getAdapterFaviconUrl(adapter.siteDomain, 64)"
+              :alt="adapter.displayName"
+              class="w-7 h-7 object-contain"
+              loading="lazy"
+              @error="($event.target as HTMLImageElement).style.display = 'none'"
+            />
+            <span v-else class="text-base font-bold text-primary-500">
+              {{ adapter.displayName.charAt(0) }}
+            </span>
           </div>
           <div class="flex-1 min-w-0">
             <h3 class="font-semibold text-foreground">{{ adapter.displayName }}</h3>

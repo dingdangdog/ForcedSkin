@@ -336,7 +336,7 @@
       "richText_map": "Emit required CSS variables + textual color mapping",
       "richText_mark": "text (sometimes + background)",
       "svgRecolor_use": "Inline SVG glyphs",
-      "svgRecolor_map": "fill/stroke inherit currentColor from parent hue",
+      "svgRecolor_map": "Default fill/stroke→currentColor; optional fill/stroke palette keys for fixed color",
       "svgRecolor_mark": "Optional marking to avoid interfering with cleanup"
     }
   },

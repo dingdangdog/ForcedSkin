@@ -12,6 +12,18 @@ const LAYER_KINDS = new Set([
 
 const HOST_OPS = new Set(["equals", "suffixDomain"]);
 
+/** 与 richText.color / svgRecolor.fill|stroke 共用的调色板键 */
+const PALETTE_KEYS = new Set([
+  "background",
+  "foreground",
+  "surface",
+  "surfaceMuted",
+  "border",
+  "muted",
+  "primary500",
+  "primary700",
+]);
+
 export interface AdapterFormulaValidation {
   ok: boolean;
   error?: string;
@@ -80,6 +92,16 @@ export function validateAdapterFormulaPayload(parsed: unknown): AdapterFormulaVa
       }
       if (L.color !== undefined && typeof L.color !== "string") {
         return { ok: false, error: "richText.color 须为调色板键名" };
+      }
+    }
+
+    if (L.kind === "svgRecolor") {
+      for (const k of ["fill", "stroke"] as const) {
+        const v = L[k];
+        if (v === undefined) continue;
+        if (typeof v !== "string" || !PALETTE_KEYS.has(v)) {
+          return { ok: false, error: `svgRecolor.${k} 必须为调色板键名（或省略以保持 currentColor）` };
+        }
       }
     }
 

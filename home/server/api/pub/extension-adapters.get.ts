@@ -1,4 +1,5 @@
 import prisma from "~~/server/lib/prisma";
+import { resolveExtensionAdapterPresentation } from "~~/server/utils/extension-adapter-presentation";
 import { success, serverError } from "~~/server/utils/result";
 
 /**
@@ -17,16 +18,28 @@ export default defineEventHandler(async (event) => {
       orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }],
       select: {
         name: true,
+        displayName: true,
+        siteDomain: true,
         code: true,
         updatedAt: true,
       },
     });
 
-    const adapters = rows.map((r) => ({
-      name: r.name,
-      code: r.code,
-      updatedAt: r.updatedAt.toISOString(),
-    }));
+    const adapters = rows.map((r) => {
+      const { displayName, siteDomain } = resolveExtensionAdapterPresentation({
+        name: r.name,
+        displayName: r.displayName,
+        siteDomain: r.siteDomain,
+        code: r.code,
+      });
+      return {
+        name: r.name,
+        displayName,
+        siteDomain,
+        code: r.code,
+        updatedAt: r.updatedAt.toISOString(),
+      };
+    });
 
     return success({ adapters });
   } catch (err: unknown) {

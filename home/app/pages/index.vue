@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { doApi } from "~/utils/api";
+import { getAdapterFaviconUrl, getAdapterMainDomain } from "~/utils/adapter-branding";
 
 definePageMeta({ layout: "default" });
 
@@ -39,18 +40,6 @@ const lightThemes = ref<Theme[]>([]);
 const darkThemes = ref<Theme[]>([]);
 const adapters = ref<Adapter[]>([]);
 const loading = ref(true);
-
-// 获取适配器的主域名（用于展示图标）
-function getMainDomain(siteDomain: string): string {
-  const domains = siteDomain.split(",").map(d => d.trim()).filter(Boolean);
-  return domains[0] || "";
-}
-
-function getFaviconUrl(siteDomain: string): string {
-  const domain = getMainDomain(siteDomain);
-  if (!domain) return "";
-  return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
-}
 
 onMounted(async () => {
   try {
@@ -171,8 +160,8 @@ onMounted(async () => {
             <!-- favicon -->
             <div class="w-8 h-8 rounded-lg bg-surface-muted flex items-center justify-center overflow-hidden">
               <img
-                v-if="getMainDomain(adapter.siteDomain)"
-                :src="getFaviconUrl(adapter.siteDomain)"
+                v-if="getAdapterMainDomain(adapter.siteDomain)"
+                :src="getAdapterFaviconUrl(adapter.siteDomain)"
                 :alt="adapter.displayName"
                 class="w-6 h-6 object-contain"
                 loading="lazy"
@@ -186,7 +175,7 @@ onMounted(async () => {
             <div class="text-center">
               <div class="text-sm font-semibold text-foreground leading-tight">{{ adapter.displayName }}</div>
               <div class="text-xs text-muted mt-0.5 truncate max-w-full">
-                {{ getMainDomain(adapter.siteDomain) }}
+                {{ getAdapterMainDomain(adapter.siteDomain) }}
               </div>
             </div>
           </div>
