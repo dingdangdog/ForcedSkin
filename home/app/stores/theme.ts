@@ -706,7 +706,7 @@ export const useThemeStore = defineStore("theme", () => {
   };
 
   /**
-   * 用主题商城/API 返回的一条主题记录更新本地亮或暗色槽位（含完整 colors），
+   * 用主题市场/API 返回的一条主题记录更新本地亮或暗色槽位（含完整 colors），
    * 使页眉等依赖 CSS 变量的区域与选中主题一致。
    */
   const applySitePaletteFromThemeRow = (row: {

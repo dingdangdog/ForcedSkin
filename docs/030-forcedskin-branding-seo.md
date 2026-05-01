@@ -5,7 +5,7 @@
 - **产品名称**：ForcedSkin（强制换肤）
 - **域名**：forcedskin.com
 - **Slogan**：让每个网站都有你喜欢的颜色
-- **定位**：浏览器换肤扩展 + 主题商城平台
+- **定位**：浏览器换肤扩展 + 主题市场平台
 
 ---
 
@@ -38,7 +38,7 @@
 | 页面 | title | description | og:* | canonical | 结构化数据 |
 |---|---|---|---|---|---|
 | / | ForcedSkin — 强制换肤... | ✅ | ✅ | ✅ | WebSite + SearchAction |
-| /themes | 主题商城 | ✅ | ✅ | ✅ | CollectionPage |
+| /themes | 主题市场 | ✅ | ✅ | ✅ | CollectionPage |
 | /adapters | 网站适配器 | ✅ | ✅ | ✅ | CollectionPage |
 | /privacy | 隐私政策 | ✅ | ✅ | ✅ | — |
 | /terms | 用户协议 | ✅ | ✅ | ✅ | — |

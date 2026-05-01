@@ -72,7 +72,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
       titleTemplate: '%s — ForcedSkin',
       meta: [
-        { name: 'description', content: '强制换肤 - 为任意网站应用你喜欢的主题配色。浏览器扩展 + 主题商城，支持亮色 / 暗色自由切换，登录后跨设备同步。' },
+        { name: 'description', content: '强制换肤 - 为任意网站应用你喜欢的主题配色。浏览器扩展 + 主题市场，支持亮色 / 暗色自由切换，登录后跨设备同步。' },
         { name: 'keywords', content: 'ForcedSkin,强制换肤,浏览器主题,网页换肤,暗色模式,亮色主题,browser theme,dark mode extension,web skin' },
         { name: 'author', content: 'ForcedSkin' },
         { name: 'robots', content: 'index, follow' },

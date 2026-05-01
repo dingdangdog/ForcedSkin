@@ -6,10 +6,10 @@ definePageMeta({ layout: "default" });
 const { t } = useI18n();
 
 useHead({
-  title: "主题商城 — ForcedSkin",
+  title: "主题市场 — ForcedSkin",
   meta: [
-    { name: "description", content: "浏览 ForcedSkin 主题商城，发现适合你的亮色和暗色配色方案，一键应用到任意网站。" },
-    { property: "og:title", content: "主题商城 — ForcedSkin" },
+    { name: "description", content: "浏览 ForcedSkin 主题市场，发现适合你的亮色和暗色配色方案，一键应用到任意网站。" },
+    { property: "og:title", content: "主题市场 — ForcedSkin" },
     { property: "og:description", content: "发现精美配色主题，收藏并同步到 ForcedSkin 浏览器扩展，为任意网站换上你喜欢的颜色。" },
     { property: "og:url", content: "https://forcedskin.com/themes" },
   ],
@@ -20,7 +20,7 @@ useHead({
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": "ForcedSkin 主题商城",
+        "name": "ForcedSkin 主题市场",
         "description": "浏览 ForcedSkin 的亮色和暗色主题配色方案",
         "url": "https://forcedskin.com/themes",
         "isPartOf": { "@type": "WebSite", "name": "ForcedSkin", "url": "https://forcedskin.com" },
@@ -106,7 +106,7 @@ async function toggleFavorite(theme: Theme) {
     const res = await doApi.post<any>("api/entry/user/themes/favorite", { themeId: theme.id });
     if (res.favorited) { favorites.value.add(theme.id); showToast(t("themes.favorited", { name: theme.displayName })); }
     else { favorites.value.delete(theme.id); showToast(t("themes.unfavorited")); }
-  } catch {}
+  } catch { }
 }
 
 async function selectTheme(theme: Theme) {
@@ -123,7 +123,7 @@ async function selectTheme(theme: Theme) {
     if (theme.mode === "light") selectedLight.value = theme.name;
     else selectedDark.value = theme.name;
     showToast(t("themes.set_as", { name: theme.displayName, mode: theme.mode === "light" ? t("themes.mode_light") : t("themes.mode_dark") }));
-  } catch {} finally { saving.value = false; }
+  } catch { } finally { saving.value = false; }
 }
 
 function openSubmit() {
@@ -163,7 +163,8 @@ onMounted(load);
         <p class="text-muted mt-1">{{ t('themes.subtitle') }}</p>
       </div>
       <div class="flex items-center gap-3">
-        <NuxtLink to="/guide/theme" class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
+        <NuxtLink to="/guide/theme"
+          class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           📖 {{ t('themes.guide_link') }}
         </NuxtLink>
         <button v-if="isLoggedIn" @click="openSubmit"
@@ -181,13 +182,10 @@ onMounted(load);
     <div class="flex items-center gap-3 mb-6">
       <button
         v-for="opt in [{ k: 'all', l: t('themes.all') }, { k: 'light', l: t('themes.light') }, { k: 'dark', l: t('themes.dark') }]"
-        :key="opt.k"
-        @click="filterMode = opt.k as any"
-        class="px-4 py-1.5 rounded-full text-sm font-medium transition-colors border"
-        :class="filterMode === opt.k
+        :key="opt.k" @click="filterMode = opt.k as any"
+        class="px-4 py-1.5 rounded-full text-sm font-medium transition-colors border" :class="filterMode === opt.k
           ? 'bg-primary-500 text-white border-primary-500'
-          : 'text-muted border-border hover:border-primary-400 hover:text-foreground'"
-      >
+          : 'text-muted border-border hover:border-primary-400 hover:text-foreground'">
         {{ opt.l }}
       </button>
     </div>
@@ -197,20 +195,14 @@ onMounted(load);
     </div>
 
     <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <ThemeCard
-        v-for="theme in filtered"
-        :key="theme.id"
-        :theme="theme"
-        :favorited="favorites.has(theme.id)"
+      <ThemeCard v-for="theme in filtered" :key="theme.id" :theme="theme" :favorited="favorites.has(theme.id)"
         :selected="theme.mode === 'light' ? selectedLight === theme.name : selectedDark === theme.name"
-        :show-actions="true"
-        @favorite="toggleFavorite"
-        @select="selectTheme"
-      />
+        :show-actions="true" @favorite="toggleFavorite" @select="selectTheme" />
     </div>
 
     <!-- 提交主题弹窗 -->
-    <div v-if="showSubmit" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" @click.self="showSubmit = false">
+    <div v-if="showSubmit" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      @click.self="showSubmit = false">
       <div class="bg-background border border-border rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
         <div class="flex items-start justify-between mb-4">
           <div>
@@ -225,7 +217,8 @@ onMounted(load);
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="text-xs text-muted mb-1 block">{{ t('themes.field_mode') }} *</label>
-              <select v-model="submitForm.mode" class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-sm outline-none">
+              <select v-model="submitForm.mode"
+                class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-sm outline-none">
                 <option value="light">light 亮色</option>
                 <option value="dark">dark 暗色</option>
               </select>
@@ -240,12 +233,14 @@ onMounted(load);
           </div>
           <div>
             <label class="text-xs text-muted mb-1 block">{{ t('themes.field_desc') }}</label>
-            <input v-model="submitForm.description" class="w-full px-3 py-2 rounded-lg border border-border focus:border-primary-400 text-sm bg-surface text-foreground outline-none" />
+            <input v-model="submitForm.description"
+              class="w-full px-3 py-2 rounded-lg border border-border focus:border-primary-400 text-sm bg-surface text-foreground outline-none" />
           </div>
           <div>
             <label class="text-xs text-muted mb-1 block">
               {{ t('themes.field_colors') }} *
-              <NuxtLink to="/guide/theme" target="_blank" class="ml-1 text-primary-500 hover:underline">{{ t('themes.guide_link') }}</NuxtLink>
+              <NuxtLink to="/guide/theme" target="_blank" class="ml-1 text-primary-500 hover:underline">{{
+                t('themes.guide_link') }}</NuxtLink>
             </label>
             <textarea v-model="submitForm.colors" rows="10" :placeholder="colorsJsonPlaceholder"
               class="w-full px-3 py-2 rounded-lg border text-xs font-mono text-foreground bg-surface outline-none resize-y"
@@ -268,7 +263,8 @@ onMounted(load);
 
     <!-- toast -->
     <Transition name="fade">
-      <div v-if="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
+      <div v-if="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
         {{ toast }}
       </div>
     </Transition>
@@ -276,6 +272,14 @@ onMounted(load);
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s, transform 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateX(-50%) translateY(8px); }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
 </style>

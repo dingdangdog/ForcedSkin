@@ -75,7 +75,7 @@ const fields = [
     <!-- 标题区 -->
     <div class="mb-10">
       <div class="flex items-center gap-2 text-sm text-muted mb-3">
-        <NuxtLink to="/themes" class="hover:text-foreground transition-colors">主题商城</NuxtLink>
+        <NuxtLink to="/themes" class="hover:text-foreground transition-colors">主题市场</NuxtLink>
         <span>/</span>
         <span class="text-foreground">创作指南</span>
       </div>
@@ -103,7 +103,7 @@ const fields = [
         <div class="p-4 rounded-2xl border border-border bg-surface">
           <div class="text-2xl mb-2">③</div>
           <h3 class="font-semibold text-foreground mb-1">提交审核</h3>
-          <p class="text-muted text-sm">在<NuxtLink to="/themes" class="text-primary-500 hover:underline">主题商城</NuxtLink>点击「提交主题」，等待管理员审核后上线。</p>
+          <p class="text-muted text-sm">在<NuxtLink to="/themes" class="text-primary-500 hover:underline">主题市场</NuxtLink>点击「提交主题」，等待管理员审核后上线。</p>
         </div>
       </div>
     </section>
@@ -197,7 +197,7 @@ const fields = [
       <div class="p-5 rounded-2xl border border-border bg-surface space-y-3 text-sm text-muted">
         <p>🔐 提交前需登录账号。</p>
         <p>⏳ 提交后进入「待审核」状态，管理员会在 1-3 个工作日内完成审核。</p>
-        <p>✅ 审核通过后，主题将在主题商城对所有用户可见，并可被收藏和使用。</p>
+        <p>✅ 审核通过后，主题将在主题市场对所有用户可见，并可被收藏和使用。</p>
         <p>❌ 若主题不符合规范（颜色值无效、名称冲突、内容违规等），审核将被拒绝并删除，请重新提交修正后的版本。</p>
         <p>🚫 严禁提交包含恶意代码、歧视性内容或侵权配色的主题。</p>
       </div>
@@ -205,7 +205,7 @@ const fields = [
 
     <!-- CTA -->
     <div class="text-center py-8">
-      <p class="text-muted mb-4">准备好了？去主题商城提交你的作品吧！</p>
+      <p class="text-muted mb-4">准备好了？去主题市场提交你的作品吧！</p>
       <NuxtLink to="/themes"
         class="inline-block px-6 py-3 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
         🎨 前往提交主题
