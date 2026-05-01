@@ -1,15 +1,13 @@
 <script setup lang="ts">
 definePageMeta({ layout: "default" });
 
-useHead({
-  title: "Privacy Policy — ForcedSkin",
-  meta: [
-    { name: "description", content: "ForcedSkin Privacy Policy: how we collect, use, and protect your personal information." },
-    { property: "og:title", content: "Privacy Policy — ForcedSkin" },
-    { property: "og:description", content: "ForcedSkin Privacy Policy: how we collect, use, and protect your personal information." },
-    { property: "og:url", content: "https://forcedskin.com/privacy" },
-  ],
-  link: [{ rel: "canonical", href: "https://forcedskin.com/privacy" }],
+const localePath = useLocalePath();
+
+useForcedSkinSeo("/privacy", {
+  titleKey: "seo.privacy.title",
+  descriptionKey: "seo.privacy.description",
+  ogTitleKey: "seo.privacy.og_title",
+  ogDescriptionKey: "seo.privacy.og_description",
 });
 
 const effectiveDate = "April 28, 2026";
@@ -133,8 +131,8 @@ const effectiveDate = "April 28, 2026";
     </div>
 
     <div class="mt-12 pt-8 border-t border-border flex flex-wrap gap-4">
-      <NuxtLink to="/terms" class="text-primary-500 hover:underline text-sm">Terms of Service →</NuxtLink>
-      <NuxtLink to="/" class="text-muted hover:text-foreground text-sm">Back to home</NuxtLink>
+      <NuxtLink :to="localePath('/terms')" class="text-primary-500 hover:underline text-sm">Terms of Service →</NuxtLink>
+      <NuxtLink :to="localePath('/')" class="text-muted hover:text-foreground text-sm">Back to home</NuxtLink>
     </div>
   </div>
 </template>

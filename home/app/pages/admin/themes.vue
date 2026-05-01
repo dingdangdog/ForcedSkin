@@ -2,12 +2,22 @@
 import { doApi } from "~/utils/api";
 
 definePageMeta({ layout: "admin", middleware: "admin" });
-useHead({ title: "主题管理 — ForcedSkin 后台", meta: [{ name: "robots", content: "noindex, nofollow" }] });
+useHead({ title: "主题管理 — ForcedSkin 后台", titleTemplate: false, meta: [{ name: "robots", content: "noindex, nofollow" }] });
+
+const localePath = useLocalePath();
 
 interface Theme {
-  id: string; name: string; displayName: string; description: string;
-  mode: string; colors: string; isActive: boolean; isDefault: boolean;
-  sortOrder: number; submitterId: string | null; createdAt: string;
+  id: string;
+  name: string;
+  displayName: string;
+  description: string;
+  mode: string;
+  colors: string;
+  isActive: boolean;
+  isDefault: boolean;
+  sortOrder: number;
+  submitterId: string | null;
+  createdAt: string;
 }
 
 const themes = ref<Theme[]>([]);
@@ -220,7 +230,7 @@ onMounted(load);
           <div>
             <label class="text-xs text-muted mb-1 block">
               色彩配置 JSON *
-              <NuxtLink to="/guide/theme" target="_blank" class="ml-1 text-primary-500 hover:underline">查看字段规范 →</NuxtLink>
+              <NuxtLink :to="localePath('/guide/theme')" target="_blank" class="ml-1 text-primary-500 hover:underline">查看字段规范 →</NuxtLink>
             </label>
             <textarea v-model="form.colors" rows="10" class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-xs font-mono focus:outline-none focus:border-primary-400 resize-y"/>
           </div>

@@ -4,16 +4,14 @@ import { doApi } from "~/utils/api";
 definePageMeta({ layout: "default" });
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
-useHead({
-  title: "ForcedSkin — Force Reskin Any Website",
-  meta: [
-    { name: "description", content: "ForcedSkin applies your chosen color theme to any website. Browser extension + theme store, with light/dark mode support and cross-device sync." },
-    { property: "og:title", content: "ForcedSkin — Force Reskin" },
-    { property: "og:description", content: "Apply your favorite theme to any website. Browser extension + theme store, freely switch between light and dark." },
-    { property: "og:url", content: "https://forcedskin.com/" },
-  ],
-  link: [{ rel: "canonical", href: "https://forcedskin.com/" }],
+useForcedSkinSeo("/", {
+  titleKey: "seo.home.title",
+  descriptionKey: "seo.home.description",
+  ogTitleKey: "seo.home.og_title",
+  ogDescriptionKey: "seo.home.og_description",
+  keywordsKey: "seo.keywords",
 });
 
 interface Theme {
@@ -87,11 +85,11 @@ onMounted(async () => {
           {{ t('home.desc', { brand: 'ForcedSkin' }) }}
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <NuxtLink to="/themes"
+          <NuxtLink :to="localePath('/themes')"
             class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold text-base hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20">
             {{ t('home.cta_themes') }}
           </NuxtLink>
-          <NuxtLink to="/auth/login"
+          <NuxtLink :to="localePath('/auth/login')"
             class="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold text-base hover:bg-surface-muted transition-colors">
             {{ t('home.cta_login') }}
           </NuxtLink>
@@ -109,7 +107,7 @@ onMounted(async () => {
             <h2 class="text-2xl md:text-3xl font-bold text-foreground">{{ t('home.popular.title') }}</h2>
             <p class="text-muted text-sm mt-1">{{ t('home.popular.subtitle') }}</p>
           </div>
-          <NuxtLink to="/themes"
+          <NuxtLink :to="localePath('/themes')"
             class="hidden sm:inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors">
             {{ t('home.popular.view_all') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +127,7 @@ onMounted(async () => {
           <NuxtLink
             v-for="theme in [...lightThemes, ...darkThemes]"
             :key="theme.id"
-            to="/themes"
+            :to="localePath('/themes')"
             class="block"
           >
             <ThemeCard :theme="theme" :show-actions="false" />
@@ -141,7 +139,7 @@ onMounted(async () => {
 
         <!-- 查看更多（移动端） -->
         <div class="mt-8 text-center sm:hidden">
-          <NuxtLink to="/themes"
+          <NuxtLink :to="localePath('/themes')"
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-surface-muted transition-colors">
             {{ t('home.popular.view_all') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,7 +196,7 @@ onMounted(async () => {
         <div v-else class="text-center py-16">
           <div class="text-4xl mb-3">🔌</div>
           <p class="text-muted text-sm">{{ t('home.adapted.empty_title') }}</p>
-          <NuxtLink to="/adapters"
+          <NuxtLink :to="localePath('/adapters')"
             class="mt-4 inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors">
             {{ t('home.adapted.go_submit') }}
           </NuxtLink>
@@ -207,7 +205,7 @@ onMounted(async () => {
         <!-- 提交入口 -->
         <div class="mt-8 text-center">
           <p class="text-muted text-sm mb-3">{{ t('home.adapted.no_site') }}</p>
-          <NuxtLink to="/adapters"
+          <NuxtLink :to="localePath('/adapters')"
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-surface-muted transition-colors">
             {{ t('home.adapted.submit_btn') }}
           </NuxtLink>
@@ -221,11 +219,11 @@ onMounted(async () => {
         <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4">{{ t('home.cta.title') }}</h2>
         <p class="text-muted mb-8">{{ t('home.cta.desc') }}</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <NuxtLink to="/auth/login"
+          <NuxtLink :to="localePath('/auth/login')"
             class="px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
             {{ t('home.cta.btn_login') }}
           </NuxtLink>
-          <NuxtLink to="/themes"
+          <NuxtLink :to="localePath('/themes')"
             class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
             {{ t('home.cta.btn_themes') }}
           </NuxtLink>

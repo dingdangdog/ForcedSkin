@@ -157,5 +157,60 @@
     "loading": "Loading…",
     "no_data": "No data",
     "view_more": "Browse more"
+  },
+  "seo": {
+    "keywords": "ForcedSkin, browser theme, web skin, dark mode extension, light theme, Chrome extension, forced skin",
+    "home": {
+      "title": "Force Every Website Into Your Favorite Colors",
+      "description": "ForcedSkin applies your chosen color theme to any website. Browser extension plus theme marketplace — switch light and dark freely, sync across devices when you log in.",
+      "og_title": "ForcedSkin — Unified web themes",
+      "og_description": "Apply your favorite light or dark palette to any website. Extensions plus marketplace with cross-device sync."
+    },
+    "themes": {
+      "title": "Theme Marketplace",
+      "description": "Browse the ForcedSkin theme marketplace. Discover light and dark palettes you can apply to any website in one click.",
+      "og_title": "ForcedSkin Theme Marketplace",
+      "og_description": "Discover curated themes, favorite them, and sync to the ForcedSkin browser extension to reskin any site.",
+      "ld_name": "ForcedSkin Theme Marketplace",
+      "ld_description": "Browse light and dark themes for ForcedSkin"
+    },
+    "adapters": {
+      "title": "Site Adapters",
+      "description": "Community-maintained site adapters help ForcedSkin theme results feel more natural on popular websites.",
+      "og_title": "Site adapters — ForcedSkin",
+      "og_description": "Browse community adapters for more precise forced-theming support on your favorite sites."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "ForcedSkin Privacy Policy — how we collect, use, and protect your personal information.",
+      "og_title": "Privacy Policy — ForcedSkin",
+      "og_description": "How ForcedSkin handles your data across the website and browser extension."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "description": "ForcedSkin Terms of Service — rules for registering and using the Service.",
+      "og_title": "Terms of Service — ForcedSkin",
+      "og_description": "Terms and conditions for using ForcedSkin."
+    },
+    "auth": {
+      "title": "Sign in",
+      "description": "Sign in with GitHub or Google to manage favorite themes and sync them to the ForcedSkin browser extension."
+    },
+    "account": {
+      "title": "My Account",
+      "description": "Manage ForcedSkin favorite themes and your selected light/dark palettes, synced with the signed-in extension."
+    },
+    "guide_theme": {
+      "title": "Theme Authoring Guide",
+      "description": "Learn how to design custom themes for ForcedSkin: JSON structure, palette fields, and submission flow.",
+      "og_title": "Theme authoring guide — ForcedSkin",
+      "og_description": "Color field specification, gradients, and how to publish community themes."
+    },
+    "guide_adapter": {
+      "title": "Adapter Development Guide",
+      "description": "ForcedSkin adapters use declarative JSON formulas (forcedskin-adapter-formula/v1): matching rules and layers.",
+      "og_title": "Adapter development guide — ForcedSkin",
+      "og_description": "Declarative adapter JSON, hostname matching, and submission flow."
+    }
   }
 }

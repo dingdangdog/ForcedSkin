@@ -1,13 +1,11 @@
 <script setup lang="ts">
 definePageMeta({ layout: "default" });
-useHead({
-  title: "主题创作指南 — ForcedSkin",
-  meta: [
-    { name: "description", content: "了解如何为 ForcedSkin 编写自定义主题：颜色字段规范、JSON 结构、色阶定义与提交流程。" },
-    { property: "og:title", content: "主题创作指南 — ForcedSkin" },
-    { property: "og:url", content: "https://forcedskin.com/guide/theme" },
-  ],
-  link: [{ rel: "canonical", href: "https://forcedskin.com/guide/theme" }],
+const localePath = useLocalePath();
+useForcedSkinSeo("/guide/theme", {
+  titleKey: "seo.guide_theme.title",
+  descriptionKey: "seo.guide_theme.description",
+  ogTitleKey: "seo.guide_theme.og_title",
+  ogDescriptionKey: "seo.guide_theme.og_description",
 });
 
 const lightExample = JSON.stringify({
@@ -75,7 +73,7 @@ const fields = [
     <!-- 标题区 -->
     <div class="mb-10">
       <div class="flex items-center gap-2 text-sm text-muted mb-3">
-        <NuxtLink to="/themes" class="hover:text-foreground transition-colors">主题市场</NuxtLink>
+        <NuxtLink :to="localePath('/themes')" class="hover:text-foreground transition-colors">主题市场</NuxtLink>
         <span>/</span>
         <span class="text-foreground">创作指南</span>
       </div>
@@ -103,7 +101,7 @@ const fields = [
         <div class="p-4 rounded-2xl border border-border bg-surface">
           <div class="text-2xl mb-2">③</div>
           <h3 class="font-semibold text-foreground mb-1">提交审核</h3>
-          <p class="text-muted text-sm">在<NuxtLink to="/themes" class="text-primary-500 hover:underline">主题市场</NuxtLink>点击「提交主题」，等待管理员审核后上线。</p>
+          <p class="text-muted text-sm">在<NuxtLink :to="localePath('/themes')" class="text-primary-500 hover:underline">主题市场</NuxtLink>点击「提交主题」，等待管理员审核后上线。</p>
         </div>
       </div>
     </section>
@@ -206,7 +204,7 @@ const fields = [
     <!-- CTA -->
     <div class="text-center py-8">
       <p class="text-muted mb-4">准备好了？去主题市场提交你的作品吧！</p>
-      <NuxtLink to="/themes"
+      <NuxtLink :to="localePath('/themes')"
         class="inline-block px-6 py-3 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
         🎨 前往提交主题
       </NuxtLink>

@@ -2,7 +2,9 @@
 const { data, status, signOut } = useAuth();
 const themeStore = useThemeStore();
 const route = useRoute();
-const { t, locale, setLocale } = useI18n();
+const { t, locale } = useI18n();
+const localePath = useLocalePath();
+const switchLocalePath = useSwitchLocalePath();
 
 const isLoggedIn = computed(() => status.value === "authenticated");
 const user = computed(() => data.value?.user as { name?: string; email?: string; image?: string; roles?: string } | undefined);
@@ -13,13 +15,24 @@ const isAdmin = computed(() => {
 const isDark = computed(() => themeStore.isDark);
 
 const navLinks = computed(() => [
-  { to: "/", label: t("nav.home") },
-  { to: "/themes", label: t("nav.themes") },
-  { to: "/adapters", label: t("nav.adapters") },
+  { path: "/", label: t("nav.home") },
+  { path: "/themes", label: t("nav.themes") },
+  { path: "/adapters", label: t("nav.adapters") },
 ]);
 
+function navActive(path: string) {
+  const cur = route.path.replace(/\/$/, "") || "/";
+  const target = localePath(path).replace(/\/$/, "") || "/";
+  if (path === "/") {
+    return cur === target;
+  }
+  return cur === target || cur.startsWith(`${target}/`);
+}
+
 function toggleLocale() {
-  setLocale(locale.value === "en" ? "zh" : "en");
+  const next = locale.value === "en" ? "zh" : "en";
+  const href = switchLocalePath(next as "zh" | "en");
+  if (href) navigateTo(href);
 }
 
 onMounted(() => {
@@ -33,7 +46,7 @@ onMounted(() => {
     <header class="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
       <div class="max-w-6xl mx-auto px-4 h-14 flex items-center gap-6">
         <!-- Logo -->
-        <NuxtLink to="/" class="font-bold text-lg text-foreground flex items-center gap-2 shrink-0">
+        <NuxtLink :to="localePath('/')" class="font-bold text-lg text-foreground flex items-center gap-2 shrink-0">
           <img src="/LOGO.webp" alt="ForcedSkin" class="w-6 h-6 object-contain rounded-md" />
           ForcedSkin
         </NuxtLink>
@@ -42,10 +55,10 @@ onMounted(() => {
         <nav class="flex items-center gap-1">
           <NuxtLink
             v-for="link in navLinks"
-            :key="link.to"
-            :to="link.to"
+            :key="link.path"
+            :to="localePath(link.path)"
             class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
-            :class="route.path === link.to
+            :class="navActive(link.path)
               ? 'bg-primary-500/10 text-primary-600'
               : 'text-muted hover:text-foreground hover:bg-surface-muted'"
           >
@@ -78,7 +91,7 @@ onMounted(() => {
 
           <!-- 已登录 -->
           <template v-if="isLoggedIn">
-            <NuxtLink to="/account" class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-surface-muted transition-colors">
+            <NuxtLink :to="localePath('/account')" class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-surface-muted transition-colors">
               <img v-if="user?.image" :src="user.image" :alt="user?.name || ''" class="w-6 h-6 rounded-full object-cover" />
               <span v-else class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-bold">
                 {{ (user?.name || "U").charAt(0).toUpperCase() }}
@@ -87,17 +100,17 @@ onMounted(() => {
                 {{ user?.name || user?.email || t('nav.account') }}
               </span>
             </NuxtLink>
-            <NuxtLink v-if="isAdmin" to="/admin" class="px-3 py-1.5 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-muted transition-colors">
+            <NuxtLink v-if="isAdmin" :to="localePath('/admin')" class="px-3 py-1.5 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-muted transition-colors">
               {{ t('nav.admin') }}
             </NuxtLink>
-            <button @click="signOut({ callbackUrl: '/' })" class="px-3 py-1.5 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-muted transition-colors">
+            <button @click="signOut({ callbackUrl: localePath('/') })" class="px-3 py-1.5 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-muted transition-colors">
               {{ t('nav.logout') }}
             </button>
           </template>
 
           <!-- 未登录 -->
           <template v-else>
-            <NuxtLink to="/auth/login" class="px-4 py-1.5 rounded-lg text-sm font-medium bg-primary-500 text-white hover:bg-primary-600 transition-colors">
+            <NuxtLink :to="localePath('/auth/login')" class="px-4 py-1.5 rounded-lg text-sm font-medium bg-primary-500 text-white hover:bg-primary-600 transition-colors">
               {{ t('nav.login') }}
             </NuxtLink>
           </template>
@@ -119,12 +132,12 @@ onMounted(() => {
           <span>{{ t('footer.copyright', { year: new Date().getFullYear() }) }}</span>
         </div>
         <nav class="flex gap-3 flex-wrap justify-center">
-          <NuxtLink to="/themes" class="hover:text-foreground">{{ t('footer.themes') }}</NuxtLink>
-          <NuxtLink to="/adapters" class="hover:text-foreground">{{ t('footer.adapters') }}</NuxtLink>
-          <NuxtLink to="/guide/theme" class="hover:text-foreground">{{ t('footer.guide_theme') }}</NuxtLink>
-          <NuxtLink to="/guide/adapter" class="hover:text-foreground">{{ t('footer.guide_adapter') }}</NuxtLink>
-          <NuxtLink to="/privacy" class="hover:text-foreground">{{ t('footer.privacy') }}</NuxtLink>
-          <NuxtLink to="/terms" class="hover:text-foreground">{{ t('footer.terms') }}</NuxtLink>
+          <NuxtLink :to="localePath('/themes')" class="hover:text-foreground">{{ t('footer.themes') }}</NuxtLink>
+          <NuxtLink :to="localePath('/adapters')" class="hover:text-foreground">{{ t('footer.adapters') }}</NuxtLink>
+          <NuxtLink :to="localePath('/guide/theme')" class="hover:text-foreground">{{ t('footer.guide_theme') }}</NuxtLink>
+          <NuxtLink :to="localePath('/guide/adapter')" class="hover:text-foreground">{{ t('footer.guide_adapter') }}</NuxtLink>
+          <NuxtLink :to="localePath('/privacy')" class="hover:text-foreground">{{ t('footer.privacy') }}</NuxtLink>
+          <NuxtLink :to="localePath('/terms')" class="hover:text-foreground">{{ t('footer.terms') }}</NuxtLink>
           <a href="mailto:hello@forcedskin.com" class="hover:text-foreground">{{ t('footer.contact') }}</a>
         </nav>
       </div>

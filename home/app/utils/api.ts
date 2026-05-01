@@ -1,5 +1,6 @@
 // import { Alert } from "~/utils/alert";
 import type { Result, UserInfo } from "~/utils/model";
+import { prefixedAuthLoginFromCookie } from "~/utils/localized-auth-login";
 import { useUserStore } from "~/stores/user";
 
 const API_PREFIEX = "/";
@@ -89,7 +90,7 @@ const intercepterResponse = <T>(res: Result<T>): T => {
       // 清除登陆状态（@sidebase/nuxt-auth框架）
       // useAuth().signOut();
       // const route = useRoute();
-      navigateTo("/auth/login");
+      navigateTo(prefixedAuthLoginFromCookie());
     }
     // Alert.error(res.m);
     console.error(res.m);

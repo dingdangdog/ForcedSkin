@@ -4,47 +4,135 @@
 
   <url>
     <loc>https://forcedskin.com/</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/" />
   </url>
 
   <url>
     <loc>https://forcedskin.com/themes</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/themes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/themes" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/themes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/themes" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh/themes</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/themes" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/themes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/themes" />
   </url>
 
   <url>
     <loc>https://forcedskin.com/adapters</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/adapters"/>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/adapters" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/adapters" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/adapters" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh/adapters</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/adapters" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/adapters" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/adapters" />
   </url>
 
   <url>
-    <loc>https://forcedskin.com/auth/login</loc>
-    <lastmod>2026-04-28</lastmod>
+    <loc>https://forcedskin.com/guide/theme</loc>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/guide/theme" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/guide/theme" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/guide/theme" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh/guide/theme</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/guide/theme" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/guide/theme" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/guide/theme" />
+  </url>
+
+  <url>
+    <loc>https://forcedskin.com/guide/adapter</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/guide/adapter" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/guide/adapter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/guide/adapter" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh/guide/adapter</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/guide/adapter" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/guide/adapter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/guide/adapter" />
   </url>
 
   <url>
     <loc>https://forcedskin.com/privacy</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/privacy" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/privacy" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh/privacy</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/privacy" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/privacy" />
   </url>
 
   <url>
     <loc>https://forcedskin.com/terms</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/terms" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/terms" />
+  </url>
+  <url>
+    <loc>https://forcedskin.com/zh/terms</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forcedskin.com/terms" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://forcedskin.com/zh/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://forcedskin.com/terms" />
   </url>
 
 </urlset>

@@ -3,17 +3,16 @@ import { doApi } from "~/utils/api";
 
 definePageMeta({ layout: "default", middleware: "auth" });
 
-useHead({
-  title: "我的账号 — ForcedSkin",
-  meta: [
-    { name: "description", content: "管理你的 ForcedSkin 主题收藏，选择亮色和暗色主题，同步到浏览器扩展。" },
-    { name: "robots", content: "noindex, nofollow" },
-  ],
+useForcedSkinSeo("/account", {
+  titleKey: "seo.account.title",
+  descriptionKey: "seo.account.description",
+  robots: "noindex, nofollow",
 });
 
 const { data: authData, signOut } = useAuth();
 const authUser = computed(() => authData.value?.user as { name?: string; email?: string; image?: string } | undefined);
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; }
 interface Submission extends Theme { isActive: boolean; }
@@ -86,7 +85,7 @@ async function selectTheme(theme: Theme) {
 }
 
 async function logout() {
-  await signOut({ callbackUrl: "/" });
+  await signOut({ callbackUrl: localePath("/") });
 }
 
 onMounted(load);
@@ -179,12 +178,12 @@ onMounted(load);
       <section class="mb-8">
         <div class="flex items-center justify-between mb-4">
           <h2 class="font-semibold text-foreground">☀️ {{ t('account.favorite_section_light') }}</h2>
-          <NuxtLink to="/themes?mode=light" class="text-primary-500 text-sm hover:underline">{{ t('common.view_more') }}</NuxtLink>
+          <NuxtLink :to="localePath({ path: '/themes', query: { mode: 'light' } })" class="text-primary-500 text-sm hover:underline">{{ t('common.view_more') }}</NuxtLink>
         </div>
         <div v-if="lightFavorites.length === 0"
           class="text-center py-8 text-muted text-sm border border-border rounded-2xl border-dashed">
           {{ t('account.no_favorites') }} —
-          <NuxtLink to="/themes" class="text-primary-500 hover:underline">{{ t('themes.title') }}</NuxtLink>
+          <NuxtLink :to="localePath('/themes')" class="text-primary-500 hover:underline">{{ t('themes.title') }}</NuxtLink>
         </div>
         <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <ThemeCard v-for="theme in lightFavorites" :key="theme.id" :theme="theme" :favorited="true"
@@ -197,12 +196,12 @@ onMounted(load);
       <section>
         <div class="flex items-center justify-between mb-4">
           <h2 class="font-semibold text-foreground">🌙 {{ t('account.favorite_section_dark') }}</h2>
-          <NuxtLink to="/themes?mode=dark" class="text-primary-500 text-sm hover:underline">{{ t('common.view_more') }}</NuxtLink>
+          <NuxtLink :to="localePath({ path: '/themes', query: { mode: 'dark' } })" class="text-primary-500 text-sm hover:underline">{{ t('common.view_more') }}</NuxtLink>
         </div>
         <div v-if="darkFavorites.length === 0"
           class="text-center py-8 text-muted text-sm border border-border rounded-2xl border-dashed">
           {{ t('account.no_favorites') }} —
-          <NuxtLink to="/themes" class="text-primary-500 hover:underline">{{ t('themes.title') }}</NuxtLink>
+          <NuxtLink :to="localePath('/themes')" class="text-primary-500 hover:underline">{{ t('themes.title') }}</NuxtLink>
         </div>
         <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <ThemeCard v-for="theme in darkFavorites" :key="theme.id" :theme="theme" :favorited="true"

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 definePageMeta({ layout: "default" });
-useHead({
-  title: "适配器开发指南 — ForcedSkin",
-  meta: [
-    { name: "description", content: "ForcedSkin 适配器使用声明式 JSON 公式（forcedskin-adapter-formula/v1）：分层着色规则、域名匹配与提交流程。" },
-    { property: "og:title", content: "适配器开发指南 — ForcedSkin" },
-    { property: "og:url", content: "https://forcedskin.com/guide/adapter" },
-  ],
-  link: [{ rel: "canonical", href: "https://forcedskin.com/guide/adapter" }],
+const localePath = useLocalePath();
+useForcedSkinSeo("/guide/adapter", {
+  titleKey: "seo.guide_adapter.title",
+  descriptionKey: "seo.guide_adapter.description",
+  ogTitleKey: "seo.guide_adapter.og_title",
+  ogDescriptionKey: "seo.guide_adapter.og_description",
 });
 
 const minimalExample = `{
@@ -104,7 +102,7 @@ const paletteFields = [
     <!-- 标题区 -->
     <div class="mb-10">
       <div class="flex items-center gap-2 text-sm text-muted mb-3">
-        <NuxtLink to="/adapters" class="hover:text-foreground transition-colors">适配器</NuxtLink>
+        <NuxtLink :to="localePath('/adapters')" class="hover:text-foreground transition-colors">适配器</NuxtLink>
         <span>/</span>
         <span class="text-foreground">开发指南</span>
       </div>
@@ -313,7 +311,7 @@ const paletteFields = [
     <!-- CTA -->
     <div class="text-center py-8">
       <p class="text-muted mb-4">准备好了？去适配器页面提交你的适配器！</p>
-      <NuxtLink to="/adapters"
+      <NuxtLink :to="localePath('/adapters')"
         class="inline-block px-6 py-3 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
         🔌 前往提交适配器
       </NuxtLink>

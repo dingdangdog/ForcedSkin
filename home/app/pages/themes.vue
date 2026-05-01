@@ -4,29 +4,17 @@ import { doApi } from "~/utils/api";
 definePageMeta({ layout: "default" });
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
-useHead({
-  title: "主题市场 — ForcedSkin",
-  meta: [
-    { name: "description", content: "浏览 ForcedSkin 主题市场，发现适合你的亮色和暗色配色方案，一键应用到任意网站。" },
-    { property: "og:title", content: "主题市场 — ForcedSkin" },
-    { property: "og:description", content: "发现精美配色主题，收藏并同步到 ForcedSkin 浏览器扩展，为任意网站换上你喜欢的颜色。" },
-    { property: "og:url", content: "https://forcedskin.com/themes" },
-  ],
-  link: [{ rel: "canonical", href: "https://forcedskin.com/themes" }],
-  script: [
-    {
-      type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "ForcedSkin 主题市场",
-        "description": "浏览 ForcedSkin 的亮色和暗色主题配色方案",
-        "url": "https://forcedskin.com/themes",
-        "isPartOf": { "@type": "WebSite", "name": "ForcedSkin", "url": "https://forcedskin.com" },
-      }),
-    },
-  ],
+useForcedSkinSeo("/themes", {
+  titleKey: "seo.themes.title",
+  descriptionKey: "seo.themes.description",
+  ogTitleKey: "seo.themes.og_title",
+  ogDescriptionKey: "seo.themes.og_description",
+  collectionPageLd: {
+    nameKey: "seo.themes.ld_name",
+    descriptionKey: "seo.themes.ld_description",
+  },
 });
 
 interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; isDefault: boolean; }
@@ -163,7 +151,7 @@ onMounted(load);
         <p class="text-muted mt-1">{{ t('themes.subtitle') }}</p>
       </div>
       <div class="flex items-center gap-3">
-        <NuxtLink to="/guide/theme"
+        <NuxtLink :to="localePath('/guide/theme')"
           class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           📖 {{ t('themes.guide_link') }}
         </NuxtLink>
@@ -171,7 +159,7 @@ onMounted(load);
           class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors">
           + {{ t('themes.submit_btn') }}
         </button>
-        <NuxtLink v-else to="/auth/login"
+        <NuxtLink v-else :to="localePath('/auth/login')"
           class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           {{ t('themes.login_to_submit') }}
         </NuxtLink>
@@ -209,7 +197,8 @@ onMounted(load);
             <h2 class="font-bold text-foreground text-lg">{{ t('themes.modal_title') }}</h2>
             <p class="text-xs text-muted mt-0.5">{{ t('themes.modal_subtitle') }}</p>
           </div>
-          <NuxtLink to="/guide/theme" target="_blank" class="text-xs text-primary-500 hover:underline shrink-0 mt-1">
+          <NuxtLink :to="localePath('/guide/theme')" target="_blank"
+            class="text-xs text-primary-500 hover:underline shrink-0 mt-1">
             📖 {{ t('themes.guide_link') }}
           </NuxtLink>
         </div>
@@ -239,8 +228,9 @@ onMounted(load);
           <div>
             <label class="text-xs text-muted mb-1 block">
               {{ t('themes.field_colors') }} *
-              <NuxtLink to="/guide/theme" target="_blank" class="ml-1 text-primary-500 hover:underline">{{
-                t('themes.guide_link') }}</NuxtLink>
+              <NuxtLink :to="localePath('/guide/theme')" target="_blank" class="ml-1 text-primary-500 hover:underline">
+                {{
+                  t('themes.guide_link') }}</NuxtLink>
             </label>
             <textarea v-model="submitForm.colors" rows="10" :placeholder="colorsJsonPlaceholder"
               class="w-full px-3 py-2 rounded-lg border text-xs font-mono text-foreground bg-surface outline-none resize-y"

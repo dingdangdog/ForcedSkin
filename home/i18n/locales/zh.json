@@ -157,5 +157,60 @@
     "loading": "加载中…",
     "no_data": "暂无数据",
     "view_more": "浏览更多"
+  },
+  "seo": {
+    "keywords": "ForcedSkin,强制换肤,浏览器主题,网页换肤,暗色模式,亮色主题,Chrome扩展,网页主题扩展",
+    "home": {
+      "title": "让每个网站都变成你喜欢的配色",
+      "description": "ForcedSkin 让你在任意网站上使用自选配色——浏览器扩展 + 主题商城，亮色 / 暗色一键切换，登录后可跨设备同步。",
+      "og_title": "ForcedSkin — 统一网页观感",
+      "og_description": "为任意站点套用喜欢的亮暗主题，商城收藏配色并与扩展多端同步。"
+    },
+    "themes": {
+      "title": "主题市场",
+      "description": "浏览 ForcedSkin 主题市场，发现适合你的亮色与暗色方案，一键应用到任意网站。",
+      "og_title": "ForcedSkin 主题市场",
+      "og_description": "精选配色主题，收藏并同步到 ForcedSkin 浏览器扩展，为任意网站换上你喜欢的颜色。",
+      "ld_name": "ForcedSkin 主题市场",
+      "ld_description": "浏览 ForcedSkin 亮色与暗色主题配色方案"
+    },
+    "adapters": {
+      "title": "网站适配器",
+      "description": "社区维护的网站适配方案，让 ForcedSkin 在热门站点上的强制换肤更自然贴合。",
+      "og_title": "网站适配器 — ForcedSkin",
+      "og_description": "浏览社区提交的适配器，在常用站点上获得更精细的着色效果。"
+    },
+    "privacy": {
+      "title": "隐私政策",
+      "description": "ForcedSkin 隐私政策：我们如何收集、使用与保护您的个人信息。",
+      "og_title": "隐私政策 — ForcedSkin",
+      "og_description": "ForcedSkin 在官网与浏览器扩展场景下的数据处理说明。"
+    },
+    "terms": {
+      "title": "用户协议",
+      "description": "ForcedSkin 用户协议：注册与使用本服务的条款与条件。",
+      "og_title": "用户协议 — ForcedSkin",
+      "og_description": "使用 ForcedSkin 服务前请阅读的法律条款摘要。"
+    },
+    "auth": {
+      "title": "登录",
+      "description": "使用 GitHub 或 Google 登录 ForcedSkin，管理收藏主题并与浏览器扩展同步。"
+    },
+    "account": {
+      "title": "我的账号",
+      "description": "管理你在 ForcedSkin 收藏与选用的亮色 / 暗色主题，已与登录态下的扩展同步。"
+    },
+    "guide_theme": {
+      "title": "主题创作指南",
+      "description": "了解如何为 ForcedSkin 编写自定义主题：颜色字段规范、JSON 结构与提交流程。",
+      "og_title": "主题创作指南 — ForcedSkin",
+      "og_description": "ForcedSkin 主题 JSON、色阶字段与上架审核说明。"
+    },
+    "guide_adapter": {
+      "title": "适配器开发指南",
+      "description": "ForcedSkin 适配器基于声明式 JSON 公式 forcedskin-adapter-formula/v1：域名匹配与分层着色规则。",
+      "og_title": "适配器开发指南 — ForcedSkin",
+      "og_description": "适配器公式规范、写法示例与投稿流程。"
+    }
   }
 }

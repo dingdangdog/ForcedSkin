@@ -1,5 +1,6 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { status, signIn } = useAuth();
+  const localePath = useLocalePath();
+  const { status } = useAuth();
 
   if (status.value === "authenticated") return;
 
@@ -13,6 +14,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (status.value !== "authenticated") {
-    return navigateTo(`/auth/login?callbackUrl=${encodeURIComponent(to.fullPath)}`);
+    return navigateTo({ path: localePath("/auth/login"), query: { callbackUrl: to.fullPath } });
   }
 });

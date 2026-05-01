@@ -4,16 +4,13 @@ import { doApi } from "~/utils/api";
 definePageMeta({ layout: "default" });
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
-useHead({
-  title: "Site Adapters — ForcedSkin",
-  meta: [
-    { name: "description", content: "Community-maintained fine-tuned adapters for popular websites, making ForcedSkin theme results more natural." },
-    { property: "og:title", content: "Site Adapters — ForcedSkin" },
-    { property: "og:description", content: "Browse community-submitted site adapters for more precise theme support on your favorite websites." },
-    { property: "og:url", content: "https://forcedskin.com/adapters" },
-  ],
-  link: [{ rel: "canonical", href: "https://forcedskin.com/adapters" }],
+useForcedSkinSeo("/adapters", {
+  titleKey: "seo.adapters.title",
+  descriptionKey: "seo.adapters.description",
+  ogTitleKey: "seo.adapters.og_title",
+  ogDescriptionKey: "seo.adapters.og_description",
 });
 
 interface Adapter {
@@ -76,14 +73,14 @@ onMounted(load);
         <p class="text-muted mt-1 text-sm">{{ t('adapters.subtitle') }}</p>
       </div>
       <div class="flex items-center gap-3">
-        <NuxtLink to="/guide/adapter" class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
+        <NuxtLink :to="localePath('/guide/adapter')" class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           📖 {{ t('adapters.guide_link') }}
         </NuxtLink>
         <button v-if="isLoggedIn" @click="showSubmit = true"
           class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors">
           + {{ t('adapters.submit_btn') }}
         </button>
-        <NuxtLink v-else to="/auth/login"
+        <NuxtLink v-else :to="localePath('/auth/login')"
           class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           {{ t('adapters.login_to_submit') }}
         </NuxtLink>
@@ -122,7 +119,7 @@ onMounted(load);
       <div class="bg-background border border-border rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
       <div class="flex items-start justify-between mb-4">
           <h2 class="font-bold text-foreground text-lg">{{ t('adapters.modal_title') }}</h2>
-          <NuxtLink to="/guide/adapter" target="_blank" class="text-xs text-primary-500 hover:underline shrink-0 mt-1">
+          <NuxtLink :to="localePath('/guide/adapter')" target="_blank" class="text-xs text-primary-500 hover:underline shrink-0 mt-1">
             📖 {{ t('adapters.guide_link') }}
           </NuxtLink>
         </div>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 definePageMeta({ layout: false });
 
-useHead({
-  title: "登录 — ForcedSkin",
-  meta: [
-    { name: "description", content: "使用 GitHub 或 Google 账号登录 ForcedSkin，管理你的主题收藏并同步到浏览器扩展。" },
-    { name: "robots", content: "noindex, nofollow" },
-  ],
+const localePath = useLocalePath();
+
+useForcedSkinSeo("/auth/login", {
+  titleKey: "seo.auth.title",
+  descriptionKey: "seo.auth.description",
+  robots: "noindex, nofollow",
 });
 
 const { signIn, status } = useAuth();
@@ -29,7 +29,7 @@ async function signInWith(provider: "github" | "google") {
   loading.value = provider;
   try {
     await signIn(provider, {
-      callbackUrl: (route.query.callbackUrl as string) || "/",
+      callbackUrl: (route.query.callbackUrl as string) || localePath("/"),
     });
   } catch {
     loading.value = null;
@@ -41,7 +41,7 @@ watch(
   () => status.value,
   (s) => {
     if (s === "authenticated") {
-      navigateTo((route.query.callbackUrl as string) || "/");
+      navigateTo((route.query.callbackUrl as string) || localePath("/"));
     }
   },
   { immediate: true }
@@ -72,7 +72,7 @@ const themeStore = useThemeStore();
     </button>
 
     <!-- Logo -->
-    <NuxtLink to="/" class="flex items-center gap-2.5 mb-10">
+    <NuxtLink :to="localePath('/')" class="flex items-center gap-2.5 mb-10">
       <img src="/LOGO.webp" alt="ForcedSkin" class="w-10 h-10 object-contain rounded-2xl shadow-lg shadow-[#4CAF50]/20" />
       <span class="font-bold text-2xl">ForcedSkin</span>
     </NuxtLink>
@@ -147,15 +147,15 @@ const themeStore = useThemeStore();
         :class="themeStore.isDark ? 'border-[#333633] text-[#A0A0A0]' : 'border-[#D8E8D8] text-[#6C7E6C]'"
       >
         {{ t('auth.agree_prefix') }}
-        <NuxtLink to="/terms" class="text-[#4CAF50] hover:underline">{{ t('auth.terms') }}</NuxtLink>
+        <NuxtLink :to="localePath('/terms')" class="text-[#4CAF50] hover:underline">{{ t('auth.terms') }}</NuxtLink>
         {{ t('auth.and') }}
-        <NuxtLink to="/privacy" class="text-[#4CAF50] hover:underline">{{ t('auth.privacy') }}</NuxtLink>
+        <NuxtLink :to="localePath('/privacy')" class="text-[#4CAF50] hover:underline">{{ t('auth.privacy') }}</NuxtLink>
       </div>
     </div>
 
     <!-- 回到首页 -->
     <NuxtLink
-      to="/"
+      :to="localePath('/')"
       class="mt-6 text-sm transition-colors"
       :class="themeStore.isDark ? 'text-[#A0A0A0] hover:text-[#E0E0E0]' : 'text-[#6C7E6C] hover:text-[#2C3E2C]'"
     >

@@ -2,7 +2,10 @@
 import { doApi } from "~/utils/api";
 
 definePageMeta({ layout: "admin", middleware: ["admin"] });
-useHead({ title: "控制台 — ForcedSkin 后台", meta: [{ name: "robots", content: "noindex, nofollow" }] });
+
+const localePath = useLocalePath();
+
+useHead({ title: "控制台 — ForcedSkin 后台", titleTemplate: false, meta: [{ name: "robots", content: "noindex, nofollow" }] });
 
 const pendingThemes = ref(0);
 const pendingAdapters = ref(0);
@@ -43,7 +46,7 @@ onMounted(async () => {
         </p>
       </div>
       <!-- 待审核主题 -->
-      <NuxtLink to="/admin/themes?status=pending"
+      <NuxtLink :to="localePath({ path: '/admin/themes', query: { status: 'pending' } })"
         class="p-5 rounded-2xl border bg-surface transition-colors hover:border-yellow-400"
         :class="pendingThemes > 0 ? 'border-yellow-300' : 'border-border'">
         <p class="text-xs text-muted mb-1">待审核主题</p>
@@ -61,7 +64,7 @@ onMounted(async () => {
         </p>
       </div>
       <!-- 待审核适配器 -->
-      <NuxtLink to="/admin/adapters?status=pending"
+      <NuxtLink :to="localePath({ path: '/admin/adapters', query: { status: 'pending' } })"
         class="p-5 rounded-2xl border bg-surface transition-colors hover:border-yellow-400"
         :class="pendingAdapters > 0 ? 'border-yellow-300' : 'border-border'">
         <p class="text-xs text-muted mb-1">待审核适配器</p>
@@ -75,7 +78,7 @@ onMounted(async () => {
     <!-- 快捷操作 -->
     <h2 class="text-base font-semibold text-foreground mb-3">快捷操作</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <NuxtLink to="/admin/themes"
+      <NuxtLink :to="localePath('/admin/themes')"
         class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary-400 hover:bg-surface-muted transition-colors">
         <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 text-xl shrink-0">🎨</div>
         <div>
@@ -87,7 +90,7 @@ onMounted(async () => {
           {{ pendingThemes }} 待审核
         </span>
       </NuxtLink>
-      <NuxtLink to="/admin/adapters"
+      <NuxtLink :to="localePath('/admin/adapters')"
         class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary-400 hover:bg-surface-muted transition-colors">
         <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 text-xl shrink-0">🔌</div>
         <div>
@@ -99,7 +102,7 @@ onMounted(async () => {
           {{ pendingAdapters }} 待审核
         </span>
       </NuxtLink>
-      <NuxtLink to="/admin/settings"
+      <NuxtLink :to="localePath('/admin/settings')"
         class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary-400 hover:bg-surface-muted transition-colors">
         <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 text-xl shrink-0">⚙️</div>
         <div>
@@ -107,14 +110,14 @@ onMounted(async () => {
           <p class="text-xs text-muted mt-0.5">管理系统配置项</p>
         </div>
       </NuxtLink>
-      <a href="/" target="_blank"
+      <NuxtLink :to="localePath('/')" target="_blank"
         class="flex items-center gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary-400 hover:bg-surface-muted transition-colors">
         <div class="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 text-xl shrink-0">🌐</div>
         <div>
           <p class="font-medium text-foreground text-sm">查看前台</p>
           <p class="text-xs text-muted mt-0.5">在新标签页打开网站前台</p>
         </div>
-      </a>
+      </NuxtLink>
     </div>
   </div>
 </template>

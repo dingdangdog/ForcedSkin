@@ -3,32 +3,32 @@
     <aside class="hidden md:flex md:w-64 bg-surface border-r border-border flex-shrink-0">
       <nav class="flex-1 p-5 flex flex-col h-full overflow-y-auto">
         <div class="mb-4 flex justify-center items-center space-x-2">
-          <NuxtLink to="/admin"
+          <NuxtLink :to="localePath('/admin')"
             class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm font-bold text-white">
             管
           </NuxtLink>
           <h2 class="text-2xl font-bold text-foreground">管理后台</h2>
         </div>
         <div class="mb-4">
-          <a href="/" target="_blank"
+          <NuxtLink :to="localePath('/')" target="_blank"
             class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted hover:bg-surface-muted transition-colors">
             <HomeIcon class="w-5 h-5" />
             <span>返回前台</span>
             <ArrowTopRightOnSquareIcon class="w-4 h-4 ml-auto" />
-          </a>
+          </NuxtLink>
         </div>
         <div class="flex-1 space-y-1">
           <p class="px-3 mb-1.5 text-xs font-medium uppercase tracking-wider text-muted">
             导航
           </p>
           <ul class="space-y-1">
-            <li v-for="item in menuItems" :key="item.to">
-              <NuxtLink :to="item.to"
+            <li v-for="item in menuItems" :key="item.path">
+              <NuxtLink :to="localePath(item.path)"
                 class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" :class="[
-                  isActive(item.to)
+                  isActive(item.path)
                     ? 'bg-primary-50 text-primary-600'
                     : 'text-muted hover:bg-surface-muted',
-                ]" @click.prevent="handleMenuClick(item.to)">
+                ]">
                 <component :is="item.icon" class="w-5 h-5" />
                 <span>{{ item.label }}</span>
               </NuxtLink>
@@ -88,29 +88,24 @@
 
           <nav class="flex-1 overflow-y-auto px-3 py-2">
             <div class="mb-3">
-              <a href="/" target="_blank"
+              <NuxtLink :to="localePath('/')" target="_blank"
                 class="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm font-medium text-muted hover:bg-surface-muted transition-colors">
                 <HomeIcon class="w-4 h-4" />
                 <span>返回前台</span>
                 <ArrowTopRightOnSquareIcon class="w-3.5 h-3.5 ml-auto" />
-              </a>
+              </NuxtLink>
             </div>
             <p class="px-2 mb-1 text-xs font-medium uppercase tracking-wider text-muted">
               导航
             </p>
             <ul class="space-y-0.5">
-              <li v-for="item in menuItems" :key="`mobile-${item.to}`">
-                <NuxtLink :to="item.to"
+              <li v-for="item in menuItems" :key="`mobile-${item.path}`">
+                <NuxtLink :to="localePath(item.path)"
                   class="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm font-medium transition-colors" :class="[
-                    isActive(item.to)
+                    isActive(item.path)
                       ? 'bg-primary-50 text-primary-600'
                       : 'text-muted hover:bg-surface-muted',
-                  ]" @click.prevent="
-                    () => {
-                      handleMenuClick(item.to);
-                      mobileMenuOpen = false;
-                    }
-                  ">
+                  ]" @click="mobileMenuOpen = false">
                   <component :is="item.icon" class="w-4 h-4" />
                   <span>{{ item.label }}</span>
                 </NuxtLink>
@@ -189,6 +184,7 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const route = useRoute();
+const localePath = useLocalePath();
 const mobileMenuOpen = ref(false);
 const themeStore = useThemeStore();
 const isDark = computed(() => themeStore.isDark);
@@ -199,32 +195,33 @@ const logoutLoading = ref(false);
 
 interface MenuItem {
   label: string;
-  to: string;
+  path: string;
   icon: Component;
 }
 
 const menuItems: MenuItem[] = [
-  { label: "控制台", to: "/admin", icon: Squares2X2Icon },
-  { label: "主题管理", to: "/admin/themes", icon: SwatchIcon },
-  { label: "适配器管理", to: "/admin/adapters", icon: PuzzlePieceIcon },
-  { label: "设置", to: "/admin/settings", icon: Cog8ToothIcon },
+  { label: "控制台", path: "/admin", icon: Squares2X2Icon },
+  { label: "主题管理", path: "/admin/themes", icon: SwatchIcon },
+  { label: "适配器管理", path: "/admin/adapters", icon: PuzzlePieceIcon },
+  { label: "设置", path: "/admin/settings", icon: Cog8ToothIcon },
 ];
+
+const normalizePathStripLocale = (p: string) => {
+  const s = (p.replace(/\/$/, "") || "/") as string;
+  return (s.startsWith("/zh") ? s.replace(/^\/zh(?=\/|$)/, "") || "/" : s) as string;
+};
+
+const isActive = (logicalPath: string) => {
+  const target = normalizePathStripLocale(localePath(logicalPath));
+  const cur = normalizePathStripLocale(route.path);
+  if (target === "/admin") {
+    return cur === "/admin" || cur.startsWith("/admin/");
+  }
+  return cur === target || cur.startsWith(`${target}/`);
+};
 
 const toggleTheme = () => {
   themeStore.toggleTheme();
-};
-
-const isActive = (path: string) => {
-  const currentPath = route.path.replace(/\/$/, "") || "/";
-  const normalized = path.replace(/\/$/, "") || "/";
-  if (normalized === "/admin") {
-    return currentPath === "/admin";
-  }
-  return currentPath === normalized || currentPath.startsWith(`${normalized}/`);
-};
-
-const handleMenuClick = async (path: string) => {
-  await navigateTo(path);
 };
 
 const handleLogout = async () => {
@@ -240,7 +237,7 @@ const handleLogout = async () => {
     document.cookie = "Authorization=; Max-Age=0; path=/";
   }
   try {
-    await navigateTo("/", { replace: true });
+    await navigateTo(localePath("/"), { replace: true });
   } catch (error) {
     console.error("登出跳转失败:", error);
   } finally {

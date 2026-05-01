@@ -5,19 +5,19 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@sidebase/nuxt-auth', '@nuxtjs/i18n'],
 
   i18n: {
-    // lazy: true,
     langDir: 'locales/',
     locales: [
-      { code: 'en', file: 'en.json', name: 'English' },
-      { code: 'zh', file: 'zh.json', name: '中文' },
+      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
+      { code: 'zh', iso: 'zh-CN', file: 'zh.json', name: '中文' },
     ],
     defaultLocale: 'en',
-    strategy: 'no_prefix',
+    strategy: 'prefix_except_default',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_locale',
       redirectOn: 'root',
       alwaysRedirect: false,
+      fallbackLocale: 'en',
     },
   },
 
@@ -67,18 +67,16 @@ export default defineNuxtConfig({
   // 全局 head SEO
   app: {
     head: {
-      htmlAttrs: { lang: 'zh-CN' },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       titleTemplate: '%s — ForcedSkin',
       meta: [
-        { name: 'description', content: '强制换肤 - 为任意网站应用你喜欢的主题配色。浏览器扩展 + 主题市场，支持亮色 / 暗色自由切换，登录后跨设备同步。' },
-        { name: 'keywords', content: 'ForcedSkin,强制换肤,浏览器主题,网页换肤,暗色模式,亮色主题,browser theme,dark mode extension,web skin' },
+        { name: 'description', content: 'ForcedSkin — apply your chosen light or dark theme to any website. Extension plus theme marketplace, cross-device sync when signed in.' },
+        { name: 'keywords', content: 'ForcedSkin,forced skin,browser theme,web skin,dark mode,Chrome extension, forced skin zh' },
         { name: 'author', content: 'ForcedSkin' },
         { name: 'robots', content: 'index, follow' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'ForcedSkin' },
-        { property: 'og:locale', content: 'zh_CN' },
         { property: 'og:image', content: 'https://forcedskin.com/LOGO.png' },
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: '@forcedskin' },
@@ -89,7 +87,6 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/webp', href: '/LOGO.webp', sizes: 'any' },
         { rel: 'apple-touch-icon', href: '/LOGO.webp' },
-        { rel: 'canonical', href: 'https://forcedskin.com' },
       ],
     },
   },
@@ -107,6 +104,9 @@ export default defineNuxtConfig({
       '/account/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
       '/admin/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
       '/auth/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+      '/zh/account/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+      '/zh/admin/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+      '/zh/auth/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
     },
   },
 })
