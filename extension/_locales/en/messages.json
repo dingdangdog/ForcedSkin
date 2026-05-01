@@ -161,9 +161,6 @@
   "accountSyncedTitle": {
     "message": "Synced with account"
   },
-  "themeFooterHint": {
-    "message": "Controls whether pages are recolored (except sites on the whitelist). Expand Light or Dark to pick a palette."
-  },
   "expandPickLight": {
     "message": "Expand or collapse light themes"
   },

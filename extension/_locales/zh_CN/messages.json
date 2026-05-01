@@ -161,9 +161,6 @@
   "accountSyncedTitle": {
     "message": "与账号同步"
   },
-  "themeFooterHint": {
-    "message": "扩展按此处设置改色（白名单站点除外）。展开「亮色」或「暗色」可挑选具体主题。"
-  },
   "expandPickLight": {
     "message": "展开或收起亮色主题列表"
   },
