@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { doApi } from "~/utils/api";
+import { copyTextToClipboard } from "~/utils/clipboard";
 
 definePageMeta({ layout: "admin", middleware: "admin" });
 useHead({ title: "适配器管理 — ForcedSkin 后台", titleTemplate: false, meta: [{ name: "robots", content: "noindex, nofollow" }] });
@@ -51,6 +52,11 @@ async function remove(adapter: Adapter) {
     showToast("已删除");
     await load();
   } catch {}
+}
+
+async function copyAdapterCode(adapter: Adapter) {
+  const ok = await copyTextToClipboard(adapter.code);
+  showToast(ok ? "已复制代码" : "复制失败");
 }
 
 onMounted(load);
@@ -106,9 +112,18 @@ onMounted(load);
     <!-- 代码查看弹窗 -->
     <div v-if="reviewing" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" @click.self="reviewing = null">
       <div class="bg-background border border-border rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-border">
-          <h2 class="font-bold text-foreground">{{ reviewing.displayName }} — 适配代码</h2>
-          <button @click="reviewing = null" class="text-muted hover:text-foreground">✕</button>
+        <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-border">
+          <h2 class="font-bold text-foreground truncate min-w-0">{{ reviewing.displayName }} — 适配代码</h2>
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              class="px-3 py-1.5 rounded-lg text-xs border border-border text-muted hover:text-foreground hover:bg-surface-muted transition-colors"
+              @click="copyAdapterCode(reviewing)"
+            >
+              复制代码
+            </button>
+            <button type="button" class="p-1.5 text-muted hover:text-foreground" aria-label="关闭" @click="reviewing = null">✕</button>
+          </div>
         </div>
         <div class="flex-1 overflow-auto p-5">
           <pre class="text-xs font-mono text-foreground whitespace-pre-wrap">{{ reviewing.code }}</pre>

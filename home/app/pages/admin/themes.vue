@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { doApi } from "~/utils/api";
+import { copyTextToClipboard } from "~/utils/clipboard";
 
 definePageMeta({ layout: "admin", middleware: "admin" });
 useHead({ title: "主题管理 — ForcedSkin 后台", titleTemplate: false, meta: [{ name: "robots", content: "noindex, nofollow" }] });
@@ -130,6 +131,11 @@ const formPreviewTheme = computed(() => ({
 
 watch(() => form.mode, (m) => { if (!editing.value) form.colors = DEFAULT_COLORS[m as "light" | "dark"]; });
 
+async function copyThemeColorsJson() {
+  const ok = await copyTextToClipboard(form.colors);
+  showToast(ok ? "已复制色彩 JSON" : "复制失败");
+}
+
 onMounted(load);
 </script>
 
@@ -228,10 +234,19 @@ onMounted(load);
             <input v-model="form.description" class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-sm focus:outline-none focus:border-primary-400"/>
           </div>
           <div>
-            <label class="text-xs text-muted mb-1 block">
-              色彩配置 JSON *
-              <NuxtLink :to="localePath('/guide/theme')" target="_blank" class="ml-1 text-primary-500 hover:underline">查看字段规范 →</NuxtLink>
-            </label>
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <label class="text-xs text-muted block flex-1 min-w-0">
+                色彩配置 JSON *
+                <NuxtLink :to="localePath('/guide/theme')" target="_blank" class="ml-1 text-primary-500 hover:underline">查看字段规范 →</NuxtLink>
+              </label>
+              <button
+                type="button"
+                class="shrink-0 px-2.5 py-1 rounded-lg text-xs border border-border text-muted hover:text-foreground hover:bg-surface-muted transition-colors"
+                @click="copyThemeColorsJson"
+              >
+                复制 JSON
+              </button>
+            </div>
             <textarea v-model="form.colors" rows="10" class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-xs font-mono focus:outline-none focus:border-primary-400 resize-y"/>
           </div>
           <div class="flex items-center gap-3">
