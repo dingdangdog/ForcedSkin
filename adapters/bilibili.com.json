@@ -1,0 +1,80 @@
+{
+  "schema": "forcedskin-adapter-formula/v1",
+  "id": "bilibili",
+  "priority": 100,
+  "match": {
+    "hostname": [
+      {
+        "op": "equals",
+        "value": "bilibili.com"
+      },
+      {
+        "op": "suffixDomain",
+        "value": "bilibili.com"
+      }
+    ]
+  },
+  "layers": [
+    {
+      "kind": "surface",
+      "skipOverlayLike": true,
+      "selectors": [
+        "[class*='bili-']",
+        "[class*='bpx-']",
+        "[class*='bui-']",
+        "[class*='dyn-']",
+        "[class*='search-']",
+        "[class*='message-']",
+        "[class*='eplist_']",
+        "[class*='numberList_']",
+        "[class*='numberListItem_']",
+        "[class*='modeChangeBtn_']",
+        "[class*='_ChatContent_']",
+        "[class*='_InfiniteScroll_']",
+        "[class*='_MessageList_']",
+        "[class*='_Msg_']",
+        "[class*='_Session_']",
+        "[class*='_Conversation_']"
+      ]
+    },
+    {
+      "kind": "accent",
+      "selectors": [
+        "[class*='active']",
+        "[class*='select']",
+        "[class*='current']",
+        ".bili-dyn-list-tabs__item.active",
+        "[class*='numberListItem_select']"
+      ]
+    },
+    {
+      "kind": "canvas",
+      "selectors": [
+        ".message-bg",
+        ".message-bgc"
+      ]
+    },
+    {
+      "kind": "richText",
+      "selectors": [
+        "bili-rich-text"
+      ],
+      "cssVars": {
+        "--bili-rich-text-color": "foreground",
+        "--bili-rich-text-link-color": "primary500",
+        "--bili-rich-text-link-color-hover": "primary700"
+      },
+      "color": "foreground"
+    },
+    {
+      "kind": "svgRecolor",
+      "selectors": [
+        "svg path",
+        "svg rect",
+        "svg circle",
+        "svg polygon",
+        "svg line"
+      ]
+    }
+  ]
+}

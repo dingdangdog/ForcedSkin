@@ -9,11 +9,11 @@
 ## 方案
 
 1. **接口**：`GET /api/pub/extension-adapters`  
-   - 返回全部 `isActive === true` 的 `{ name, code, updatedAt }`，供扩展拉取；已与其它 `/api/pub/**` 一样放行 CORS。
+   - 返回全部 `isActive === true` 的 `{ name, displayName, siteDomain, code, updatedAt }`，供扩展拉取；已与其它 `/api/pub/**` 一样放行 CORS。
 
 2. **扩展后台**（`background.js`）  
-   - `syncAdapters()`：拉取接口 → `chrome.storage.local["gtsRemoteAdapterScripts"]`  
-   - 触发时机：`chrome.runtime.onInstalled`、`chrome.runtime.onStartup`、`syncTheme`（同步主题前）  
+   - `syncAdapters()`：拉取接口 → `chrome.storage.local["gtsRemoteAdapterScripts"]`（缓存含 `code` 及展示用元数据）  
+   - 触发时机：`chrome.runtime.onInstalled`、`chrome.runtime.onStartup`、弹窗「更新适配器」、登录成功后的显式拉取；**不再**在 `syncTheme()` 内隐式调用。  
    - 成功后对所有网页 Tab 发送 `ADAPTERS_UPDATE`。
 
 3. **内容脚本**（`content.js`）  
@@ -34,5 +34,5 @@
 
 ## 运营侧操作
 
-- 更新适配逻辑：在后台编辑适配器 **`code`（JSON 公式）** 并保存；用户下次同步主题或重启浏览器即可拉到新公式。  
+- 更新适配逻辑：在后台编辑适配器 **`code`（JSON 公式）** 并保存；用户下次点击「更新适配器」、重装扩展或浏览器启动即可拉到新公式。  
 - 新库部署：`init-data` 写入 B 站公式种子。

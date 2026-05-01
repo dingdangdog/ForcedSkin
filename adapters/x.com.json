@@ -1,0 +1,46 @@
+{
+  "schema": "forcedskin-adapter-formula/v1",
+  "id": "x-twitter",
+  "priority": 100,
+  "match": {
+    "hostname": [
+      {
+        "op": "equals",
+        "value": "x.com"
+      },
+      {
+        "op": "suffixDomain",
+        "value": "x.com"
+      },
+      {
+        "op": "equals",
+        "value": "twitter.com"
+      },
+      {
+        "op": "suffixDomain",
+        "value": "twitter.com"
+      }
+    ]
+  },
+  "layers": [
+    {
+      "kind": "richText",
+      "selectors": [
+        "a[role=\"link\"][aria-label]:not([href*=\"/status/\"]) div[dir=\"ltr\"]",
+        "a[role=\"link\"][aria-label]:not([href*=\"/status/\"]) > div > div:first-of-type"
+      ],
+      "cssVars": {
+        "--gts-x-sidebar-ink": "foreground"
+      },
+      "color": "foreground"
+    },
+    {
+      "kind": "svgRecolor",
+      "selectors": [
+        "a[role=\"link\"][aria-label]:not([href*=\"/status/\"]) svg path"
+      ],
+      "fill": "foreground",
+      "stroke": "foreground"
+    }
+  ]
+}

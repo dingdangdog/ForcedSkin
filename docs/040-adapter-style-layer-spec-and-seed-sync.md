@@ -39,13 +39,13 @@
    - 从 `chrome.storage.local.gtsRemoteAdapterScripts` 执行服务端下发的脚本；监听 `ADAPTERS_UPDATE` 热重载。
 
 3. **`extension/src/background.js`**  
-   - `syncAdapters()` 请求 `/api/pub/extension-adapters`，写入本地缓存并广播 `ADAPTERS_UPDATE`；安装、浏览器启动、`syncTheme` 时均会同步。
+   - `syncAdapters()` 请求 `/api/pub/extension-adapters`，写入本地缓存并广播 `ADAPTERS_UPDATE`；安装、浏览器启动与弹窗「更新适配器」时触发（`syncTheme` 不再附带拉取适配器）。
 
 4. **`extension/manifest.json`**  
    - 不再打包 `adapters/bilibili.js`，改由服务端下发。
 
 5. **`home/server/api/pub/extension-adapters.get.ts`**  
-   - 公开返回全部 `isActive` 适配器的 `name` + `code` + `updatedAt`。
+   - 公开返回全部 `isActive` 适配器的 `name`、`displayName`、`siteDomain`、`code`、`updatedAt`。
 
 6. **`home/server/plugins/init-data.ts`**  
    - 空库种子：`code` 直接读取 `server/seeds/bilibili-adapter.fallback.js`（相对 `process.cwd()`），**不再**使用已删除的 resolve 工具。
@@ -58,6 +58,6 @@
 
 ## 维护说明
 
-- **运行时**：扩展从服务端拉取已上线适配器的 `code`，不写死在插件包里；管理员在后台改库、`syncTheme`/重装扩展后即可下发新版本脚本。
+- **运行时**：扩展从服务端拉取已上线适配器的 `code`，不写死在插件包里；管理员在后台改库后，用户通过「更新适配器」或浏览器启动同步即可下发新版本公式。
 - **空库种子**：`init-data` 将 `home/server/seeds/bilibili-adapter.fallback.js` 写入数据库初始记录；开发时请保持该 seeds 文件与 `extension/src/content/adapters/bilibili.js`（参考实现）一致。
 - 已有数据库不会自动覆盖适配器 `code`；需管理员在后台更新或自行迁移。
