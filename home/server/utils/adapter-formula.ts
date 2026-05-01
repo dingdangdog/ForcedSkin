@@ -105,8 +105,15 @@ export function validateAdapterFormulaPayload(parsed: unknown): AdapterFormulaVa
       }
     }
 
-    if (L.kind === "surface" && L.skipOverlayLike !== undefined && typeof L.skipOverlayLike !== "boolean") {
-      return { ok: false, error: "surface.skipOverlayLike 须为布尔值" };
+    if (L.kind === "surface") {
+      if (L.skipOverlayLike !== undefined && typeof L.skipOverlayLike !== "boolean") {
+        return { ok: false, error: "surface.skipOverlayLike 须为布尔值" };
+      }
+      if (L.backgroundKey !== undefined) {
+        if (typeof L.backgroundKey !== "string" || !PALETTE_KEYS.has(L.backgroundKey)) {
+          return { ok: false, error: "surface.backgroundKey 须为合法调色板键名" };
+        }
+      }
     }
   }
 
