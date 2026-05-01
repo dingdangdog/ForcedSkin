@@ -158,6 +158,188 @@
     "no_data": "No data",
     "view_more": "Browse more"
   },
+  "guide_theme": {
+    "crumb_themes": "Theme marketplace",
+    "crumb_current": "Authoring guide",
+    "h1": "🎨 Theme authoring guide",
+    "intro": "Learn the ForcedSkin theme JSON schema and palette field rules—design palettes for any site and submit them for the community.",
+    "quick_title": "Quick start",
+    "quick_1_title": "Choose a mode",
+    "quick_1_intro": "Decide whether the theme runs in",
+    "quick_1_mid": "(light palettes) or",
+    "quick_1_out": "(dark palettes).",
+    "quick_2_title": "Fill in colors",
+    "quick_2_body": "Follow the field specification below — at minimum all required keys must be present in your JSON.",
+    "quick_3_title": "Submit for review",
+    "quick_3_before": "On the ",
+    "quick_3_after": "page click “Submit Theme”. Admins approve before it appears for everyone.",
+    "fields_heading": "Color fields",
+    "fields_intro": "All palette entries must be hex (#RRGGBB) strings or CSS rgba(...) values.",
+    "badge_required": "Required",
+    "badge_optional": "Optional",
+    "example_prefix": "Example:",
+    "scale_heading": "Color ramps",
+    "scale_intro_sentence": "The JSON keys primary, secondary, and accent each accept either authoring style below:",
+    "scale_compact_title": "Compact (three core shades)",
+    "scale_compact_note": "The engine promotes shade 500 as the default hue; 600/700 cover hover/active affordances.",
+    "scale_full_title": "Full ramp (50 → 950, eleven stops)",
+    "scale_full_note": "Publishing the complete ramp yields smoother tonal transitions everywhere.",
+    "scale_tip_label": "Tip:",
+    "scale_tip_body": "Shade IDs follow Tailwind-style ramps: 50 is lightest, 950 is darkest. Light themes mainly use 500/600/700; dark themes often lean on 400/500/600.",
+    "samples_heading": "Full samples",
+    "sample_light_cap": "🌿 Light sample (light-mint)",
+    "sample_dark_cap": "🌑 Dark sample (dark-forest)",
+    "vars_heading": "Custom variables (vars)",
+    "vars_body_before": "If default tokens fall short, add extra CSS vars under a ",
+    "vars_body_mid": " node—omit the ",
+    "vars_body_after": " prefix in each key.",
+    "naming_heading": "Slug rules (name)",
+    "name_rule_1": "Only lowercase ASCII letters, digits, and hyphen (",
+    "name_rule_1_tail": ").",
+    "name_rule_fmt": "Prefer concise “mode-style” pairs such as “dark-ocean” or “light-sakura”.",
+    "name_rule_3": "Slugs must be globally unique—they cannot change after publishing, so double-check beforehand.",
+    "name_rule_4": "Maximum length 50 characters.",
+    "review_heading": "Submission & review",
+    "review_1": "🔐 Sign in before submitting.",
+    "review_2": "⏳ Submissions queue for review-staff typically respond within 1-3 working days.",
+    "review_3": "✅ Approved themes appear in the marketplace for everyone to favorite.",
+    "review_4": "❌ Invalid colors, conflicting names, or policy breaches will be rejected-delete and submit a corrected version.",
+    "review_5": "🚫 No malicious code, hate content, or obviously infringing palettes.",
+    "cta_intro": "Ready? Head to the theme marketplace and publish your palette.",
+    "cta_btn": "🎨 Submit a theme",
+    "fields": {
+      "background": {
+        "desc": "Primary page background-light themes lean near white, dark themes near deep neutrals. CSS var: --color-background"
+      },
+      "foreground": {
+        "desc": "Primary text-readably contrasted against background. CSS var: --color-foreground"
+      },
+      "surface": {
+        "desc": "Card/panel/container fill-slightly lifted from background. CSS var: --color-surface"
+      },
+      "surfaceMuted": {
+        "desc": "Muted hovers/sub-containers stepped from surface. CSS var: --color-surface-muted"
+      },
+      "border": {
+        "desc": "Hairlines & dividers-typically low saturation grays/semi-transparent tones. CSS var: --color-border"
+      },
+      "muted": {
+        "desc": "De-emphasized copy & placeholders. CSS var: --color-muted"
+      },
+      "primary": {
+        "desc": "Primary brand ramp for buttons/links/focus-can be single color or ramp (50–950). Requires at least shades 500/600/700. Maps to CSS variables --color-primary- plus shade tokens (50–950)"
+      },
+      "secondary": {
+        "desc": "Secondary accent ramps for chips/ghost buttons-structure matches primary-maps to --color-secondary- plus shade tokens"
+      },
+      "accent": {
+        "desc": "Highlights,badges,spotlight colors-structure matches primary-maps to --color-accent- plus shade tokens"
+      },
+      "vars": {
+        "desc": "Arbitrary CSS custom properties-keys omit “--”; values applied verbatim on :root"
+      }
+    }
+  },
+  "guide_adapter": {
+    "crumb_adapters": "Site adapters",
+    "crumb_current": "Development guide",
+    "h1": "🔌 Adapter development guide",
+    "lead_1": "ForcedSkin adapters are authored as",
+    "lead_2": "declarative JSON formulas",
+    "lead_3": "(",
+    "lead_4": ") describing which hostnames to target and which selector layers to tint. The server stores JSON only; the extension ships a",
+    "lead_5": "fixed interpreter",
+    "lead_6": "that applies paint rules—never arbitrary JavaScript.",
+    "how_title": "How it works",
+    "how_s1": "The core engine starts with CSS-variable + inline overlays for baseline recoloring.",
+    "how_s2": "When a hostname hits, adapters run ascending by priority—the smaller the number, the sooner the interpreter executes (recommended site adapters use 100).",
+    "how_s3": "Each adapter tweaks targeted nodes via the exposed engineApi helpers; skip transparent overlays/player stacks per the Best practices notes.",
+    "how_s4": "The runtime already observes DOM deltas and reapplies adapters throttled—you do not need MutationObserver boilerplate.",
+    "how_s5_prefix": "Formulas arrive from",
+    "how_s5_api": "GET /api/pub/extension-adapters",
+    "how_s5_suffix": "; every record’s JSON blob is cached locally. Updating the portal copy takes effect once users refresh adapters or reopen the browser—no reinstall required.",
+    "minimal_title": "Minimal example",
+    "formula_title": "Adapter formula forcedskin-adapter-formula/v1",
+    "formula_intro": "Submitted JSON must pass server validation—the root schema looks like this:",
+    "th_field": "Field",
+    "th_type": "Type",
+    "th_required": "Required",
+    "th_desc": "Description",
+    "th_op": "Operator",
+    "th_meaning": "Meaning",
+    "th_kind": "Layer kind",
+    "th_use": "Purpose",
+    "th_style_map": "Typical mapping",
+    "th_mark": "markApplied",
+    "req_yes": "Required",
+    "req_no": "Optional",
+    "hostname_title": "match.hostname rules",
+    "palette_title": "Palette keys (richText cssVars / color)",
+    "layer_title": "Recommended layer kinds",
+    "layer_intro": "Think semantically—not just by element names. See the checked-in sample",
+    "layer_intro_after": "for a full walkthrough.",
+    "note_avoid_title": "Skip risky regions:",
+    "note_avoid_body": "The engine already ignores media, canvas, iframe, heavy blend/backdrop layers, and nodes whose classes hint at masks or overlays—extend those guardrails for translucent player chrome.",
+    "note_iso_title": "Host opt-out:",
+    "note_iso_before": "Mark subtrees (e.g. previews) with ",
+    "note_iso_after": " so their descendants skip global repainting.",
+    "sample_title": "Full sample excerpt",
+    "bp_title": "Best practices",
+    "bp_ok_json_title": "JSON must strictly validate",
+    "bp_ok_json_body": "Invalid schema/layers/host rules bounce during review-fold this guide’s minimal sample & seeds before submitting.",
+    "bp_skip_title": "Enable skipOverlayLike on surface",
+    "bp_skip_body": "Matches core engine safeguards so translucent HUDs/video stacks are not flattened to solid fills.",
+    "bp_nojs_title": "Never ship JavaScript",
+    "bp_nojs_body": "The code field is JSON only; the extension no longer evals strings through new Function.",
+    "submit_title": "Submission checklist",
+    "submit_1": "🔐 Sign in before filing a submission.",
+    "submit_2": "📋 Provide display name, comma-separated domains, and paste the JSON into the adapter code textarea.",
+    "submit_3": "⏳ Entries land in pending until staff validate safety + selector scope.",
+    "submit_4": "✅ Approved adapters roll out to every extension user who syncs adapters.",
+    "submit_5": "❌ Overly broad selectors or invalid JSON return feedback—fix and resubmit.",
+    "domain_title": "Target domain format",
+    "domain_intro": "siteDomain is the human-facing list; matching actually keys off match.hostname like:",
+    "cta_intro": "Ready? Open the adapter gallery and submit your JSON.",
+    "cta_btn": "🔌 Submit an adapter",
+    "formula": {
+      "schema_desc": "Literal version string forcedskin-adapter-formula/v1",
+      "id_desc": "Logical adapter id—usually the site codename, e.g. bilibili",
+      "priority_desc": "Execution order (ascending). Site-specific adapters typically use 100",
+      "match_desc": "Array of hostname rule objects (see table below)",
+      "layers_desc": "Ordered paint layers— kinds documented in the layer table"
+    },
+    "host": {
+      "equals_desc": "Hostname equals value (case-insensitive)",
+      "suffix_desc": "Hostname equals value or ends with .value (covers both example.com and *.example.com)"
+    },
+    "palette": {
+      "background": "Page background",
+      "foreground": "Primary text",
+      "surface": "Card / panel fill",
+      "surfaceMuted": "Muted containers / hover fills",
+      "border": "Border color",
+      "muted": "Secondary text",
+      "primary500": "Primary emphasis (links) mapped from theme primary.500",
+      "primary700": "Deeper primary state mapped from primary.700 or 800"
+    },
+    "layer": {
+      "surface_use": "Panels, list rows, nav shells",
+      "surface_map": "background→surface, color→foreground, border→border",
+      "surface_mark": "bg + text + border",
+      "accent_use": "Active tabs / current list rows",
+      "accent_map": "background+border→primary700, color→background for contrast",
+      "accent_mark": "bg + text + border",
+      "canvas_use": "Hero slabs with raster backgrounds",
+      "canvas_map": "Strip background-image, background→palette background",
+      "canvas_mark": "Usually background only",
+      "richText_use": "Sites that expose branded web components",
+      "richText_map": "Emit required CSS variables + textual color mapping",
+      "richText_mark": "text (sometimes + background)",
+      "svgRecolor_use": "Inline SVG glyphs",
+      "svgRecolor_map": "fill/stroke inherit currentColor from parent hue",
+      "svgRecolor_mark": "Optional marking to avoid interfering with cleanup"
+    }
+  },
   "seo": {
     "keywords": "ForcedSkin, browser theme, web skin, dark mode extension, light theme, Chrome extension, forced skin",
     "home": {

@@ -158,6 +158,188 @@
     "no_data": "暂无数据",
     "view_more": "浏览更多"
   },
+  "guide_theme": {
+    "crumb_themes": "主题市场",
+    "crumb_current": "创作指南",
+    "h1": "🎨 主题创作指南",
+    "intro": "了解 ForcedSkin 主题的 JSON 结构与颜色字段规范，为任意网站设计专属配色并提交给社区共享。",
+    "quick_title": "快速开始",
+    "quick_1_title": "选择模式",
+    "quick_1_intro": "决定你的主题运行在",
+    "quick_1_mid": "（亮色）还是",
+    "quick_1_out": "（暗色）模式。",
+    "quick_2_title": "填写颜色",
+    "quick_2_body": "按下方字段规范填写 JSON，至少包含全部必填键。",
+    "quick_3_title": "提交审核",
+    "quick_3_before": "在 ",
+    "quick_3_after": " 点击「提交主题」，等待管理员审核通过后对所有用户可见。",
+    "fields_heading": "颜色字段规范",
+    "fields_intro": "所有颜色值为十六进制（#RRGGBB）或 CSS rgba(...) 字符串。",
+    "badge_required": "必填",
+    "badge_optional": "可选",
+    "example_prefix": "示例：",
+    "scale_heading": "色阶（Color Scale）",
+    "scale_intro_sentence": "primary、secondary、accent 三个调色对象均支持以下两种写法之一：",
+    "scale_compact_title": "简写（仅核心 3 档）",
+    "scale_compact_note": "引擎以 500 为主色，600/700 承接悬浮与激活态。",
+    "scale_full_title": "完整色阶（50 ~ 950，共 11 档）",
+    "scale_full_note": "推荐提供完整色阶，让深浅场景过渡更自然。",
+    "scale_tip_label": "提示：",
+    "scale_tip_body": "色阶编号遵循 Tailwind CSS 规范，50 最浅（近白），950 最深（近黑）。亮色主题通常以 500/600/700 为主用色，暗色主题可以偏向 400/500/600。",
+    "samples_heading": "完整示例",
+    "sample_light_cap": "🌿 亮色主题示例（light-mint）",
+    "sample_dark_cap": "🌑 暗色主题示例（dark-forest）",
+    "vars_heading": "自定义变量（vars）",
+    "vars_body_before": "若标准字段不够用，可在 ",
+    "vars_body_mid": " 中声明额外 CSS 变量；键名不含 ",
+    "vars_body_after": " 前缀。",
+    "naming_heading": "标识命名规范（name）",
+    "name_rule_1": "仅允许小写字母、数字与连字符（",
+    "name_rule_1_tail": "）。",
+    "name_rule_fmt": "推荐使用「模式-风格」式命名，例如 dark-ocean、light-sakura。",
+    "name_rule_3": "标识全局唯一且创建后不可更名，请慎重选择。",
+    "name_rule_4": "长度 ≤ 50 个字符。",
+    "review_heading": "提交与审核流程",
+    "review_1": "🔐 提交前需登录账号。",
+    "review_2": "⏳ 提交后为待审核，管理员通常 1～3 个工作日内处理。",
+    "review_3": "✅ 审核通过后将在主题市场公开，可被收藏与选用。",
+    "review_4": "❌ 颜色非法、名称冲突或违规内容会被拒绝，请修正后重新提交。",
+    "review_5": "🚫 禁止提交恶意代码、仇恨或明显侵权的配色内容。",
+    "cta_intro": "准备好了？前往主题市场提交你的作品。",
+    "cta_btn": "🎨 前往提交主题",
+    "fields": {
+      "background": {
+        "desc": "页面主背景。亮色主题接近白，暗色主题接近深中性色。CSS：--color-background"
+      },
+      "foreground": {
+        "desc": "主文字色，与背景保持高对比。CSS：--color-foreground"
+      },
+      "surface": {
+        "desc": "卡片、面板容器背景，略高于/低于主背景。CSS：--color-surface"
+      },
+      "surfaceMuted": {
+        "desc": "次级容器、悬浮等更弱一层背景。CSS：--color-surface-muted"
+      },
+      "border": {
+        "desc": "分割线、描边，常为低饱和灰或半透明。CSS：--color-border"
+      },
+      "muted": {
+        "desc": "次要文案、占位符等降调文本。CSS：--color-muted"
+      },
+      "primary": {
+        "desc": "主色色阶，用于按钮、链接与高亮；可为单色或 50–950 对象，至少含 500/600/700，对应变量名 --color-primary- 加色阶编号"
+      },
+      "secondary": {
+        "desc": "次要色阶，用于芯片、幽灵按钮等；结构同 primary。CSS：--color-secondary- 加色阶编号"
+      },
+      "accent": {
+        "desc": "强调色阶，用于徽章、提示高亮等；结构同 primary。CSS：--color-accent- 加色阶编号"
+      },
+      "vars": {
+        "desc": "额外 CSS 自定义属性；键不带 --，值为合法 CSS，将注入 :root"
+      }
+    }
+  },
+  "guide_adapter": {
+    "crumb_adapters": "适配器",
+    "crumb_current": "开发指南",
+    "h1": "🔌 适配器开发指南",
+    "lead_1": "ForcedSkin 适配器基于",
+    "lead_2": "声明式 JSON 公式",
+    "lead_3": "（",
+    "lead_4": "）描述匹配的域名与分层选择器。服务端与数据库仅存储 JSON；扩展内置",
+    "lead_5": "固定解释器",
+    "lead_6": "应用着色规则，不执行任意 JavaScript。",
+    "how_title": "工作原理",
+    "how_s1": "主引擎先对页面做全局配色覆盖（CSS 变量 + inline）。",
+    "how_s2": "命中域名后，按适配器 priority 数值升序执行内置步骤（数值越小越早；站点适配建议写 100）。",
+    "how_s3": "适配器通过 engineApi 精准修正元素；播放器叠层、半透明 HUD 等需在最佳实践中额外跳过。",
+    "how_s4": "引擎已对 DOM 变更增量改写并节流回调适配器，无需手写 MutationObserver。",
+    "how_s5_prefix": "公式由服务端下发：扩展从 ",
+    "how_s5_api": "GET /api/pub/extension-adapters",
+    "how_s5_suffix": " 拉取每条适配器的 JSON（code 字段），缓存后由解释器解析；后台或种子更新后，用户同步或重启浏览器即可生效，无需重装扩展。",
+    "minimal_title": "最小示例",
+    "formula_title": "适配器公式 forcedskin-adapter-formula/v1",
+    "formula_intro": "提交的「适配器代码」须为合法 JSON，根对象字段如下（服务端会校验）：",
+    "th_field": "字段",
+    "th_type": "类型",
+    "th_required": "必填",
+    "th_desc": "说明",
+    "th_op": "op",
+    "th_meaning": "含义",
+    "th_kind": "分层 kind",
+    "th_use": "用途",
+    "th_style_map": "典型样式映射",
+    "th_mark": "markApplied",
+    "req_yes": "必填",
+    "req_no": "可选",
+    "hostname_title": "match.hostname 规则",
+    "palette_title": "palette 键名（richText.cssVars / color）",
+    "layer_title": "推荐的「着色分层」",
+    "layer_intro": "按语义分层而非只看标签名；完整范例见仓库文件",
+    "layer_intro_after": "。",
+    "note_avoid_title": "不应着色：",
+    "note_avoid_body": "引擎已跳过 IMG / VIDEO / CANVAS / IFRAME、复杂背景图、混合模式、backdrop-filter、以及 class 含 mask/overlay 等的节点；适配器内应对半透明遮罩、播放器叠层做额外 skip。",
+    "note_iso_title": "站点隔离：",
+    "note_iso_before": "宿主页面可将预览区等加上 ",
+    "note_iso_after": " ，其子孙不参与全局改写。",
+    "sample_title": "完整示例（节选）",
+    "bp_title": "最佳实践 & 注意事项",
+    "bp_ok_json_title": "公式须通过 JSON / schema 校验",
+    "bp_ok_json_body": "schema、layers、match.hostname 写法错误会导致拒稿；请对照本文最小示例与仓库 seeds。",
+    "bp_skip_title": "surface 层建议开启 skipOverlayLike",
+    "bp_skip_body": "与引擎一致，跳过半透明叠层与 pointer-events:none 等高风险节点，避免把视频蒙层涂成实色。",
+    "bp_nojs_title": "禁止提交 JavaScript",
+    "bp_nojs_body": "code 字段必须为 JSON 公式；扩展不再对服务端字符串使用 new Function 执行脚本。",
+    "submit_title": "提交须知",
+    "submit_1": "🔐 提交前需登录账号。",
+    "submit_2": "📋 提交时需填写展示名称、目标域名列表（逗号分隔）及完整 JSON（粘贴至「适配器代码」文本框）。",
+    "submit_3": "⏳ 提交后为待审核，管理员会校验合法性与安全性。",
+    "submit_4": "✅ 审核通过后对在扩展中启用该适配器的全体用户生效。",
+    "submit_5": "❌ 公式无效或选择器过宽损坏布局时将退回，请据反馈修订后重提。",
+    "domain_title": "目标域名格式",
+    "domain_intro": "siteDomain 为人类可读列表；真正匹配使用 match.hostname，例如：",
+    "cta_intro": "准备好了？前往适配器页面提交你的适配器！",
+    "cta_btn": "🔌 前往提交适配器",
+    "formula": {
+      "schema_desc": "固定为 forcedskin-adapter-formula/v1",
+      "id_desc": "适配器逻辑 ID，建议与站点英文名一致，如 bilibili",
+      "priority_desc": "执行顺序：数值越小越早；站点适配建议 100",
+      "match_desc": "hostname 匹配规则数组（见下表）",
+      "layers_desc": "着色分层列表，kind 含义见「着色分层」表"
+    },
+    "host": {
+      "equals_desc": "hostname 与 value 完全相同（忽略大小写）",
+      "suffix_desc": "hostname 等于 value 或以 .value 为后缀（覆盖 example.com 与 *.example.com）"
+    },
+    "palette": {
+      "background": "页面主背景色",
+      "foreground": "主文字颜色",
+      "surface": "卡片/面板背景",
+      "surfaceMuted": "次级容器/悬浮背景",
+      "border": "边框颜色",
+      "muted": "次要文字颜色",
+      "primary500": "主色强调（链接等），由主题 JSON 的 primary.500 映射",
+      "primary700": "主色更深状态，由 primary.700 / 800 映射"
+    },
+    "layer": {
+      "surface_use": "面板、列表行、导航条容器",
+      "surface_map": "background→surface，color→foreground，border→border",
+      "surface_mark": "bg + text + border（三项都打）",
+      "accent_use": "选中 Tab、当前列表项",
+      "accent_map": "background+border→primary700，color→background（保证对比）",
+      "accent_mark": "bg + text + border",
+      "canvas_use": "带大图背景的整块容器",
+      "canvas_map": "移除 background-image，background→background",
+      "canvas_mark": "通常仅 bg",
+      "richText_use": "站内富文本自定义元素",
+      "richText_map": "写入站点要求的 CSS 变量 + color→foreground",
+      "richText_mark": "text（或按需加 bg）",
+      "svgRecolor_use": "SVG path 等矢量图标",
+      "svgRecolor_map": "fill/stroke→currentColor，由父级 color 驱动",
+      "svgRecolor_mark": "可不标记（避免干扰引擎清除逻辑）"
+    }
+  },
   "seo": {
     "keywords": "ForcedSkin,强制换肤,浏览器主题,网页换肤,暗色模式,亮色主题,Chrome扩展,网页主题扩展",
     "home": {
