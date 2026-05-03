@@ -51,6 +51,10 @@ ForcedSkin lets you apply a consistent **light / dark appearance** across websit
 
 The extension saves your preferences and cached data locally: theme mode (light / dark / off), per-site whitelist, signed-in profile metadata, authentication token issued after OAuth, downloaded theme catalogs and palette definitions, and cached site-adapter formulas fetched from ForcedSkin’s servers. **`storage` is required** so these settings persist between sessions and so the popup and content scripts can read the same data without transmitting browsing history.
 
+### `alarms`
+
+Under **Manifest V3**, the background worker may be suspended when idle. When the user selects **automatic** theme mode, the extension switches between light and dark based on **local clock boundaries** (day vs night hours). **`chrome.alarms`** schedules a single named alarm for the **next** boundary so the worker can wake, re-evaluate the effective theme, and **broadcast updates** to open tabs—without keeping a persistent timer or polling. Alarms are cleared whenever automatic mode is not active; they are used **only** for this scheduled theme refresh, not for unrelated scheduling or background work.
+
 ### `scripting`
 
 This extension targets **Manifest V3**. The **`scripting` permission** is declared so the extension may use Chrome’s programmatic script APIs when needed—for example to register content scripts programmatically or to inject scripts in coordination with tab lifecycle—alongside statically declared content scripts that apply universal theming. Use is limited to **theme and adapter orchestration**, not unrelated page modification.
