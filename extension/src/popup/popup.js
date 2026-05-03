@@ -458,6 +458,28 @@ function applyPickedLabelsFromResponse(response) {
   }
 }
 
+function autoEffectiveNow() {
+  const h = new Date().getHours();
+  return h >= 6 && h < 18 ? "light" : "dark";
+}
+
+function updateStatus(storedMode, effectiveModeFromBg) {
+  let uiTheme;
+  if (storedMode === "off") {
+    uiTheme = "off";
+  } else if (storedMode === "auto") {
+    const eff =
+      effectiveModeFromBg === "light" || effectiveModeFromBg === "dark"
+        ? effectiveModeFromBg
+        : autoEffectiveNow();
+    uiTheme = eff;
+  } else {
+    uiTheme = storedMode;
+  }
+  setPopupTheme(uiTheme);
+  applyPopupPaletteFromCatalog(uiTheme, lastSettingsSnapshot?.palette);
+}
+
 // ── Settings load ─────────────────────────────────────────────────────────────
 async function loadCurrentMode() {
   const response = await chrome.runtime.sendMessage({ type: "GET_SETTINGS" });
@@ -470,16 +492,11 @@ async function loadCurrentMode() {
 
   syncAccordionExpansionToMode(currentMode);
 
-  updateStatus(currentMode);
+  updateStatus(currentMode, response?.effectiveMode);
   renderWhitelistState();
   syncWhitelistField();
   applyPickedLabelsFromResponse(response);
   renderThemeVariantRows();
-}
-
-function updateStatus(mode) {
-  setPopupTheme(mode);
-  applyPopupPaletteFromCatalog(mode, lastSettingsSnapshot?.palette);
 }
 
 async function onModeChange(event) {

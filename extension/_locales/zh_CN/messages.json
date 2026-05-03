@@ -17,6 +17,12 @@
   "optionDark": {
     "message": "暗色主题"
   },
+  "optionAuto": {
+    "message": "自动"
+  },
+  "optionAutoSub": {
+    "message": "按本地时间：约 6:00–18:00 亮色，其余暗色"
+  },
   "optionOff": {
     "message": "不修改"
   },
@@ -129,7 +135,7 @@
     "message": "账号"
   },
   "panelThemesLead": {
-    "message": "选择要对网页生效的模式；点击亮/暗右侧箭头可展开，并在网格里挑选具体主题。"
+    "message": "选择要对网页生效的模式（含按本地时间自动切换）；点击亮/暗右侧箭头可展开，并在网格里挑选具体主题。"
   },
   "panelWhitelistLead": {
     "message": "列入白名单的网站将保持原样式，不参与强制换肤。"

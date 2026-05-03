@@ -56,7 +56,7 @@
       }
       if (message.type === "THEME_MODE_UPDATE") {
         if (!engineRef) return;
-        engineRef.applySettings(message.mode, []);
+        engineRef.applySettings(api.resolveStoredThemeMode(message.mode || api.MODES.OFF), []);
       }
       if (message.type === "ADAPTERS_UPDATE") {
         void reloadAdaptersAndReapply();
@@ -65,7 +65,7 @@
 
     const { mode, whitelist, palette } = await engine.loadInitialSettings();
     if (palette) engine.setPalette(palette);
-    engine.applySettings(mode, whitelist);
+    engine.applySettings(api.resolveStoredThemeMode(mode), whitelist);
   }
 
   async function reloadAdaptersAndReapply() {
@@ -78,7 +78,7 @@
         chrome.storage.sync.get(["themeMode", "siteWhitelist"]),
         chrome.storage.local.get(["gtsPalette"]),
       ]);
-      const mode = syncData.themeMode || api.MODES.OFF;
+      const mode = api.resolveStoredThemeMode(syncData.themeMode || api.MODES.OFF);
       const whitelist = Array.isArray(syncData.siteWhitelist) ? syncData.siteWhitelist : [];
       if (localData.gtsPalette) engineRef.setPalette(localData.gtsPalette);
       engineRef.applySettings(mode, whitelist);

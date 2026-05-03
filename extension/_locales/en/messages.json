@@ -17,6 +17,12 @@
   "optionDark": {
     "message": "Dark Theme"
   },
+  "optionAuto": {
+    "message": "Auto"
+  },
+  "optionAutoSub": {
+    "message": "Local time: light ~6:00–18:00, dark otherwise"
+  },
   "optionOff": {
     "message": "Disabled"
   },
@@ -129,7 +135,7 @@
     "message": "Account"
   },
   "panelThemesLead": {
-    "message": "Choose a mode. Use the chevron on Light/Dark to expand and pick a palette from the grid."
+    "message": "Pick a mode (including time-based auto). Use the chevron on Light/Dark to expand and pick a palette from the grid."
   },
   "panelWhitelistLead": {
     "message": "Sites on the whitelist keep their original styles."

@@ -67,8 +67,62 @@ function normalizeAdapterPresentation(a) {
   return { displayName: displays, siteDomain };
 }
 
-const THEME_MODES = { LIGHT: "light", DARK: "dark", OFF: "off" };
+const THEME_MODES = { LIGHT: "light", DARK: "dark", OFF: "off", AUTO: "auto" };
+
+/** 自动模式：本地时间 [dayStart, dayEnd) 小时区间为亮色，其余为暗色（与 engine.js 保持一致） */
+const AUTO_LOCAL_DAY_START_HOUR = 6;
+const AUTO_LOCAL_DAY_END_HOUR = 18;
+
+const AUTO_THEME_ALARM = "gtsAutoThemeBoundary";
+
 const DEFAULT_MODE = THEME_MODES.OFF;
+
+function resolveEffectiveMode(stored) {
+  if (stored === THEME_MODES.AUTO) {
+    const h = new Date().getHours();
+    return h >= AUTO_LOCAL_DAY_START_HOUR && h < AUTO_LOCAL_DAY_END_HOUR ? THEME_MODES.LIGHT : THEME_MODES.DARK;
+  }
+  return stored;
+}
+
+/** 下一次到达 AUTO 切换边界的 Unix 时间戳（毫秒） */
+function nextAutoBoundaryTimestampMs() {
+  const now = Date.now();
+  const out = [];
+  for (let dayOffset = 0; dayOffset < 3; dayOffset++) {
+    const d = new Date(now);
+    d.setDate(d.getDate() + dayOffset);
+    d.setHours(AUTO_LOCAL_DAY_START_HOUR, 0, 0, 0);
+    out.push(d.getTime());
+    d.setHours(AUTO_LOCAL_DAY_END_HOUR, 0, 0, 0);
+    out.push(d.getTime());
+  }
+  const future = out.filter((t) => t > now).sort((a, b) => a - b);
+  return future[0] ?? now + 60_000;
+}
+
+async function refreshAutoThemeAlarm() {
+  try {
+    await chrome.alarms.clear(AUTO_THEME_ALARM);
+  } catch {
+    /* ignore */
+  }
+  const stored = await getMode();
+  if (stored !== THEME_MODES.AUTO) return;
+  const when = nextAutoBoundaryTimestampMs();
+  chrome.alarms.create(AUTO_THEME_ALARM, { when });
+}
+
+async function broadcastThemeSettingsToTabs() {
+  const [stored, whitelist, palette] = await Promise.all([getMode(), getWhitelist(), getStoredPalette()]);
+  const mode = resolveEffectiveMode(stored);
+  const tabs = await chrome.tabs.query({});
+  for (const tab of tabs) {
+    if (canInjectToUrl(tab.url) && tab.id) {
+      chrome.tabs.sendMessage(tab.id, { type: "SETTINGS_UPDATE", mode, whitelist, palette }, () => void chrome.runtime.lastError);
+    }
+  }
+}
 
 async function getMode() {
   const data = await chrome.storage.sync.get(STORAGE_KEY);
@@ -117,7 +171,8 @@ async function getStoredPalette() {
 
 async function sendSettingsToTab(tabId) {
   if (!tabId) return;
-  const [mode, whitelist, palette] = await Promise.all([getMode(), getWhitelist(), getStoredPalette()]);
+  const [stored, whitelist, palette] = await Promise.all([getMode(), getWhitelist(), getStoredPalette()]);
+  const mode = resolveEffectiveMode(stored);
   chrome.tabs.sendMessage(tabId, { type: "SETTINGS_UPDATE", mode, whitelist, palette }, () => {
     void chrome.runtime.lastError;
   });
@@ -271,7 +326,8 @@ async function persistThemeStateFromApi(settings) {
 }
 
 async function broadcastPalette(palette) {
-  const [mode, whitelist] = await Promise.all([getMode(), getWhitelist()]);
+  const [stored, whitelist] = await Promise.all([getMode(), getWhitelist()]);
+  const mode = resolveEffectiveMode(stored);
   const tabs = await chrome.tabs.query({});
   for (const tab of tabs) {
     if (canInjectToUrl(tab.url) && tab.id) {
@@ -304,11 +360,23 @@ chrome.runtime.onInstalled.addListener(async () => {
   if (!mode) await setMode(DEFAULT_MODE);
   await syncAdapters();
   await syncTheme();
+  await refreshAutoThemeAlarm();
 });
 
 chrome.runtime.onStartup?.addListener(() => {
   void syncAdapters();
   void syncTheme();
+  void refreshAutoThemeAlarm();
+});
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name !== AUTO_THEME_ALARM) return;
+  void (async () => {
+    const stored = await getMode();
+    if (stored !== THEME_MODES.AUTO) return;
+    await broadcastThemeSettingsToTabs();
+    await refreshAutoThemeAlarm();
+  })();
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -328,6 +396,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           local = await chrome.storage.local.get([CATALOG_KEY, PICK_LIGHT_KEY, PICK_DARK_KEY]);
         }
         const [mode, whitelist, { user }] = await Promise.all([getMode(), getWhitelist(), getStoredUser()]);
+        const effectiveMode = resolveEffectiveMode(mode);
         const catalog = local[CATALOG_KEY] || { light: [], dark: [] };
         const pickLight = local[PICK_LIGHT_KEY];
         const pickDark = local[PICK_DARK_KEY];
@@ -336,6 +405,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const palette = await getStoredPalette();
         sendResponse({
           mode,
+          effectiveMode,
           whitelist,
           user,
           lightTheme: lightMeta?.displayName || user?.lightTheme || null,
@@ -347,8 +417,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
       } catch {
         const [mode, whitelist, { user }] = await Promise.all([getMode(), getWhitelist(), getStoredUser()]);
+        const effectiveMode = resolveEffectiveMode(mode);
         sendResponse({
           mode,
+          effectiveMode,
           whitelist,
           user,
           lightTheme: user?.lightTheme || null,
@@ -372,15 +444,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { mode } = message;
     const validMode = Object.values(THEME_MODES).includes(mode) ? mode : DEFAULT_MODE;
     setMode(validMode).then(async () => {
-      const [whitelist, palette] = await Promise.all([getWhitelist(), getStoredPalette()]);
-      const tabs = await chrome.tabs.query({});
-      for (const tab of tabs) {
-        if (canInjectToUrl(tab.url) && tab.id) {
-          chrome.tabs.sendMessage(tab.id, { type: "SETTINGS_UPDATE", mode: validMode, whitelist, palette }, () => {
-            void chrome.runtime.lastError;
-          });
-        }
-      }
+      await broadcastThemeSettingsToTabs();
+      await refreshAutoThemeAlarm();
       sendResponse({ ok: true });
     });
     return true;
@@ -502,7 +567,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "SET_WHITELIST") {
     const whitelist = normalizeWhitelist(message.whitelist || []);
     setWhitelist(whitelist).then(async () => {
-      const [mode, palette] = await Promise.all([getMode(), getStoredPalette()]);
+      const [stored, palette] = await Promise.all([getMode(), getStoredPalette()]);
+      const mode = resolveEffectiveMode(stored);
       const tabs = await chrome.tabs.query({});
       for (const tab of tabs) {
         if (canInjectToUrl(tab.url) && tab.id) {

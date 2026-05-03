@@ -228,12 +228,14 @@ body[data-theme="off"] .tab:hover {
   box-shadow: 0 0 0 1px var(--popup-primary);
 }
 
-.mode-block--off {
+.mode-block--off,
+.mode-block--auto {
   display: block;
   cursor: pointer;
 }
 
-.mode-block--off:has(input:checked) {
+.mode-block--off:has(input:checked),
+.mode-block--auto:has(input:checked) {
   border-color: var(--popup-primary);
   box-shadow: 0 0 0 1px var(--popup-primary);
 }

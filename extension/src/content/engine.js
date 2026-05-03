@@ -12,6 +12,19 @@
     OFF: "off"
   };
 
+  /** 与 background.js 自动模式一致：本地时间 [start, end) 为亮色 */
+  const AUTO_LOCAL_DAY_START_HOUR = 6;
+  const AUTO_LOCAL_DAY_END_HOUR = 18;
+  const STORED_AUTO = "auto";
+
+  function resolveStoredThemeMode(stored) {
+    if (stored === STORED_AUTO) {
+      const h = new Date().getHours();
+      return h >= AUTO_LOCAL_DAY_START_HOUR && h < AUTO_LOCAL_DAY_END_HOUR ? MODES.LIGHT : MODES.DARK;
+    }
+    return stored;
+  }
+
   const DEFAULT_PALETTE = {
     [MODES.LIGHT]: {
       colorScheme: "light",
@@ -519,6 +532,8 @@
 
   window.__GTS_ENGINE__ = {
     MODES,
+    STORED_AUTO,
+    resolveStoredThemeMode,
     get PALETTE() { return PALETTE; },
     DEFAULT_PALETTE,
     normalizeRemoteColors,
