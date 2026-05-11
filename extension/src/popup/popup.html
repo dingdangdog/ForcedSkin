@@ -72,6 +72,15 @@
           type="button"
           role="tab"
           class="tab"
+          data-tab="builder"
+          aria-selected="false"
+          id="tab-btn-builder"
+          data-i18n="tabBuilder"
+        ></button>
+        <button
+          type="button"
+          role="tab"
+          class="tab"
           data-tab="whitelist"
           aria-selected="false"
           id="tab-btn-whitelist"
@@ -237,7 +246,67 @@
           ></p>
         </section>
 
-        <!-- 2 白名单 -->
+        <!-- 2 适配器构建器 -->
+        <section
+          id="panel-builder"
+          class="tab-panel"
+          role="tabpanel"
+          aria-labelledby="tab-btn-builder"
+          hidden
+        >
+          <p id="builderCurrentSite" class="builder-current-site"></p>
+          <div id="builderEmpty" class="builder-empty">
+            <p class="panel-lead" data-i18n="panelBuilderLead"></p>
+            <div class="builder-steps">
+              <div class="builder-step">
+                <span class="builder-step-num">1</span>
+                <span data-i18n="builderStep1"></span>
+              </div>
+              <div class="builder-step">
+                <span class="builder-step-num">2</span>
+                <span data-i18n="builderStep2"></span>
+              </div>
+              <div class="builder-step">
+                <span class="builder-step-num">3</span>
+                <span data-i18n="builderStep3"></span>
+              </div>
+            </div>
+            <button id="startPickingBtn" type="button" class="save-btn primary-btn" data-i18n="startPicking"></button>
+            <p id="builderPickHint" class="builder-pick-hint hidden" data-i18n="builderEscHint"></p>
+            <button id="stopPickingBtn" type="button" class="save-btn builder-stop-pick hidden" data-i18n="stopPicking"></button>
+            <button id="exitBuilderBtnEmpty" type="button" class="save-btn" data-i18n="exitBuilderEdit"></button>
+          </div>
+
+          <div id="builderActive" class="builder-active hidden">
+            <div class="builder-toolbar">
+              <button id="pickMoreBtn" type="button" class="save-btn" data-i18n="pickMore"></button>
+              <button id="stopPickingBtnActive" type="button" class="save-btn builder-stop-pick hidden" data-i18n="stopPicking"></button>
+              <button id="exitBuilderBtnActive" type="button" class="save-btn" data-i18n="exitBuilderEdit"></button>
+            </div>
+
+            <div id="builderElementList" class="builder-element-list"></div>
+
+            <div class="builder-formula-section">
+              <div class="builder-formula-head">
+                <span class="field-label" data-i18n="builderFeedbackLabel"></span>
+              </div>
+              <textarea
+                id="builderFeedbackInput"
+                class="whitelist-textarea"
+                rows="4"
+                spellcheck="true"
+                data-i18n-placeholder="builderFeedbackPlaceholder"
+              ></textarea>
+            </div>
+
+            <div class="builder-submit-row">
+              <button id="submitAdapterBtn" type="button" class="save-btn primary-btn" data-i18n="submitAdapter"></button>
+            </div>
+            <p id="builderStatus" class="status"></p>
+          </div>
+        </section>
+
+        <!-- 3 白名单 -->
         <section
           id="panel-whitelist"
           class="tab-panel"

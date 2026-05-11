@@ -29,9 +29,15 @@ model User {
   updatedAt   DateTime  @updatedAt
   lastLoginAt DateTime?
 
+
+
   @@index([email])
+
   @@map("users")
+
 }
+
+
 
 /// 主题表
 model Theme {
@@ -80,9 +86,46 @@ model SiteAdapter {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  parentId    String?  @db.VarChar(36) /// 合并来源的适配器 ID（追踪合并历史）
+  /// 审核信息
+  rejectionReason String?  @db.VarChar(500) /// 审核拒绝原因
+  reviewedAt      DateTime? /// 审核时间
+  source          String   @default("website") @db.VarChar(20) /// 提交来源: "website" | "extension"
+
   @@index([isActive])
+  @@index([submitterId])
   @@map("site_adapters")
+
 }
+
+/// 用户适配需求请求（非代码投稿）
+model AdapterRequest {
+  id               String    @id @default(cuid()) @db.VarChar(36)
+  submitterId      String    @db.VarChar(36)
+  siteDomain       String    @db.VarChar(200)
+  /// 选中的元素列表 JSON 字符串（由扩展采集）
+  selectedElements String    @db.Text
+  /// 用户自然语言反馈与需求描述
+  feedback         String    @db.VarChar(1000)
+  /// pending | processing | completed | rejected
+  status           String    @default("pending") @db.VarChar(20)
+  /// 来源: website | extension
+  source           String    @default("extension") @db.VarChar(20)
+  /// 管理员备注（可选）
+  adminNote        String?   @db.VarChar(1000)
+  /// 若已实现并落地到适配器，关联目标适配器 ID（可选）
+  adapterId        String?   @db.VarChar(36)
+  reviewedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([submitterId])
+  @@index([status])
+  @@index([siteDomain])
+  @@map("adapter_requests")
+}
+
+
 
 /// 用户已启用的适配器
 model UserAdapters {

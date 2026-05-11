@@ -23,12 +23,24 @@ export default defineEventHandler(async (event) => {
   if (!userId) return error("未登录");
 
   const body = await readBody(event);
-  const { displayName, description, siteDomain, code } = body || {};
+  const { displayName, description, siteDomain, code, source } = body || {};
 
   if (!displayName || !siteDomain || !code) return error("缺少必要字段");
 
+  const validSource = source === "extension" ? "extension" : "website";
+
   const formulaCheck = validateAdapterFormulaCodeString(code);
   if (!formulaCheck.ok) return error(formulaCheck.error || "适配器公式无效");
+
+  // 检测同域名已有适配器
+  const existingAdapters = await prisma.siteAdapter.findMany({
+    where: {
+      siteDomain: { contains: siteDomain.trim().toLowerCase() },
+      isActive: true,
+    },
+    select: { id: true, name: true, displayName: true, siteDomain: true },
+    take: 10,
+  });
 
   const baseSlug = slugify(displayName) || "adapter";
   let name = `${baseSlug}-${randomSuffix()}`;
@@ -49,10 +61,14 @@ export default defineEventHandler(async (event) => {
         siteDomain,
         code,
         isActive: false,
+        source: validSource,
       },
     });
 
-    return success(adapter);
+    return success({
+      adapter,
+      existingAdapters: existingAdapters.length > 0 ? existingAdapters : undefined,
+    });
   } catch (err: any) {
     if (err.code === "P2002") return error("适配器标识冲突，请重新提交");
     return serverError("提交失败", err, "entry/adapters.post");

@@ -56,8 +56,15 @@ async function submitAdapter() {
   if (!validateForm()) return;
   submitting.value = true;
   try {
-    await doApi.post("api/entry/adapters", { ...form });
-    showToast(t("adapters.submit_ok"));
+    const res = await doApi.post<{ existingAdapters?: { displayName: string; siteDomain: string }[] }>(
+      "api/entry/adapters",
+      { ...form, source: "website" },
+    );
+    if (res?.existingAdapters?.length) {
+      showToast(t("adapters.submit_ok_existing", { count: res.existingAdapters.length }));
+    } else {
+      showToast(t("adapters.submit_ok"));
+    }
     showSubmit.value = false;
     Object.assign(form, { displayName: "", description: "", siteDomain: "", code: "" });
   } catch { showToast(t("adapters.submit_fail")); } finally { submitting.value = false; }

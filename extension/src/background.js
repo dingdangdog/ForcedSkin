@@ -10,6 +10,7 @@ const PICK_DARK_KEY = "gtsPickDark";
 const API_BASE = "https://forcedskin.com";
 
 const ADAPTERS_SCRIPTS_KEY = "gtsRemoteAdapterScripts";
+const BUILDER_PENDING_SELECTIONS_KEY = "gtsBuilderPendingSelections";
 
 /**
  * 线上若仍返回旧版负载（仅 name/code/updatedAt），或缓存里缺展示字段时，
@@ -181,6 +182,42 @@ async function sendSettingsToTab(tabId) {
 function canInjectToUrl(url) {
   if (!url) return false;
   return /^https?:\/\//.test(url);
+}
+
+function normalizeBuilderSelectionPayload(message) {
+  if (!message || typeof message !== "object") return null;
+  const selector = typeof message.selector === "string" ? message.selector.trim() : "";
+  if (!selector) return null;
+  const pageHost =
+    typeof message.pageHost === "string" ? message.pageHost.trim().toLowerCase() : "";
+  return {
+    selector,
+    fullSelector: typeof message.fullSelector === "string" ? message.fullSelector : "",
+    tagName: typeof message.tagName === "string" ? message.tagName : "div",
+    textHint: typeof message.textHint === "string" ? message.textHint : "",
+    classHint: typeof message.classHint === "string" ? message.classHint : "",
+    pageHost,
+    ts: Date.now(),
+  };
+}
+
+async function enqueueBuilderSelection(message) {
+  const payload = normalizeBuilderSelectionPayload(message);
+  if (!payload) return { ok: false, error: "invalid-selection" };
+  const data = await chrome.storage.local.get(BUILDER_PENDING_SELECTIONS_KEY);
+  const queue = Array.isArray(data[BUILDER_PENDING_SELECTIONS_KEY]) ? data[BUILDER_PENDING_SELECTIONS_KEY] : [];
+  queue.push(payload);
+  // 防止异常增长，保留最近 200 条
+  const trimmed = queue.slice(-200);
+  await chrome.storage.local.set({ [BUILDER_PENDING_SELECTIONS_KEY]: trimmed });
+  return { ok: true };
+}
+
+async function takeAndClearBuilderSelections() {
+  const data = await chrome.storage.local.get(BUILDER_PENDING_SELECTIONS_KEY);
+  const queue = Array.isArray(data[BUILDER_PENDING_SELECTIONS_KEY]) ? data[BUILDER_PENDING_SELECTIONS_KEY] : [];
+  await chrome.storage.local.set({ [BUILDER_PENDING_SELECTIONS_KEY]: [] });
+  return queue;
 }
 
 function parseOauthResult(redirectedTo) {
@@ -586,8 +623,79 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     getWhitelist().then((whitelist) => sendResponse({ whitelist }));
     return true;
   }
-});
 
+  if (message.type === "BUILDER_ELEMENT_SELECTED") {
+    enqueueBuilderSelection(message)
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ ok: false, error: err?.message || String(err) }));
+    return true;
+  }
+
+  if (message.type === "GET_AND_CLEAR_BUILDER_SELECTIONS") {
+    takeAndClearBuilderSelections()
+      .then((queue) => sendResponse({ ok: true, selections: queue }))
+      .catch((err) => sendResponse({ ok: false, selections: [], error: err?.message || String(err) }));
+    return true;
+  }
+
+  if (message.type === "SUBMIT_ADAPTER") {
+    (async () => {
+      try {
+        const { token } = await getStoredUser();
+        if (!token) {
+          sendResponse({ ok: false, error: "未登录" });
+          return;
+        }
+        const { siteDomain, selectedElements, feedback, source } = message;
+        if (!siteDomain || !Array.isArray(selectedElements) || selectedElements.length === 0 || !feedback) {
+          sendResponse({ ok: false, error: "缺少必要字段" });
+          return;
+        }
+        const res = await fetch(API_BASE + "/api/entry/adapter-requests", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            siteDomain,
+            selectedElements,
+            feedback,
+            source: source || "extension",
+          }),
+        });
+        const json = await res.json();
+        if (json.c === 200) {
+          sendResponse({ ok: true, data: json.d });
+        } else {
+          sendResponse({ ok: false, error: json.m || "提交失败" });
+        }
+      } catch (err) {
+        sendResponse({ ok: false, error: err ? (err.message || String(err)) : "提交失败" });
+      }
+    })();
+    return true;
+  }
+
+  if (message.type === "CHECK_ADAPTER_DOMAIN") {
+    (async () => {
+      try {
+        const domain = message.domain;
+        if (!domain) { sendResponse({ ok: true, adapters: [] }); return; }
+        const res = await fetch(API_BASE + "/api/pub/adapters/by-domain?domain=" + encodeURIComponent(domain));
+        const json = await res.json();
+        if (json.c === 200) {
+          sendResponse({ ok: true, adapters: json.d.adapters || [], total: json.d.total || 0 });
+        } else {
+          sendResponse({ ok: true, adapters: [] });
+        }
+      } catch (e) {
+        sendResponse({ ok: true, adapters: [] });
+      }
+    })();
+    return true;
+  }
+});
 chrome.tabs.onActivated.addListener(async ({ tabId }) => {
   await sendSettingsToTab(tabId);
 });

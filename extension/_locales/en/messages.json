@@ -208,5 +208,125 @@
   },
   "themeInternalId": {
     "message": "ID"
+  },
+  "tabBuilder": {
+    "message": "Builder"
+  },
+  "panelBuilderLead": {
+    "message": "Pick problematic areas on the page and describe the issue. Admin will implement the adapter for you."
+  },
+  "builderStep1": {
+    "message": "Click 'Start Picking' below, then hover elements on the page to highlight them"
+  },
+  "builderStep2": {
+    "message": "Click problematic areas on the page (you can select multiple)"
+  },
+  "builderStep3": {
+    "message": "Describe the visible issue and expected result in plain language, then submit"
+  },
+  "startPicking": {
+    "message": "Start Picking"
+  },
+  "builderEscHint": {
+    "message": "Picking: press Esc to exit, or tap “Exit pick mode” below. Esc works best when focus is on the page."
+  },
+  "stopPicking": {
+    "message": "Exit pick mode"
+  },
+  "exitBuilderEdit": {
+    "message": "Exit this edit"
+  },
+  "builderEditExited": {
+    "message": "Exited this edit. Current picked areas and description are cleared."
+  },
+  "builderPickCancelled": {
+    "message": "Exited pick mode"
+  },
+  "pickMore": {
+    "message": "Pick More"
+  },
+  "testFormula": {
+    "message": "Test on Page"
+  },
+  "formulaPreview": {
+    "message": "Formula Preview"
+  },
+  "copyFormula": {
+    "message": "Copy"
+  },
+  "saveDraft": {
+    "message": "Save Draft"
+  },
+  "submitAdapter": {
+    "message": "Submit Adapter Request"
+  },
+  "draftSaved": {
+    "message": "Draft saved"
+  },
+  "submitOk": {
+    "message": "Request submitted. Admin will implement an adapter based on your description."
+  },
+  "submitOkExisting": {
+    "message": "Submitted. This domain already has live adapter(s); an admin can merge into an existing one."
+  },
+  "submitLoginRequired": {
+    "message": "Please sign in on the Account tab first"
+  },
+  "builderElementCount": {
+    "message": "{count} elements picked"
+  },
+  "builderFeedbackLabel": {
+    "message": "Issue description (required)"
+  },
+  "builderFeedbackPlaceholder": {
+    "message": "Example: in dark mode, selected text is unreadable; button hover turns text white on bright background; comment area is too bright and hurts readability."
+  },
+  "builderFeedbackTooShort": {
+    "message": "Please provide a more specific request (at least 6 characters)"
+  },
+  "builderPickedRecovered": {
+    "message": "Recovered {1} picked area(s). Continue writing the issue description."
+  },
+  "layerKindSurface": {
+    "message": "surface - generic container"
+  },
+  "layerKindAccent": {
+    "message": "accent - highlighted/selected"
+  },
+  "layerKindCanvas": {
+    "message": "canvas - background art"
+  },
+  "layerKindRichText": {
+    "message": "richText - rich text"
+  },
+  "layerKindSvgRecolor": {
+    "message": "svgRecolor - icon recolor"
+  },
+  "builderFormulaCopied": {
+    "message": "Formula copied to clipboard"
+  },
+  "builderTestApplied": {
+    "message": "Test styles applied to page"
+  },
+  "builderPickingStarted": {
+    "message": "Pick mode started. Return to page and click target elements."
+  },
+  "builderNoElements": {
+    "message": "Pick at least one element first"
+  },
+  "builderDomainEmpty": {
+    "message": "Please enter the target site domain"
+  },
+  "builderCurrentSitePrefix": {
+    "message": "Current page: "
+  },
+  "builderSiteUnavailable": {
+    "message": "Can't read the current page hostname. Open the extension on a normal https page to submit (not store pages, blank tabs, etc.)."
+  },
+  "builderDomainLabel": {
+    "message": "Target site domain"
+  },
+  "builderDomainPlaceholder": {
+    "message": "e.g. example.com"
   }
 }

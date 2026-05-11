@@ -31,7 +31,7 @@ Why install: One switch for eye-friendly reading; domain whitelist for control; 
 
 - **单一用途**：整段可复制到「Single purpose」或等价说明框（可按字数限制截取首句核心句）。
 - **各权限**：每段对应一项权限的名称；若商店要求分项填写，就只贴该段正文。
-- 若审核方要求「权限与实现一致」：当前仓库里的 `manifest.json` 已声明 **`scripting`**，但源码中未发现对 `chrome.scripting` 的调用；若审核反馈该权限冗余，可考虑从清单中移除 `scripting` 后再上架，或与审核说明保持一致。
+- 若审核方要求「权限与实现一致」：当前仓库里的 `manifest.json` 已声明 `**scripting`**，但源码中未发现对 `chrome.scripting` 的调用；若审核反馈该权限冗余，可考虑从清单中移除 `scripting` 后再上架，或与审核说明保持一致。
 
 ---
 
@@ -49,29 +49,29 @@ ForcedSkin lets you apply a consistent **light / dark appearance** across websit
 
 ### `storage`
 
-The extension saves your preferences and cached data locally: theme mode (light / dark / off), per-site whitelist, signed-in profile metadata, authentication token issued after OAuth, downloaded theme catalogs and palette definitions, and cached site-adapter formulas fetched from ForcedSkin’s servers. **`storage` is required** so these settings persist between sessions and so the popup and content scripts can read the same data without transmitting browsing history.
+The extension saves your preferences and cached data locally: theme mode (light / dark / off), per-site whitelist, signed-in profile metadata, authentication token issued after OAuth, downloaded theme catalogs and palette definitions, and cached site-adapter formulas fetched from ForcedSkin’s servers. `**storage` is required** so these settings persist between sessions and so the popup and content scripts can read the same data without transmitting browsing history.
 
 ### `alarms`
 
-Under **Manifest V3**, the background worker may be suspended when idle. When the user selects **automatic** theme mode, the extension switches between light and dark based on **local clock boundaries** (day vs night hours). **`chrome.alarms`** schedules a single named alarm for the **next** boundary so the worker can wake, re-evaluate the effective theme, and **broadcast updates** to open tabs—without keeping a persistent timer or polling. Alarms are cleared whenever automatic mode is not active; they are used **only** for this scheduled theme refresh, not for unrelated scheduling or background work.
+Under **Manifest V3**, the background worker may be suspended when idle. When the user selects **automatic** theme mode, the extension switches between light and dark based on **local clock boundaries** (day vs night hours). `**chrome.alarms`** schedules a single named alarm for the **next** boundary so the worker can wake, re-evaluate the effective theme, and **broadcast updates** to open tabs—without keeping a persistent timer or polling. Alarms are cleared whenever automatic mode is not active; they are used **only** for this scheduled theme refresh, not for unrelated scheduling or background work.
 
 ### `scripting`
 
-This extension targets **Manifest V3**. The **`scripting` permission** is declared so the extension may use Chrome’s programmatic script APIs when needed—for example to register content scripts programmatically or to inject scripts in coordination with tab lifecycle—alongside statically declared content scripts that apply universal theming. Use is limited to **theme and adapter orchestration**, not unrelated page modification.
+This extension targets **Manifest V3**. The `**scripting` permission** is declared so the extension may use Chrome’s programmatic script APIs when needed—for example to register content scripts programmatically or to inject scripts in coordination with tab lifecycle—alongside statically declared content scripts that apply universal theming. Use is limited to **theme and adapter orchestration**, not unrelated page modification.
 
 *(若你从 `manifest.json` 中移除 `scripting`，请在本项填「不适用」或删除该权限声明后再提交商店。)*
 
 ### `tabs`
 
-The background service worker needs **`chrome.tabs`** to enumerate regular browser tabs (`https` / `http`), listen for activation and navigation events, and **send one-way messages** so each tab’s content script receives updated theme mode, whitelist, palettes, or adapter-cache refresh signals. Tab URLs are inspected **only** to skip restricted schemes (for example non-web pages); the extension does not collect or upload your browsing history.
+The background service worker needs `**chrome.tabs`** to enumerate regular browser tabs (`https` / `http`), listen for activation and navigation events, and **send one-way messages** so each tab’s content script receives updated theme mode, whitelist, palettes, or adapter-cache refresh signals. Tab URLs are inspected **only** to skip restricted schemes (for example non-web pages); the extension does not collect or upload your browsing history.
 
 ### `identity`
 
-**`identity`** is used solely for **`chrome.identity.launchWebAuthFlow`**—opening a bounded OAuth / session handshake with **`https://forcedskin.com`** and returning to the extension’s predefined redirect URL. This lets users sign in with the same account mechanism as the website and receive a bearer token stored locally for syncing theme selections. No third-party identity provider access beyond that official auth bridge is requested by this permission itself.
+`**identity`** is used solely for `**chrome.identity.launchWebAuthFlow**`—opening a bounded OAuth / session handshake with `**https://forcedskin.com**` and returning to the extension’s predefined redirect URL. This lets users sign in with the same account mechanism as the website and receive a bearer token stored locally for syncing theme selections. No third-party identity provider access beyond that official auth bridge is requested by this permission itself.
 
 ### Host permissions (`<all_urls>`)
 
-Universal **host access** matches where the extension is designed to operate: ordinary website documents on `http://*` and `https://*`. Manifest **content scripts** load at **`document_start`** on those origins so lightweight color overrides can run early. Narrowing host permissions would defeat the primary goal of consistent theming across sites the user chooses to browse. Sensitive internal controls (whitelist, optional login) remain **under the user’s control** inside the popup; the extension does not exfiltrate page content unrelated to delivering theming behaviour.
+Universal **host access** matches where the extension is designed to operate: ordinary website documents on `http://*` and `https://*`. Manifest **content scripts** load at `**document_start`** on those origins so lightweight color overrides can run early. Narrowing host permissions would defeat the primary goal of consistent theming across sites the user chooses to browse. Sensitive internal controls (whitelist, optional login) remain **under the user’s control** inside the popup; the extension does not exfiltrate page content unrelated to delivering theming behaviour.
 
 ---
 
@@ -79,4 +79,4 @@ Universal **host access** matches where the extension is designed to operate: or
 
 以下为「隐私惯例 / 数据收集」类字段可参考的短文（按需裁剪）。
 
-ForcedSkin operates primarily **on-device**: preferences and caches live in **`chrome.storage`**. Optional network calls go to **`https://forcedskin.com`** (authenticated theme/catalog sync after login, fetching public adapter definitions and palette metadata). Browser tabs are iterated locally to propagate settings; **URLs are not bulk-uploaded as browsing history.** Authentication uses the **`identity`** web-auth flow tied to ForcedSkin’s OAuth bridge endpoint.
+ForcedSkin operates primarily **on-device**: preferences and caches live in `**chrome.storage`**. Optional network calls go to `**https://forcedskin.com**` (authenticated theme/catalog sync after login, fetching public adapter definitions and palette metadata). Browser tabs are iterated locally to propagate settings; **URLs are not bulk-uploaded as browsing history.** Authentication uses the `**identity`** web-auth flow tied to ForcedSkin’s OAuth bridge endpoint.

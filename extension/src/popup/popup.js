@@ -62,10 +62,24 @@ const accountEmail = document.getElementById("accountEmail");
 const accountStatusText = document.getElementById("accountStatusText");
 const logoutBtn = document.getElementById("logoutBtn");
 
+const panelThemes = document.getElementById("panel-themes");
+
+const panelBuilder = document.getElementById("panel-builder");
+
+const panelWhitelist = document.getElementById("panel-whitelist");
+
+const panelAccount = document.getElementById("panel-account");
+
 const panels = {
-  themes: document.getElementById("panel-themes"),
-  whitelist: document.getElementById("panel-whitelist"),
-  account: document.getElementById("panel-account"),
+
+  themes: panelThemes,
+
+  builder: panelBuilder,
+
+  whitelist: panelWhitelist,
+
+  account: panelAccount,
+
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -669,6 +683,335 @@ syncAdaptersBtn?.addEventListener("click", async () => {
   }
 });
 
+// ── Builder tab ───────────────────────────────────────────────────────────────
+const builderEmpty = document.getElementById("builderEmpty");
+const builderActive = document.getElementById("builderActive");
+const startPickingBtn = document.getElementById("startPickingBtn");
+const pickMoreBtn = document.getElementById("pickMoreBtn");
+const builderElementList = document.getElementById("builderElementList");
+const builderFeedbackInput = document.getElementById("builderFeedbackInput");
+const submitAdapterBtn = document.getElementById("submitAdapterBtn");
+const builderStatus = document.getElementById("builderStatus");
+const builderCurrentSite = document.getElementById("builderCurrentSite");
+const stopPickingBtn = document.getElementById("stopPickingBtn");
+const stopPickingBtnActive = document.getElementById("stopPickingBtnActive");
+const exitBuilderBtnEmpty = document.getElementById("exitBuilderBtnEmpty");
+const exitBuilderBtnActive = document.getElementById("exitBuilderBtnActive");
+const builderPickHint = document.getElementById("builderPickHint");
+
+/** 同步当前标签页域名展示（不依赖隐藏区或未刷新的文案） */
+async function updateBuilderSiteDisplay() {
+  const host = await getCurrentTabHostname();
+  if (builderCurrentSite) {
+    const prefix = i18n("builderCurrentSitePrefix");
+    builderCurrentSite.textContent = host ? `${prefix}${host}` : "";
+  }
+  return host;
+}
+
+/** 构建器当前状态 */
+const builderState = {
+  /** pageHost：点选时由页面注入脚本写入，用于提交时与当前标签域名交叉校验 */
+  elements: [],        // { id, selector, tagName, textHint, classHint, pageHost? }
+  hasUnsaved: false,
+  feedback: "",
+  /** 页面是否处于「选取元素」交互（与 adapter-builder 注入脚本一致） */
+  picking: false,
+};
+
+function pushBuilderSelection(selection) {
+  if (!selection || typeof selection !== "object") return false;
+  const selector = typeof selection.selector === "string" ? selection.selector : "";
+  if (!selector) return false;
+  if (builderState.elements.some((e) => e.selector === selector)) return false;
+  const pageHost =
+    typeof selection.pageHost === "string" ? selection.pageHost.trim().toLowerCase() : "";
+  builderState.elements.push({
+    id: Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+    selector,
+    tagName: selection.tagName || "div",
+    textHint: selection.textHint || "",
+    classHint: selection.classHint || "",
+    pageHost,
+  });
+  builderState.hasUnsaved = true;
+  return true;
+}
+
+async function consumePendingBuilderSelections() {
+  try {
+    const res = await chrome.runtime.sendMessage({ type: "GET_AND_CLEAR_BUILDER_SELECTIONS" });
+    const list = Array.isArray(res?.selections) ? res.selections : [];
+    if (list.length === 0) return;
+    let added = 0;
+    for (const sel of list) {
+      if (pushBuilderSelection(sel)) added++;
+    }
+    if (added > 0) {
+      renderBuilderActive();
+      builderStatus.textContent = i18n("builderPickedRecovered", [String(added)]);
+      setTimeout(() => {
+        if (builderStatus.textContent === i18n("builderPickedRecovered", [String(added)])) builderStatus.textContent = "";
+      }, 2200);
+    }
+  } catch (_) {}
+}
+
+function updateBuilderPickingUi() {
+  const on = builderState.picking;
+  if (stopPickingBtn) stopPickingBtn.classList.toggle("hidden", !on);
+  if (builderPickHint) builderPickHint.classList.toggle("hidden", !on);
+  if (stopPickingBtnActive) stopPickingBtnActive.classList.toggle("hidden", !on);
+}
+
+/** 通知页面退出选取（无论 popup 内 picking 标记是否同步，避免关 popup 后页面仍卡在选取态） */
+async function stopBuilderPickingFromPopup() {
+  try {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    const tab = tabs[0];
+    if (tab?.id) {
+      await chrome.tabs.sendMessage(tab.id, { type: "BUILDER_STOP_PICKING" }).catch(() => {});
+    }
+  } catch (_) {}
+  builderState.picking = false;
+  updateBuilderPickingUi();
+}
+
+function builderReset() {
+  void stopBuilderPickingFromPopup();
+  builderState.elements = [];
+  builderState.hasUnsaved = false;
+  builderState.feedback = "";
+  if (builderFeedbackInput) builderFeedbackInput.value = "";
+  renderBuilderEmpty();
+  builderStatus.textContent = "";
+}
+
+function renderBuilderEmpty() {
+  builderEmpty.classList.remove("hidden");
+  builderActive.classList.add("hidden");
+  void updateBuilderSiteDisplay();
+  updateBuilderPickingUi();
+}
+
+function renderBuilderActive() {
+  builderEmpty.classList.add("hidden");
+  builderActive.classList.remove("hidden");
+  renderBuilderElementList();
+  void updateBuilderSiteDisplay();
+  updateBuilderPickingUi();
+}
+
+function renderBuilderElementList() {
+  if (!builderElementList) return;
+  const items = builderState.elements;
+  builderElementList.innerHTML = "";
+
+  if (items.length === 0) {
+    builderElementList.innerHTML = `<p class="builder-empty-hint">${i18n("builderNoElements")}</p>`;
+    return;
+  }
+
+  items.forEach((item, idx) => {
+    const row = document.createElement("div");
+    row.className = "builder-element-item";
+
+    const info = document.createElement("div");
+    info.className = "builder-element-info";
+    const hint = item.textHint ? ` "${item.textHint}"` : "";
+    const clsHint = item.classHint ? ` .${item.classHint}` : "";
+    info.innerHTML = `
+      <span class="builder-element-tag">&lt;${item.tagName}&gt;${clsHint}${hint}</span>
+      <code class="builder-element-selector">${item.selector}</code>
+    `;
+
+    const controls = document.createElement("div");
+    controls.className = "builder-element-controls";
+
+    // 移除按钮
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "builder-remove-btn";
+    removeBtn.textContent = "✕";
+    removeBtn.title = "移除";
+    removeBtn.addEventListener("click", () => {
+      builderState.elements.splice(idx, 1);
+      builderState.hasUnsaved = true;
+      renderBuilderElementList();
+    });
+
+    controls.appendChild(removeBtn);
+    row.appendChild(info);
+    row.appendChild(controls);
+    builderElementList.appendChild(row);
+  });
+}
+
+async function builderSubmit() {
+  // 检查登录
+  const userInfo = await chrome.runtime.sendMessage({ type: "GET_USER_INFO" });
+  if (!userInfo?.user) {
+    builderStatus.textContent = i18n("submitLoginRequired");
+    return;
+  }
+
+  // 域名：优先当前标签页；若为空则用点选时页面写入的 pageHost（点选发生在具体网页里，一定带得上）
+  let hostname = (await getCurrentTabHostname()) || "";
+  if (!hostname) {
+    hostname =
+      builderState.elements.map((e) => e.pageHost).find((h) => typeof h === "string" && h.length > 0) || "";
+  }
+  if (!hostname) {
+    builderStatus.textContent = i18n("builderSiteUnavailable");
+    return;
+  }
+
+  if (builderState.elements.length === 0) {
+    builderStatus.textContent = i18n("builderNoElements");
+    return;
+  }
+  const feedback = (builderFeedbackInput?.value || "").trim();
+  if (feedback.length < 6) {
+    builderStatus.textContent = i18n("builderFeedbackTooShort");
+    return;
+  }
+
+  const selectedElements = builderState.elements.map((e) => ({
+    selector: e.selector,
+    tagName: e.tagName,
+    textHint: e.textHint,
+    classHint: e.classHint,
+    // 可选：便于后台区分子域/iframe 场景；服务端 normalize 会忽略未知字段
+    pageHost: e.pageHost || undefined,
+  }));
+
+  try {
+    builderStatus.textContent = "提交中...";
+    const res = await chrome.runtime.sendMessage({
+      type: "SUBMIT_ADAPTER",
+      siteDomain: hostname,
+      selectedElements,
+      feedback,
+      source: "extension",
+    });
+    if (res?.ok) {
+      builderStatus.textContent = i18n("submitOk");
+      builderReset();
+    } else {
+      builderStatus.textContent = res?.error || "提交失败";
+    }
+  } catch (e) {
+    builderStatus.textContent = "提交失败：" + (e.message || "");
+  }
+}
+
+// ── Builder 消息监听（从 content script 接收选取结果）──
+chrome.runtime.onMessage.addListener((message) => {
+  if (!message || typeof message !== "object") return;
+
+  if (message.type === "BUILDER_ELEMENT_SELECTED") {
+    // popup 保持打开时也能实时接收；后台队列会在 reopen 时兜底
+    if (!pushBuilderSelection(message)) return;
+    renderBuilderActive();
+  }
+
+  if (message.type === "BUILDER_CANCEL_PICK") {
+    builderState.picking = false;
+    updateBuilderPickingUi();
+    if (builderStatus) {
+      builderStatus.textContent = i18n("builderPickCancelled");
+      setTimeout(() => {
+        if (builderStatus.textContent === i18n("builderPickCancelled")) builderStatus.textContent = "";
+      }, 2000);
+    }
+  }
+});
+
+// ── Builder 事件绑定 ──
+async function injectBuilderScript(tabId) {
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      files: ["src/content/adapter-builder.js"],
+    });
+  } catch (e) {
+    // might already be injected, ignore
+  }
+}
+
+async function startBuilderPickingOnActiveTab() {
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+  const tab = tabs[0];
+  if (!tab?.id) return;
+  await injectBuilderScript(tab.id);
+  chrome.tabs.sendMessage(tab.id, { type: "BUILDER_START_PICKING" });
+  builderState.picking = true;
+  updateBuilderPickingUi();
+  builderStatus.textContent = i18n("builderPickingStarted");
+  setTimeout(() => { builderStatus.textContent = ""; }, 2000);
+}
+
+startPickingBtn?.addEventListener("click", () => {
+  void startBuilderPickingOnActiveTab();
+});
+
+pickMoreBtn?.addEventListener("click", () => {
+  void startBuilderPickingOnActiveTab();
+});
+
+async function onStopPickingClick() {
+  const wasPicking = builderState.picking;
+  await stopBuilderPickingFromPopup();
+  if (wasPicking && builderStatus) {
+    builderStatus.textContent = i18n("builderPickCancelled");
+    setTimeout(() => {
+      if (builderStatus.textContent === i18n("builderPickCancelled")) builderStatus.textContent = "";
+    }, 2000);
+  }
+}
+
+stopPickingBtn?.addEventListener("click", () => {
+  void onStopPickingClick();
+});
+
+stopPickingBtnActive?.addEventListener("click", () => {
+  void onStopPickingClick();
+});
+
+submitAdapterBtn?.addEventListener("click", builderSubmit);
+
+function onExitBuilderEditClick() {
+  builderReset();
+  builderStatus.textContent = i18n("builderEditExited");
+  setTimeout(() => {
+    if (builderStatus.textContent === i18n("builderEditExited")) builderStatus.textContent = "";
+  }, 2000);
+}
+
+exitBuilderBtnEmpty?.addEventListener("click", onExitBuilderEditClick);
+exitBuilderBtnActive?.addEventListener("click", onExitBuilderEditClick);
+
+builderFeedbackInput?.addEventListener("input", () => {
+  builderState.feedback = builderFeedbackInput.value || "";
+  builderState.hasUnsaved = true;
+});
+
+// ── builder 标签切换补充逻辑 ──
+let prevPopupTabId = "themes";
+const origSetActiveTab = setActiveTab;
+setActiveTab = function(name) {
+  if (prevPopupTabId === "builder" && name !== "builder") {
+    void stopBuilderPickingFromPopup();
+  }
+  origSetActiveTab(name);
+  if (name === "builder") {
+    void updateBuilderSiteDisplay();
+    void consumePendingBuilderSelections();
+  }
+  prevPopupTabId = name;
+};
+
+// ── Init ──
 applyI18n();
 setActiveTab("themes");
 void (async () => {

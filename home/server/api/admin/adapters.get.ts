@@ -9,8 +9,11 @@ export default defineEventHandler(async (event) => {
     const status = query.status as string | undefined; // "pending" | "active" | "all"
 
     const where: any = {};
-    if (status === "pending") where.isActive = false;
-    else if (status === "active") where.isActive = true;
+    // 待审核：与后台列表筛选一致，不含已拒绝（rejectionReason 非空）
+    if (status === "pending") {
+      where.isActive = false;
+      where.rejectionReason = null;
+    } else if (status === "active") where.isActive = true;
 
     const [total, list] = await Promise.all([
       prisma.siteAdapter.count({ where }),

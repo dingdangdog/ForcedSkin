@@ -208,5 +208,125 @@
   },
   "themeInternalId": {
     "message": "标识"
+  },
+  "tabBuilder": {
+    "message": "构建器"
+  },
+  "panelBuilderLead": {
+    "message": "在页面里点选“有问题”的区域，并描述问题现象，管理员将据此实现适配器。"
+  },
+  "builderStep1": {
+    "message": "点击下方「开始选取」，鼠标移到目标元素上会高亮"
+  },
+  "builderStep2": {
+    "message": "点击页面中有问题的区域（可多选）"
+  },
+  "builderStep3": {
+    "message": "用自然语言描述问题现象与期望结果，然后提交需求"
+  },
+  "startPicking": {
+    "message": "开始选取元素"
+  },
+  "builderEscHint": {
+    "message": "选取中：按 Esc 退出；或点击下方「退出选取模式」。焦点在页面内时 Esc 最有效。"
+  },
+  "stopPicking": {
+    "message": "退出选取模式"
+  },
+  "exitBuilderEdit": {
+    "message": "退出本次编辑"
+  },
+  "builderEditExited": {
+    "message": "已退出本次编辑，已清空当前选区与描述"
+  },
+  "builderPickCancelled": {
+    "message": "已退出选取模式"
+  },
+  "pickMore": {
+    "message": "继续选取"
+  },
+  "testFormula": {
+    "message": "测试效果"
+  },
+  "formulaPreview": {
+    "message": "公式预览"
+  },
+  "copyFormula": {
+    "message": "复制"
+  },
+  "saveDraft": {
+    "message": "保存草稿"
+  },
+  "submitAdapter": {
+    "message": "提交适配需求"
+  },
+  "draftSaved": {
+    "message": "草稿已保存"
+  },
+  "submitOk": {
+    "message": "需求已提交，管理员将基于你的描述实现适配器"
+  },
+  "submitOkExisting": {
+    "message": "已提交审核。该域名已有已上线适配器，管理员可将本条合并进现有适配器。"
+  },
+  "submitLoginRequired": {
+    "message": "请先在「账号」标签页登录后再提交"
+  },
+  "builderElementCount": {
+    "message": "已选取 {count} 个元素"
+  },
+  "builderFeedbackLabel": {
+    "message": "问题描述（必填）"
+  },
+  "builderFeedbackPlaceholder": {
+    "message": "示例：暗色模式下，这块文字几乎看不见；按钮 hover 后文字变白；评论区背景太亮刺眼。请优先修复文字可读性。"
+  },
+  "builderFeedbackTooShort": {
+    "message": "请填写更具体的需求描述（至少 6 个字）"
+  },
+  "builderPickedRecovered": {
+    "message": "已同步 {1} 个刚刚选中的区域，请继续补充问题描述"
+  },
+  "layerKindSurface": {
+    "message": "surface — 普通容器"
+  },
+  "layerKindAccent": {
+    "message": "accent — 高亮/选中"
+  },
+  "layerKindCanvas": {
+    "message": "canvas — 背景画布"
+  },
+  "layerKindRichText": {
+    "message": "richText — 富文本"
+  },
+  "layerKindSvgRecolor": {
+    "message": "svgRecolor — 图标重色"
+  },
+  "builderFormulaCopied": {
+    "message": "公式已复制到剪贴板"
+  },
+  "builderTestApplied": {
+    "message": "测试样式已应用到页面"
+  },
+  "builderPickingStarted": {
+    "message": "已进入选取模式，请回到页面点击目标元素"
+  },
+  "builderNoElements": {
+    "message": "请先选取至少一个元素"
+  },
+  "builderDomainEmpty": {
+    "message": "请先输入适配的网站域名"
+  },
+  "builderCurrentSitePrefix": {
+    "message": "当前页面："
+  },
+  "builderSiteUnavailable": {
+    "message": "无法读取当前页面域名。请在普通 https 网页中打开扩展后再提交（不支持商店页、空白页等）。"
+  },
+  "builderDomainLabel": {
+    "message": "适配网站域名"
+  },
+  "builderDomainPlaceholder": {
+    "message": "例：example.com"
   }
 }

@@ -102,6 +102,7 @@
     "submit": "Submit for Review",
     "submitting": "Submitting…",
     "submit_ok": "Submitted, pending review",
+    "submit_ok_existing": "Submitted for review. This domain already has {count} live adapter(s); an admin can merge your submission into an existing one.",
     "submit_fail": "Submission failed"
   },
   "account": {

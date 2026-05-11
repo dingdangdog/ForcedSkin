@@ -15,14 +15,52 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 
 interface Theme { id: string; name: string; displayName: string; description: string; mode: string; colors: string; }
+
 interface Submission extends Theme { isActive: boolean; }
 
+
+
+interface AdapterSubmission {
+
+  id: string;
+
+  name: string;
+
+  displayName: string;
+
+  description: string;
+
+  siteDomain: string;
+
+  code: string;
+
+  isActive: boolean;
+
+  rejectionReason: string | null;
+
+  source: string;
+
+  createdAt: string;
+
+}
+
+
+
 const themeStore = useThemeStore();
+
 const favorites = ref<Theme[]>([]);
+
 const submissions = ref<Submission[]>([]);
+
+const adapterSubmissions = ref<AdapterSubmission[]>([]);
+
 const catalogThemes = ref<Theme[]>([]);
+
 const selectedLight = ref("");
+
 const selectedDark = ref("");
+
+const deletingAdapter = ref<string | null>(null);
 const loading = ref(true);
 const saving = ref(false);
 const toast = ref("");
@@ -46,22 +84,43 @@ const selectedLightMeta = computed(() => themeLookupBySlug(selectedLight.value))
 const selectedDarkMeta = computed(() => themeLookupBySlug(selectedDark.value));
 
 async function load() {
+
   loading.value = true;
+
   try {
-    const [favRes, userInfo, catalogRes, subRes] = await Promise.all([
+
+    const [favRes, userInfo, catalogRes, subRes, adapterRes] = await Promise.all([
+
       doApi.get<Theme[]>("api/entry/user/themes"),
+
       doApi.get<any>("api/entry/user/info"),
+
       doApi.get<{ list?: Theme[] }>("api/themes", { pageSize: 100 }).catch(() => ({ list: [] })),
+
       doApi.get<Submission[]>("api/entry/user/themes/submissions").catch(() => []),
+
+      doApi.get<AdapterSubmission[]>("api/entry/user/adapters").catch(() => []),
+
     ]);
+
     favorites.value = favRes || [];
+
     submissions.value = subRes || [];
+
+    adapterSubmissions.value = adapterRes || [];
+
     catalogThemes.value = catalogRes?.list || [];
+
     selectedLight.value = userInfo?.lightTheme || "";
+
     selectedDark.value = userInfo?.darkTheme || "";
+
   } finally {
+
     loading.value = false;
+
   }
+
 }
 
 async function removeFavorite(theme: Theme) {
@@ -86,6 +145,20 @@ async function selectTheme(theme: Theme) {
 
 async function logout() {
   await signOut({ callbackUrl: localePath("/") });
+}
+
+async function deleteAdapterSubmission(adapter: AdapterSubmission) {
+  if (!confirm(`确认删除适配器「${adapter.displayName}」的提交？`)) return;
+  deletingAdapter.value = adapter.id;
+  try {
+    await doApi.delete(`api/entry/user/adapters/${adapter.id}`);
+    adapterSubmissions.value = adapterSubmissions.value.filter((a) => a.id !== adapter.id);
+    showToast("已删除");
+  } catch {
+    showToast("删除失败");
+  } finally {
+    deletingAdapter.value = null;
+  }
 }
 
 onMounted(load);
@@ -138,6 +211,42 @@ onMounted(load);
               :selected="Boolean(th.isActive && ((th.mode === 'light' && selectedLight === th.name) || (th.mode === 'dark' && selectedDark === th.name)))"
               @select="selectTheme"
             />
+          </div>
+        </div>
+      </section>
+
+      <!-- 网站适配器提交 -->
+      <section v-if="adapterSubmissions.length" class="mb-10 p-5 rounded-2xl border border-border bg-surface">
+        <div class="flex items-center justify-between mb-1">
+          <h2 class="font-semibold text-foreground text-lg">🔌 我提交的适配器</h2>
+          <NuxtLink :to="localePath('/adapters')" class="text-primary-500 text-sm hover:underline">
+            {{ t('common.view_more') }}
+          </NuxtLink>
+        </div>
+        <p class="text-muted text-sm mb-4">在官网或扩展中提交的适配器，审核通过后会自动同步到所有用户的扩展</p>
+        <div class="space-y-2">
+          <div v-for="adapter in adapterSubmissions" :key="adapter.id"
+            class="flex items-center gap-3 p-3 rounded-xl border border-border bg-surface-muted/30 hover:bg-surface-muted transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-surface-muted flex items-center justify-center text-sm shrink-0">
+              {{ adapter.displayName.charAt(0) }}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-medium text-foreground text-sm">{{ adapter.displayName }}</span>
+                <span class="text-xs font-mono text-muted">{{ adapter.siteDomain }}</span>
+                <span class="text-xs px-1.5 py-0.5 rounded font-medium"
+                  :class="adapter.isActive ? 'bg-green-100 text-green-700' : adapter.rejectionReason ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'">
+                  {{ adapter.isActive ? '已上线' : adapter.rejectionReason ? '已拒绝' : '待审核' }}
+                </span>
+                <span v-if="adapter.source === 'extension'" class="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">扩展提交</span>
+                <span v-else class="text-xs bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">官网提交</span>
+              </div>
+              <p v-if="adapter.rejectionReason" class="text-red-500 text-xs mt-0.5">拒绝原因：{{ adapter.rejectionReason }}</p>
+            </div>
+            <button v-if="!adapter.isActive" @click="deleteAdapterSubmission(adapter)" :disabled="deletingAdapter === adapter.id"
+              class="px-2.5 py-1 rounded-lg text-xs border border-red-200 text-red-500 hover:bg-red-50 disabled:opacity-50 transition-colors shrink-0">
+              {{ deletingAdapter === adapter.id ? '删除中...' : '删除' }}
+            </button>
           </div>
         </div>
       </section>

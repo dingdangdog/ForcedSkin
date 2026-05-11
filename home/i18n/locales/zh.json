@@ -102,6 +102,7 @@
     "submit": "提交审核",
     "submitting": "提交中…",
     "submit_ok": "已提交，等待审核",
+    "submit_ok_existing": "已提交审核。该域名已有 {count} 个已上线适配器，管理员可将本条合并进现有适配器。",
     "submit_fail": "提交失败"
   },
   "account": {
