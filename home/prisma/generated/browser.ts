@@ -23,6 +23,21 @@ export * from './enums.js';
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserPointsBalance
+ * 用户积分余额（与流水双写）
+ */
+export type UserPointsBalance = Prisma.UserPointsBalanceModel
+/**
+ * Model PointLedger
+ * 积分流水（不可物理删除；冲正用反向流水）
+ */
+export type PointLedger = Prisma.PointLedgerModel
+/**
+ * Model PointRule
+ * 可运营配置的积分规则（code 与业务 reasonCode 对齐）
+ */
+export type PointRule = Prisma.PointRuleModel
+/**
  * Model Theme
  * 主题表
  */
@@ -37,6 +52,11 @@ export type UserThemes = Prisma.UserThemesModel
  * 网站适配器
  */
 export type SiteAdapter = Prisma.SiteAdapterModel
+/**
+ * Model AdapterRequest
+ * 用户适配需求请求（非代码投稿）
+ */
+export type AdapterRequest = Prisma.AdapterRequestModel
 /**
  * Model UserAdapters
  * 用户已启用的适配器

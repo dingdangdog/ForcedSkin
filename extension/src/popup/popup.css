@@ -578,6 +578,13 @@ body[data-theme="off"] .mode-block__sub {
   color: var(--popup-fg);
 }
 
+.account-points {
+  margin-top: 0.35rem;
+  font-size: 11px;
+  color: var(--muted, #64748b);
+  line-height: 1.35;
+}
+
 .account-email {
   font-size: 11px;
   color: var(--popup-muted);

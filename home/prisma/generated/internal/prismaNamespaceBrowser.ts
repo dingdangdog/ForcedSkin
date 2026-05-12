@@ -52,9 +52,13 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  UserPointsBalance: 'UserPointsBalance',
+  PointLedger: 'PointLedger',
+  PointRule: 'PointRule',
   Theme: 'Theme',
   UserThemes: 'UserThemes',
   SiteAdapter: 'SiteAdapter',
+  AdapterRequest: 'AdapterRequest',
   UserAdapters: 'UserAdapters',
   AIProvider: 'AIProvider',
   Config: 'Config'
@@ -92,6 +96,47 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserPointsBalanceScalarFieldEnum = {
+  userId: 'userId',
+  availablePoints: 'availablePoints',
+  frozenPoints: 'frozenPoints',
+  lifetimeEarned: 'lifetimeEarned',
+  lifetimeSpent: 'lifetimeSpent',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserPointsBalanceScalarFieldEnum = (typeof UserPointsBalanceScalarFieldEnum)[keyof typeof UserPointsBalanceScalarFieldEnum]
+
+
+export const PointLedgerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  delta: 'delta',
+  balanceAfter: 'balanceAfter',
+  reasonCode: 'reasonCode',
+  title: 'title',
+  meta: 'meta',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  actorUserId: 'actorUserId',
+  idempotencyKey: 'idempotencyKey',
+  createdAt: 'createdAt'
+} as const
+
+export type PointLedgerScalarFieldEnum = (typeof PointLedgerScalarFieldEnum)[keyof typeof PointLedgerScalarFieldEnum]
+
+
+export const PointRuleScalarFieldEnum = {
+  code: 'code',
+  points: 'points',
+  enabled: 'enabled',
+  description: 'description',
+  capPerUserPerDay: 'capPerUserPerDay'
+} as const
+
+export type PointRuleScalarFieldEnum = (typeof PointRuleScalarFieldEnum)[keyof typeof PointRuleScalarFieldEnum]
 
 
 export const ThemeScalarFieldEnum = {
@@ -133,10 +178,35 @@ export const SiteAdapterScalarFieldEnum = {
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  parentId: 'parentId',
+  derivedFromRequestId: 'derivedFromRequestId',
+  implementedByUserId: 'implementedByUserId',
+  rejectionReason: 'rejectionReason',
+  reviewedAt: 'reviewedAt',
+  source: 'source'
 } as const
 
 export type SiteAdapterScalarFieldEnum = (typeof SiteAdapterScalarFieldEnum)[keyof typeof SiteAdapterScalarFieldEnum]
+
+
+export const AdapterRequestScalarFieldEnum = {
+  id: 'id',
+  submitterId: 'submitterId',
+  siteDomain: 'siteDomain',
+  selectedElements: 'selectedElements',
+  feedback: 'feedback',
+  status: 'status',
+  source: 'source',
+  adminNote: 'adminNote',
+  adapterId: 'adapterId',
+  implementedByUserId: 'implementedByUserId',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AdapterRequestScalarFieldEnum = (typeof AdapterRequestScalarFieldEnum)[keyof typeof AdapterRequestScalarFieldEnum]
 
 
 export const UserAdaptersScalarFieldEnum = {
@@ -192,6 +262,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -206,4 +284,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

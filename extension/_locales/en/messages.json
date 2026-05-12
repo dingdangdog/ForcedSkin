@@ -266,11 +266,17 @@
   "submitOk": {
     "message": "Request submitted. Admin will implement an adapter based on your description."
   },
+  "submitOkWithPoints": {
+    "message": "Request submitted (+$1 points). Admin will implement an adapter based on your description."
+  },
   "submitOkExisting": {
     "message": "Submitted. This domain already has live adapter(s); an admin can merge into an existing one."
   },
   "submitLoginRequired": {
     "message": "Please sign in on the Account tab first"
+  },
+  "accountPointsSummary": {
+    "message": "Points: $1 (view ledger on the website account page)"
   },
   "builderElementCount": {
     "message": "{count} elements picked"

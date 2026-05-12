@@ -266,11 +266,17 @@
   "submitOk": {
     "message": "需求已提交，管理员将基于你的描述实现适配器"
   },
+  "submitOkWithPoints": {
+    "message": "需求已提交（+$1 积分），管理员将基于你的描述实现适配器"
+  },
   "submitOkExisting": {
     "message": "已提交审核。该域名已有已上线适配器，管理员可将本条合并进现有适配器。"
   },
   "submitLoginRequired": {
     "message": "请先在「账号」标签页登录后再提交"
+  },
+  "accountPointsSummary": {
+    "message": "贡献分：$1（官网账户页可查看流水）"
   },
   "builderElementCount": {
     "message": "已选取 {count} 个元素"

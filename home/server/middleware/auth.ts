@@ -1,6 +1,6 @@
 import { getServerSession } from "#auth";
 import { noLogin } from "~~/server/utils/result";
-import prisma from "~~/server/lib/prisma";
+import { getAuthPayload } from "~~/server/utils/jwt";
 
 function normalizePath(pathname: string): string {
   return (pathname.replace(/\/+$/, "") || "/").toLowerCase();
@@ -26,16 +26,27 @@ export default defineEventHandler(async (event) => {
     | { id: string; roles?: string }
     | undefined;
 
-  if (!sessionUser?.id) {
+  if (sessionUser?.id) {
+    event.context.userId = sessionUser.id;
+    event.context.userRoles = sessionUser.roles ?? "user";
+  } else if (under(pathname, "/api/entry")) {
+    // 扩展端 Bearer JWT（与 extension auth bridge 一致）
+    const payload = getAuthPayload(event);
+    if (payload?.id) {
+      event.context.userId = payload.id;
+      event.context.userRoles = payload.roles ?? "user";
+    } else {
+      return noLogin("未登录或登录已失效");
+    }
+  } else {
     return noLogin("未登录或登录已失效");
   }
 
-  // 把 userId 写入 context，下游 handler 直接用 event.context.userId
-  event.context.userId = sessionUser.id;
-  event.context.userRoles = sessionUser.roles ?? "user";
-
-  // admin 路由额外校验
+  // admin 路由额外校验（仅 Session；后台操作不使用扩展 JWT）
   if (under(pathname, "/api/admin")) {
+    if (!sessionUser?.id) {
+      return noLogin("需要登录管理后台");
+    }
     const roles: string = sessionUser.roles ?? event.context.userRoles ?? "";
     if (!roles.split(",").map((r) => r.trim()).includes("admin")) {
       return noLogin("需要管理员权限");

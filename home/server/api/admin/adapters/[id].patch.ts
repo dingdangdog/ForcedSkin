@@ -1,13 +1,25 @@
 import prisma from "~~/server/lib/prisma";
 import { success, error, serverError } from "~~/server/utils/result";
 import { validateAdapterFormulaCodeString } from "~~/server/utils/adapter-formula";
+import { getUserId } from "~~/server/utils/jwt";
+import { tryAwardClosureForAdapterId } from "~~/server/lib/points";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
   if (!id) return error("缺少 ID");
 
   const body = await readBody(event);
-  const { displayName, description, siteDomain, code, isActive, sortOrder, rejectionReason } = body || {};
+  const {
+    displayName,
+    description,
+    siteDomain,
+    code,
+    isActive,
+    sortOrder,
+    rejectionReason,
+    derivedFromRequestId,
+    implementedByUserId,
+  } = body || {};
 
   if (code !== undefined) {
     const formulaCheck = validateAdapterFormulaCodeString(code);
@@ -38,7 +50,33 @@ export default defineEventHandler(async (event) => {
       updateData.rejectionReason = rejectionReason;
     }
 
+    if (derivedFromRequestId !== undefined) {
+      updateData.derivedFromRequestId = derivedFromRequestId ? String(derivedFromRequestId) : null;
+    }
+    if (implementedByUserId !== undefined) {
+      updateData.implementedByUserId = implementedByUserId ? String(implementedByUserId) : null;
+    }
+
     const updated = await prisma.siteAdapter.update({ where: { id }, data: updateData });
+
+    const actorUserId = getUserId(event);
+
+    if (updated.derivedFromRequestId) {
+      await prisma.adapterRequest.updateMany({
+        where: {
+          id: updated.derivedFromRequestId,
+          OR: [{ adapterId: null }, { adapterId: updated.id }],
+        },
+        data: { adapterId: updated.id },
+      });
+    }
+
+    if (updated.isActive) {
+      await prisma.$transaction(async (tx) => {
+        await tryAwardClosureForAdapterId(tx, updated.id, actorUserId);
+      });
+    }
+
     return success(updated);
   } catch (err: any) {
     if (err.code === "P2025") return error("适配器不存在");

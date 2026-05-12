@@ -65,6 +65,8 @@ const loading = ref(true);
 const saving = ref(false);
 const toast = ref("");
 
+const pointsSummary = ref<{ availablePoints: number; lifetimeEarned: number; recentLedger: Array<{ id: string; delta: number; title: string | null; reasonCode: string; createdAt: string }> } | null>(null);
+
 const showToast = (msg: string) => {
   toast.value = msg;
   setTimeout(() => { toast.value = ""; }, 2500);
@@ -89,7 +91,7 @@ async function load() {
 
   try {
 
-    const [favRes, userInfo, catalogRes, subRes, adapterRes] = await Promise.all([
+    const [favRes, userInfo, catalogRes, subRes, adapterRes, pointsRes] = await Promise.all([
 
       doApi.get<Theme[]>("api/entry/user/themes"),
 
@@ -100,6 +102,8 @@ async function load() {
       doApi.get<Submission[]>("api/entry/user/themes/submissions").catch(() => []),
 
       doApi.get<AdapterSubmission[]>("api/entry/user/adapters").catch(() => []),
+
+      doApi.get<any>("api/entry/user/points").catch(() => null),
 
     ]);
 
@@ -114,6 +118,16 @@ async function load() {
     selectedLight.value = userInfo?.lightTheme || "";
 
     selectedDark.value = userInfo?.darkTheme || "";
+
+    if (pointsRes) {
+      pointsSummary.value = {
+        availablePoints: pointsRes.availablePoints ?? 0,
+        lifetimeEarned: pointsRes.lifetimeEarned ?? 0,
+        recentLedger: pointsRes.recentLedger || [],
+      };
+    } else {
+      pointsSummary.value = null;
+    }
 
   } finally {
 
@@ -191,6 +205,28 @@ onMounted(load);
     </div>
 
     <template v-else>
+      <!-- 积分概览 -->
+      <section v-if="pointsSummary" class="mb-10 p-5 rounded-2xl border border-amber-200/80 bg-amber-50/40 dark:bg-amber-950/20 dark:border-amber-800/60">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <h2 class="font-semibold text-foreground text-lg mb-1">贡献积分</h2>
+            <p class="text-muted text-sm leading-relaxed">当前可用 <span class="font-bold text-foreground tabular-nums">{{ pointsSummary.availablePoints }}</span>
+              分 · 累计获得 <span class="tabular-nums">{{ pointsSummary.lifetimeEarned }}</span> 分</p>
+          </div>
+          <NuxtLink :to="localePath('/account/points')"
+            class="shrink-0 px-3 py-1.5 rounded-lg bg-primary-500 text-white text-sm font-medium hover:bg-primary-600 transition-colors">
+            查看全部流水
+          </NuxtLink>
+        </div>
+        <ul v-if="pointsSummary.recentLedger.length" class="mt-4 space-y-2 border-t border-border/60 pt-3">
+          <li v-for="row in pointsSummary.recentLedger" :key="row.id" class="flex justify-between text-sm gap-2">
+            <span class="text-muted truncate">{{ row.title || row.reasonCode }}</span>
+            <span class="font-medium tabular-nums shrink-0" :class="row.delta >= 0 ? 'text-green-600' : 'text-red-500'">{{ row.delta >= 0 ? "+" : "" }}{{ row.delta }}</span>
+          </li>
+        </ul>
+        <p v-else class="mt-3 text-sm text-muted">暂无流水，提交适配需求或参与闭环即可获得积分。</p>
+      </section>
+
       <!-- 我提交的主题 -->
       <section v-if="submissions.length" class="mb-10 rounded-2xl border-2 border-primary-400/50 bg-primary-500/[0.04] p-5">
         <h2 class="font-semibold text-foreground text-lg mb-1">{{ t('account.my_submissions') }}</h2>

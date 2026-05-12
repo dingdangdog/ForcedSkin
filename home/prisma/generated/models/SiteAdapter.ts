@@ -46,6 +46,12 @@ export type SiteAdapterMinAggregateOutputType = {
   sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  parentId: string | null
+  derivedFromRequestId: string | null
+  implementedByUserId: string | null
+  rejectionReason: string | null
+  reviewedAt: Date | null
+  source: string | null
 }
 
 export type SiteAdapterMaxAggregateOutputType = {
@@ -60,6 +66,12 @@ export type SiteAdapterMaxAggregateOutputType = {
   sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  parentId: string | null
+  derivedFromRequestId: string | null
+  implementedByUserId: string | null
+  rejectionReason: string | null
+  reviewedAt: Date | null
+  source: string | null
 }
 
 export type SiteAdapterCountAggregateOutputType = {
@@ -74,6 +86,12 @@ export type SiteAdapterCountAggregateOutputType = {
   sortOrder: number
   createdAt: number
   updatedAt: number
+  parentId: number
+  derivedFromRequestId: number
+  implementedByUserId: number
+  rejectionReason: number
+  reviewedAt: number
+  source: number
   _all: number
 }
 
@@ -98,6 +116,12 @@ export type SiteAdapterMinAggregateInputType = {
   sortOrder?: true
   createdAt?: true
   updatedAt?: true
+  parentId?: true
+  derivedFromRequestId?: true
+  implementedByUserId?: true
+  rejectionReason?: true
+  reviewedAt?: true
+  source?: true
 }
 
 export type SiteAdapterMaxAggregateInputType = {
@@ -112,6 +136,12 @@ export type SiteAdapterMaxAggregateInputType = {
   sortOrder?: true
   createdAt?: true
   updatedAt?: true
+  parentId?: true
+  derivedFromRequestId?: true
+  implementedByUserId?: true
+  rejectionReason?: true
+  reviewedAt?: true
+  source?: true
 }
 
 export type SiteAdapterCountAggregateInputType = {
@@ -126,6 +156,12 @@ export type SiteAdapterCountAggregateInputType = {
   sortOrder?: true
   createdAt?: true
   updatedAt?: true
+  parentId?: true
+  derivedFromRequestId?: true
+  implementedByUserId?: true
+  rejectionReason?: true
+  reviewedAt?: true
+  source?: true
   _all?: true
 }
 
@@ -227,6 +263,12 @@ export type SiteAdapterGroupByOutputType = {
   sortOrder: number
   createdAt: Date
   updatedAt: Date
+  parentId: string | null
+  derivedFromRequestId: string | null
+  implementedByUserId: string | null
+  rejectionReason: string | null
+  reviewedAt: Date | null
+  source: string
   _count: SiteAdapterCountAggregateOutputType | null
   _avg: SiteAdapterAvgAggregateOutputType | null
   _sum: SiteAdapterSumAggregateOutputType | null
@@ -264,6 +306,12 @@ export type SiteAdapterWhereInput = {
   sortOrder?: Prisma.IntFilter<"SiteAdapter"> | number
   createdAt?: Prisma.DateTimeFilter<"SiteAdapter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SiteAdapter"> | Date | string
+  parentId?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  derivedFromRequestId?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  implementedByUserId?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"SiteAdapter"> | Date | string | null
+  source?: Prisma.StringFilter<"SiteAdapter"> | string
 }
 
 export type SiteAdapterOrderByWithRelationInput = {
@@ -278,6 +326,12 @@ export type SiteAdapterOrderByWithRelationInput = {
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  derivedFromRequestId?: Prisma.SortOrderInput | Prisma.SortOrder
+  implementedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  source?: Prisma.SortOrder
 }
 
 export type SiteAdapterWhereUniqueInput = Prisma.AtLeast<{
@@ -295,6 +349,12 @@ export type SiteAdapterWhereUniqueInput = Prisma.AtLeast<{
   sortOrder?: Prisma.IntFilter<"SiteAdapter"> | number
   createdAt?: Prisma.DateTimeFilter<"SiteAdapter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SiteAdapter"> | Date | string
+  parentId?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  derivedFromRequestId?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  implementedByUserId?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"SiteAdapter"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"SiteAdapter"> | Date | string | null
+  source?: Prisma.StringFilter<"SiteAdapter"> | string
 }, "id" | "name">
 
 export type SiteAdapterOrderByWithAggregationInput = {
@@ -309,6 +369,12 @@ export type SiteAdapterOrderByWithAggregationInput = {
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  derivedFromRequestId?: Prisma.SortOrderInput | Prisma.SortOrder
+  implementedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  source?: Prisma.SortOrder
   _count?: Prisma.SiteAdapterCountOrderByAggregateInput
   _avg?: Prisma.SiteAdapterAvgOrderByAggregateInput
   _max?: Prisma.SiteAdapterMaxOrderByAggregateInput
@@ -331,6 +397,12 @@ export type SiteAdapterScalarWhereWithAggregatesInput = {
   sortOrder?: Prisma.IntWithAggregatesFilter<"SiteAdapter"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SiteAdapter"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SiteAdapter"> | Date | string
+  parentId?: Prisma.StringNullableWithAggregatesFilter<"SiteAdapter"> | string | null
+  derivedFromRequestId?: Prisma.StringNullableWithAggregatesFilter<"SiteAdapter"> | string | null
+  implementedByUserId?: Prisma.StringNullableWithAggregatesFilter<"SiteAdapter"> | string | null
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"SiteAdapter"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SiteAdapter"> | Date | string | null
+  source?: Prisma.StringWithAggregatesFilter<"SiteAdapter"> | string
 }
 
 export type SiteAdapterCreateInput = {
@@ -345,6 +417,12 @@ export type SiteAdapterCreateInput = {
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  derivedFromRequestId?: string | null
+  implementedByUserId?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  source?: string
 }
 
 export type SiteAdapterUncheckedCreateInput = {
@@ -359,6 +437,12 @@ export type SiteAdapterUncheckedCreateInput = {
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  derivedFromRequestId?: string | null
+  implementedByUserId?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  source?: string
 }
 
 export type SiteAdapterUpdateInput = {
@@ -373,6 +457,12 @@ export type SiteAdapterUpdateInput = {
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  implementedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SiteAdapterUncheckedUpdateInput = {
@@ -387,6 +477,12 @@ export type SiteAdapterUncheckedUpdateInput = {
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  implementedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SiteAdapterCreateManyInput = {
@@ -401,6 +497,12 @@ export type SiteAdapterCreateManyInput = {
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  derivedFromRequestId?: string | null
+  implementedByUserId?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  source?: string
 }
 
 export type SiteAdapterUpdateManyMutationInput = {
@@ -415,6 +517,12 @@ export type SiteAdapterUpdateManyMutationInput = {
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  implementedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SiteAdapterUncheckedUpdateManyInput = {
@@ -429,6 +537,12 @@ export type SiteAdapterUncheckedUpdateManyInput = {
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  implementedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SiteAdapterCountOrderByAggregateInput = {
@@ -443,6 +557,12 @@ export type SiteAdapterCountOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
+  derivedFromRequestId?: Prisma.SortOrder
+  implementedByUserId?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
+  source?: Prisma.SortOrder
 }
 
 export type SiteAdapterAvgOrderByAggregateInput = {
@@ -461,6 +581,12 @@ export type SiteAdapterMaxOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
+  derivedFromRequestId?: Prisma.SortOrder
+  implementedByUserId?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
+  source?: Prisma.SortOrder
 }
 
 export type SiteAdapterMinOrderByAggregateInput = {
@@ -475,6 +601,12 @@ export type SiteAdapterMinOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
+  derivedFromRequestId?: Prisma.SortOrder
+  implementedByUserId?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
+  source?: Prisma.SortOrder
 }
 
 export type SiteAdapterSumOrderByAggregateInput = {
@@ -495,6 +627,12 @@ export type SiteAdapterSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  derivedFromRequestId?: boolean
+  implementedByUserId?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  source?: boolean
 }, ExtArgs["result"]["siteAdapter"]>
 
 export type SiteAdapterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -509,6 +647,12 @@ export type SiteAdapterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  derivedFromRequestId?: boolean
+  implementedByUserId?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  source?: boolean
 }, ExtArgs["result"]["siteAdapter"]>
 
 export type SiteAdapterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -523,6 +667,12 @@ export type SiteAdapterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  derivedFromRequestId?: boolean
+  implementedByUserId?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  source?: boolean
 }, ExtArgs["result"]["siteAdapter"]>
 
 export type SiteAdapterSelectScalar = {
@@ -537,9 +687,15 @@ export type SiteAdapterSelectScalar = {
   sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  derivedFromRequestId?: boolean
+  implementedByUserId?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  source?: boolean
 }
 
-export type SiteAdapterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submitterId" | "name" | "displayName" | "description" | "siteDomain" | "code" | "isActive" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["siteAdapter"]>
+export type SiteAdapterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submitterId" | "name" | "displayName" | "description" | "siteDomain" | "code" | "isActive" | "sortOrder" | "createdAt" | "updatedAt" | "parentId" | "derivedFromRequestId" | "implementedByUserId" | "rejectionReason" | "reviewedAt" | "source", ExtArgs["result"]["siteAdapter"]>
 
 export type $SiteAdapterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SiteAdapter"
@@ -574,6 +730,31 @@ export type $SiteAdapterPayload<ExtArgs extends runtime.Types.Extensions.Interna
     sortOrder: number
     createdAt: Date
     updatedAt: Date
+    /**
+     * 合并来源的适配器 ID（追踪合并历史）
+     */
+    parentId: string | null
+    /**
+     * 由哪条适配需求衍生（闭环追溯，可空）
+     */
+    derivedFromRequestId: string | null
+    /**
+     * 实际实现者（管理员或贡献者），用于积分
+     */
+    implementedByUserId: string | null
+    /**
+     * 审核信息
+     * 审核拒绝原因
+     */
+    rejectionReason: string | null
+    /**
+     * 审核时间
+     */
+    reviewedAt: Date | null
+    /**
+     * 提交来源: "website" | "extension"
+     */
+    source: string
   }, ExtArgs["result"]["siteAdapter"]>
   composites: {}
 }
@@ -1008,6 +1189,12 @@ export interface SiteAdapterFieldRefs {
   readonly sortOrder: Prisma.FieldRef<"SiteAdapter", 'Int'>
   readonly createdAt: Prisma.FieldRef<"SiteAdapter", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SiteAdapter", 'DateTime'>
+  readonly parentId: Prisma.FieldRef<"SiteAdapter", 'String'>
+  readonly derivedFromRequestId: Prisma.FieldRef<"SiteAdapter", 'String'>
+  readonly implementedByUserId: Prisma.FieldRef<"SiteAdapter", 'String'>
+  readonly rejectionReason: Prisma.FieldRef<"SiteAdapter", 'String'>
+  readonly reviewedAt: Prisma.FieldRef<"SiteAdapter", 'DateTime'>
+  readonly source: Prisma.FieldRef<"SiteAdapter", 'String'>
 }
     
 

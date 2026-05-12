@@ -29,12 +29,56 @@ model User {
   updatedAt   DateTime  @updatedAt
   lastLoginAt DateTime?
 
-
+  pointsBalance UserPointsBalance?
 
   @@index([email])
 
   @@map("users")
 
+}
+
+/// 用户积分余额（与流水双写）
+model UserPointsBalance {
+  userId           String   @id @db.VarChar(36)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  availablePoints  Int      @default(0)
+  frozenPoints     Int      @default(0)
+  lifetimeEarned   Int      @default(0)
+  lifetimeSpent    Int      @default(0)
+  updatedAt        DateTime @updatedAt
+
+  @@map("user_points_balances")
+}
+
+/// 积分流水（不可物理删除；冲正用反向流水）
+model PointLedger {
+  id               String   @id @default(cuid()) @db.VarChar(36)
+  userId           String   @db.VarChar(36)
+  delta            Int
+  balanceAfter     Int?
+  reasonCode       String   @db.VarChar(80)
+  title            String?  @db.VarChar(200)
+  meta             Json?
+  sourceType       String   @db.VarChar(40)
+  sourceId         String?  @db.VarChar(36)
+  actorUserId      String?  @db.VarChar(36)
+  idempotencyKey   String   @unique @db.VarChar(200)
+  createdAt        DateTime @default(now())
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("point_ledgers")
+}
+
+/// 可运营配置的积分规则（code 与业务 reasonCode 对齐）
+model PointRule {
+  code               String  @id @db.VarChar(80)
+  points             Int     @default(0)
+  enabled            Boolean @default(true)
+  description        String  @default("") @db.VarChar(500)
+  /// 每用户每自然日（UTC）该规则最多生效次数；null 表示不限制（提交分在代码中另有「同站每日」逻辑）
+  capPerUserPerDay   Int?
+
+  @@map("point_rules")
 }
 
 
@@ -87,6 +131,10 @@ model SiteAdapter {
   updatedAt   DateTime @updatedAt
 
   parentId    String?  @db.VarChar(36) /// 合并来源的适配器 ID（追踪合并历史）
+  /// 由哪条适配需求衍生（闭环追溯，可空）
+  derivedFromRequestId String? @db.VarChar(36)
+  /// 实际实现者（管理员或贡献者），用于积分
+  implementedByUserId  String? @db.VarChar(36)
   /// 审核信息
   rejectionReason String?  @db.VarChar(500) /// 审核拒绝原因
   reviewedAt      DateTime? /// 审核时间
@@ -94,6 +142,7 @@ model SiteAdapter {
 
   @@index([isActive])
   @@index([submitterId])
+  @@index([derivedFromRequestId])
   @@map("site_adapters")
 
 }
@@ -115,6 +164,8 @@ model AdapterRequest {
   adminNote        String?   @db.VarChar(1000)
   /// 若已实现并落地到适配器，关联目标适配器 ID（可选）
   adapterId        String?   @db.VarChar(36)
+  /// 记录实现者（可与适配器上的 implementedByUserId 互为补充）
+  implementedByUserId String? @db.VarChar(36)
   reviewedAt       DateTime?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt

@@ -59,6 +59,7 @@ const accountAvatar = document.getElementById("accountAvatar");
 const accountAvatarFallback = document.getElementById("accountAvatarFallback");
 const accountDisplayName = document.getElementById("accountDisplayName");
 const accountEmail = document.getElementById("accountEmail");
+const accountPointsLine = document.getElementById("accountPointsLine");
 const accountStatusText = document.getElementById("accountStatusText");
 const logoutBtn = document.getElementById("logoutBtn");
 
@@ -572,10 +573,25 @@ async function renderAccountState() {
 
     renderAccountMyThemesStrip();
     void renderAccountAdaptersStrip();
+
+    if (accountPointsLine) {
+      const pts = await chrome.runtime.sendMessage({ type: "GET_USER_POINTS" });
+      if (pts && typeof pts.availablePoints === "number") {
+        accountPointsLine.textContent = i18n("accountPointsSummary", [String(pts.availablePoints)]);
+        accountPointsLine.classList.remove("hidden");
+      } else {
+        accountPointsLine.textContent = "";
+        accountPointsLine.classList.add("hidden");
+      }
+    }
   } else {
     accountGuest.classList.remove("hidden");
     accountSignedIn.classList.add("hidden");
     accountEmail.textContent = "";
+    if (accountPointsLine) {
+      accountPointsLine.textContent = "";
+      accountPointsLine.classList.add("hidden");
+    }
     accountAvatar.removeAttribute("src");
     accountAvatar.classList.add("hidden");
     accountAvatarFallback.classList.remove("hidden");
@@ -895,7 +911,12 @@ async function builderSubmit() {
       source: "extension",
     });
     if (res?.ok) {
-      builderStatus.textContent = i18n("submitOk");
+      const delta = res?.data?.pointsDelta;
+      if (typeof delta === "number" && delta !== 0) {
+        builderStatus.textContent = i18n("submitOkWithPoints", [String(delta)]);
+      } else {
+        builderStatus.textContent = i18n("submitOk");
+      }
       builderReset();
     } else {
       builderStatus.textContent = res?.error || "提交失败";

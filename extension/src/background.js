@@ -477,6 +477,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
+  if (message.type === "GET_USER_POINTS") {
+    (async () => {
+      try {
+        const { token } = await getStoredUser();
+        if (!token) {
+          sendResponse(null);
+          return;
+        }
+        const res = await fetch(API_BASE + "/api/entry/user/points", {
+          headers: { Authorization: "Bearer " + token },
+        });
+        const json = await res.json();
+        if (json.c === 200) sendResponse(json.d);
+        else sendResponse(null);
+      } catch {
+        sendResponse(null);
+      }
+    })();
+    return true;
+  }
+
   if (message.type === "SET_THEME_MODE") {
     const { mode } = message;
     const validMode = Object.values(THEME_MODES).includes(mode) ? mode : DEFAULT_MODE;

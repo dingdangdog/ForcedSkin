@@ -9,9 +9,13 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/UserPointsBalance.js'
+export type * from './models/PointLedger.js'
+export type * from './models/PointRule.js'
 export type * from './models/Theme.js'
 export type * from './models/UserThemes.js'
 export type * from './models/SiteAdapter.js'
+export type * from './models/AdapterRequest.js'
 export type * from './models/UserAdapters.js'
 export type * from './models/AIProvider.js'
 export type * from './models/Config.js'

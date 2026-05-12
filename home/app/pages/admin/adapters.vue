@@ -19,6 +19,8 @@ interface Adapter {
   source: string;
   rejectionReason: string | null;
   parentId: string | null;
+  derivedFromRequestId: string | null;
+  implementedByUserId: string | null;
   createdAt: string;
 }
 
@@ -44,6 +46,8 @@ const form = reactive({
   siteDomain: "",
   code: "",
   sortOrder: 0,
+  derivedFromRequestId: "",
+  implementedByUserId: "",
 });
 
 const rejectForm = reactive({
@@ -98,6 +102,8 @@ function openEdit(adapter: Adapter) {
     siteDomain: adapter.siteDomain,
     code: adapter.code,
     sortOrder: adapter.sortOrder,
+    derivedFromRequestId: adapter.derivedFromRequestId || "",
+    implementedByUserId: adapter.implementedByUserId || "",
   });
   showForm.value = true;
 }
@@ -177,6 +183,8 @@ async function save() {
       siteDomain,
       code: form.code,
       sortOrder: Number(form.sortOrder) || 0,
+      derivedFromRequestId: (form.derivedFromRequestId || "").trim() || null,
+      implementedByUserId: (form.implementedByUserId || "").trim() || null,
     });
     showToast("已保存");
     showForm.value = false;
@@ -361,6 +369,16 @@ onMounted(load);
           <div class="flex items-center gap-3">
             <label class="text-xs text-muted shrink-0">排序</label>
             <input type="number" v-model="form.sortOrder" class="w-20 px-2 py-1.5 rounded-lg border border-border bg-surface text-foreground text-sm focus:outline-none"/>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-muted mb-1 block">来源适配需求 ID（可选）</label>
+              <input v-model="form.derivedFromRequestId" placeholder="AdapterRequest.id" class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-xs font-mono focus:outline-none"/>
+            </div>
+            <div>
+              <label class="text-xs text-muted mb-1 block">实现者用户 ID（可选）</label>
+              <input v-model="form.implementedByUserId" class="w-full px-3 py-2 rounded-lg border border-border bg-surface text-foreground text-xs font-mono focus:outline-none"/>
+            </div>
           </div>
           <div>
             <div class="flex items-start justify-between gap-2 mb-1">

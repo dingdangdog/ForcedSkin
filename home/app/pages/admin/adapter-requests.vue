@@ -14,6 +14,7 @@ interface AdapterRequest {
   source: "extension" | "website";
   adminNote: string | null;
   adapterId: string | null;
+  implementedByUserId: string | null;
   reviewedAt: string | null;
   createdAt: string;
 }
@@ -24,6 +25,8 @@ const status = ref<"all" | "pending" | "processing" | "completed" | "rejected">(
 const toast = ref("");
 const savingId = ref<string | null>(null);
 const draftNote = reactive<Record<string, string>>({});
+const draftAdapterId = reactive<Record<string, string>>({});
+const draftImplementerId = reactive<Record<string, string>>({});
 
 const showToast = (msg: string) => {
   toast.value = msg;
@@ -65,6 +68,8 @@ async function load() {
     requests.value = res.list || [];
     requests.value.forEach((r) => {
       draftNote[r.id] = r.adminNote || "";
+      draftAdapterId[r.id] = r.adapterId || "";
+      draftImplementerId[r.id] = r.implementedByUserId || "";
     });
   } finally {
     loading.value = false;
@@ -74,14 +79,39 @@ async function load() {
 async function updateStatus(item: AdapterRequest, next: AdapterRequest["status"]) {
   savingId.value = item.id;
   try {
-    await doApi.patch(`api/admin/adapter-requests/${item.id}`, {
+    const body: Record<string, string | null> = {
       status: next,
       adminNote: draftNote[item.id] || "",
-    });
+    };
+    const aid = (draftAdapterId[item.id] || "").trim();
+    const impl = (draftImplementerId[item.id] || "").trim();
+    if (aid) body.adapterId = aid;
+    if (impl) body.implementedByUserId = impl;
+
+    await doApi.patch(`api/admin/adapter-requests/${item.id}`, body);
     showToast("已更新");
     await load();
   } catch {
     showToast("更新失败");
+  } finally {
+    savingId.value = null;
+  }
+}
+
+async function saveLinksOnly(item: AdapterRequest) {
+  savingId.value = item.id;
+  try {
+    const aid = (draftAdapterId[item.id] || "").trim();
+    const impl = (draftImplementerId[item.id] || "").trim();
+    await doApi.patch(`api/admin/adapter-requests/${item.id}`, {
+      adminNote: draftNote[item.id] || "",
+      adapterId: aid || null,
+      implementedByUserId: impl || null,
+    });
+    showToast("关联已保存");
+    await load();
+  } catch {
+    showToast("保存失败");
   } finally {
     savingId.value = null;
   }
@@ -131,12 +161,31 @@ onMounted(load);
           <span>{{ parseElements(item.selectedElements).join(" | ") || "（无）" }}</span>
         </div>
 
+        <div class="mt-3 grid gap-2 sm:grid-cols-2">
+          <div>
+            <label class="text-[11px] text-muted">关联适配器 ID（上线且关联后触发闭环积分）</label>
+            <input
+              v-model="draftAdapterId[item.id]"
+              class="w-full px-2.5 py-1.5 rounded-lg border border-border bg-background text-sm font-mono"
+              placeholder="SiteAdapter.id"
+            />
+          </div>
+          <div>
+            <label class="text-[11px] text-muted">实现者用户 ID（可选，用于适配实现积分）</label>
+            <input
+              v-model="draftImplementerId[item.id]"
+              class="w-full px-2.5 py-1.5 rounded-lg border border-border bg-background text-sm font-mono"
+              placeholder="与后台用户列表中 ID 一致"
+            />
+          </div>
+        </div>
         <div class="mt-3 flex items-center gap-2 flex-wrap">
           <input
             v-model="draftNote[item.id]"
             class="flex-1 min-w-[220px] px-2.5 py-1.5 rounded-lg border border-border bg-background text-sm"
             placeholder="管理员备注（可写 AI 处理建议）"
           />
+          <button class="px-2.5 py-1 rounded text-xs border border-border" :disabled="savingId === item.id" @click="saveLinksOnly(item)">保存关联</button>
           <button class="px-2.5 py-1 rounded text-xs border border-border" :disabled="savingId === item.id" @click="updateStatus(item, 'processing')">处理中</button>
           <button class="px-2.5 py-1 rounded text-xs bg-green-500 text-white" :disabled="savingId === item.id" @click="updateStatus(item, 'completed')">完成</button>
           <button class="px-2.5 py-1 rounded text-xs border border-red-200 text-red-600" :disabled="savingId === item.id" @click="updateStatus(item, 'rejected')">拒绝</button>

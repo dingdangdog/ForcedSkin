@@ -385,9 +385,13 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  UserPointsBalance: 'UserPointsBalance',
+  PointLedger: 'PointLedger',
+  PointRule: 'PointRule',
   Theme: 'Theme',
   UserThemes: 'UserThemes',
   SiteAdapter: 'SiteAdapter',
+  AdapterRequest: 'AdapterRequest',
   UserAdapters: 'UserAdapters',
   AIProvider: 'AIProvider',
   Config: 'Config'
@@ -406,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "theme" | "userThemes" | "siteAdapter" | "userAdapters" | "aIProvider" | "config"
+    modelProps: "user" | "userPointsBalance" | "pointLedger" | "pointRule" | "theme" | "userThemes" | "siteAdapter" | "adapterRequest" | "userAdapters" | "aIProvider" | "config"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -481,6 +485,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserPointsBalance: {
+      payload: Prisma.$UserPointsBalancePayload<ExtArgs>
+      fields: Prisma.UserPointsBalanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPointsBalanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPointsBalanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>
+        }
+        findFirst: {
+          args: Prisma.UserPointsBalanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPointsBalanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>
+        }
+        findMany: {
+          args: Prisma.UserPointsBalanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>[]
+        }
+        create: {
+          args: Prisma.UserPointsBalanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>
+        }
+        createMany: {
+          args: Prisma.UserPointsBalanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPointsBalanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>[]
+        }
+        delete: {
+          args: Prisma.UserPointsBalanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>
+        }
+        update: {
+          args: Prisma.UserPointsBalanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPointsBalanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPointsBalanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPointsBalanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPointsBalanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPointsBalancePayload>
+        }
+        aggregate: {
+          args: Prisma.UserPointsBalanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPointsBalance>
+        }
+        groupBy: {
+          args: Prisma.UserPointsBalanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPointsBalanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPointsBalanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPointsBalanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    PointLedger: {
+      payload: Prisma.$PointLedgerPayload<ExtArgs>
+      fields: Prisma.PointLedgerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PointLedgerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PointLedgerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>
+        }
+        findFirst: {
+          args: Prisma.PointLedgerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PointLedgerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>
+        }
+        findMany: {
+          args: Prisma.PointLedgerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>[]
+        }
+        create: {
+          args: Prisma.PointLedgerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>
+        }
+        createMany: {
+          args: Prisma.PointLedgerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PointLedgerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>[]
+        }
+        delete: {
+          args: Prisma.PointLedgerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>
+        }
+        update: {
+          args: Prisma.PointLedgerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>
+        }
+        deleteMany: {
+          args: Prisma.PointLedgerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PointLedgerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PointLedgerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>[]
+        }
+        upsert: {
+          args: Prisma.PointLedgerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointLedgerPayload>
+        }
+        aggregate: {
+          args: Prisma.PointLedgerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePointLedger>
+        }
+        groupBy: {
+          args: Prisma.PointLedgerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointLedgerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PointLedgerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointLedgerCountAggregateOutputType> | number
+        }
+      }
+    }
+    PointRule: {
+      payload: Prisma.$PointRulePayload<ExtArgs>
+      fields: Prisma.PointRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PointRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PointRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>
+        }
+        findFirst: {
+          args: Prisma.PointRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PointRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>
+        }
+        findMany: {
+          args: Prisma.PointRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>[]
+        }
+        create: {
+          args: Prisma.PointRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>
+        }
+        createMany: {
+          args: Prisma.PointRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PointRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>[]
+        }
+        delete: {
+          args: Prisma.PointRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>
+        }
+        update: {
+          args: Prisma.PointRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.PointRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PointRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PointRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.PointRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointRulePayload>
+        }
+        aggregate: {
+          args: Prisma.PointRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePointRule>
+        }
+        groupBy: {
+          args: Prisma.PointRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PointRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointRuleCountAggregateOutputType> | number
         }
       }
     }
@@ -703,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SiteAdapterCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SiteAdapterCountAggregateOutputType> | number
+        }
+      }
+    }
+    AdapterRequest: {
+      payload: Prisma.$AdapterRequestPayload<ExtArgs>
+      fields: Prisma.AdapterRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdapterRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdapterRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.AdapterRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdapterRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>
+        }
+        findMany: {
+          args: Prisma.AdapterRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>[]
+        }
+        create: {
+          args: Prisma.AdapterRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>
+        }
+        createMany: {
+          args: Prisma.AdapterRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdapterRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.AdapterRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>
+        }
+        update: {
+          args: Prisma.AdapterRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdapterRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdapterRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdapterRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdapterRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdapterRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.AdapterRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdapterRequest>
+        }
+        groupBy: {
+          args: Prisma.AdapterRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdapterRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdapterRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdapterRequestCountAggregateOutputType> | number
         }
       }
     }
@@ -985,6 +1285,47 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const UserPointsBalanceScalarFieldEnum = {
+  userId: 'userId',
+  availablePoints: 'availablePoints',
+  frozenPoints: 'frozenPoints',
+  lifetimeEarned: 'lifetimeEarned',
+  lifetimeSpent: 'lifetimeSpent',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserPointsBalanceScalarFieldEnum = (typeof UserPointsBalanceScalarFieldEnum)[keyof typeof UserPointsBalanceScalarFieldEnum]
+
+
+export const PointLedgerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  delta: 'delta',
+  balanceAfter: 'balanceAfter',
+  reasonCode: 'reasonCode',
+  title: 'title',
+  meta: 'meta',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  actorUserId: 'actorUserId',
+  idempotencyKey: 'idempotencyKey',
+  createdAt: 'createdAt'
+} as const
+
+export type PointLedgerScalarFieldEnum = (typeof PointLedgerScalarFieldEnum)[keyof typeof PointLedgerScalarFieldEnum]
+
+
+export const PointRuleScalarFieldEnum = {
+  code: 'code',
+  points: 'points',
+  enabled: 'enabled',
+  description: 'description',
+  capPerUserPerDay: 'capPerUserPerDay'
+} as const
+
+export type PointRuleScalarFieldEnum = (typeof PointRuleScalarFieldEnum)[keyof typeof PointRuleScalarFieldEnum]
+
+
 export const ThemeScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1024,10 +1365,35 @@ export const SiteAdapterScalarFieldEnum = {
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  parentId: 'parentId',
+  derivedFromRequestId: 'derivedFromRequestId',
+  implementedByUserId: 'implementedByUserId',
+  rejectionReason: 'rejectionReason',
+  reviewedAt: 'reviewedAt',
+  source: 'source'
 } as const
 
 export type SiteAdapterScalarFieldEnum = (typeof SiteAdapterScalarFieldEnum)[keyof typeof SiteAdapterScalarFieldEnum]
+
+
+export const AdapterRequestScalarFieldEnum = {
+  id: 'id',
+  submitterId: 'submitterId',
+  siteDomain: 'siteDomain',
+  selectedElements: 'selectedElements',
+  feedback: 'feedback',
+  status: 'status',
+  source: 'source',
+  adminNote: 'adminNote',
+  adapterId: 'adapterId',
+  implementedByUserId: 'implementedByUserId',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AdapterRequestScalarFieldEnum = (typeof AdapterRequestScalarFieldEnum)[keyof typeof AdapterRequestScalarFieldEnum]
 
 
 export const UserAdaptersScalarFieldEnum = {
@@ -1083,6 +1449,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -1097,6 +1471,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1134,13 +1517,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1151,6 +1527,27 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1278,9 +1675,13 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  userPointsBalance?: Prisma.UserPointsBalanceOmit
+  pointLedger?: Prisma.PointLedgerOmit
+  pointRule?: Prisma.PointRuleOmit
   theme?: Prisma.ThemeOmit
   userThemes?: Prisma.UserThemesOmit
   siteAdapter?: Prisma.SiteAdapterOmit
+  adapterRequest?: Prisma.AdapterRequestOmit
   userAdapters?: Prisma.UserAdaptersOmit
   aIProvider?: Prisma.AIProviderOmit
   config?: Prisma.ConfigOmit

@@ -182,6 +182,8 @@ import {
   SwatchIcon,
   PuzzlePieceIcon,
   UsersIcon,
+  InboxIcon,
+  GiftIcon,
 } from "@heroicons/vue/24/outline";
 
 const route = useRoute();
@@ -205,6 +207,8 @@ const menuItems: MenuItem[] = [
   { label: "用户管理", path: "/admin/users", icon: UsersIcon },
   { label: "主题管理", path: "/admin/themes", icon: SwatchIcon },
   { label: "适配器管理", path: "/admin/adapters", icon: PuzzlePieceIcon },
+  { label: "适配需求", path: "/admin/adapter-requests", icon: InboxIcon },
+  { label: "积分管理", path: "/admin/points", icon: GiftIcon },
   { label: "设置", path: "/admin/settings", icon: Cog8ToothIcon },
 ];
 
