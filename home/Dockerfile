@@ -8,7 +8,8 @@ RUN apk add --no-cache openssl libc6-compat
 
 # 使用项目锁文件做可重复构建
 COPY package.json pnpm-lock.yaml ./
-RUN corepack enable && pnpm install --frozen-lockfile
+RUN corepack enable
+RUN pnpm install --frozen-lockfile --registry=https://registry.npmmirror.com
 
 # 拷贝源码并构建
 COPY . .
