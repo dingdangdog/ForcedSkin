@@ -6,7 +6,12 @@
     "login": "Anmelden",
     "account": "Konto",
     "admin": "Admin",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "menu": "Menü",
+    "open_menu": "Menü öffnen",
+    "close_menu": "Menü schließen",
+    "theme_light": "Zum hellen Modus wechseln",
+    "theme_dark": "Zum dunklen Modus wechseln"
   },
   "footer": {
     "copyright": "© {year}",

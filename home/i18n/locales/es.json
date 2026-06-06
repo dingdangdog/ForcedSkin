@@ -6,7 +6,12 @@
     "login": "Iniciar sesión",
     "account": "Cuenta",
     "admin": "Admin",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "menu": "Menú",
+    "open_menu": "Abrir menú",
+    "close_menu": "Cerrar menú",
+    "theme_light": "Cambiar a modo claro",
+    "theme_dark": "Cambiar a modo oscuro"
   },
   "footer": {
     "copyright": "© {year}",

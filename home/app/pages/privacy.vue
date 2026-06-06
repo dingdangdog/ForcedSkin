@@ -14,9 +14,9 @@ const effectiveDate = "April 28, 2026";
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto px-4 py-16">
-    <div class="mb-10">
-      <h1 class="text-3xl font-bold text-foreground mb-3">Privacy Policy</h1>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16 prose-responsive">
+    <div class="mb-8 sm:mb-10">
+      <h1 class="text-2xl sm:text-3xl font-bold text-foreground mb-3">Privacy Policy</h1>
       <p class="text-muted text-sm">Effective date: {{ effectiveDate }} · Last updated: {{ effectiveDate }}</p>
     </div>
 

@@ -6,7 +6,12 @@
     "login": "ログイン",
     "account": "アカウント",
     "admin": "管理",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "menu": "メニュー",
+    "open_menu": "メニューを開く",
+    "close_menu": "メニューを閉じる",
+    "theme_light": "ライトモードに切り替え",
+    "theme_dark": "ダークモードに切り替え"
   },
   "footer": {
     "copyright": "© {year}",

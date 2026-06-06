@@ -6,7 +6,12 @@
     "login": "Login",
     "account": "Account",
     "admin": "Admin",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "menu": "Menu",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "theme_light": "Switch to light mode",
+    "theme_dark": "Switch to dark mode"
   },
   "footer": {
     "copyright": "© {year}",

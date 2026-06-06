@@ -74,13 +74,13 @@ onMounted(load);
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto px-4 py-10">
-    <div class="flex items-end justify-between mb-8 gap-4 flex-wrap">
-      <div>
-        <h1 class="text-3xl font-bold text-foreground">{{ t('adapters.title') }}</h1>
-        <p class="text-muted mt-1 text-sm">{{ t('adapters.subtitle') }}</p>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
+      <div class="min-w-0">
+        <h1 class="text-2xl sm:text-3xl font-bold text-foreground">{{ t('adapters.title') }}</h1>
+        <p class="text-muted mt-1 text-sm sm:text-base">{{ t('adapters.subtitle') }}</p>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap shrink-0">
         <NuxtLink :to="localePath('/guide/adapter')" class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           📖 {{ t('adapters.guide_link') }}
         </NuxtLink>
@@ -184,7 +184,7 @@ onMounted(load);
 
     <Transition name="fade">
       <div v-if="toast"
-        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[calc(100vw-2rem)] px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg text-center">
         {{ toast }}</div>
     </Transition>
   </div>

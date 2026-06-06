@@ -96,11 +96,11 @@ const reasonLabel = (code: string) => {
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto px-4 py-10">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
     <div class="flex items-center justify-between gap-3 mb-8 flex-wrap">
       <div>
         <NuxtLink :to="localePath('/account')" class="text-sm text-primary-500 hover:underline mb-1 inline-block">← 返回账户</NuxtLink>
-        <h1 class="text-2xl font-bold text-foreground">我的积分</h1>
+        <h1 class="text-xl sm:text-2xl font-bold text-foreground">我的积分</h1>
         <p class="text-muted text-sm mt-1">积分用于激励社区贡献，非现金；规则由运营配置，可在下方流水查看每笔来源。</p>
       </div>
     </div>

@@ -117,8 +117,8 @@ const layerRows = computed(() =>
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-12">
-    <div class="mb-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 prose-responsive">
+    <div class="mb-8 sm:mb-10">
       <div class="flex flex-wrap items-center gap-2 text-sm text-muted mb-3">
         <NuxtLink :to="localePath('/adapters')" class="hover:text-foreground transition-colors">{{
           t("guide_adapter.crumb_adapters")
@@ -126,8 +126,8 @@ const layerRows = computed(() =>
         <span aria-hidden="true">/</span>
         <span class="text-foreground">{{ t("guide_adapter.crumb_current") }}</span>
       </div>
-      <h1 class="text-4xl font-bold text-foreground mb-3">{{ t("guide_adapter.h1") }}</h1>
-      <p class="text-muted text-lg leading-relaxed">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">{{ t("guide_adapter.h1") }}</h1>
+      <p class="text-muted text-base sm:text-lg leading-relaxed">
         {{ t("guide_adapter.lead_1") }}
         <strong class="text-foreground">{{ t("guide_adapter.lead_2") }}</strong>
         {{ t("guide_adapter.lead_3") }}
@@ -161,8 +161,8 @@ const layerRows = computed(() =>
     <section class="mb-10">
       <h2 class="text-2xl font-bold text-foreground mb-3">{{ t("guide_adapter.formula_title") }}</h2>
       <p class="text-muted text-sm mb-4">{{ t("guide_adapter.formula_intro") }}</p>
-      <div class="overflow-x-auto mb-6">
-        <table class="w-full text-sm border-collapse">
+      <div class="scroll-x-touch mb-6">
+        <table class="w-full min-w-[36rem] text-sm border-collapse">
           <thead>
             <tr class="bg-surface-muted text-left">
               <th class="px-3 py-2 rounded-tl-lg border border-border text-foreground font-semibold">{{ t("guide_adapter.th_field") }}</th>
@@ -187,8 +187,8 @@ const layerRows = computed(() =>
       </div>
 
       <h3 class="text-lg font-semibold text-foreground mb-3">{{ t("guide_adapter.hostname_title") }}</h3>
-      <div class="overflow-x-auto mb-6">
-        <table class="w-full text-sm border-collapse">
+      <div class="scroll-x-touch mb-6">
+        <table class="w-full min-w-[36rem] text-sm border-collapse">
           <thead>
             <tr class="bg-surface-muted text-left">
               <th class="px-3 py-2 rounded-tl-lg border border-border text-foreground font-semibold">{{ t("guide_adapter.th_op") }}</th>
@@ -209,8 +209,8 @@ const layerRows = computed(() =>
       </div>
 
       <h3 class="text-lg font-semibold text-foreground mb-3">{{ t("guide_adapter.palette_title") }}</h3>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm border-collapse">
+      <div class="scroll-x-touch">
+        <table class="w-full min-w-[24rem] text-sm border-collapse">
           <thead>
             <tr class="bg-surface-muted text-left">
               <th class="px-3 py-2 rounded-tl-lg border border-border text-foreground font-semibold">{{ t("guide_adapter.th_field") }}</th>
@@ -238,8 +238,8 @@ const layerRows = computed(() =>
         <code class="bg-surface-muted px-1 rounded text-xs text-foreground">home/server/seeds/bilibili-adapter.formula.json</code>
         {{ t("guide_adapter.layer_intro_after") }}
       </p>
-      <div class="overflow-x-auto mb-4">
-        <table class="w-full text-sm border-collapse">
+      <div class="scroll-x-touch mb-4">
+        <table class="w-full min-w-[40rem] text-sm border-collapse">
           <thead>
             <tr class="bg-surface-muted text-left">
               <th class="px-3 py-2 border border-border text-foreground font-semibold">{{ t("guide_adapter.th_kind") }}</th>

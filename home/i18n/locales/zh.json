@@ -6,7 +6,12 @@
     "login": "登录",
     "account": "账号",
     "admin": "管理",
-    "logout": "退出"
+    "logout": "退出",
+    "menu": "菜单",
+    "open_menu": "打开菜单",
+    "close_menu": "关闭菜单",
+    "theme_light": "切换为浅色模式",
+    "theme_dark": "切换为深色模式"
   },
   "footer": {
     "copyright": "© {year}",

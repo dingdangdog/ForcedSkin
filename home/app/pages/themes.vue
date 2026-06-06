@@ -148,13 +148,13 @@ onMounted(load);
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <div class="flex items-end justify-between mb-8 gap-4 flex-wrap">
-      <div>
-        <h1 class="text-3xl font-bold text-foreground">{{ t('themes.title') }}</h1>
-        <p class="text-muted mt-1">{{ t('themes.subtitle') }}</p>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
+      <div class="min-w-0">
+        <h1 class="text-2xl sm:text-3xl font-bold text-foreground">{{ t('themes.title') }}</h1>
+        <p class="text-muted mt-1 text-sm sm:text-base">{{ t('themes.subtitle') }}</p>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap shrink-0">
         <NuxtLink :to="localePath('/guide/theme')"
           class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-foreground hover:bg-surface-muted transition-colors">
           📖 {{ t('themes.guide_link') }}
@@ -171,7 +171,7 @@ onMounted(load);
     </div>
 
     <!-- 筛选 -->
-    <div class="flex items-center gap-3 mb-6">
+    <div class="flex items-center gap-2 sm:gap-3 mb-6 flex-wrap">
       <button
         v-for="opt in [{ k: 'all', l: t('themes.all') }, { k: 'light', l: t('themes.light') }, { k: 'dark', l: t('themes.dark') }]"
         :key="opt.k" @click="filterMode = opt.k as any"
@@ -182,11 +182,11 @@ onMounted(load);
       </button>
     </div>
 
-    <div v-if="loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       <div v-for="i in 12" :key="i" class="rounded-2xl bg-surface-muted animate-pulse h-52"></div>
     </div>
 
-    <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       <ThemeCard v-for="theme in filtered" :key="theme.id" :theme="theme" :favorited="favorites.has(theme.id)"
         :selected="theme.mode === 'light' ? selectedLight === theme.name : selectedDark === theme.name"
         :favorite-count="theme.favoriteCount ?? 0"
@@ -208,7 +208,7 @@ onMounted(load);
           </NuxtLink>
         </div>
         <div class="space-y-4">
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="text-xs text-muted mb-1 block">{{ t('themes.field_mode') }} *</label>
               <select v-model="submitForm.mode"
@@ -259,7 +259,7 @@ onMounted(load);
     <!-- toast -->
     <Transition name="fade">
       <div v-if="toast"
-        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[calc(100vw-2rem)] px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg text-center">
         {{ toast }}
       </div>
     </Transition>

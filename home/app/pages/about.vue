@@ -38,7 +38,7 @@ const howSteps = [
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto px-4 py-16">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
     <!-- Header -->
     <div class="mb-12 text-center">
       <div

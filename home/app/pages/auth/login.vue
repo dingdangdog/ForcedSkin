@@ -52,7 +52,7 @@ const themeStore = useThemeStore();
 
 <template>
   <div
-    class="min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-200"
+    class="relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 safe-top safe-bottom transition-colors duration-200 overflow-x-hidden"
     :class="themeStore.isDark ? 'bg-[#101410] text-[#E0E0E0]' : 'bg-[#F8FFF8] text-[#2C3E2C]'"
   >
     <!-- 暗色切换 -->
@@ -72,9 +72,9 @@ const themeStore = useThemeStore();
     </button>
 
     <!-- Logo -->
-    <NuxtLink :to="localePath('/')" class="flex items-center gap-2.5 mb-10">
-      <img src="/LOGO.webp" alt="ForcedSkin" class="w-10 h-10 object-contain rounded-2xl shadow-lg shadow-[#4CAF50]/20" />
-      <span class="font-bold text-2xl">ForcedSkin</span>
+    <NuxtLink :to="localePath('/')" class="flex items-center gap-2.5 mb-8 sm:mb-10">
+      <img src="/LOGO.webp" alt="ForcedSkin" class="w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-2xl shadow-lg shadow-[#4CAF50]/20" />
+      <span class="font-bold text-xl sm:text-2xl">ForcedSkin</span>
     </NuxtLink>
 
     <!-- 卡片 -->

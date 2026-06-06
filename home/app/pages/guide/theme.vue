@@ -100,8 +100,8 @@ const varsSample = "{\n  \"background\": \"#101010\",\n  \"foreground\": \"#E0E0
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-12">
-    <div class="mb-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 prose-responsive">
+    <div class="mb-8 sm:mb-10">
       <div class="flex flex-wrap items-center gap-2 text-sm text-muted mb-3">
         <NuxtLink :to="localePath('/themes')" class="hover:text-foreground transition-colors">
           {{ t("guide_theme.crumb_themes") }}
@@ -109,13 +109,13 @@ const varsSample = "{\n  \"background\": \"#101010\",\n  \"foreground\": \"#E0E0
         <span aria-hidden="true">/</span>
         <span class="text-foreground">{{ t("guide_theme.crumb_current") }}</span>
       </div>
-      <h1 class="text-4xl font-bold text-foreground mb-3">{{ t("guide_theme.h1") }}</h1>
-      <p class="text-muted text-lg leading-relaxed">{{ t("guide_theme.intro") }}</p>
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">{{ t("guide_theme.h1") }}</h1>
+      <p class="text-muted text-base sm:text-lg leading-relaxed">{{ t("guide_theme.intro") }}</p>
     </div>
 
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold text-foreground mb-4">{{ t("guide_theme.quick_title") }}</h2>
-      <div class="grid sm:grid-cols-3 gap-4 mb-6">
+    <section class="mb-8 sm:mb-10">
+      <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-4">{{ t("guide_theme.quick_title") }}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div class="p-4 rounded-2xl border border-border bg-surface">
           <h3 class="font-semibold text-foreground mb-1 flex flex-nowrap items-baseline gap-2">
             <span class="text-2xl leading-none shrink-0 font-normal tabular-nums" aria-hidden="true">①</span>
@@ -151,7 +151,7 @@ const varsSample = "{\n  \"background\": \"#101010\",\n  \"foreground\": \"#E0E0
     </section>
 
     <section class="mb-10">
-      <h2 class="text-2xl font-bold text-foreground mb-2">{{ t("guide_theme.fields_heading") }}</h2>
+      <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-2">{{ t("guide_theme.fields_heading") }}</h2>
       <p class="text-muted text-sm mb-5">
         {{ t("guide_theme.fields_intro") }}
       </p>

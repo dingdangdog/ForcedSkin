@@ -71,7 +71,7 @@ onMounted(async () => {
 <template>
   <div>
     <!-- ══════ Hero ══════════════════════════════════════════════ -->
-    <section class="relative py-24 px-4 text-center overflow-hidden border-b border-border">
+    <section class="relative py-16 sm:py-20 md:py-24 px-4 sm:px-6 text-center overflow-hidden border-b border-border">
       <div
         class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-primary-700/5 pointer-events-none" />
       <div class="relative max-w-3xl mx-auto">
@@ -80,11 +80,11 @@ onMounted(async () => {
           <img src="/LOGO.webp" alt="" class="w-4 h-4 object-contain" />
           {{ t('home.badge') }}
         </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-5 leading-tight tracking-tight">
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-foreground mb-5 leading-tight tracking-tight">
           {{ t('home.h1_1') }}<br />
           <span class="text-primary-500">{{ t('home.h1_2') }}</span>
         </h1>
-        <p class="text-muted text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">
+        <p class="text-muted text-base sm:text-lg md:text-xl mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed px-2">
           {{ t('home.desc', { brand: 'ForcedSkin' }) }}
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -117,10 +117,10 @@ onMounted(async () => {
     </section>
 
     <!-- ══════ 热门主题 ══════════════════════════════════════════ -->
-    <section class="py-20 px-4 border-b border-border">
+    <section class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 border-b border-border">
       <div class="max-w-5xl mx-auto">
         <!-- 标题行 -->
-        <div class="flex items-end justify-between mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10">
           <div>
             <h2 class="text-2xl md:text-3xl font-bold text-foreground">{{ t('home.popular.title') }}</h2>
             <p class="text-muted text-sm mt-1">{{ t('home.popular.subtitle') }}</p>
@@ -165,7 +165,7 @@ onMounted(async () => {
     </section>
 
     <!-- ══════ 已适配网站 ════════════════════════════════════════ -->
-    <section class="py-20 px-4 bg-surface-muted/30 border-b border-border">
+    <section class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-surface-muted/30 border-b border-border">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-10">
           <h2 class="text-2xl md:text-3xl font-bold text-foreground">{{ t('home.adapted.title') }}</h2>
@@ -223,21 +223,21 @@ onMounted(async () => {
     </section>
 
     <!-- ══════ CTA ═══════════════════════════════════════════════ -->
-    <section class="py-20 px-4 bg-primary-500/5 border-t border-border">
+    <section class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-primary-500/5 border-t border-border">
       <div class="max-w-2xl mx-auto text-center">
         <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4">{{ t('home.cta.title') }}</h2>
         <p class="text-muted mb-8">{{ t('home.cta.desc') }}</p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <div class="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-lg sm:max-w-none mx-auto">
           <a :href="CHROME_STORE_URL" target="_blank" rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
             {{ t('home.cta.btn_extension') }}
           </a>
           <NuxtLink :to="localePath('/auth/login')"
-            class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
+            class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
             {{ t('home.cta.btn_login') }}
           </NuxtLink>
           <NuxtLink :to="localePath('/themes')"
-            class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
+            class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
             {{ t('home.cta.btn_themes') }}
           </NuxtLink>
         </div>

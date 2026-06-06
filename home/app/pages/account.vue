@@ -179,10 +179,10 @@ onMounted(load);
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
     <!-- 用户信息 -->
-    <div class="flex items-center justify-between mb-8">
-      <div class="flex items-center gap-3">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+      <div class="flex items-center gap-3 min-w-0">
         <img v-if="authUser?.image" :src="authUser.image"
           class="w-12 h-12 rounded-full object-cover border border-border" />
         <span v-else
@@ -190,17 +190,17 @@ onMounted(load);
           {{ (authUser?.name || "U").charAt(0).toUpperCase() }}
         </span>
         <div>
-          <h1 class="text-xl font-bold text-foreground">{{ authUser?.name || t('account.title') }}</h1>
-          <p class="text-muted text-sm mt-0.5">{{ authUser?.email }}</p>
+          <h1 class="text-lg sm:text-xl font-bold text-foreground truncate">{{ authUser?.name || t('account.title') }}</h1>
+          <p class="text-muted text-sm mt-0.5 truncate">{{ authUser?.email }}</p>
         </div>
       </div>
       <button @click="logout"
-        class="px-4 py-2 rounded-lg border border-border text-muted hover:text-foreground hover:bg-surface-muted text-sm transition-colors">
+        class="self-start sm:self-auto px-4 py-2 rounded-lg border border-border text-muted hover:text-foreground hover:bg-surface-muted text-sm transition-colors shrink-0">
         {{ t('account.logout') }}
       </button>
     </div>
 
-    <div v-if="loading" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
       <div v-for="i in 6" :key="i" class="h-48 rounded-2xl bg-surface-muted animate-pulse"></div>
     </div>
 
@@ -231,7 +231,7 @@ onMounted(load);
       <section v-if="submissions.length" class="mb-10 rounded-2xl border-2 border-primary-400/50 bg-primary-500/[0.04] p-5">
         <h2 class="font-semibold text-foreground text-lg mb-1">{{ t('account.my_submissions') }}</h2>
         <p class="text-muted text-sm mb-4 leading-relaxed">{{ t('account.submissions_intro') }}</p>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <div v-for="th in submissions" :key="th.id" class="relative">
             <p
               class="absolute top-14 left-2 z-10 text-[11px] font-medium px-2 py-0.5 rounded-md shadow max-w-[calc(100%-1rem)]"
@@ -262,7 +262,7 @@ onMounted(load);
         <p class="text-muted text-sm mb-4">在官网或扩展中提交的适配器，审核通过后会自动同步到所有用户的扩展</p>
         <div class="space-y-2">
           <div v-for="adapter in adapterSubmissions" :key="adapter.id"
-            class="flex items-center gap-3 p-3 rounded-xl border border-border bg-surface-muted/30 hover:bg-surface-muted transition-colors">
+            class="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 rounded-xl border border-border bg-surface-muted/30 hover:bg-surface-muted transition-colors">
             <div class="w-8 h-8 rounded-lg bg-surface-muted flex items-center justify-center text-sm shrink-0">
               {{ adapter.displayName.charAt(0) }}
             </div>
@@ -330,7 +330,7 @@ onMounted(load);
           {{ t('account.no_favorites') }} —
           <NuxtLink :to="localePath('/themes')" class="text-primary-500 hover:underline">{{ t('themes.title') }}</NuxtLink>
         </div>
-        <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <ThemeCard v-for="theme in lightFavorites" :key="theme.id" :theme="theme" :favorited="true"
             :selected="selectedLight === theme.name" :show-actions="true" @favorite="removeFavorite"
             @select="selectTheme" />
@@ -348,7 +348,7 @@ onMounted(load);
           {{ t('account.no_favorites') }} —
           <NuxtLink :to="localePath('/themes')" class="text-primary-500 hover:underline">{{ t('themes.title') }}</NuxtLink>
         </div>
-        <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <ThemeCard v-for="theme in darkFavorites" :key="theme.id" :theme="theme" :favorited="true"
             :selected="selectedDark === theme.name" :show-actions="true" @favorite="removeFavorite"
             @select="selectTheme" />
@@ -358,7 +358,7 @@ onMounted(load);
 
     <Transition name="fade">
       <div v-if="toast"
-        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg">
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[calc(100vw-2rem)] px-4 py-2.5 rounded-xl bg-foreground text-background text-sm font-medium shadow-lg text-center">
         {{ toast }}
       </div>
     </Transition>
