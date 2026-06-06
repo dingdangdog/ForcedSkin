@@ -14,6 +14,7 @@
     "adapters": "Adaptadores",
     "guide_theme": "Guía de temas",
     "guide_adapter": "Guía de adaptadores",
+    "about": "Acerca de",
     "privacy": "Política de privacidad",
     "terms": "Términos de servicio",
     "contact": "Contacto"
@@ -399,6 +400,81 @@
       "description": "Los adaptadores de ForcedSkin usan fórmulas JSON declarativas (forcedskin-adapter-formula/v1): reglas de coincidencia y capas.",
       "og_title": "Guía de desarrollo de adaptadores — ForcedSkin",
       "og_description": "JSON declarativo de adaptadores, coincidencia de hostname y flujo de envío."
+    },
+    "about": {
+      "title": "Acerca de ForcedSkin",
+      "description": "Descubre qué es ForcedSkin: la extensión de navegador y el mercado de temas para aplicar tus colores favoritos en cualquier sitio web.",
+      "og_title": "Acerca de ForcedSkin",
+      "og_description": "Resumen del sitio web y la extensión ForcedSkin: theming forzado, mercado de temas, adaptadores de sitios y sincronización entre dispositivos."
     }
+  },
+  "about": {
+    "title": "Acerca de ForcedSkin",
+    "subtitle": "Plataforma de theming para navegador que aplica tu paleta clara u oscura favorita a cualquier sitio web — sin que el sitio lo admita.",
+    "what": {
+      "title": "¿Qué es ForcedSkin?",
+      "body": "ForcedSkin (forcedskin.com) es una plataforma de theming para la navegación diaria. Combina una extensión de Chrome con un sitio impulsado por la comunidad: explora y guarda temas de color, elige paletas claras y oscuras, y deja que la extensión inyecte estilos en las páginas mediante CSS. Los sitios populares pueden recibir adaptadores afinados de la comunidad para un aspecto más natural."
+    },
+    "website": {
+      "title": "Sitio web (forcedskin.com)",
+      "intro": "El sitio es el centro de temas, adaptadores y tu cuenta. Puedes usarlo sin instalar la extensión; iniciar sesión desbloquea la sincronización con el navegador.",
+      "themes": {
+        "title": "Mercado de temas",
+        "body": "Explora paletas claras y oscuras oficiales y de la comunidad. Marca favoritos y elige tus temas activos — se sincronizan con la extensión con sesión iniciada."
+      },
+      "adapters": {
+        "title": "Adaptadores de sitios",
+        "body": "Fórmulas JSON mantenidas por la comunidad que refinan cómo ForcedSkin pinta sitios concretos. Envía nuevos adaptadores para revisión o explora los existentes."
+      },
+      "account": {
+        "title": "Cuenta y sincronización",
+        "body": "Inicia sesión con GitHub o Google para guardar favoritos, seguir envíos y mantener tus temas coherentes en varios dispositivos mediante la extensión."
+      },
+      "guides": {
+        "title": "Guías de creación",
+        "body": "Documentación paso a paso para diseñar JSON de temas y escribir fórmulas de adaptadores (forcedskin-adapter-formula/v1)."
+      }
+    },
+    "extension": {
+      "title": "Extensión de navegador",
+      "intro": "La extensión ForcedSkin funciona en navegadores Chromium (Chrome, Edge, Arc, etc.) y aplica tu tema al cargar las páginas.",
+      "force": {
+        "title": "Recolorear cualquier sitio",
+        "body": "Sustituye fondo, texto y colores de la interfaz con variables CSS y estilos en línea — funciona aunque el sitio no tenga modo oscuro."
+      },
+      "modes": {
+        "title": "Claro, oscuro, auto o desactivado",
+        "body": "Alterna entre paletas claras y oscuras, sigue la hora local (claro ~6:00–18:00) o desactiva el theming para conservar el estilo original."
+      },
+      "whitelist": {
+        "title": "Lista blanca por sitio",
+        "body": "Añade dominios a la lista blanca para que esos sitios conserven su apariencia nativa mientras el resto usa tu tema."
+      },
+      "sync": {
+        "title": "Sincronización de cuenta",
+        "body": "Tras iniciar sesión en forcedskin.com, sincroniza tu catálogo de temas y lista de adaptadores desde el popup — los cambios en el sitio se reflejan en la extensión."
+      },
+      "builder": {
+        "title": "Constructor de adaptadores",
+        "body": "Selecciona elementos en una página para informar problemas de estilo y ayudar a redactar fórmulas de adaptadores. Útil para quienes mejoran el soporte por sitio."
+      },
+      "browsers": "Compatible con Chrome, Edge, Arc y otros navegadores basados en Chromium."
+    },
+    "how": {
+      "title": "Cómo empezar",
+      "step1": "Instala la extensión desde Chrome Web Store (o una tienda Chromium compatible).",
+      "step2": "Explora el mercado de temas y elige paletas claras/oscuras — márcalas como favoritas tras iniciar sesión.",
+      "step3": "Abre el popup de la extensión, inicia sesión y pulsa Sincronizar para obtener tus temas y adaptadores.",
+      "step4": "Opcionalmente envía temas o adaptadores de sitios para compartirlos con la comunidad."
+    },
+    "privacy_note": "No recopilamos contenido de páginas ni historial de navegación para el theming. Consulta nuestra",
+    "cta": {
+      "title": "¿Listo para cambiar el aspecto de la web?",
+      "desc": "Instala la extensión, explora temas e inicia sesión para sincronizar entre dispositivos.",
+      "extension": "Añadir a Chrome",
+      "themes": "Explorar temas",
+      "login": "Iniciar sesión"
+    },
+    "back_home": "Volver al inicio"
   }
 }

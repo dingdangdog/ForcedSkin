@@ -14,6 +14,7 @@
     "adapters": "Adapter",
     "guide_theme": "Theme-Leitfaden",
     "guide_adapter": "Adapter-Leitfaden",
+    "about": "Über uns",
     "privacy": "Datenschutzerklärung",
     "terms": "Nutzungsbedingungen",
     "contact": "Kontakt"
@@ -399,6 +400,81 @@
       "description": "ForcedSkin-Adapter nutzen deklarative JSON-Formeln (forcedskin-adapter-formula/v1): Matching-Regeln und Layer.",
       "og_title": "Adapter-Entwicklungsleitfaden — ForcedSkin",
       "og_description": "Deklaratives Adapter-JSON, Hostname-Matching und Einreichungsablauf."
+    },
+    "about": {
+      "title": "Über ForcedSkin",
+      "description": "Erfahre, was ForcedSkin ist — Browser-Erweiterung und Theme-Marktplatz, mit dem du deine Lieblingsfarben auf jeder Website anwenden kannst.",
+      "og_title": "Über ForcedSkin",
+      "og_description": "Überblick über ForcedSkin-Website und Browser-Erweiterung: erzwungenes Theming, Theme-Marktplatz, Site-Adapter und geräteübergreifende Synchronisation."
     }
+  },
+  "about": {
+    "title": "Über ForcedSkin",
+    "subtitle": "Eine Browser-Theming-Plattform, die deine bevorzugte helle oder dunkle Palette auf jeder Website anwendet — ohne Mitwirkung der Seite.",
+    "what": {
+      "title": "Was ist ForcedSkin?",
+      "body": "ForcedSkin (forcedskin.com) ist eine Browser-Theming-Plattform für den Alltag. Sie verbindet eine Chrome-Erweiterung mit einer community-getriebenen Website: Themes durchstöbern und sammeln, helle und dunkle Paletten wählen und per CSS Stile in Webseiten injizieren. Beliebte Seiten können fein abgestimmte Adapter aus der Community erhalten, damit das Ergebnis natürlicher wirkt."
+    },
+    "website": {
+      "title": "Website (forcedskin.com)",
+      "intro": "Die Website ist die Zentrale für Themes, Adapter und dein Konto. Du kannst sie ohne Erweiterung nutzen; die Anmeldung schaltet die Synchronisation mit dem Browser frei.",
+      "themes": {
+        "title": "Theme-Marktplatz",
+        "body": "Offizielle und community-eigene helle/dunkle Paletten durchstöbern. Favoriten setzen und aktive Hell-/Dunkel-Themes wählen — sie synchronisieren sich mit der angemeldeten Erweiterung."
+      },
+      "adapters": {
+        "title": "Site-Adapter",
+        "body": "Community-gepflegte JSON-Formeln, die verfeinern, wie ForcedSkin bestimmte Websites einfärbt. Neue Adapter zur Prüfung einreichen oder bestehende durchsuchen."
+      },
+      "account": {
+        "title": "Konto & Sync",
+        "body": "Mit GitHub oder Google anmelden, um Favoriten zu speichern, Einreichungen zu verfolgen und gewählte Themes über die Erweiterung geräteübergreifend konsistent zu halten."
+      },
+      "guides": {
+        "title": "Autoren-Leitfäden",
+        "body": "Schritt-für-Schritt-Dokumentation zum Entwerfen von Theme-JSON und zum Schreiben von Adapter-Formeln (forcedskin-adapter-formula/v1)."
+      }
+    },
+    "extension": {
+      "title": "Browser-Erweiterung",
+      "intro": "Die ForcedSkin-Erweiterung läuft in Chromium-Browsern (Chrome, Edge, Arc usw.) und wendet dein Theme beim Laden der Seiten an.",
+      "force": {
+        "title": "Jede Seite neu einfärben",
+        "body": "Überschreibt Hintergrund, Text und UI-Farben per CSS-Variablen und Inline-Stilen — funktioniert auch ohne Dark Mode der Seite."
+      },
+      "modes": {
+        "title": "Hell, dunkel, auto oder aus",
+        "body": "Zwischen hellen und dunklen Paletten wechseln, lokale Uhrzeit folgen (hell ~6:00–18:00) oder Theming deaktivieren, um den Originalstil zu behalten."
+      },
+      "whitelist": {
+        "title": "Whitelist pro Seite",
+        "body": "Domains zur Whitelist hinzufügen, damit diese Seiten ihr natives Erscheinungsbild behalten, während der Rest dein Theme nutzt."
+      },
+      "sync": {
+        "title": "Konto-Sync",
+        "body": "Nach der Anmeldung auf forcedskin.com Theme-Katalog und Adapter-Liste im Popup synchronisieren — Änderungen auf der Website spiegeln sich in der Erweiterung."
+      },
+      "builder": {
+        "title": "Adapter-Builder",
+        "body": "Elemente auf einer Seite auswählen, um Stilprobleme zu melden und Adapter-Formeln zu entwerfen. Hilfreich für Mitwirkende, die site-spezifische Unterstützung verbessern."
+      },
+      "browsers": "Unterstützt Chrome, Edge, Arc und andere Chromium-basierte Browser."
+    },
+    "how": {
+      "title": "So startest du",
+      "step1": "Erweiterung aus dem Chrome Web Store (oder einem kompatiblen Chromium-Store) installieren.",
+      "step2": "Theme-Marktplatz durchstöbern und helle/dunkle Paletten wählen — nach der Anmeldung favorisieren.",
+      "step3": "Erweiterungs-Popup öffnen, anmelden und Sync tippen, um Konto-Themes und Adapter zu laden.",
+      "step4": "Optional Themes oder Site-Adapter einreichen, um sie mit der Community zu teilen."
+    },
+    "privacy_note": "Wir sammeln keine Seiteninhalte oder Browserverläufe fürs Theming. Siehe unsere",
+    "cta": {
+      "title": "Bereit, das Web neu einzufärben?",
+      "desc": "Erweiterung installieren, Themes entdecken und anmelden für Sync auf allen Geräten.",
+      "extension": "Zu Chrome hinzufügen",
+      "themes": "Themes durchstöbern",
+      "login": "Anmelden"
+    },
+    "back_home": "Zur Startseite"
   }
 }

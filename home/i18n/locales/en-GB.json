@@ -14,6 +14,7 @@
     "adapters": "Adapters",
     "guide_theme": "Theme Guide",
     "guide_adapter": "Adapter Guide",
+    "about": "About",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "contact": "Contact"
@@ -399,6 +400,81 @@
       "description": "ForcedSkin adapters use declarative JSON formulas (forcedskin-adapter-formula/v1): matching rules and layers.",
       "og_title": "Adapter development guide — ForcedSkin",
       "og_description": "Declarative adapter JSON, hostname matching, and submission flow."
+    },
+    "about": {
+      "title": "About ForcedSkin",
+      "description": "Learn what ForcedSkin is — the browser extension and theme marketplace that lets you apply your favourite colours to any website.",
+      "og_title": "About ForcedSkin",
+      "og_description": "ForcedSkin website and browser extension overview: forced theming, theme marketplace, site adapters, and cross-device sync."
     }
+  },
+  "about": {
+    "title": "About ForcedSkin",
+    "subtitle": "A browser theming platform that applies your favourite light or dark palette to any website — no site co-operation required.",
+    "what": {
+      "title": "What is ForcedSkin?",
+      "body": "ForcedSkin (forcedskin.com) is a browser theming platform for everyday browsing. It combines a Chrome extension with a community-driven website: browse and collect colour themes, pick light and dark palettes, and let the extension inject styling into web pages via CSS. Popular sites can receive fine-tuned adapters from the community for a more natural look."
+    },
+    "website": {
+      "title": "Website (forcedskin.com)",
+      "intro": "The website is the hub for themes, adapters, and your account. You can use it without installing the extension, but signing in unlocks sync to the browser.",
+      "themes": {
+        "title": "Theme Marketplace",
+        "body": "Browse official and community light/dark palettes. Favourite themes and set your active light and dark choices — they sync to the signed-in extension."
+      },
+      "adapters": {
+        "title": "Site Adapters",
+        "body": "Community-maintained JSON formulas that refine how ForcedSkin paints specific websites. Submit new adapters for review, or browse existing ones."
+      },
+      "account": {
+        "title": "Account & Sync",
+        "body": "Sign in with GitHub or Google to save favourites, track submissions, and keep your chosen themes consistent across devices via the extension."
+      },
+      "guides": {
+        "title": "Authoring Guides",
+        "body": "Step-by-step documentation for designing theme JSON and writing adapter formulas (forcedskin-adapter-formula/v1)."
+      }
+    },
+    "extension": {
+      "title": "Browser Extension",
+      "intro": "The ForcedSkin extension runs on Chromium browsers (Chrome, Edge, Arc, etc.) and applies your theme as pages load.",
+      "force": {
+        "title": "Force recolour any site",
+        "body": "Overrides page background, text, and UI colours using CSS variables and inline styles — works even when a site has no dark mode."
+      },
+      "modes": {
+        "title": "Light, dark, auto, or off",
+        "body": "Switch between light and dark palettes, follow local time (light ~6:00–18:00), or disable theming to keep the original site style."
+      },
+      "whitelist": {
+        "title": "Per-site whitelist",
+        "body": "Add domains to a whitelist so those sites keep their native appearance whilst everything else uses your theme."
+      },
+      "sync": {
+        "title": "Account sync",
+        "body": "After signing in on forcedskin.com, sync your theme catalogue and adapter list from the popup — changes on the website reflect in the extension."
+      },
+      "builder": {
+        "title": "Adapter builder",
+        "body": "Pick elements on a page to report styling issues and help draft adapter formulas. Useful for contributors improving site-specific support."
+      },
+      "browsers": "Supports Chrome, Edge, Arc, and other Chromium-based browsers."
+    },
+    "how": {
+      "title": "How to get started",
+      "step1": "Install the extension from the Chrome Web Store (or a compatible Chromium store).",
+      "step2": "Browse the theme marketplace and pick light/dark palettes you like — favourite them after signing in.",
+      "step3": "Open the extension popup, sign in, and tap Sync to pull your account themes and adapters.",
+      "step4": "Optionally submit themes or site adapters to share with the community."
+    },
+    "privacy_note": "We do not collect page contents or browsing history for theming. See our",
+    "cta": {
+      "title": "Ready to reskin the web?",
+      "desc": "Install the extension, explore themes, and sign in to sync across devices.",
+      "extension": "Add to Chrome",
+      "themes": "Browse Themes",
+      "login": "Sign in"
+    },
+    "back_home": "Back to home"
   }
 }

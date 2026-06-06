@@ -14,6 +14,7 @@
     "adapters": "适配器",
     "guide_theme": "主题创作指南",
     "guide_adapter": "适配器开发指南",
+    "about": "关于我们",
     "privacy": "隐私政策",
     "terms": "用户协议",
     "contact": "联系我们"
@@ -399,6 +400,81 @@
       "description": "ForcedSkin 适配器基于声明式 JSON 公式 forcedskin-adapter-formula/v1：域名匹配与分层着色规则。",
       "og_title": "适配器开发指南 — ForcedSkin",
       "og_description": "适配器公式规范、写法示例与投稿流程。"
+    },
+    "about": {
+      "title": "关于 ForcedSkin",
+      "description": "了解 ForcedSkin 是什么——浏览器扩展与主题商城，让你在任意网站上使用喜欢的配色。",
+      "og_title": "关于 ForcedSkin",
+      "og_description": "ForcedSkin 官网与浏览器扩展介绍：强制换肤、主题市场、网站适配器与跨设备同步。"
     }
+  },
+  "about": {
+    "title": "关于 ForcedSkin",
+    "subtitle": "浏览器主题平台，无需网站配合，即可将任意页面换成你喜欢的亮色或暗色配色。",
+    "what": {
+      "title": "ForcedSkin 是什么？",
+      "body": "ForcedSkin（forcedskin.com）是面向日常浏览的网页换肤平台。它将 Chrome 扩展与社区驱动的官网结合：浏览与收藏配色主题、分别选定亮色与暗色方案，由扩展通过 CSS 注入页面样式。热门网站还可获得社区提交的精细适配器，换肤效果更自然。"
+    },
+    "website": {
+      "title": "官网（forcedskin.com）",
+      "intro": "官网是主题、适配器与账号的管理中心。不安装扩展也可浏览，登录后可将偏好同步到浏览器。",
+      "themes": {
+        "title": "主题市场",
+        "body": "浏览官方与社区的亮色 / 暗色配色。收藏主题并设定当前使用的亮暗方案，登录后会同步到扩展。"
+      },
+      "adapters": {
+        "title": "网站适配器",
+        "body": "社区维护的 JSON 公式，针对特定网站优化 ForcedSkin 的着色效果。可提交新适配器等待审核，或浏览已有方案。"
+      },
+      "account": {
+        "title": "账号与同步",
+        "body": "使用 GitHub 或 Google 登录，保存收藏、查看投稿记录，并通过扩展在多台设备间保持主题一致。"
+      },
+      "guides": {
+        "title": "创作指南",
+        "body": "主题 JSON 设计与适配器公式（forcedskin-adapter-formula/v1）的分步文档。"
+      }
+    },
+    "extension": {
+      "title": "浏览器扩展",
+      "intro": "ForcedSkin 扩展运行于 Chromium 内核浏览器（Chrome、Edge、Arc 等），在页面加载时应用你的主题。",
+      "force": {
+        "title": "强制覆盖任意网站",
+        "body": "通过 CSS 变量与内联样式覆盖页面背景、文字与 UI 颜色——即使网站本身没有暗色模式也能换肤。"
+      },
+      "modes": {
+        "title": "亮色、暗色、自动或关闭",
+        "body": "在亮暗配色间切换、按本地时间自动切换（约 6:00–18:00 为亮色），或关闭换肤以保留网站原貌。"
+      },
+      "whitelist": {
+        "title": "站点白名单",
+        "body": "将指定域名加入白名单，这些网站保持原生样式，其余页面仍使用你的主题。"
+      },
+      "sync": {
+        "title": "账号同步",
+        "body": "在 forcedskin.com 登录后，可在扩展弹窗中同步主题目录与适配器列表——官网上的变更会反映到扩展。"
+      },
+      "builder": {
+        "title": "适配器构建器",
+        "body": "在页面上点选元素以反馈样式问题并辅助编写适配器公式，适合希望改进站点支持的贡献者。"
+      },
+      "browsers": "支持 Chrome、Edge、Arc 等 Chromium 内核浏览器。"
+    },
+    "how": {
+      "title": "如何开始",
+      "step1": "从 Chrome 应用商店（或兼容的 Chromium 商店）安装扩展。",
+      "step2": "浏览主题市场，挑选喜欢的亮 / 暗配色——登录后可收藏。",
+      "step3": "打开扩展弹窗，登录并点击同步，拉取账号主题与适配器。",
+      "step4": "可选：向社区提交主题或网站适配器。"
+    },
+    "privacy_note": "我们不会为换肤而收集页面内容或浏览历史。详见",
+    "cta": {
+      "title": "准备好给网页换肤了吗？",
+      "desc": "安装扩展、探索主题，登录后即可跨设备同步。",
+      "extension": "添加到 Chrome",
+      "themes": "浏览主题市场",
+      "login": "登录"
+    },
+    "back_home": "返回首页"
   }
 }

@@ -122,6 +122,7 @@ onMounted(() => {
           <NuxtLink :to="localePath('/adapters')" class="hover:text-foreground">{{ t('footer.adapters') }}</NuxtLink>
           <NuxtLink :to="localePath('/guide/theme')" class="hover:text-foreground">{{ t('footer.guide_theme') }}</NuxtLink>
           <NuxtLink :to="localePath('/guide/adapter')" class="hover:text-foreground">{{ t('footer.guide_adapter') }}</NuxtLink>
+          <NuxtLink :to="localePath('/about')" class="hover:text-foreground">{{ t('footer.about') }}</NuxtLink>
           <NuxtLink :to="localePath('/privacy')" class="hover:text-foreground">{{ t('footer.privacy') }}</NuxtLink>
           <NuxtLink :to="localePath('/terms')" class="hover:text-foreground">{{ t('footer.terms') }}</NuxtLink>
           <a href="mailto:hello@forcedskin.com" class="hover:text-foreground">{{ t('footer.contact') }}</a>
