@@ -4,6 +4,9 @@ import { getAdapterFaviconUrl, getAdapterMainDomain } from "~/utils/adapter-bran
 
 definePageMeta({ layout: "default" });
 
+const CHROME_STORE_URL =
+  "https://chromewebstore.google.com/detail/nljhbgiempaeoklghhpmhnphihlkhalm";
+
 const { t } = useI18n();
 const localePath = useLocalePath();
 
@@ -69,22 +72,32 @@ onMounted(async () => {
   <div>
     <!-- ══════ Hero ══════════════════════════════════════════════ -->
     <section class="relative py-24 px-4 text-center overflow-hidden border-b border-border">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-primary-700/5 pointer-events-none" />
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-primary-700/5 pointer-events-none" />
       <div class="relative max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-500/10 text-primary-600 text-sm font-medium mb-6">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-500/10 text-primary-600 text-sm font-medium mb-6">
           <img src="/LOGO.webp" alt="" class="w-4 h-4 object-contain" />
           {{ t('home.badge') }}
         </div>
         <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-5 leading-tight tracking-tight">
-          <span class="text-primary-500">{{ t('home.h1_1') }}</span><br />
-          {{ t('home.h1_2') }}
+          {{ t('home.h1_1') }}<br />
+          <span class="text-primary-500">{{ t('home.h1_2') }}</span>
         </h1>
         <p class="text-muted text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed">
           {{ t('home.desc', { brand: 'ForcedSkin' }) }}
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a :href="CHROME_STORE_URL" target="_blank" rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold text-base hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+            </svg>
+            {{ t('home.cta_extension') }}
+          </a>
           <NuxtLink :to="localePath('/themes')"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold text-base hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20">
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold text-base hover:bg-surface-muted transition-colors">
             {{ t('home.cta_themes') }}
           </NuxtLink>
           <NuxtLink :to="localePath('/auth/login')"
@@ -92,7 +105,14 @@ onMounted(async () => {
             {{ t('home.cta_login') }}
           </NuxtLink>
         </div>
-        <p class="text-muted text-xs mt-5">{{ t('home.browser_note') }}</p>
+        <p class="text-muted text-xs mt-5">
+          {{ t('home.browser_note') }}
+          <span aria-hidden="true"> · </span>
+          <a :href="CHROME_STORE_URL" target="_blank" rel="noopener noreferrer"
+            class="text-primary-600 hover:text-primary-500 font-medium transition-colors">
+            {{ t('home.chrome_store_link') }}
+          </a>
+        </p>
       </div>
     </section>
 
@@ -122,12 +142,8 @@ onMounted(async () => {
         <!-- 主题卡片 — 复用 ThemeCard 组件，与主题页保持一致 -->
         <div v-else-if="lightThemes.length > 0 || darkThemes.length > 0"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <NuxtLink
-            v-for="theme in [...lightThemes, ...darkThemes]"
-            :key="theme.id"
-            :to="localePath('/themes')"
-            class="block"
-          >
+          <NuxtLink v-for="theme in [...lightThemes, ...darkThemes]" :key="theme.id" :to="localePath('/themes')"
+            class="block">
             <ThemeCard :theme="theme" :show-actions="false" :favorite-count="theme.favoriteCount ?? 0" />
           </NuxtLink>
         </div>
@@ -168,14 +184,9 @@ onMounted(async () => {
             class="group rounded-xl border border-border bg-surface px-3 py-4 flex flex-col items-center gap-2 hover:border-primary-400 hover:bg-surface-muted transition-all duration-150 cursor-default">
             <!-- favicon -->
             <div class="w-8 h-8 rounded-lg bg-surface-muted flex items-center justify-center overflow-hidden">
-              <img
-                v-if="getAdapterMainDomain(adapter.siteDomain)"
-                :src="getAdapterFaviconUrl(adapter.siteDomain)"
-                :alt="adapter.displayName"
-                class="w-6 h-6 object-contain"
-                loading="lazy"
-                @error="($event.target as HTMLImageElement).style.display='none'"
-              />
+              <img v-if="getAdapterMainDomain(adapter.siteDomain)" :src="getAdapterFaviconUrl(adapter.siteDomain)"
+                :alt="adapter.displayName" class="w-6 h-6 object-contain" loading="lazy"
+                @error="($event.target as HTMLImageElement).style.display = 'none'" />
               <span v-else class="text-xs font-bold text-muted">
                 {{ adapter.displayName.charAt(0) }}
               </span>
@@ -217,8 +228,12 @@ onMounted(async () => {
         <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4">{{ t('home.cta.title') }}</h2>
         <p class="text-muted mb-8">{{ t('home.cta.desc') }}</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a :href="CHROME_STORE_URL" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
+            {{ t('home.cta.btn_extension') }}
+          </a>
           <NuxtLink :to="localePath('/auth/login')"
-            class="px-8 py-3.5 rounded-xl bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors">
+            class="px-8 py-3.5 rounded-xl border border-border text-foreground font-semibold hover:bg-surface-muted transition-colors">
             {{ t('home.cta.btn_login') }}
           </NuxtLink>
           <NuxtLink :to="localePath('/themes')"

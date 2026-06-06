@@ -212,10 +212,7 @@ const menuItems: MenuItem[] = [
   { label: "设置", path: "/admin/settings", icon: Cog8ToothIcon },
 ];
 
-const normalizePathStripLocale = (p: string) => {
-  const s = (p.replace(/\/$/, "") || "/") as string;
-  return (s.startsWith("/zh") ? s.replace(/^\/zh(?=\/|$)/, "") || "/" : s) as string;
-};
+const normalizePathStripLocale = (p: string) => stripLocalePrefix(p);
 
 const isActive = (logicalPath: string) => {
   const target = normalizePathStripLocale(localePath(logicalPath));

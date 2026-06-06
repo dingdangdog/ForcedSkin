@@ -1,3 +1,15 @@
+import { APP_LOCALES, DEFAULT_LOCALE } from './app/utils/i18n-locales'
+
+const localizedNoIndexRules = Object.fromEntries(
+  APP_LOCALES
+    .filter((l) => l.code !== DEFAULT_LOCALE)
+    .flatMap((l) => [
+      [`/${l.code}/account/**`, { headers: { 'X-Robots-Tag': 'noindex, nofollow' } }],
+      [`/${l.code}/admin/**`, { headers: { 'X-Robots-Tag': 'noindex, nofollow' } }],
+      [`/${l.code}/auth/**`, { headers: { 'X-Robots-Tag': 'noindex, nofollow' } }],
+    ]),
+)
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -6,10 +18,12 @@ export default defineNuxtConfig({
 
   i18n: {
     langDir: 'locales/',
-    locales: [
-      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
-      { code: 'zh', iso: 'zh-CN', file: 'zh.json', name: '中文' },
-    ],
+    locales: APP_LOCALES.map((l) => ({
+      code: l.code,
+      iso: l.iso,
+      file: `${l.code}.json`,
+      name: l.name,
+    })),
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
     detectBrowserLanguage: {
@@ -104,9 +118,7 @@ export default defineNuxtConfig({
       '/account/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
       '/admin/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
       '/auth/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
-      '/zh/account/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
-      '/zh/admin/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
-      '/zh/auth/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+      ...localizedNoIndexRules,
     },
   },
 })

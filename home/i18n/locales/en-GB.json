@@ -3,7 +3,7 @@
     "home": "Home",
     "themes": "Themes",
     "adapters": "Adapters",
-    "login": "Login",
+    "login": "Sign in",
     "account": "Account",
     "admin": "Admin",
     "logout": "Sign out"
@@ -21,10 +21,10 @@
   "home": {
     "badge": "Browser Theme Extension · Force Reskin",
     "h1_1": "Force every website into",
-    "h1_2": "your favorite colors",
-    "desc": "{brand} applies your chosen theme to any website — no website support required. Switch freely between light and dark modes, sync across devices after login.",
+    "h1_2": "your favourite colours",
+    "desc": "{brand} applies your chosen theme to any website — no website support required. Switch freely between light and dark modes, sync across devices after signing in.",
     "cta_themes": "🎨 Browse Themes",
-    "cta_login": "Register / Login",
+    "cta_login": "Register / Sign in",
     "cta_extension": "Add to Chrome",
     "browser_note": "Supports Chrome · Edge · Arc and other Chromium browsers",
     "chrome_store_link": "Install from Chrome Web Store",
@@ -45,28 +45,28 @@
     },
     "cta": {
       "title": "Start Using ForcedSkin Today",
-      "desc": "Sign up for free, collect your favorite themes, and install the extension to sync across devices",
-      "btn_login": "Register / Login",
+      "desc": "Sign up for free, collect your favourite themes, and install the extension to sync across devices",
+      "btn_login": "Register / Sign in",
       "btn_themes": "Browse Theme Store",
       "btn_extension": "Add to Chrome"
     }
   },
   "themes": {
     "title": "Themes",
-    "subtitle": "Pick your favorite palette — log in to sync it to the extension",
+    "subtitle": "Pick your favourite palette — sign in to sync it to the extension",
     "all": "All",
     "light": "Light",
     "dark": "Dark",
-    "need_login": "Please log in first",
-    "need_login_select": "Log in to select a theme",
+    "need_login": "Please sign in first",
+    "need_login_select": "Sign in to select a theme",
     "favorited": "Added: {name}",
-    "unfavorited": "Removed from favorites",
+    "unfavorited": "Removed from favourites",
     "set_as": "Set {name} as {mode} theme",
     "mode_light": "light",
     "mode_dark": "dark",
     "guide_link": "Theme Guide",
     "submit_btn": "Submit Theme",
-    "login_to_submit": "Log in to submit a theme",
+    "login_to_submit": "Sign in to submit a theme",
     "modal_title": "Submit New Theme",
     "modal_subtitle": "Your submission will be reviewed before going public",
     "field_name": "Theme ID",
@@ -76,8 +76,8 @@
     "field_display_ph": "e.g. Ocean Dark",
     "field_display_required": "Display name is required",
     "field_desc": "Description",
-    "field_colors": "Colors JSON",
-    "field_colors_required": "Colors JSON is required",
+    "field_colors": "Colours JSON",
+    "field_colors_required": "Colours JSON is required",
     "cancel": "Cancel",
     "submit": "Submit for Review",
     "submitting": "Submitting…",
@@ -91,7 +91,7 @@
     "modal_title": "Submit New Adapter",
     "guide_link": "Adapter Guide",
     "no_adapters": "No adapters yet",
-    "login_to_submit": "Log in to submit an adapter",
+    "login_to_submit": "Sign in to submit an adapter",
     "field_name": "Adapter ID",
     "field_name_ph": "e.g. bilibili",
     "field_display": "Display Name",
@@ -113,8 +113,8 @@
     "logout": "Sign out",
     "light_theme": "Light Theme",
     "dark_theme": "Dark Theme",
-    "favorites": "Favorite Themes",
-    "no_favorites": "No favorites yet",
+    "favorites": "Favourite Themes",
+    "no_favorites": "No favourites yet",
     "change": "Change",
     "remove": "Remove",
     "default": "Default",
@@ -124,7 +124,7 @@
     "my_submissions": "Themes you submitted",
     "submission_review": "Pending review — goes public once approved",
     "submission_live": "Live — visible to everyone",
-    "submissions_intro": "Themes you submitted via the theme gallery appear here; after approval others can browse and favorite them.",
+    "submissions_intro": "Themes you submitted via the theme gallery appear here; after approval others can browse and favourite them.",
     "favorite_section_light": "Saved light themes",
     "favorite_section_dark": "Saved dark themes"
   },
@@ -152,11 +152,11 @@
     "light_badge": "Light",
     "dark_badge": "Dark",
     "selected": "Active",
-    "favorite": "Favorite",
-    "unfavorite": "Unfavorite",
+    "favorite": "Favourite",
+    "unfavorite": "Unfavourite",
     "mock_btn": "Button",
     "mock_secondary": "Alt",
-    "favorites_count": "{n} favorites"
+    "favorites_count": "{n} favourites"
   },
   "common": {
     "language": "Language",
@@ -174,17 +174,17 @@
     "quick_1_intro": "Decide whether the theme runs in",
     "quick_1_mid": "(light palettes) or",
     "quick_1_out": "(dark palettes).",
-    "quick_2_title": "Fill in colors",
+    "quick_2_title": "Fill in colours",
     "quick_2_body": "Follow the field specification below — at minimum all required keys must be present in your JSON.",
     "quick_3_title": "Submit for review",
     "quick_3_before": "On the ",
     "quick_3_after": "page click “Submit Theme”. Admins approve before it appears for everyone.",
-    "fields_heading": "Color fields",
+    "fields_heading": "Colour fields",
     "fields_intro": "All palette entries must be hex (#RRGGBB) strings or CSS rgba(...) values.",
     "badge_required": "Required",
     "badge_optional": "Optional",
     "example_prefix": "Example:",
-    "scale_heading": "Color ramps",
+    "scale_heading": "Colour ramps",
     "scale_intro_sentence": "The JSON keys primary, secondary, and accent each accept either authoring style below:",
     "scale_compact_title": "Compact (three core shades)",
     "scale_compact_note": "The engine promotes shade 500 as the default hue; 600/700 cover hover/active affordances.",
@@ -207,42 +207,42 @@
     "name_rule_4": "Maximum length 50 characters.",
     "review_heading": "Submission & review",
     "review_1": "🔐 Sign in before submitting.",
-    "review_2": "⏳ Submissions queue for review-staff typically respond within 1-3 working days.",
-    "review_3": "✅ Approved themes appear in the marketplace for everyone to favorite.",
-    "review_4": "❌ Invalid colors, conflicting names, or policy breaches will be rejected-delete and submit a corrected version.",
+    "review_2": "⏳ Submissions queue for review—staff typically respond within 1–3 working days.",
+    "review_3": "✅ Approved themes appear in the marketplace for everyone to favourite.",
+    "review_4": "❌ Invalid colours, conflicting names, or policy breaches will be rejected—delete and submit a corrected version.",
     "review_5": "🚫 No malicious code, hate content, or obviously infringing palettes.",
     "cta_intro": "Ready? Head to the theme marketplace and publish your palette.",
     "cta_btn": "🎨 Submit a theme",
     "fields": {
       "background": {
-        "desc": "Primary page background-light themes lean near white, dark themes near deep neutrals. CSS var: --color-background"
+        "desc": "Primary page background—light themes lean near white, dark themes near deep neutrals. CSS var: --color-background"
       },
       "foreground": {
-        "desc": "Primary text-readably contrasted against background. CSS var: --color-foreground"
+        "desc": "Primary text—readably contrasted against background. CSS var: --color-foreground"
       },
       "surface": {
-        "desc": "Card/panel/container fill-slightly lifted from background. CSS var: --color-surface"
+        "desc": "Card/panel/container fill—slightly lifted from background. CSS var: --color-surface"
       },
       "surfaceMuted": {
         "desc": "Muted hovers/sub-containers stepped from surface. CSS var: --color-surface-muted"
       },
       "border": {
-        "desc": "Hairlines & dividers-typically low saturation grays/semi-transparent tones. CSS var: --color-border"
+        "desc": "Hairlines & dividers—typically low saturation greys/semi-transparent tones. CSS var: --color-border"
       },
       "muted": {
-        "desc": "De-emphasized copy & placeholders. CSS var: --color-muted"
+        "desc": "De-emphasised copy & placeholders. CSS var: --color-muted"
       },
       "primary": {
-        "desc": "Primary brand ramp for buttons/links/focus-can be single color or ramp (50–950). Requires at least shades 500/600/700. Maps to CSS variables --color-primary- plus shade tokens (50–950)"
+        "desc": "Primary brand ramp for buttons/links/focus—can be single colour or ramp (50–950). Requires at least shades 500/600/700. Maps to CSS variables --color-primary- plus shade tokens (50–950)"
       },
       "secondary": {
-        "desc": "Secondary accent ramps for chips/ghost buttons-structure matches primary-maps to --color-secondary- plus shade tokens"
+        "desc": "Secondary accent ramps for chips/ghost buttons—structure matches primary—maps to --color-secondary- plus shade tokens"
       },
       "accent": {
-        "desc": "Highlights,badges,spotlight colors-structure matches primary-maps to --color-accent- plus shade tokens"
+        "desc": "Highlights, badges, spotlight colours—structure matches primary—maps to --color-accent- plus shade tokens"
       },
       "vars": {
-        "desc": "Arbitrary CSS custom properties-keys omit “--”; values applied verbatim on :root"
+        "desc": "Arbitrary CSS custom properties—keys omit “--”; values applied verbatim on :root"
       }
     }
   },
@@ -257,7 +257,7 @@
     "lead_5": "fixed interpreter",
     "lead_6": "that applies paint rules—never arbitrary JavaScript.",
     "how_title": "How it works",
-    "how_s1": "The core engine starts with CSS-variable + inline overlays for baseline recoloring.",
+    "how_s1": "The core engine starts with CSS-variable + inline overlays for baseline recolouring.",
     "how_s2": "When a hostname hits, adapters run ascending by priority—the smaller the number, the sooner the interpreter executes (recommended site adapters use 100).",
     "how_s3": "Each adapter tweaks targeted nodes via the exposed engineApi helpers; skip transparent overlays/player stacks per the Best practices notes.",
     "how_s4": "The runtime already observes DOM deltas and reapplies adapters throttled—you do not need MutationObserver boilerplate.",
@@ -292,7 +292,7 @@
     "sample_title": "Full sample excerpt",
     "bp_title": "Best practices",
     "bp_ok_json_title": "JSON must strictly validate",
-    "bp_ok_json_body": "Invalid schema/layers/host rules bounce during review-fold this guide’s minimal sample & seeds before submitting.",
+    "bp_ok_json_body": "Invalid schema/layers/host rules bounce during review—fold this guide’s minimal sample & seeds before submitting.",
     "bp_skip_title": "Enable skipOverlayLike on surface",
     "bp_skip_body": "Matches core engine safeguards so translucent HUDs/video stacks are not flattened to solid fills.",
     "bp_nojs_title": "Never ship JavaScript",
@@ -323,7 +323,7 @@
       "foreground": "Primary text",
       "surface": "Card / panel fill",
       "surfaceMuted": "Muted containers / hover fills",
-      "border": "Border color",
+      "border": "Border colour",
       "muted": "Secondary text",
       "primary500": "Primary emphasis (links) mapped from theme primary.500",
       "primary700": "Deeper primary state mapped from primary.700 or 800"
@@ -339,26 +339,26 @@
       "canvas_map": "Strip background-image, background→palette background",
       "canvas_mark": "Usually background only",
       "richText_use": "Sites that expose branded web components",
-      "richText_map": "Emit required CSS variables + textual color mapping",
+      "richText_map": "Emit required CSS variables + textual colour mapping",
       "richText_mark": "text (sometimes + background)",
       "svgRecolor_use": "Inline SVG glyphs",
-      "svgRecolor_map": "Default fill/stroke→currentColor; optional fill/stroke palette keys for fixed color",
+      "svgRecolor_map": "Default fill/stroke→currentColor; optional fill/stroke palette keys for fixed colour",
       "svgRecolor_mark": "Optional marking to avoid interfering with cleanup"
     }
   },
   "seo": {
     "keywords": "ForcedSkin, browser theme, web skin, dark mode extension, light theme, Chrome extension, forced skin",
     "home": {
-      "title": "Force Every Website Into Your Favorite Colors",
-      "description": "ForcedSkin applies your chosen color theme to any website. Browser extension plus theme marketplace — switch light and dark freely, sync across devices when you log in.",
+      "title": "Force Every Website Into Your Favourite Colours",
+      "description": "ForcedSkin applies your chosen colour theme to any website. Browser extension plus theme marketplace — switch light and dark freely, sync across devices when you sign in.",
       "og_title": "ForcedSkin — Unified web themes",
-      "og_description": "Apply your favorite light or dark palette to any website. Extensions plus marketplace with cross-device sync."
+      "og_description": "Apply your favourite light or dark palette to any website. Extensions plus marketplace with cross-device sync."
     },
     "themes": {
       "title": "Theme Marketplace",
       "description": "Browse the ForcedSkin theme marketplace. Discover light and dark palettes you can apply to any website in one click.",
       "og_title": "ForcedSkin Theme Marketplace",
-      "og_description": "Discover curated themes, favorite them, and sync to the ForcedSkin browser extension to reskin any site.",
+      "og_description": "Discover curated themes, favourite them, and sync to the ForcedSkin browser extension to reskin any site.",
       "ld_name": "ForcedSkin Theme Marketplace",
       "ld_description": "Browse light and dark themes for ForcedSkin"
     },
@@ -366,7 +366,7 @@
       "title": "Site Adapters",
       "description": "Community-maintained site adapters help ForcedSkin theme results feel more natural on popular websites.",
       "og_title": "Site adapters — ForcedSkin",
-      "og_description": "Browse community adapters for more precise forced-theming support on your favorite sites."
+      "og_description": "Browse community adapters for more precise forced-theming support on your favourite sites."
     },
     "privacy": {
       "title": "Privacy Policy",
@@ -382,17 +382,17 @@
     },
     "auth": {
       "title": "Sign in",
-      "description": "Sign in with GitHub or Google to manage favorite themes and sync them to the ForcedSkin browser extension."
+      "description": "Sign in with GitHub or Google to manage favourite themes and sync them to the ForcedSkin browser extension."
     },
     "account": {
       "title": "My Account",
-      "description": "Manage ForcedSkin favorite themes and your selected light/dark palettes, synced with the signed-in extension."
+      "description": "Manage ForcedSkin favourite themes and your selected light/dark palettes, synced with the signed-in extension."
     },
     "guide_theme": {
       "title": "Theme Authoring Guide",
       "description": "Learn how to design custom themes for ForcedSkin: JSON structure, palette fields, and submission flow.",
       "og_title": "Theme authoring guide — ForcedSkin",
-      "og_description": "Color field specification, gradients, and how to publish community themes."
+      "og_description": "Colour field specification, gradients, and how to publish community themes."
     },
     "guide_adapter": {
       "title": "Adapter Development Guide",

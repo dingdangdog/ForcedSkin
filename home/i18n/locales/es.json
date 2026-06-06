@@ -1,0 +1,404 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "themes": "Temas",
+    "adapters": "Adaptadores",
+    "login": "Iniciar sesión",
+    "account": "Cuenta",
+    "admin": "Admin",
+    "logout": "Cerrar sesión"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "themes": "Tienda de temas",
+    "adapters": "Adaptadores",
+    "guide_theme": "Guía de temas",
+    "guide_adapter": "Guía de adaptadores",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio",
+    "contact": "Contacto"
+  },
+  "home": {
+    "badge": "Extensión de temas del navegador · Force Reskin",
+    "h1_1": "Haz que cualquier sitio web adopte",
+    "h1_2": "tus colores favoritos",
+    "desc": "{brand} aplica el tema que elijas a cualquier sitio web — sin necesidad de soporte del sitio. Cambia libremente entre modos claro y oscuro y sincroniza entre dispositivos tras iniciar sesión.",
+    "cta_themes": "🎨 Explorar temas",
+    "cta_login": "Registrarse / Iniciar sesión",
+    "cta_extension": "Añadir a Chrome",
+    "browser_note": "Compatible con Chrome · Edge · Arc y otros navegadores Chromium",
+    "chrome_store_link": "Instalar desde Chrome Web Store",
+    "popular": {
+      "title": "Temas populares",
+      "subtitle": "Paletas claras y oscuras seleccionadas — previsualiza y añádelas con un clic",
+      "view_all": "Ver todos los temas",
+      "empty": "Aún no hay datos de temas"
+    },
+    "adapted": {
+      "title": "Sitios adaptados con precisión",
+      "subtitle": "Estos sitios tienen adaptadores afinados de la comunidad y el equipo oficial para un aspecto más natural",
+      "empty_title": "Aún no hay sitios adaptados",
+      "empty_desc": "Envía uno para empezar",
+      "go_submit": "Enviar →",
+      "no_site": "¿No ves tu sitio?",
+      "submit_btn": "🔌 Enviar nuevo adaptador de sitio"
+    },
+    "cta": {
+      "title": "Empieza a usar ForcedSkin hoy",
+      "desc": "Regístrate gratis, recopila tus temas favoritos e instala la extensión para sincronizar entre dispositivos",
+      "btn_login": "Registrarse / Iniciar sesión",
+      "btn_themes": "Explorar tienda de temas",
+      "btn_extension": "Añadir a Chrome"
+    }
+  },
+  "themes": {
+    "title": "Temas",
+    "subtitle": "Elige tu paleta favorita — inicia sesión para sincronizarla con la extensión",
+    "all": "Todos",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "need_login": "Inicia sesión primero",
+    "need_login_select": "Inicia sesión para seleccionar un tema",
+    "favorited": "Añadido: {name}",
+    "unfavorited": "Eliminado de favoritos",
+    "set_as": "Establecer {name} como tema {mode}",
+    "mode_light": "claro",
+    "mode_dark": "oscuro",
+    "guide_link": "Guía de temas",
+    "submit_btn": "Enviar tema",
+    "login_to_submit": "Inicia sesión para enviar un tema",
+    "modal_title": "Enviar nuevo tema",
+    "modal_subtitle": "Tu envío será revisado antes de publicarse",
+    "field_name": "ID del tema",
+    "field_name_required": "El ID del tema es obligatorio",
+    "field_mode": "Modo",
+    "field_display": "Nombre visible",
+    "field_display_ph": "p. ej. Océano oscuro",
+    "field_display_required": "El nombre visible es obligatorio",
+    "field_desc": "Descripción",
+    "field_colors": "JSON de colores",
+    "field_colors_required": "El JSON de colores es obligatorio",
+    "cancel": "Cancelar",
+    "submit": "Enviar para revisión",
+    "submitting": "Enviando…",
+    "submit_ok": "Enviado, pendiente de revisión",
+    "submit_fail": "Error al enviar"
+  },
+  "adapters": {
+    "title": "Adaptadores de sitios",
+    "subtitle": "Adaptadores afinados mantenidos por la comunidad para sitios populares",
+    "submit_btn": "Enviar adaptador",
+    "modal_title": "Enviar nuevo adaptador",
+    "guide_link": "Guía de adaptadores",
+    "no_adapters": "Aún no hay adaptadores",
+    "login_to_submit": "Inicia sesión para enviar un adaptador",
+    "field_name": "ID del adaptador",
+    "field_name_ph": "p. ej. bilibili",
+    "field_display": "Nombre visible",
+    "field_display_ph": "p. ej. Bilibili",
+    "field_domain": "Dominio(s) del sitio",
+    "field_domain_ph": "p. ej. bilibili.com,www.bilibili.com",
+    "field_desc": "Descripción",
+    "field_code": "Fórmula del adaptador (JSON)",
+    "field_code_ph": "Pega el JSON completo de forcedskin-adapter-formula/v1",
+    "cancel": "Cancelar",
+    "submit": "Enviar para revisión",
+    "submitting": "Enviando…",
+    "submit_ok": "Enviado, pendiente de revisión",
+    "submit_ok_existing": "Enviado para revisión. Este dominio ya tiene {count} adaptador(es) activo(s); un administrador puede fusionar tu envío con uno existente.",
+    "submit_fail": "Error al enviar"
+  },
+  "account": {
+    "title": "Mi cuenta",
+    "logout": "Cerrar sesión",
+    "light_theme": "Tema claro",
+    "dark_theme": "Tema oscuro",
+    "favorites": "Temas favoritos",
+    "no_favorites": "Aún no hay favoritos",
+    "change": "Cambiar",
+    "remove": "Eliminar",
+    "default": "Predeterminado",
+    "synced_heading": "Temas claros / oscuros guardados",
+    "synced_intro": "Son los temas vinculados a tu cuenta (sincronizados con la extensión del navegador donde has iniciado sesión). Los nombres abajo son etiquetas; los slugs técnicos permanecen en el servidor para emparejar paletas.",
+    "slug_hint": "Slug técnico: {slug}",
+    "my_submissions": "Temas que enviaste",
+    "submission_review": "Pendiente de revisión — se publicará cuando se apruebe",
+    "submission_live": "Activo — visible para todos",
+    "submissions_intro": "Los temas que enviaste desde la galería aparecen aquí; tras la aprobación otros pueden explorarlos y marcarlos como favoritos.",
+    "favorite_section_light": "Temas claros guardados",
+    "favorite_section_dark": "Temas oscuros guardados"
+  },
+  "auth": {
+    "title": "Bienvenido de nuevo",
+    "subtitle": "Inicia sesión con tu cuenta para continuar",
+    "github": "Continuar con GitHub",
+    "google": "Continuar con Google",
+    "loading": "Redirigiendo…",
+    "agree_prefix": "Al iniciar sesión, aceptas nuestros",
+    "terms": "Términos de servicio",
+    "and": "y",
+    "privacy": "Política de privacidad",
+    "back": "← Volver a ForcedSkin",
+    "error": {
+      "OAuthSignin": "Error al iniciar sesión con OAuth, inténtalo de nuevo",
+      "OAuthCallback": "Error en la devolución de OAuth, inténtalo de nuevo",
+      "OAuthCreateAccount": "No se pudo crear la cuenta, inténtalo de nuevo",
+      "OAuthAccountNotLinked": "Este correo ya está vinculado a otro proveedor",
+      "Callback": "Error de devolución (callback)",
+      "Default": "Error al iniciar sesión, inténtalo de nuevo"
+    }
+  },
+  "card": {
+    "light_badge": "Claro",
+    "dark_badge": "Oscuro",
+    "selected": "Activo",
+    "favorite": "Favorito",
+    "unfavorite": "Quitar de favoritos",
+    "mock_btn": "Botón",
+    "mock_secondary": "Alt",
+    "favorites_count": "{n} favoritos"
+  },
+  "common": {
+    "language": "Idioma",
+    "loading": "Cargando…",
+    "no_data": "Sin datos",
+    "view_more": "Ver más"
+  },
+  "guide_theme": {
+    "crumb_themes": "Mercado de temas",
+    "crumb_current": "Guía de creación",
+    "h1": "🎨 Guía de creación de temas",
+    "intro": "Aprende el esquema JSON de temas de ForcedSkin y las reglas de los campos de paleta: diseña paletas para cualquier sitio y envíalas a la comunidad.",
+    "quick_title": "Inicio rápido",
+    "quick_1_title": "Elige un modo",
+    "quick_1_intro": "Decide si el tema se ejecuta en",
+    "quick_1_mid": "(paletas claras) o",
+    "quick_1_out": "(paletas oscuras).",
+    "quick_2_title": "Completa los colores",
+    "quick_2_body": "Sigue la especificación de campos que aparece abajo — como mínimo, tu JSON debe incluir todas las claves obligatorias.",
+    "quick_3_title": "Enviar para revisión",
+    "quick_3_before": "En la página de ",
+    "quick_3_after": " haz clic en «Enviar tema». Los administradores lo aprueban antes de que sea visible para todos.",
+    "fields_heading": "Campos de color",
+    "fields_intro": "Todas las entradas de la paleta deben ser cadenas hex (#RRGGBB) o valores CSS rgba(...).",
+    "badge_required": "Obligatorio",
+    "badge_optional": "Opcional",
+    "example_prefix": "Ejemplo:",
+    "scale_heading": "Rampas de color",
+    "scale_intro_sentence": "Las claves JSON primary, secondary y accent aceptan cualquiera de los dos estilos de creación siguientes:",
+    "scale_compact_title": "Compacta (tres tonos principales)",
+    "scale_compact_note": "El motor promueve el tono 500 como matiz predeterminado; 600/700 cubren los estados hover/active.",
+    "scale_full_title": "Rampa completa (50 → 950, once paradas)",
+    "scale_full_note": "Publicar la rampa completa produce transiciones tonales más suaves en todas partes.",
+    "scale_tip_label": "Consejo:",
+    "scale_tip_body": "Los IDs de tono siguen rampas al estilo Tailwind: 50 es el más claro, 950 el más oscuro. Los temas claros usan sobre todo 500/600/700; los oscuros suelen apoyarse en 400/500/600.",
+    "samples_heading": "Ejemplos completos",
+    "sample_light_cap": "🌿 Ejemplo claro (light-mint)",
+    "sample_dark_cap": "🌑 Ejemplo oscuro (dark-forest)",
+    "vars_heading": "Variables personalizadas (vars)",
+    "vars_body_before": "Si los tokens predeterminados no bastan, añade CSS vars extra bajo un nodo ",
+    "vars_body_mid": " — omite el prefijo ",
+    "vars_body_after": " en cada clave.",
+    "naming_heading": "Reglas de slug (name)",
+    "name_rule_1": "Solo letras ASCII en minúsculas, dígitos y guion (",
+    "name_rule_1_tail": ").",
+    "name_rule_fmt": "Prefiere pares concisos «modo-estilo» como «dark-ocean» o «light-sakura».",
+    "name_rule_3": "Los slugs deben ser únicos a nivel global — no pueden cambiarse tras publicarse, así que revísalos antes.",
+    "name_rule_4": "Longitud máxima de 50 caracteres.",
+    "review_heading": "Envío y revisión",
+    "review_1": "🔐 Inicia sesión antes de enviar.",
+    "review_2": "⏳ Los envíos entran en cola de revisión; el equipo suele responder en 1-3 días laborables.",
+    "review_3": "✅ Los temas aprobados aparecen en el mercado para que todos los marquen como favoritos.",
+    "review_4": "❌ Colores inválidos, nombres en conflicto o incumplimientos de política serán rechazados — elimina y envía una versión corregida.",
+    "review_5": "🚫 Sin código malicioso, contenido de odio ni paletas obviamente infractoras.",
+    "cta_intro": "¿Listo? Ve al mercado de temas y publica tu paleta.",
+    "cta_btn": "🎨 Enviar un tema",
+    "fields": {
+      "background": {
+        "desc": "Fondo principal de la página — los temas claros se acercan al blanco, los oscuros a neutros profundos. CSS var: --color-background"
+      },
+      "foreground": {
+        "desc": "Texto principal — contraste legible frente al fondo. CSS var: --color-foreground"
+      },
+      "surface": {
+        "desc": "Relleno de tarjetas/paneles/contenedores — ligeramente elevado respecto al fondo. CSS var: --color-surface"
+      },
+      "surfaceMuted": {
+        "desc": "Hovers atenuados y subcontenedores escalonados desde surface. CSS var: --color-surface-muted"
+      },
+      "border": {
+        "desc": "Líneas finas y divisores — normalmente grises de baja saturación o tonos semitransparentes. CSS var: --color-border"
+      },
+      "muted": {
+        "desc": "Texto secundario y placeholders. CSS var: --color-muted"
+      },
+      "primary": {
+        "desc": "Rampa de marca principal para botones/enlaces/focus — puede ser un color único o una rampa (50–950). Requiere al menos los tonos 500/600/700. Se mapea a variables CSS --color-primary- más tokens de tono (50–950)"
+      },
+      "secondary": {
+        "desc": "Rampas de acento secundarias para chips/botones ghost — la estructura coincide con primary; se mapea a --color-secondary- más tokens de tono"
+      },
+      "accent": {
+        "desc": "Destacados, badges y colores de foco — la estructura coincide con primary; se mapea a --color-accent- más tokens de tono"
+      },
+      "vars": {
+        "desc": "Propiedades CSS personalizadas arbitrarias — las claves omiten «--»; los valores se aplican tal cual en :root"
+      }
+    }
+  },
+  "guide_adapter": {
+    "crumb_adapters": "Adaptadores de sitios",
+    "crumb_current": "Guía de desarrollo",
+    "h1": "🔌 Guía de desarrollo de adaptadores",
+    "lead_1": "Los adaptadores de ForcedSkin se crean como",
+    "lead_2": "fórmulas JSON declarativas",
+    "lead_3": "(",
+    "lead_4": ") que describen qué hostnames apuntar y qué capas de selectores teñir. El servidor solo almacena JSON; la extensión incluye un",
+    "lead_5": "intérprete fijo",
+    "lead_6": "que aplica reglas de pintado — nunca JavaScript arbitrario.",
+    "how_title": "Cómo funciona",
+    "how_s1": "El motor principal parte de overlays con CSS variables + inline para el recolorizado base.",
+    "how_s2": "Cuando coincide un hostname, los adaptadores se ejecutan en orden ascendente por prioridad — cuanto menor el número, antes se ejecuta el intérprete (los adaptadores de sitio recomendados usan 100).",
+    "how_s3": "Cada adaptador ajusta nodos objetivo mediante los helpers expuestos de engineApi; omite overlays transparentes y pilas de reproductor según las notas de Buenas prácticas.",
+    "how_s4": "El runtime ya observa cambios en el DOM y reaplica adaptadores con limitación — no necesitas boilerplate de MutationObserver.",
+    "how_s5_prefix": "Las fórmulas llegan desde",
+    "how_s5_api": "GET /api/pub/extension-adapters",
+    "how_s5_suffix": "; el blob JSON de cada registro se cachea localmente. Actualizar la copia del portal surte efecto cuando los usuarios refrescan adaptadores o reabren el navegador — sin reinstalar.",
+    "minimal_title": "Ejemplo mínimo",
+    "formula_title": "Fórmula de adaptador forcedskin-adapter-formula/v1",
+    "formula_intro": "El JSON enviado debe pasar la validación del servidor — el esquema raíz tiene esta forma:",
+    "th_field": "Campo",
+    "th_type": "Tipo",
+    "th_required": "Obligatorio",
+    "th_desc": "Descripción",
+    "th_op": "Operador",
+    "th_meaning": "Significado",
+    "th_kind": "Tipo de capa",
+    "th_use": "Propósito",
+    "th_style_map": "Mapeo típico",
+    "th_mark": "markApplied",
+    "req_yes": "Obligatorio",
+    "req_no": "Opcional",
+    "hostname_title": "Reglas de match.hostname",
+    "palette_title": "Claves de paleta (richText cssVars / color)",
+    "layer_title": "Tipos de capa recomendados",
+    "layer_intro": "Piensa en semántica — no solo en nombres de elementos. Consulta el ejemplo incluido en el repositorio",
+    "layer_intro_after": "para un recorrido completo.",
+    "note_avoid_title": "Omitir regiones de riesgo:",
+    "note_avoid_body": "El motor ya ignora media, canvas, iframe, capas blend/backdrop pesadas y nodos cuyas clases sugieren máscaras u overlays — extiende esas salvaguardas para el chrome translúcido del reproductor.",
+    "note_iso_title": "Exclusión por host:",
+    "note_iso_before": "Marca subárboles (p. ej. vistas previas) con ",
+    "note_iso_after": " para que sus descendientes omitan el repintado global.",
+    "sample_title": "Extracto de ejemplo completo",
+    "bp_title": "Buenas prácticas",
+    "bp_ok_json_title": "El JSON debe validar estrictamente",
+    "bp_ok_json_body": "Esquema/capas/reglas de host inválidos se rechazan en revisión — integra el ejemplo mínimo y los seeds de esta guía antes de enviar.",
+    "bp_skip_title": "Activa skipOverlayLike en surface",
+    "bp_skip_body": "Coincide con las salvaguardas del motor principal para que HUDs translúcidos y pilas de vídeo no se aplanen a rellenos sólidos.",
+    "bp_nojs_title": "Nunca envíes JavaScript",
+    "bp_nojs_body": "El campo code es solo JSON; la extensión ya no evalúa cadenas mediante new Function.",
+    "submit_title": "Lista de comprobación del envío",
+    "submit_1": "🔐 Inicia sesión antes de presentar un envío.",
+    "submit_2": "📋 Indica nombre visible, dominios separados por comas y pega el JSON en el área de texto del código del adaptador.",
+    "submit_3": "⏳ Las entradas quedan en pendiente hasta que el equipo valide seguridad y alcance de selectores.",
+    "submit_4": "✅ Los adaptadores aprobados se despliegan a todos los usuarios de la extensión que sincronicen adaptadores.",
+    "submit_5": "❌ Selectores demasiado amplios o JSON inválido devuelven comentarios — corrige y vuelve a enviar.",
+    "domain_title": "Formato del dominio objetivo",
+    "domain_intro": "siteDomain es la lista orientada al usuario; el emparejamiento real usa match.hostname así:",
+    "cta_intro": "¿Listo? Abre la galería de adaptadores y envía tu JSON.",
+    "cta_btn": "🔌 Enviar un adaptador",
+    "formula": {
+      "schema_desc": "Cadena literal de versión forcedskin-adapter-formula/v1",
+      "id_desc": "ID lógico del adaptador — normalmente el nombre en código del sitio, p. ej. bilibili",
+      "priority_desc": "Orden de ejecución (ascendente). Los adaptadores específicos de sitio suelen usar 100",
+      "match_desc": "Array de objetos de reglas de hostname (ver tabla abajo)",
+      "layers_desc": "Capas de pintado ordenadas — tipos documentados en la tabla de capas"
+    },
+    "host": {
+      "equals_desc": "El hostname es igual al valor (sin distinguir mayúsculas)",
+      "suffix_desc": "El hostname es igual al valor o termina en .value (cubre example.com y *.example.com)"
+    },
+    "palette": {
+      "background": "Fondo de página",
+      "foreground": "Texto principal",
+      "surface": "Relleno de tarjeta / panel",
+      "surfaceMuted": "Contenedores atenuados / rellenos hover",
+      "border": "Color de borde",
+      "muted": "Texto secundario",
+      "primary500": "Énfasis principal (enlaces) mapeado desde theme primary.500",
+      "primary700": "Estado primary más profundo mapeado desde primary.700 u 800"
+    },
+    "layer": {
+      "surface_use": "Paneles, filas de lista, shells de navegación",
+      "surface_map": "background→surface, color→foreground, border→border",
+      "surface_mark": "bg + text + border",
+      "accent_use": "Pestañas activas / filas de lista actuales",
+      "accent_map": "background+border→primary700, color→background para contraste",
+      "accent_mark": "bg + text + border",
+      "canvas_use": "Bloques hero con fondos raster",
+      "canvas_map": "Elimina background-image, background→palette background",
+      "canvas_mark": "Normalmente solo background",
+      "richText_use": "Sitios que exponen web components de marca",
+      "richText_map": "Emite las CSS variables requeridas + mapeo de color textual",
+      "richText_mark": "text (a veces + background)",
+      "svgRecolor_use": "Glifos SVG inline",
+      "svgRecolor_map": "fill/stroke por defecto→currentColor; claves de paleta fill/stroke opcionales para color fijo",
+      "svgRecolor_mark": "Marcado opcional para no interferir con la limpieza"
+    }
+  },
+  "seo": {
+    "keywords": "ForcedSkin, tema del navegador, skin web, extensión modo oscuro, tema claro, extensión Chrome, forced skin",
+    "home": {
+      "title": "Haz que cualquier sitio web adopte tus colores favoritos",
+      "description": "ForcedSkin aplica el tema de color que elijas a cualquier sitio web. Extensión del navegador más mercado de temas — cambia libremente entre claro y oscuro, sincroniza entre dispositivos al iniciar sesión.",
+      "og_title": "ForcedSkin — Temas web unificados",
+      "og_description": "Aplica tu paleta clara u oscura favorita a cualquier sitio web. Extensiones más mercado con sincronización entre dispositivos."
+    },
+    "themes": {
+      "title": "Mercado de temas",
+      "description": "Explora el mercado de temas de ForcedSkin. Descubre paletas claras y oscuras que puedes aplicar a cualquier sitio web con un clic.",
+      "og_title": "Mercado de temas ForcedSkin",
+      "og_description": "Descubre temas seleccionados, márcalos como favoritos y sincronízalos con la extensión del navegador ForcedSkin para cambiar el aspecto de cualquier sitio.",
+      "ld_name": "Mercado de temas ForcedSkin",
+      "ld_description": "Explora temas claros y oscuros para ForcedSkin"
+    },
+    "adapters": {
+      "title": "Adaptadores de sitios",
+      "description": "Adaptadores de sitios mantenidos por la comunidad ayudan a que los resultados de temas ForcedSkin se vean más naturales en sitios populares.",
+      "og_title": "Adaptadores de sitios — ForcedSkin",
+      "og_description": "Explora adaptadores de la comunidad para un soporte de theming forzado más preciso en tus sitios favoritos."
+    },
+    "privacy": {
+      "title": "Política de privacidad",
+      "description": "Política de privacidad de ForcedSkin — cómo recopilamos, usamos y protegemos tu información personal.",
+      "og_title": "Política de privacidad — ForcedSkin",
+      "og_description": "Cómo ForcedSkin gestiona tus datos en el sitio web y la extensión del navegador."
+    },
+    "terms": {
+      "title": "Términos de servicio",
+      "description": "Términos de servicio de ForcedSkin — reglas para registrarse y usar el Servicio.",
+      "og_title": "Términos de servicio — ForcedSkin",
+      "og_description": "Términos y condiciones de uso de ForcedSkin."
+    },
+    "auth": {
+      "title": "Iniciar sesión",
+      "description": "Inicia sesión con GitHub o Google para gestionar temas favoritos y sincronizarlos con la extensión del navegador ForcedSkin."
+    },
+    "account": {
+      "title": "Mi cuenta",
+      "description": "Gestiona los temas favoritos de ForcedSkin y tus paletas claras/oscuras seleccionadas, sincronizadas con la extensión donde has iniciado sesión."
+    },
+    "guide_theme": {
+      "title": "Guía de creación de temas",
+      "description": "Aprende a diseñar temas personalizados para ForcedSkin: estructura JSON, campos de paleta y flujo de envío.",
+      "og_title": "Guía de creación de temas — ForcedSkin",
+      "og_description": "Especificación de campos de color, gradientes y cómo publicar temas de la comunidad."
+    },
+    "guide_adapter": {
+      "title": "Guía de desarrollo de adaptadores",
+      "description": "Los adaptadores de ForcedSkin usan fórmulas JSON declarativas (forcedskin-adapter-formula/v1): reglas de coincidencia y capas.",
+      "og_title": "Guía de desarrollo de adaptadores — ForcedSkin",
+      "og_description": "JSON declarativo de adaptadores, coincidencia de hostname y flujo de envío."
+    }
+  }
+}

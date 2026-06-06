@@ -1,3 +1,5 @@
+import { APP_LOCALES, DEFAULT_LOCALE, LOCALE_OG_MAP, type AppLocaleCode } from "~/utils/i18n-locales";
+
 type CollectionLd = {
   nameKey: string;
   descriptionKey: string;
@@ -12,11 +14,6 @@ export type UseForcedSkinSeoOptions = {
   robots?: string;
   /** Structured data for theme listing only */
   collectionPageLd?: CollectionLd;
-};
-
-const HREFLANG: Record<string, string> = {
-  en: "en",
-  zh: "zh-CN",
 };
 
 /**
@@ -35,19 +32,18 @@ export function useForcedSkinSeo(routePath: string, options: UseForcedSkinSeoOpt
     const description = t(options.descriptionKey);
     const ogTitle = options.ogTitleKey ? t(options.ogTitleKey) : title;
     const ogDescription = options.ogDescriptionKey ? t(options.ogDescriptionKey) : description;
-    const ogLocale = locale.value === "zh" ? "zh_CN" : "en_US";
-    const ogAlternate = locale.value === "zh" ? "en_US" : "zh_CN";
+    const currentCode = locale.value as AppLocaleCode;
+    const ogLocale = LOCALE_OG_MAP[currentCode] ?? "en_US";
+    const ogAlternates = APP_LOCALES
+      .filter((l) => l.code !== currentCode)
+      .map((l) => LOCALE_OG_MAP[l.code]);
 
     const link: Record<string, string>[] = [{ rel: "canonical", href: canonical }];
-    const codes = ["en", "zh"] as const;
+    const defaultHref = `${siteUrl}${localePath(routePath, DEFAULT_LOCALE)}`;
 
-    const defaultHref = `${siteUrl}${localePath(routePath, "en")}`;
-
-    for (const code of codes) {
-      const hreflang = HREFLANG[code];
-      if (!hreflang) continue;
+    for (const { code, iso } of APP_LOCALES) {
       const href = `${siteUrl}${localePath(routePath, code)}`;
-      link.push({ rel: "alternate", hreflang, href });
+      link.push({ rel: "alternate", hreflang: iso, href });
     }
 
     link.push({ rel: "alternate", hreflang: "x-default", href: defaultHref });
@@ -58,7 +54,7 @@ export function useForcedSkinSeo(routePath: string, options: UseForcedSkinSeoOpt
       { property: "og:description", content: ogDescription },
       { property: "og:url", content: canonical },
       { property: "og:locale", content: ogLocale },
-      { property: "og:locale:alternate", content: ogAlternate },
+      ...ogAlternates.map((alt) => ({ property: "og:locale:alternate", content: alt })),
       { property: "og:image", content: "https://forcedskin.com/LOGO.png" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:image", content: "https://forcedskin.com/LOGO.png" },

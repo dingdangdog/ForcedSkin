@@ -1,0 +1,404 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "themes": "テーマ",
+    "adapters": "アダプター",
+    "login": "ログイン",
+    "account": "アカウント",
+    "admin": "管理",
+    "logout": "ログアウト"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "themes": "テーマストア",
+    "adapters": "アダプター",
+    "guide_theme": "テーマガイド",
+    "guide_adapter": "アダプターガイド",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "お問い合わせ"
+  },
+  "home": {
+    "badge": "ブラウザテーマ拡張機能 · 強制リスキン",
+    "h1_1": "あらゆるWebサイトを",
+    "h1_2": "お気に入りの色に",
+    "desc": "{brand} は、Webサイト側の対応なしで、選んだテーマを任意のサイトに適用します。ライト/ダークを自由に切り替え、ログイン後はデバイス間で同期できます。",
+    "cta_themes": "🎨 テーマを見る",
+    "cta_login": "登録 / ログイン",
+    "cta_extension": "Chrome に追加",
+    "browser_note": "Chrome · Edge · Arc など Chromium 系ブラウザに対応",
+    "chrome_store_link": "Chrome ウェブストアからインストール",
+    "popular": {
+      "title": "人気テーマ",
+      "subtitle": "厳選されたライト/ダークパレット — ワンクリックでプレビュー＆保存",
+      "view_all": "すべてのテーマを見る",
+      "empty": "テーマデータはまだありません"
+    },
+    "adapted": {
+      "title": "精密適応サイト",
+      "subtitle": "コミュニティと公式チームによる微調整アダプターで、より自然な見た目に",
+      "empty_title": "適応サイトはまだありません",
+      "empty_desc": "まずは1件投稿してみましょう",
+      "go_submit": "投稿する →",
+      "no_site": "サイトが見当たりませんか？",
+      "submit_btn": "🔌 新規サイトアダプターを投稿"
+    },
+    "cta": {
+      "title": "今すぐ ForcedSkin を始めよう",
+      "desc": "無料登録してお気に入りテーマを集め、拡張機能をインストールしてデバイス間で同期",
+      "btn_login": "登録 / ログイン",
+      "btn_themes": "テーマストアを見る",
+      "btn_extension": "Chrome に追加"
+    }
+  },
+  "themes": {
+    "title": "テーマ",
+    "subtitle": "お気に入りのパレットを選び、ログインして拡張機能に同期",
+    "all": "すべて",
+    "light": "ライト",
+    "dark": "ダーク",
+    "need_login": "先にログインしてください",
+    "need_login_select": "テーマを選ぶにはログインが必要です",
+    "favorited": "追加しました: {name}",
+    "unfavorited": "お気に入りから削除しました",
+    "set_as": "{name} を {mode} テーマに設定",
+    "mode_light": "ライト",
+    "mode_dark": "ダーク",
+    "guide_link": "テーマガイド",
+    "submit_btn": "テーマを投稿",
+    "login_to_submit": "テーマを投稿するにはログインしてください",
+    "modal_title": "新規テーマを投稿",
+    "modal_subtitle": "公開前に審査が行われます",
+    "field_name": "テーマ ID",
+    "field_name_required": "テーマ ID は必須です",
+    "field_mode": "モード",
+    "field_display": "表示名",
+    "field_display_ph": "例: Ocean Dark",
+    "field_display_required": "表示名は必須です",
+    "field_desc": "説明",
+    "field_colors": "Colors JSON",
+    "field_colors_required": "Colors JSON は必須です",
+    "cancel": "キャンセル",
+    "submit": "審査に提出",
+    "submitting": "送信中…",
+    "submit_ok": "提出しました。審査待ちです",
+    "submit_fail": "提出に失敗しました"
+  },
+  "adapters": {
+    "title": "サイトアダプター",
+    "subtitle": "人気サイト向けにコミュニティがメンテナンスする微調整アダプター",
+    "submit_btn": "アダプターを投稿",
+    "modal_title": "新規アダプターを投稿",
+    "guide_link": "アダプターガイド",
+    "no_adapters": "アダプターはまだありません",
+    "login_to_submit": "アダプターを投稿するにはログインしてください",
+    "field_name": "アダプター ID",
+    "field_name_ph": "例: bilibili",
+    "field_display": "表示名",
+    "field_display_ph": "例: Bilibili",
+    "field_domain": "サイトドメイン",
+    "field_domain_ph": "例: bilibili.com,www.bilibili.com",
+    "field_desc": "説明",
+    "field_code": "アダプター formula (JSON)",
+    "field_code_ph": "forcedskin-adapter-formula/v1 の完全な JSON を貼り付け",
+    "cancel": "キャンセル",
+    "submit": "審査に提出",
+    "submitting": "送信中…",
+    "submit_ok": "提出しました。審査待ちです",
+    "submit_ok_existing": "審査に提出しました。このドメインには既に {count} 件の公開アダプターがあります。管理者が既存のアダプターにマージできます。",
+    "submit_fail": "提出に失敗しました"
+  },
+  "account": {
+    "title": "マイアカウント",
+    "logout": "ログアウト",
+    "light_theme": "ライトテーマ",
+    "dark_theme": "ダークテーマ",
+    "favorites": "お気に入りテーマ",
+    "no_favorites": "お気に入りはまだありません",
+    "change": "変更",
+    "remove": "削除",
+    "default": "デフォルト",
+    "synced_heading": "保存済みライト / ダークテーマ",
+    "synced_intro": "アカウントに紐づくテーマです（ログイン中のブラウザ拡張機能と同期）。下の名前は表示用ラベルで、パレット照合の technical slug はサーバー側に保持されます。",
+    "slug_hint": "Technical slug: {slug}",
+    "my_submissions": "投稿したテーマ",
+    "submission_review": "審査待ち — 承認後に公開されます",
+    "submission_live": "公開中 — 誰でも閲覧できます",
+    "submissions_intro": "テーマギャラリーから投稿したテーマがここに表示されます。承認後、他のユーザーが閲覧・お気に入り登録できます。",
+    "favorite_section_light": "保存済みライトテーマ",
+    "favorite_section_dark": "保存済みダークテーマ"
+  },
+  "auth": {
+    "title": "おかえりなさい",
+    "subtitle": "アカウントでサインインして続行",
+    "github": "GitHub で続行",
+    "google": "Google で続行",
+    "loading": "リダイレクト中…",
+    "agree_prefix": "サインインすると、当社の",
+    "terms": "利用規約",
+    "and": "および",
+    "privacy": "プライバシーポリシー",
+    "back": "← ForcedSkin に戻る",
+    "error": {
+      "OAuthSignin": "OAuth サインインに失敗しました。もう一度お試しください",
+      "OAuthCallback": "OAuth コールバックエラーです。もう一度お試しください",
+      "OAuthCreateAccount": "アカウントの作成に失敗しました。もう一度お試しください",
+      "OAuthAccountNotLinked": "このメールアドレスは別のプロバイダーに既にリンクされています",
+      "Callback": "コールバックエラー",
+      "Default": "サインインに失敗しました。もう一度お試しください"
+    }
+  },
+  "card": {
+    "light_badge": "ライト",
+    "dark_badge": "ダーク",
+    "selected": "使用中",
+    "favorite": "お気に入り",
+    "unfavorite": "お気に入り解除",
+    "mock_btn": "ボタン",
+    "mock_secondary": "代替",
+    "favorites_count": "{n} 件のお気に入り"
+  },
+  "common": {
+    "language": "言語",
+    "loading": "読み込み中…",
+    "no_data": "データがありません",
+    "view_more": "もっと見る"
+  },
+  "guide_theme": {
+    "crumb_themes": "テーママーケット",
+    "crumb_current": "作成ガイド",
+    "h1": "🎨 テーマ作成ガイド",
+    "intro": "ForcedSkin のテーマ JSON スキーマとパレットフィールドのルールを学び、任意のサイト向けパレットを設計してコミュニティに投稿しましょう。",
+    "quick_title": "クイックスタート",
+    "quick_1_title": "モードを選ぶ",
+    "quick_1_intro": "テーマを",
+    "quick_1_mid": "（ライトパレット）か",
+    "quick_1_out": "（ダークパレット）のどちらで動かすか決めます。",
+    "quick_2_title": "色を入力する",
+    "quick_2_body": "下記のフィールド仕様に従ってください — 最低限、必須キーをすべて JSON に含める必要があります。",
+    "quick_3_title": "審査に提出する",
+    "quick_3_before": "",
+    "quick_3_after": "のページで「テーマを投稿」をクリックしてください。管理者の承認後、全員に公開されます。",
+    "fields_heading": "カラーフィールド",
+    "fields_intro": "すべてのパレット値は hex (#RRGGBB) 文字列または CSS rgba(...) 値である必要があります。",
+    "badge_required": "必須",
+    "badge_optional": "任意",
+    "example_prefix": "例:",
+    "scale_heading": "カラーランプ",
+    "scale_intro_sentence": "JSON キー primary、secondary、accent は、以下のいずれかの作成スタイルを受け付けます:",
+    "scale_compact_title": "コンパクト（3つのコアシェード）",
+    "scale_compact_note": "エンジンはシェード 500 をデフォルトの色相として扱い、600/700 は hover/active の状態をカバーします。",
+    "scale_full_title": "フルランプ（50 → 950、11段階）",
+    "scale_full_note": "完全なランプを公開すると、あらゆる箇所でより滑らかなトーン遷移が得られます。",
+    "scale_tip_label": "ヒント:",
+    "scale_tip_body": "シェード ID は Tailwind 形式のランプに従います: 50 が最も明るく、950 が最も暗いです。ライトテーマは主に 500/600/700、ダークテーマは 400/500/600 を使うことが多いです。",
+    "samples_heading": "完全サンプル",
+    "sample_light_cap": "🌿 ライトサンプル (light-mint)",
+    "sample_dark_cap": "🌑 ダークサンプル (dark-forest)",
+    "vars_heading": "カスタム変数 (vars)",
+    "vars_body_before": "デフォルトトークンで足りない場合は、",
+    "vars_body_mid": " ノードの下に追加の CSS 変数を置きます — 各キーから ",
+    "vars_body_after": " プレフィックスは省略してください。",
+    "naming_heading": "Slug ルール (name)",
+    "name_rule_1": "小文字 ASCII 英字、数字、ハイフン（",
+    "name_rule_1_tail": "）のみ使用可能。",
+    "name_rule_fmt": "「dark-ocean」や「light-sakura」のような簡潔な「モード-スタイル」形式を推奨します。",
+    "name_rule_3": "Slug はグローバルに一意である必要があります — 公開後は変更できないため、事前に十分確認してください。",
+    "name_rule_4": "最大長は 50 文字です。",
+    "review_heading": "投稿と審査",
+    "review_1": "🔐 投稿前にサインインしてください。",
+    "review_2": "⏳ 提出物は審査キューに入り、スタッフは通常 1〜3 営業日以内に対応します。",
+    "review_3": "✅ 承認されたテーマはマーケットプレイスに表示され、誰でもお気に入り登録できます。",
+    "review_4": "❌ 無効な色、重複する名前、ポリシー違反は却下されます — 削除して修正版を再提出してください。",
+    "review_5": "🚫 悪意のあるコード、ヘイトコンテンツ、明らかな権利侵害パレットは禁止です。",
+    "cta_intro": "準備はできましたか？テーママーケットでパレットを公開しましょう。",
+    "cta_btn": "🎨 テーマを投稿",
+    "fields": {
+      "background": {
+        "desc": "ページの主背景 — ライトテーマは白に近く、ダークテーマは深いニュートラル色。CSS var: --color-background"
+      },
+      "foreground": {
+        "desc": "主要テキスト — 背景に対して読みやすいコントラスト。CSS var: --color-foreground"
+      },
+      "surface": {
+        "desc": "カード/パネル/コンテナの塗り — 背景よりわずかに浮いた色。CSS var: --color-surface"
+      },
+      "surfaceMuted": {
+        "desc": "控えめな hover/サブコンテナ — surface から一段階下げた色。CSS var: --color-surface-muted"
+      },
+      "border": {
+        "desc": "区切り線 — 通常は低彩度のグレー/半透明トーン。CSS var: --color-border"
+      },
+      "muted": {
+        "desc": "控えめなテキストとプレースホルダー。CSS var: --color-muted"
+      },
+      "primary": {
+        "desc": "ボタン/リンク/フォーカス用の主要ブランドランプ — 単色またはランプ (50–950) 可。最低限シェード 500/600/700 が必要。CSS 変数 --color-primary- とシェードトークン (50–950) にマップ"
+      },
+      "secondary": {
+        "desc": "チップ/ゴーストボタン用の二次アクセントランプ — primary と同構造。--color-secondary- とシェードトークンにマップ"
+      },
+      "accent": {
+        "desc": "ハイライト、バッジ、スポットライト色 — primary と同構造。--color-accent- とシェードトークンにマップ"
+      },
+      "vars": {
+        "desc": "任意の CSS カスタムプロパティ — キーから「--」を省略。値は :root にそのまま適用"
+      }
+    }
+  },
+  "guide_adapter": {
+    "crumb_adapters": "サイトアダプター",
+    "crumb_current": "開発ガイド",
+    "h1": "🔌 アダプター開発ガイド",
+    "lead_1": "ForcedSkin アダプターは",
+    "lead_2": "宣言型 JSON formula",
+    "lead_3": "（",
+    "lead_4": "）として作成され、対象 hostname と着色する selector layer を記述します。サーバーは JSON のみを保存し、拡張機能は",
+    "lead_5": "固定インタープリター",
+    "lead_6": "を同梱してペイントルールを適用します — 任意の JavaScript は実行しません。",
+    "how_title": "仕組み",
+    "how_s1": "コアエンジンは CSS 変数 + インラインオーバーレイでベースラインの再配色を行います。",
+    "how_s2": "hostname が一致すると、アダプターは priority の昇順で実行されます — 数値が小さいほど先に実行されます（サイトアダプターは 100 を推奨）。",
+    "how_s3": "各アダプターは公開された engineApi ヘルパーで対象ノードを調整します。半透明オーバーレイ/プレイヤー領域は Best practices の注意に従ってスキップしてください。",
+    "how_s4": "ランタイムは DOM の変化を監視し、スロットル付きでアダプターを再適用します — MutationObserver のボイラープレートは不要です。",
+    "how_s5_prefix": "formula は",
+    "how_s5_api": "GET /api/pub/extension-adapters",
+    "how_s5_suffix": " から取得され、各レコードの JSON blob はローカルにキャッシュされます。ポータルの内容を更新すると、ユーザーがアダプターを更新するかブラウザを再起動すれば反映されます — 再インストールは不要です。",
+    "minimal_title": "最小例",
+    "formula_title": "アダプター formula forcedskin-adapter-formula/v1",
+    "formula_intro": "提出する JSON はサーバー検証に合格する必要があります — ルートスキーマは次のとおりです:",
+    "th_field": "フィールド",
+    "th_type": "型",
+    "th_required": "必須",
+    "th_desc": "説明",
+    "th_op": "演算子",
+    "th_meaning": "意味",
+    "th_kind": "Layer kind",
+    "th_use": "用途",
+    "th_style_map": "典型的なマッピング",
+    "th_mark": "markApplied",
+    "req_yes": "必須",
+    "req_no": "任意",
+    "hostname_title": "match.hostname ルール",
+    "palette_title": "パレットキー (richText cssVars / color)",
+    "layer_title": "推奨 layer kind",
+    "layer_intro": "要素名だけでなく意味的に考えてください。リポジトリ内のサンプル",
+    "layer_intro_after": "で完全な解説を参照してください。",
+    "note_avoid_title": "リスクの高い領域をスキップ:",
+    "note_avoid_body": "エンジンは media、canvas、iframe、heavy blend/backdrop layer、マスク/オーバーレイを示す class を持つノードを既に無視します — 半透明プレイヤー UI 向けにこれらのガードレールを拡張してください。",
+    "note_iso_title": "ホスト側オプトアウト:",
+    "note_iso_before": "サブツリー（例: プレビュー）に ",
+    "note_iso_after": " を付与すると、子孫はグローバル再配色をスキップします。",
+    "sample_title": "完全サンプル抜粋",
+    "bp_title": "ベストプラクティス",
+    "bp_ok_json_title": "JSON は厳密に検証される必要があります",
+    "bp_ok_json_body": "無効な schema/layer/host ルールは審査で却下されます — 提出前に本ガイドの最小サンプルと seed を確認してください。",
+    "bp_skip_title": "surface で skipOverlayLike を有効化",
+    "bp_skip_body": "コアエンジンの安全策と一致し、半透明 HUD/動画スタックが単色塗りつぶしに潰されないようにします。",
+    "bp_nojs_title": "JavaScript を送らない",
+    "bp_nojs_body": "code フィールドは JSON のみです。拡張機能は new Function による文字列 eval は行いません。",
+    "submit_title": "提出チェックリスト",
+    "submit_1": "🔐 提出前にサインインしてください。",
+    "submit_2": "📋 表示名、カンマ区切りドメイン、JSON をアダプター code テキストエリアに貼り付けてください。",
+    "submit_3": "⏳ スタッフが安全性と selector スコープを検証するまで pending 状態になります。",
+    "submit_4": "✅ 承認されたアダプターは、アダプターを同期するすべての拡張機能ユーザーに配信されます。",
+    "submit_5": "❌ 過度に広い selector や無効な JSON はフィードバック付きで却下 — 修正して再提出してください。",
+    "domain_title": "対象ドメイン形式",
+    "domain_intro": "siteDomain は人間向けのリストです。実際のマッチングは match.hostname で行われます:",
+    "cta_intro": "準備はできましたか？アダプターギャラリーを開いて JSON を提出しましょう。",
+    "cta_btn": "🔌 アダプターを投稿",
+    "formula": {
+      "schema_desc": "リテラルバージョン文字列 forcedskin-adapter-formula/v1",
+      "id_desc": "論理アダプター id — 通常はサイトのコードネーム（例: bilibili）",
+      "priority_desc": "実行順（昇順）。サイト固有アダプターは通常 100",
+      "match_desc": "hostname ルールオブジェクトの配列（下表参照）",
+      "layers_desc": "順序付きペイント layer — kind は layer 表に記載"
+    },
+    "host": {
+      "equals_desc": "hostname が value と等しい（大文字小文字を区別しない）",
+      "suffix_desc": "hostname が value と等しい、または .value で終わる（example.com と *.example.com の両方をカバー）"
+    },
+    "palette": {
+      "background": "ページ背景",
+      "foreground": "主要テキスト",
+      "surface": "カード / パネル塗り",
+      "surfaceMuted": "控えめなコンテナ / hover 塗り",
+      "border": "ボーダー色",
+      "muted": "二次テキスト",
+      "primary500": "主要強調（リンク）— テーマ primary.500 からマップ",
+      "primary700": "より深い primary 状態 — primary.700 または 800 からマップ"
+    },
+    "layer": {
+      "surface_use": "パネル、リスト行、ナビシェル",
+      "surface_map": "background→surface, color→foreground, border→border",
+      "surface_mark": "bg + text + border",
+      "accent_use": "アクティブタブ / 現在のリスト行",
+      "accent_map": "background+border→primary700, color→background（コントラスト用）",
+      "accent_mark": "bg + text + border",
+      "canvas_use": "ラスター背景を持つヒーロースラブ",
+      "canvas_map": "background-image を除去、background→palette background",
+      "canvas_mark": "通常は background のみ",
+      "richText_use": "ブランド web component を公開しているサイト",
+      "richText_map": "必要な CSS 変数 + テキスト色マッピングを出力",
+      "richText_mark": "text（場合により + background）",
+      "svgRecolor_use": "インライン SVG グリフ",
+      "svgRecolor_map": "デフォルト fill/stroke→currentColor; 固定色用に fill/stroke パレットキーを任意指定",
+      "svgRecolor_mark": "クリーンアップ干渉を避けるための任意マーキング"
+    }
+  },
+  "seo": {
+    "keywords": "ForcedSkin, ブラウザテーマ, Webスキン, ダークモード拡張, ライトテーマ, Chrome拡張, forced skin",
+    "home": {
+      "title": "あらゆるWebサイトをお気に入りの色に",
+      "description": "ForcedSkin は、選んだカラーテーマを任意のWebサイトに適用します。ブラウザ拡張機能とテーママーケット — ライト/ダークを自由に切り替え、ログインでデバイス間同期。",
+      "og_title": "ForcedSkin — 統一Webテーマ",
+      "og_description": "お気に入りのライト/ダークパレットを任意のWebサイトに適用。拡張機能とマーケット、デバイス間同期。"
+    },
+    "themes": {
+      "title": "テーママーケット",
+      "description": "ForcedSkin テーママーケットを閲覧。ワンクリックで任意のWebサイトに適用できるライト/ダークパレットを発見。",
+      "og_title": "ForcedSkin テーママーケット",
+      "og_description": "厳選テーマを発見、お気に入り登録、ForcedSkin ブラウザ拡張機能に同期して任意のサイトをリスキン。",
+      "ld_name": "ForcedSkin テーママーケット",
+      "ld_description": "ForcedSkin 向けライト/ダークテーマを閲覧"
+    },
+    "adapters": {
+      "title": "サイトアダプター",
+      "description": "コミュニティがメンテナンスするサイトアダプターで、人気Webサイト上の ForcedSkin テーマ結果をより自然に。",
+      "og_title": "サイトアダプター — ForcedSkin",
+      "og_description": "お気に入りのサイト向けに、より精密な forced-theming サポートのコミュニティアダプターを閲覧。"
+    },
+    "privacy": {
+      "title": "プライバシーポリシー",
+      "description": "ForcedSkin プライバシーポリシー — 個人情報の収集、利用、保護について。",
+      "og_title": "プライバシーポリシー — ForcedSkin",
+      "og_description": "ForcedSkin がWebサイトとブラウザ拡張機能でデータをどう扱うか。"
+    },
+    "terms": {
+      "title": "利用規約",
+      "description": "ForcedSkin 利用規約 — 登録とサービス利用のルール。",
+      "og_title": "利用規約 — ForcedSkin",
+      "og_description": "ForcedSkin 利用の条件。"
+    },
+    "auth": {
+      "title": "サインイン",
+      "description": "GitHub または Google でサインインし、お気に入りテーマを管理して ForcedSkin ブラウザ拡張機能に同期。"
+    },
+    "account": {
+      "title": "マイアカウント",
+      "description": "ForcedSkin のお気に入りテーマと選択中のライト/ダークパレットを管理。ログイン中の拡張機能と同期。"
+    },
+    "guide_theme": {
+      "title": "テーマ作成ガイド",
+      "description": "ForcedSkin 向けカスタムテーマの設計方法: JSON 構造、パレットフィールド、提出フロー。",
+      "og_title": "テーマ作成ガイド — ForcedSkin",
+      "og_description": "カラーフィールド仕様、グラデーション、コミュニティテーマの公開方法。"
+    },
+    "guide_adapter": {
+      "title": "アダプター開発ガイド",
+      "description": "ForcedSkin アダプターは宣言型 JSON formula (forcedskin-adapter-formula/v1): マッチングルールと layer。",
+      "og_title": "アダプター開発ガイド — ForcedSkin",
+      "og_description": "宣言型アダプター JSON、hostname マッチング、提出フロー。"
+    }
+  }
+}

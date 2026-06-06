@@ -2,9 +2,8 @@
 const { data, status, signOut } = useAuth();
 const themeStore = useThemeStore();
 const route = useRoute();
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const localePath = useLocalePath();
-const switchLocalePath = useSwitchLocalePath();
 
 const isLoggedIn = computed(() => status.value === "authenticated");
 const user = computed(() => data.value?.user as { name?: string; email?: string; image?: string; roles?: string } | undefined);
@@ -27,12 +26,6 @@ function navActive(path: string) {
     return cur === target;
   }
   return cur === target || cur.startsWith(`${target}/`);
-}
-
-function toggleLocale() {
-  const next = locale.value === "en" ? "zh" : "en";
-  const href = switchLocalePath(next as "zh" | "en");
-  if (href) navigateTo(href);
 }
 
 onMounted(() => {
@@ -67,14 +60,7 @@ onMounted(() => {
         </nav>
 
         <div class="ml-auto flex items-center gap-1.5">
-          <!-- 语言切换 -->
-          <button
-            @click="toggleLocale"
-            class="px-2.5 py-1 rounded-lg text-xs font-semibold border border-border text-muted hover:text-foreground hover:bg-surface-muted transition-colors"
-            :title="locale === 'en' ? '切换到中文' : 'Switch to English'"
-          >
-            {{ locale === 'en' ? '中文' : 'EN' }}
-          </button>
+          <AppLocaleSwitcher />
 
           <!-- 亮/暗切换 -->
           <button

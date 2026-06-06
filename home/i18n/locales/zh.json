@@ -25,7 +25,9 @@
     "desc": "{brand} 无需网站支持，强制覆盖任意页面的背景与文字颜色，亮色 / 暗色自由切换，登录后跨设备同步。",
     "cta_themes": "🎨 浏览主题市场",
     "cta_login": "免费注册 / 登录",
+    "cta_extension": "添加到 Chrome",
     "browser_note": "支持 Chrome · Edge · Arc 等 Chromium 内核浏览器",
+    "chrome_store_link": "前往 Chrome 应用商店安装",
     "popular": {
       "title": "热门主题",
       "subtitle": "精选亮色与暗色方案，预览后一键收藏应用",
@@ -45,7 +47,8 @@
       "title": "立即开始使用 ForcedSkin",
       "desc": "免费注册，收藏你喜欢的主题，安装扩展后登录即可同步",
       "btn_login": "免费注册 / 登录",
-      "btn_themes": "浏览主题市场"
+      "btn_themes": "浏览主题市场",
+      "btn_extension": "安装 Chrome 扩展"
     }
   },
   "themes": {
@@ -156,6 +159,7 @@
     "favorites_count": "{n} 收藏"
   },
   "common": {
+    "language": "语言",
     "loading": "加载中…",
     "no_data": "暂无数据",
     "view_more": "浏览更多"
