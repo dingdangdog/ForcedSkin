@@ -1,0 +1,338 @@
+{
+  "extName": {
+    "message": "ForcedSkin — Web テーマ切り替え"
+  },
+  "extShortName": {
+    "message": "ForcedSkin"
+  },
+  "extDescription": {
+    "message": "お気に入りのライトまたはダークカラーテーマを任意のウェブサイトに適用できます。forcedskin.com にログインすると、カスタムテーマをデバイス間で同期できます。"
+  },
+  "logoutTitle": {
+    "message": "サインアウト"
+  },
+  "optionLight": {
+    "message": "ライトテーマ"
+  },
+  "optionDark": {
+    "message": "ダークテーマ"
+  },
+  "optionAuto": {
+    "message": "自動"
+  },
+  "optionAutoSub": {
+    "message": "ローカル時間：約 6:00–18:00 はライト、それ以外はダーク"
+  },
+  "optionOff": {
+    "message": "無効"
+  },
+  "optionOffSub": {
+    "message": "サイトの元のスタイルを維持"
+  },
+  "currentSite": {
+    "message": "現在のサイト"
+  },
+  "whitelistStatus": {
+    "message": "ホワイトリスト："
+  },
+  "whitelistAdded": {
+    "message": "追加済み"
+  },
+  "whitelistNotAdded": {
+    "message": "未追加"
+  },
+  "whitelistNotApplicable": {
+    "message": "該当なし"
+  },
+  "addWhitelist": {
+    "message": "ホワイトリストに追加"
+  },
+  "removeWhitelist": {
+    "message": "ホワイトリストから削除"
+  },
+  "currentStatus": {
+    "message": "ステータス：{mode}"
+  },
+  "statusLight": {
+    "message": "ライトテーマ"
+  },
+  "statusDark": {
+    "message": "ダークテーマ"
+  },
+  "statusOff": {
+    "message": "無効"
+  },
+  "addedToWhitelist": {
+    "message": "ホワイトリストに追加しました：{host}"
+  },
+  "removedFromWhitelist": {
+    "message": "ホワイトリストから削除しました：{host}"
+  },
+  "siteNotApplicable": {
+    "message": "認識できないウェブサイトです"
+  },
+  "loginPrompt": {
+    "message": "ログインしてテーマを同期"
+  },
+  "loginBtnOauth": {
+    "message": "GitHub / Google で続行"
+  },
+  "loggingInOauth": {
+    "message": "サインイン画面を開いています…"
+  },
+  "loginSuccessOauth": {
+    "message": "サインイン完了、テーマを同期しました"
+  },
+  "loginFailOauth": {
+    "message": "サインインに失敗しました。もう一度お試しください"
+  },
+  "accountThemes": {
+    "message": "アカウントのテーマ"
+  },
+  "syncLight": {
+    "message": "☀️ ライト"
+  },
+  "syncDark": {
+    "message": "🌙 ダーク"
+  },
+  "syncDefault": {
+    "message": "デフォルト"
+  },
+  "syncBtn": {
+    "message": "テーマを同期"
+  },
+  "syncing": {
+    "message": "同期中…"
+  },
+  "synced": {
+    "message": "テーマを同期しました"
+  },
+  "syncFailed": {
+    "message": "同期に失敗しました"
+  },
+  "loggedOut": {
+    "message": "サインアウトしました"
+  },
+  "pickLightTheme": {
+    "message": "ライトの外観"
+  },
+  "pickDarkTheme": {
+    "message": "ダークの外観"
+  },
+  "guestNickname": {
+    "message": "ゲスト"
+  },
+  "openOfficialSite": {
+    "message": "forcedskin.com を開く"
+  },
+  "tabThemes": {
+    "message": "テーマ"
+  },
+  "tabWhitelist": {
+    "message": "ホワイトリスト"
+  },
+  "tabAccount": {
+    "message": "アカウント"
+  },
+  "panelThemesLead": {
+    "message": "モードを選択してください（時間帯に応じた自動も含む）。ライト／ダークのシェブロンをクリックすると展開し、グリッドからパレットを選べます。"
+  },
+  "panelWhitelistLead": {
+    "message": "ホワイトリストに登録されたサイトは、元のスタイルのまま表示されます。"
+  },
+  "whitelistEditorLabel": {
+    "message": "ドメイン（カンマ区切り）"
+  },
+  "whitelistPlaceholder": {
+    "message": "例：example.com, foo.org"
+  },
+  "whitelistHintComma": {
+    "message": "ドメインの間は英語のカンマ , で区切ってください。プロトコルやパスは除去され、重複は自動で統合されます。"
+  },
+  "saveWhitelist": {
+    "message": "ホワイトリストを保存"
+  },
+  "whitelistSaved": {
+    "message": "ホワイトリストを保存しました"
+  },
+  "accountMyThemesTitle": {
+    "message": "マイテーマ"
+  },
+  "tagThemeLight": {
+    "message": "ライト"
+  },
+  "tagThemeDark": {
+    "message": "ダーク"
+  },
+  "accountMyThemesEmpty": {
+    "message": "テーマカタログはまだありません — 「テーマを同期」を使用してください"
+  },
+  "accountAdaptersTitle": {
+    "message": "サイトアダプター"
+  },
+  "syncAdaptersBtn": {
+    "message": "アダプターを更新"
+  },
+  "syncingAdapters": {
+    "message": "更新中…"
+  },
+  "adaptersSynced": {
+    "message": "アダプターを更新しました（$1）"
+  },
+  "adaptersSyncFailed": {
+    "message": "アダプターの更新に失敗しました"
+  },
+  "accountAdaptersEmpty": {
+    "message": "キャッシュされたアダプターはありません — 「アダプターを更新」をタップしてください"
+  },
+  "accountThemeOverview": {
+    "message": "すべてのパレット"
+  },
+  "overviewLight": {
+    "message": "ライトパレット"
+  },
+  "overviewDark": {
+    "message": "ダークパレット"
+  },
+  "accountSyncedTitle": {
+    "message": "アカウントと同期済み"
+  },
+  "expandPickLight": {
+    "message": "ライトテーマを展開または折りたたむ"
+  },
+  "expandPickDark": {
+    "message": "ダークテーマを展開または折りたたむ"
+  },
+  "pickedPaletteLabel": {
+    "message": "使用中のパレット"
+  },
+  "themeInternalId": {
+    "message": "ID"
+  },
+  "tabBuilder": {
+    "message": "ビルダー"
+  },
+  "panelBuilderLead": {
+    "message": "ページ上の問題箇所を選択し、問題を説明してください。管理者がアダプターを実装します。"
+  },
+  "builderStep1": {
+    "message": "下の「選択を開始」をクリックし、ページ上の要素にマウスを重ねてハイライトしてください"
+  },
+  "builderStep2": {
+    "message": "ページ上の問題箇所をクリックしてください（複数選択できます）"
+  },
+  "builderStep3": {
+    "message": "見えている問題と期待する結果をわかりやすい言葉で説明し、送信してください"
+  },
+  "startPicking": {
+    "message": "選択を開始"
+  },
+  "builderEscHint": {
+    "message": "選択中：Esc で終了するか、下の「選択モードを終了」をタップしてください。Esc はページにフォーカスがあるときに最も確実に動作します。"
+  },
+  "stopPicking": {
+    "message": "選択モードを終了"
+  },
+  "exitBuilderEdit": {
+    "message": "この編集を終了"
+  },
+  "builderEditExited": {
+    "message": "この編集を終了しました。選択した領域と説明はクリアされました。"
+  },
+  "builderPickCancelled": {
+    "message": "選択モードを終了しました"
+  },
+  "pickMore": {
+    "message": "さらに選択"
+  },
+  "testFormula": {
+    "message": "ページでテスト"
+  },
+  "formulaPreview": {
+    "message": "フォーミュラプレビュー"
+  },
+  "copyFormula": {
+    "message": "コピー"
+  },
+  "saveDraft": {
+    "message": "下書きを保存"
+  },
+  "submitAdapter": {
+    "message": "アダプターリクエストを送信"
+  },
+  "draftSaved": {
+    "message": "下書きを保存しました"
+  },
+  "submitOk": {
+    "message": "リクエストを送信しました。管理者が説明に基づいてアダプターを実装します。"
+  },
+  "submitOkWithPoints": {
+    "message": "リクエストを送信しました（+$1 ポイント）。管理者が説明に基づいてアダプターを実装します。"
+  },
+  "submitOkExisting": {
+    "message": "送信しました。このドメインには既に稼働中のアダプターがあります。管理者が既存のものに統合できます。"
+  },
+  "submitLoginRequired": {
+    "message": "先にアカウントタブでサインインしてください"
+  },
+  "accountPointsSummary": {
+    "message": "ポイント：$1（ウェブサイトのアカウントページで履歴を確認できます）"
+  },
+  "builderElementCount": {
+    "message": "{count} 個の要素を選択済み"
+  },
+  "builderFeedbackLabel": {
+    "message": "問題の説明（必須）"
+  },
+  "builderFeedbackPlaceholder": {
+    "message": "例：ダークモードで選択テキストが読めない。ボタンのホバーで明るい背景に白文字になる。コメント欄が明るすぎて読みにくい。"
+  },
+  "builderFeedbackTooShort": {
+    "message": "もう少し具体的に記入してください（6 文字以上）"
+  },
+  "builderPickedRecovered": {
+    "message": "選択した領域を {1} 件復元しました。問題の説明を続けてください。"
+  },
+  "layerKindSurface": {
+    "message": "surface - 汎用コンテナ"
+  },
+  "layerKindAccent": {
+    "message": "accent - ハイライト／選択中"
+  },
+  "layerKindCanvas": {
+    "message": "canvas - 背景アート"
+  },
+  "layerKindRichText": {
+    "message": "richText - リッチテキスト"
+  },
+  "layerKindSvgRecolor": {
+    "message": "svgRecolor - アイコンの色変更"
+  },
+  "builderFormulaCopied": {
+    "message": "フォーミュラをクリップボードにコピーしました"
+  },
+  "builderTestApplied": {
+    "message": "テストスタイルをページに適用しました"
+  },
+  "builderPickingStarted": {
+    "message": "選択モードを開始しました。ページに戻り、対象の要素をクリックしてください。"
+  },
+  "builderNoElements": {
+    "message": "先に要素を 1 つ以上選択してください"
+  },
+  "builderDomainEmpty": {
+    "message": "対象サイトのドメインを入力してください"
+  },
+  "builderCurrentSitePrefix": {
+    "message": "現在のページ："
+  },
+  "builderSiteUnavailable": {
+    "message": "現在のページのホスト名を取得できません。通常の https ページで拡張機能を開いてから送信してください（ストアページ、空白タブなどは不可）。"
+  },
+  "builderDomainLabel": {
+    "message": "対象サイトのドメイン"
+  },
+  "builderDomainPlaceholder": {
+    "message": "例：example.com"
+  }
+}

@@ -2,6 +2,8 @@
 const i18n = (key, substitutions) => chrome.i18n.getMessage(key, substitutions) || key;
 
 function applyI18n() {
+  const uiLang = chrome.i18n.getUILanguage?.() || "en";
+  document.documentElement.lang = uiLang.replace("_", "-");
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
     const msg = i18n(key);

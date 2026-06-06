@@ -1,0 +1,338 @@
+{
+  "extName": {
+    "message": "ForcedSkin — Web-Theme-Umschalter"
+  },
+  "extShortName": {
+    "message": "ForcedSkin"
+  },
+  "extDescription": {
+    "message": "Wende dein bevorzugtes helles oder dunkles Farbtheme auf jede Website an. Melde dich bei forcedskin.com an, um benutzerdefinierte Themes geräteübergreifend zu synchronisieren."
+  },
+  "logoutTitle": {
+    "message": "Abmelden"
+  },
+  "optionLight": {
+    "message": "Helles Theme"
+  },
+  "optionDark": {
+    "message": "Dunkles Theme"
+  },
+  "optionAuto": {
+    "message": "Automatisch"
+  },
+  "optionAutoSub": {
+    "message": "Ortszeit: hell ~6:00–18:00, sonst dunkel"
+  },
+  "optionOff": {
+    "message": "Deaktiviert"
+  },
+  "optionOffSub": {
+    "message": "Originalstil der Website beibehalten"
+  },
+  "currentSite": {
+    "message": "Aktuelle Website"
+  },
+  "whitelistStatus": {
+    "message": "Whitelist:"
+  },
+  "whitelistAdded": {
+    "message": "Hinzugefügt"
+  },
+  "whitelistNotAdded": {
+    "message": "Nicht hinzugefügt"
+  },
+  "whitelistNotApplicable": {
+    "message": "N/A"
+  },
+  "addWhitelist": {
+    "message": "Zur Whitelist hinzufügen"
+  },
+  "removeWhitelist": {
+    "message": "Von Whitelist entfernen"
+  },
+  "currentStatus": {
+    "message": "Status: {mode}"
+  },
+  "statusLight": {
+    "message": "Helles Theme"
+  },
+  "statusDark": {
+    "message": "Dunkles Theme"
+  },
+  "statusOff": {
+    "message": "Deaktiviert"
+  },
+  "addedToWhitelist": {
+    "message": "Zur Whitelist hinzugefügt: {host}"
+  },
+  "removedFromWhitelist": {
+    "message": "Von Whitelist entfernt: {host}"
+  },
+  "siteNotApplicable": {
+    "message": "Keine erkannte Website"
+  },
+  "loginPrompt": {
+    "message": "Anmelden, um Themes zu synchronisieren"
+  },
+  "loginBtnOauth": {
+    "message": "Mit GitHub / Google fortfahren"
+  },
+  "loggingInOauth": {
+    "message": "Anmeldefenster wird geöffnet…"
+  },
+  "loginSuccessOauth": {
+    "message": "Angemeldet, Theme synchronisiert"
+  },
+  "loginFailOauth": {
+    "message": "Anmeldung fehlgeschlagen, bitte erneut versuchen"
+  },
+  "accountThemes": {
+    "message": "Konto-Themes"
+  },
+  "syncLight": {
+    "message": "☀️ Hell"
+  },
+  "syncDark": {
+    "message": "🌙 Dunkel"
+  },
+  "syncDefault": {
+    "message": "Standard"
+  },
+  "syncBtn": {
+    "message": "Themes synchronisieren"
+  },
+  "syncing": {
+    "message": "Synchronisiere…"
+  },
+  "synced": {
+    "message": "Theme synchronisiert"
+  },
+  "syncFailed": {
+    "message": "Synchronisierung fehlgeschlagen"
+  },
+  "loggedOut": {
+    "message": "Abgemeldet"
+  },
+  "pickLightTheme": {
+    "message": "Helles Erscheinungsbild"
+  },
+  "pickDarkTheme": {
+    "message": "Dunkles Erscheinungsbild"
+  },
+  "guestNickname": {
+    "message": "Gast"
+  },
+  "openOfficialSite": {
+    "message": "forcedskin.com öffnen"
+  },
+  "tabThemes": {
+    "message": "Themes"
+  },
+  "tabWhitelist": {
+    "message": "Whitelist"
+  },
+  "tabAccount": {
+    "message": "Konto"
+  },
+  "panelThemesLead": {
+    "message": "Wähle einen Modus (einschließlich zeitbasierter Automatik). Klicke auf den Chevron bei Hell/Dunkel, um die Palette aus dem Raster auszuwählen."
+  },
+  "panelWhitelistLead": {
+    "message": "Websites auf der Whitelist behalten ihre Originalstile."
+  },
+  "whitelistEditorLabel": {
+    "message": "Domains (durch Kommas getrennt)"
+  },
+  "whitelistPlaceholder": {
+    "message": "z. B. example.com, foo.org"
+  },
+  "whitelistHintComma": {
+    "message": "Verwende englische Kommas , zwischen Domains. Protokolle/Pfade werden entfernt und Einträge dedupliziert."
+  },
+  "saveWhitelist": {
+    "message": "Whitelist speichern"
+  },
+  "whitelistSaved": {
+    "message": "Whitelist gespeichert"
+  },
+  "accountMyThemesTitle": {
+    "message": "Meine Themes"
+  },
+  "tagThemeLight": {
+    "message": "Hell"
+  },
+  "tagThemeDark": {
+    "message": "Dunkel"
+  },
+  "accountMyThemesEmpty": {
+    "message": "Noch kein Theme-Katalog — verwende „Themes synchronisieren“"
+  },
+  "accountAdaptersTitle": {
+    "message": "Website-Adapter"
+  },
+  "syncAdaptersBtn": {
+    "message": "Adapter aktualisieren"
+  },
+  "syncingAdapters": {
+    "message": "Wird aktualisiert…"
+  },
+  "adaptersSynced": {
+    "message": "Adapter aktualisiert ($1)"
+  },
+  "adaptersSyncFailed": {
+    "message": "Adapter-Aktualisierung fehlgeschlagen"
+  },
+  "accountAdaptersEmpty": {
+    "message": "Keine zwischengespeicherten Adapter — tippe auf „Adapter aktualisieren“"
+  },
+  "accountThemeOverview": {
+    "message": "Alle Paletten"
+  },
+  "overviewLight": {
+    "message": "Helle Paletten"
+  },
+  "overviewDark": {
+    "message": "Dunkle Paletten"
+  },
+  "accountSyncedTitle": {
+    "message": "Mit Konto synchronisiert"
+  },
+  "expandPickLight": {
+    "message": "Helle Themes ein- oder ausklappen"
+  },
+  "expandPickDark": {
+    "message": "Dunkle Themes ein- oder ausklappen"
+  },
+  "pickedPaletteLabel": {
+    "message": "Aktive Palette"
+  },
+  "themeInternalId": {
+    "message": "ID"
+  },
+  "tabBuilder": {
+    "message": "Builder"
+  },
+  "panelBuilderLead": {
+    "message": "Wähle problematische Bereiche auf der Seite aus und beschreibe das Problem. Ein Admin implementiert den Adapter für dich."
+  },
+  "builderStep1": {
+    "message": "Klicke unten auf „Auswahl starten“, bewege dann den Mauszeiger über Elemente auf der Seite, um sie hervorzuheben"
+  },
+  "builderStep2": {
+    "message": "Klicke auf problematische Bereiche auf der Seite (mehrere Auswahlen möglich)"
+  },
+  "builderStep3": {
+    "message": "Beschreibe das sichtbare Problem und das erwartete Ergebnis in einfachen Worten und sende ab"
+  },
+  "startPicking": {
+    "message": "Auswahl starten"
+  },
+  "builderEscHint": {
+    "message": "Auswahlmodus: Drücke Esc zum Beenden oder tippe unten auf „Auswahlmodus beenden“. Esc funktioniert am besten, wenn der Fokus auf der Seite liegt."
+  },
+  "stopPicking": {
+    "message": "Auswahlmodus beenden"
+  },
+  "exitBuilderEdit": {
+    "message": "Diese Bearbeitung beenden"
+  },
+  "builderEditExited": {
+    "message": "Bearbeitung beendet. Aktuelle Auswahlen und Beschreibung wurden gelöscht."
+  },
+  "builderPickCancelled": {
+    "message": "Auswahlmodus beendet"
+  },
+  "pickMore": {
+    "message": "Weitere auswählen"
+  },
+  "testFormula": {
+    "message": "Auf Seite testen"
+  },
+  "formulaPreview": {
+    "message": "Formelvorschau"
+  },
+  "copyFormula": {
+    "message": "Kopieren"
+  },
+  "saveDraft": {
+    "message": "Entwurf speichern"
+  },
+  "submitAdapter": {
+    "message": "Adapter-Anfrage senden"
+  },
+  "draftSaved": {
+    "message": "Entwurf gespeichert"
+  },
+  "submitOk": {
+    "message": "Anfrage gesendet. Ein Admin implementiert einen Adapter basierend auf deiner Beschreibung."
+  },
+  "submitOkWithPoints": {
+    "message": "Anfrage gesendet (+$1 Punkte). Ein Admin implementiert einen Adapter basierend auf deiner Beschreibung."
+  },
+  "submitOkExisting": {
+    "message": "Gesendet. Diese Domain hat bereits live Adapter; ein Admin kann sie in einen bestehenden integrieren."
+  },
+  "submitLoginRequired": {
+    "message": "Bitte melde dich zuerst auf dem Konto-Tab an"
+  },
+  "accountPointsSummary": {
+    "message": "Punkte: $1 (Transaktionsverlauf auf der Website-Kontoseite ansehen)"
+  },
+  "builderElementCount": {
+    "message": "{count} Elemente ausgewählt"
+  },
+  "builderFeedbackLabel": {
+    "message": "Problembeschreibung (erforderlich)"
+  },
+  "builderFeedbackPlaceholder": {
+    "message": "Beispiel: Im Dunkelmodus ist markierter Text unleserlich; beim Hover über Buttons wird Text weiß auf hellem Hintergrund; der Kommentarbereich ist zu hell und erschwert das Lesen."
+  },
+  "builderFeedbackTooShort": {
+    "message": "Bitte gib eine genauere Beschreibung an (mindestens 6 Zeichen)"
+  },
+  "builderPickedRecovered": {
+    "message": "{1} ausgewählte Bereich(e) wiederhergestellt. Fahre mit der Problembeschreibung fort."
+  },
+  "layerKindSurface": {
+    "message": "surface - allgemeiner Container"
+  },
+  "layerKindAccent": {
+    "message": "accent - hervorgehoben/ausgewählt"
+  },
+  "layerKindCanvas": {
+    "message": "canvas - Hintergrundgrafik"
+  },
+  "layerKindRichText": {
+    "message": "richText - Rich Text"
+  },
+  "layerKindSvgRecolor": {
+    "message": "svgRecolor - Symbol-Umfärbung"
+  },
+  "builderFormulaCopied": {
+    "message": "Formel in Zwischenablage kopiert"
+  },
+  "builderTestApplied": {
+    "message": "Teststile auf Seite angewendet"
+  },
+  "builderPickingStarted": {
+    "message": "Auswahlmodus gestartet. Kehre zur Seite zurück und klicke auf Zielelemente."
+  },
+  "builderNoElements": {
+    "message": "Wähle zuerst mindestens ein Element aus"
+  },
+  "builderDomainEmpty": {
+    "message": "Bitte gib die Ziel-Domain ein"
+  },
+  "builderCurrentSitePrefix": {
+    "message": "Aktuelle Seite: "
+  },
+  "builderSiteUnavailable": {
+    "message": "Hostname der aktuellen Seite kann nicht gelesen werden. Öffne die Erweiterung auf einer normalen https-Seite zum Senden (keine Store-Seiten, leere Tabs usw.)."
+  },
+  "builderDomainLabel": {
+    "message": "Ziel-Domain"
+  },
+  "builderDomainPlaceholder": {
+    "message": "z. B. example.com"
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "extName": {
+    "message": "ForcedSkin — Cambiador de tema web"
+  },
+  "extShortName": {
+    "message": "ForcedSkin"
+  },
+  "extDescription": {
+    "message": "Aplica tu tema claro u oscuro favorito en cualquier sitio web. Inicia sesión en forcedskin.com para sincronizar temas personalizados entre dispositivos."
+  },
+  "logoutTitle": {
+    "message": "Cerrar sesión"
+  },
+  "optionLight": {
+    "message": "Tema claro"
+  },
+  "optionDark": {
+    "message": "Tema oscuro"
+  },
+  "optionAuto": {
+    "message": "Automático"
+  },
+  "optionAutoSub": {
+    "message": "Hora local: claro ~6:00–18:00, oscuro el resto"
+  },
+  "optionOff": {
+    "message": "Desactivado"
+  },
+  "optionOffSub": {
+    "message": "Mantener el estilo original del sitio"
+  },
+  "currentSite": {
+    "message": "Sitio actual"
+  },
+  "whitelistStatus": {
+    "message": "Lista blanca:"
+  },
+  "whitelistAdded": {
+    "message": "Añadido"
+  },
+  "whitelistNotAdded": {
+    "message": "No añadido"
+  },
+  "whitelistNotApplicable": {
+    "message": "N/D"
+  },
+  "addWhitelist": {
+    "message": "Añadir a la lista blanca"
+  },
+  "removeWhitelist": {
+    "message": "Quitar de la lista blanca"
+  },
+  "currentStatus": {
+    "message": "Estado: {mode}"
+  },
+  "statusLight": {
+    "message": "Tema claro"
+  },
+  "statusDark": {
+    "message": "Tema oscuro"
+  },
+  "statusOff": {
+    "message": "Desactivado"
+  },
+  "addedToWhitelist": {
+    "message": "Añadido a la lista blanca: {host}"
+  },
+  "removedFromWhitelist": {
+    "message": "Quitado de la lista blanca: {host}"
+  },
+  "siteNotApplicable": {
+    "message": "No es un sitio web reconocido"
+  },
+  "loginPrompt": {
+    "message": "Inicia sesión para sincronizar temas"
+  },
+  "loginBtnOauth": {
+    "message": "Continuar con GitHub / Google"
+  },
+  "loggingInOauth": {
+    "message": "Abriendo ventana de inicio de sesión…"
+  },
+  "loginSuccessOauth": {
+    "message": "Sesión iniciada, tema sincronizado"
+  },
+  "loginFailOauth": {
+    "message": "Error al iniciar sesión, inténtalo de nuevo"
+  },
+  "accountThemes": {
+    "message": "Temas de la cuenta"
+  },
+  "syncLight": {
+    "message": "☀️ Claro"
+  },
+  "syncDark": {
+    "message": "🌙 Oscuro"
+  },
+  "syncDefault": {
+    "message": "Predeterminado"
+  },
+  "syncBtn": {
+    "message": "Sincronizar temas"
+  },
+  "syncing": {
+    "message": "Sincronizando…"
+  },
+  "synced": {
+    "message": "Tema sincronizado"
+  },
+  "syncFailed": {
+    "message": "Error de sincronización"
+  },
+  "loggedOut": {
+    "message": "Sesión cerrada"
+  },
+  "pickLightTheme": {
+    "message": "Apariencia clara"
+  },
+  "pickDarkTheme": {
+    "message": "Apariencia oscura"
+  },
+  "guestNickname": {
+    "message": "Invitado"
+  },
+  "openOfficialSite": {
+    "message": "Abrir forcedskin.com"
+  },
+  "tabThemes": {
+    "message": "Temas"
+  },
+  "tabWhitelist": {
+    "message": "Lista blanca"
+  },
+  "tabAccount": {
+    "message": "Cuenta"
+  },
+  "panelThemesLead": {
+    "message": "Elige un modo (incluido el automático por horario). Usa la flecha en Claro/Oscuro para expandir y elegir una paleta de la cuadrícula."
+  },
+  "panelWhitelistLead": {
+    "message": "Los sitios en la lista blanca conservan sus estilos originales."
+  },
+  "whitelistEditorLabel": {
+    "message": "Dominios (separados por comas)"
+  },
+  "whitelistPlaceholder": {
+    "message": "p. ej. example.com, foo.org"
+  },
+  "whitelistHintComma": {
+    "message": "Usa comas inglesas , entre dominios. Se eliminan protocolos/rutas y se deduplican las entradas."
+  },
+  "saveWhitelist": {
+    "message": "Guardar lista blanca"
+  },
+  "whitelistSaved": {
+    "message": "Lista blanca guardada"
+  },
+  "accountMyThemesTitle": {
+    "message": "Mis temas"
+  },
+  "tagThemeLight": {
+    "message": "Claro"
+  },
+  "tagThemeDark": {
+    "message": "Oscuro"
+  },
+  "accountMyThemesEmpty": {
+    "message": "Aún no hay catálogo de temas — usa Sincronizar temas"
+  },
+  "accountAdaptersTitle": {
+    "message": "Adaptadores de sitio"
+  },
+  "syncAdaptersBtn": {
+    "message": "Actualizar adaptadores"
+  },
+  "syncingAdapters": {
+    "message": "Actualizando…"
+  },
+  "adaptersSynced": {
+    "message": "Adaptadores actualizados ($1)"
+  },
+  "adaptersSyncFailed": {
+    "message": "Error al actualizar adaptadores"
+  },
+  "accountAdaptersEmpty": {
+    "message": "No hay adaptadores en caché — pulsa Actualizar adaptadores"
+  },
+  "accountThemeOverview": {
+    "message": "Todas las paletas"
+  },
+  "overviewLight": {
+    "message": "Paletas claras"
+  },
+  "overviewDark": {
+    "message": "Paletas oscuras"
+  },
+  "accountSyncedTitle": {
+    "message": "Sincronizado con la cuenta"
+  },
+  "expandPickLight": {
+    "message": "Expandir o contraer temas claros"
+  },
+  "expandPickDark": {
+    "message": "Expandir o contraer temas oscuros"
+  },
+  "pickedPaletteLabel": {
+    "message": "Paleta activa"
+  },
+  "themeInternalId": {
+    "message": "ID"
+  },
+  "tabBuilder": {
+    "message": "Constructor"
+  },
+  "panelBuilderLead": {
+    "message": "Selecciona las zonas problemáticas de la página y describe el problema. El administrador implementará el adaptador por ti."
+  },
+  "builderStep1": {
+    "message": "Haz clic en «Iniciar selección» abajo y pasa el cursor sobre los elementos de la página para resaltarlos"
+  },
+  "builderStep2": {
+    "message": "Haz clic en las zonas problemáticas de la página (puedes seleccionar varias)"
+  },
+  "builderStep3": {
+    "message": "Describe el problema visible y el resultado esperado en lenguaje sencillo y envía la solicitud"
+  },
+  "startPicking": {
+    "message": "Iniciar selección"
+  },
+  "builderEscHint": {
+    "message": "Selección: pulsa Esc para salir o «Salir del modo selección» abajo. Esc funciona mejor cuando el foco está en la página."
+  },
+  "stopPicking": {
+    "message": "Salir del modo selección"
+  },
+  "exitBuilderEdit": {
+    "message": "Salir de esta edición"
+  },
+  "builderEditExited": {
+    "message": "Edición abandonada. Se han borrado las áreas seleccionadas y la descripción."
+  },
+  "builderPickCancelled": {
+    "message": "Modo selección cerrado"
+  },
+  "pickMore": {
+    "message": "Seleccionar más"
+  },
+  "testFormula": {
+    "message": "Probar en la página"
+  },
+  "formulaPreview": {
+    "message": "Vista previa de la fórmula"
+  },
+  "copyFormula": {
+    "message": "Copiar"
+  },
+  "saveDraft": {
+    "message": "Guardar borrador"
+  },
+  "submitAdapter": {
+    "message": "Enviar solicitud de adaptador"
+  },
+  "draftSaved": {
+    "message": "Borrador guardado"
+  },
+  "submitOk": {
+    "message": "Solicitud enviada. El administrador implementará un adaptador según tu descripción."
+  },
+  "submitOkWithPoints": {
+    "message": "Solicitud enviada (+$1 puntos). El administrador implementará un adaptador según tu descripción."
+  },
+  "submitOkExisting": {
+    "message": "Enviado. Este dominio ya tiene adaptador(es) activo(s); un administrador puede fusionarlo con uno existente."
+  },
+  "submitLoginRequired": {
+    "message": "Inicia sesión primero en la pestaña Cuenta"
+  },
+  "accountPointsSummary": {
+    "message": "Puntos: $1 (consulta el historial en la página de cuenta del sitio web)"
+  },
+  "builderElementCount": {
+    "message": "{count} elementos seleccionados"
+  },
+  "builderFeedbackLabel": {
+    "message": "Descripción del problema (obligatorio)"
+  },
+  "builderFeedbackPlaceholder": {
+    "message": "Ejemplo: en modo oscuro, el texto seleccionado es ilegible; al pasar el cursor sobre un botón, el texto se vuelve blanco sobre fondo claro; la zona de comentarios es demasiado brillante y dificulta la lectura."
+  },
+  "builderFeedbackTooShort": {
+    "message": "Proporciona una solicitud más específica (al menos 6 caracteres)"
+  },
+  "builderPickedRecovered": {
+    "message": "Recuperada(s) {1} área(s) seleccionada(s). Continúa escribiendo la descripción del problema."
+  },
+  "layerKindSurface": {
+    "message": "surface - contenedor genérico"
+  },
+  "layerKindAccent": {
+    "message": "accent - resaltado/seleccionado"
+  },
+  "layerKindCanvas": {
+    "message": "canvas - arte de fondo"
+  },
+  "layerKindRichText": {
+    "message": "richText - texto enriquecido"
+  },
+  "layerKindSvgRecolor": {
+    "message": "svgRecolor - recolorar iconos"
+  },
+  "builderFormulaCopied": {
+    "message": "Fórmula copiada al portapapeles"
+  },
+  "builderTestApplied": {
+    "message": "Estilos de prueba aplicados en la página"
+  },
+  "builderPickingStarted": {
+    "message": "Modo selección iniciado. Vuelve a la página y haz clic en los elementos objetivo."
+  },
+  "builderNoElements": {
+    "message": "Selecciona al menos un elemento primero"
+  },
+  "builderDomainEmpty": {
+    "message": "Introduce el dominio del sitio objetivo"
+  },
+  "builderCurrentSitePrefix": {
+    "message": "Página actual: "
+  },
+  "builderSiteUnavailable": {
+    "message": "No se puede leer el nombre de host de la página actual. Abre la extensión en una página https normal para enviar (no páginas de tienda, pestañas en blanco, etc.)."
+  },
+  "builderDomainLabel": {
+    "message": "Dominio del sitio objetivo"
+  },
+  "builderDomainPlaceholder": {
+    "message": "p. ej. example.com"
+  }
+}
