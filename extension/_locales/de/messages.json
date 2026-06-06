@@ -8,6 +8,9 @@
   "extDescription": {
     "message": "Wende dein bevorzugtes helles oder dunkles Farbtheme auf jede Website an. Melde dich bei forcedskin.com an, um benutzerdefinierte Themes geräteübergreifend zu synchronisieren."
   },
+  "language": {
+    "message": "Sprache"
+  },
   "logoutTitle": {
     "message": "Abmelden"
   },
@@ -72,7 +75,7 @@
     "message": "Keine erkannte Website"
   },
   "loginPrompt": {
-    "message": "Anmelden, um Themes zu synchronisieren"
+    "message": "Bei forcedskin.com anmelden, um Themes zu synchronisieren"
   },
   "loginBtnOauth": {
     "message": "Mit GitHub / Google fortfahren"
@@ -135,7 +138,7 @@
     "message": "Konto"
   },
   "panelThemesLead": {
-    "message": "Wähle einen Modus (einschließlich zeitbasierter Automatik). Klicke auf den Chevron bei Hell/Dunkel, um die Palette aus dem Raster auszuwählen."
+    "message": "Wähle einen Modus (einschließlich zeitbasierter Automatik)."
   },
   "panelWhitelistLead": {
     "message": "Websites auf der Whitelist behalten ihre Originalstile."
@@ -213,7 +216,7 @@
     "message": "Builder"
   },
   "panelBuilderLead": {
-    "message": "Wähle problematische Bereiche auf der Seite aus und beschreibe das Problem. Ein Admin implementiert den Adapter für dich."
+    "message": "Der Builder hilft dir, Anpassungsprobleme für bestimmte Websites zu melden. Schritte:"
   },
   "builderStep1": {
     "message": "Klicke unten auf „Auswahl starten“, bewege dann den Mauszeiger über Elemente auf der Seite, um sie hervorzuheben"
@@ -222,22 +225,19 @@
     "message": "Klicke auf problematische Bereiche auf der Seite (mehrere Auswahlen möglich)"
   },
   "builderStep3": {
-    "message": "Beschreibe das sichtbare Problem und das erwartete Ergebnis in einfachen Worten und sende ab"
+    "message": "Nach der Auswahl öffne das Erweiterungs-Popup erneut, um hierher zurückzukehren (beim Klick auf die Seite schließt sich das Popup)"
+  },
+  "builderStep4": {
+    "message": "Beschreibe das Problem und das gewünschte Ergebnis in einfachen Worten und sende die Anfrage"
   },
   "startPicking": {
     "message": "Auswahl starten"
   },
   "builderEscHint": {
-    "message": "Auswahlmodus: Drücke Esc zum Beenden oder tippe unten auf „Auswahlmodus beenden“. Esc funktioniert am besten, wenn der Fokus auf der Seite liegt."
+    "message": "Auswahlmodus: Drücke Esc zum Beenden oder tippe unten auf „Auswahlmodus beenden“."
   },
   "stopPicking": {
     "message": "Auswahlmodus beenden"
-  },
-  "exitBuilderEdit": {
-    "message": "Diese Bearbeitung beenden"
-  },
-  "builderEditExited": {
-    "message": "Bearbeitung beendet. Aktuelle Auswahlen und Beschreibung wurden gelöscht."
   },
   "builderPickCancelled": {
     "message": "Auswahlmodus beendet"

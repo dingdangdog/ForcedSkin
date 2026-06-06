@@ -73,6 +73,12 @@ body {
   border: 1px solid var(--popup-border);
 }
 
+.header-user--avatar-only {
+  max-width: none;
+  padding: 2px;
+  cursor: default;
+}
+
 .header-avatar {
   width: 28px;
   height: 28px;
@@ -96,6 +102,86 @@ body {
   font-size: 12px;
   font-weight: 600;
   color: var(--popup-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Locale switcher ───────────────────────────────────────── */
+.locale-switcher {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.locale-switcher__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: 8px;
+  border: 1px solid var(--popup-border);
+  background: var(--popup-surface);
+  color: var(--popup-fg);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.locale-switcher__btn:hover {
+  border-color: var(--popup-primary);
+  background: var(--popup-primary-soft);
+}
+
+.locale-switcher__flag {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.locale-switcher__chevron {
+  width: 14px;
+  height: 14px;
+  opacity: 0.55;
+}
+
+.locale-switcher__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 30;
+  min-width: 9.5rem;
+  padding: 4px 0;
+  border-radius: 10px;
+  border: 1px solid var(--popup-border);
+  background: var(--popup-surface);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.locale-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  background: transparent;
+  color: var(--popup-fg);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.locale-switcher__option:hover {
+  background: var(--popup-primary-soft);
+}
+
+.locale-switcher__option--active {
+  color: var(--popup-primary-strong);
+  font-weight: 600;
+}
+
+.locale-switcher__name {
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

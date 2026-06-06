@@ -8,6 +8,9 @@
   "extDescription": {
     "message": "为任意网站强制应用你喜欢的亮色或暗色主题。登录 forcedskin.com 跨设备同步主题。"
   },
+  "language": {
+    "message": "语言"
+  },
   "logoutTitle": {
     "message": "退出登录"
   },
@@ -72,7 +75,7 @@
     "message": "当前标签页不是可识别的网站"
   },
   "loginPrompt": {
-    "message": "使用 forcedskin.com OAuth 登录后可同步主题"
+    "message": "登录 forcedskin.com 后可同步主题"
   },
   "loginBtnOauth": {
     "message": "使用 GitHub / Google 登录"
@@ -135,7 +138,7 @@
     "message": "账号"
   },
   "panelThemesLead": {
-    "message": "选择要对网页生效的模式（含按本地时间自动切换）；点击亮/暗右侧箭头可展开，并在网格里挑选具体主题。"
+    "message": "选择要对网页生效的模式（含按本地时间自动切换）。"
   },
   "panelWhitelistLead": {
     "message": "列入白名单的网站将保持原样式，不参与强制换肤。"
@@ -213,7 +216,7 @@
     "message": "构建器"
   },
   "panelBuilderLead": {
-    "message": "在页面里点选“有问题”的区域，并描述问题现象，管理员将据此实现适配器。"
+    "message": "构建器用于帮助用户反馈特定网站的适配问题，具体用法步骤："
   },
   "builderStep1": {
     "message": "点击下方「开始选取」，鼠标移到目标元素上会高亮"
@@ -222,22 +225,19 @@
     "message": "点击页面中有问题的区域（可多选）"
   },
   "builderStep3": {
+    "message": "选取完成后，请手动重新打开本扩展弹窗回到此页面（在页面上点击时弹窗会自动关闭）"
+  },
+  "builderStep4": {
     "message": "用自然语言描述问题现象与期望结果，然后提交需求"
   },
   "startPicking": {
     "message": "开始选取元素"
   },
   "builderEscHint": {
-    "message": "选取中：按 Esc 退出；或点击下方「退出选取模式」。焦点在页面内时 Esc 最有效。"
+    "message": "选取中：按 Esc 退出；或点击下方「退出选取模式」。"
   },
   "stopPicking": {
     "message": "退出选取模式"
-  },
-  "exitBuilderEdit": {
-    "message": "退出本次编辑"
-  },
-  "builderEditExited": {
-    "message": "已退出本次编辑，已清空当前选区与描述"
   },
   "builderPickCancelled": {
     "message": "已退出选取模式"

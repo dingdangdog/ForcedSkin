@@ -1,25 +1,10 @@
 // ── i18n helpers ──────────────────────────────────────────────────────────────
-const i18n = (key, substitutions) => chrome.i18n.getMessage(key, substitutions) || key;
+const i18n = (key, substitutions) => PopupI18n.t(key, substitutions);
+const applyI18n = () => PopupI18n.applyI18n();
 
-function applyI18n() {
-  const uiLang = chrome.i18n.getUILanguage?.() || "en";
-  document.documentElement.lang = uiLang.replace("_", "-");
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.dataset.i18n;
-    const msg = i18n(key);
-    if (msg) el.textContent = msg;
-  });
-  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-    const key = el.dataset.i18nPlaceholder;
-    const msg = i18n(key);
-    if (msg) el.placeholder = msg;
-  });
-  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
-    const key = el.dataset.i18nTitle;
-    const msg = i18n(key);
-    if (msg) el.title = msg;
-  });
-}
+const localeSwitcherEl = document.getElementById("localeSwitcher");
+let cachedHeaderUser = null;
+let cachedAccountPoints = null;
 
 const OFFICIAL_SITE = "https://forcedskin.com";
 
@@ -33,7 +18,7 @@ const removeWhitelistBtn = document.getElementById("removeWhitelistBtn");
 
 const headerAvatar = document.getElementById("headerAvatar");
 const headerAvatarFallback = document.getElementById("headerAvatarFallback");
-const headerUserName = document.getElementById("headerUserName");
+const headerUserBlock = document.getElementById("headerUserBlock");
 const openSiteBtn = document.getElementById("openSiteBtn");
 const tabButtons = document.querySelectorAll('.tab[data-tab]');
 
@@ -193,8 +178,9 @@ function setActiveTab(name) {
 
 // ── Header user ──────────────────────────────────────────────────────────────
 function renderHeaderUser(user) {
+  cachedHeaderUser = user ?? null;
   const name = user?.name || user?.username || i18n("guestNickname");
-  headerUserName.textContent = name;
+  if (headerUserBlock) headerUserBlock.title = name;
   const letter = (name.trim().charAt(0) || "?").toUpperCase();
 
   const applyFallback = () => {
@@ -579,9 +565,11 @@ async function renderAccountState() {
     if (accountPointsLine) {
       const pts = await chrome.runtime.sendMessage({ type: "GET_USER_POINTS" });
       if (pts && typeof pts.availablePoints === "number") {
+        cachedAccountPoints = pts.availablePoints;
         accountPointsLine.textContent = i18n("accountPointsSummary", [String(pts.availablePoints)]);
         accountPointsLine.classList.remove("hidden");
       } else {
+        cachedAccountPoints = null;
         accountPointsLine.textContent = "";
         accountPointsLine.classList.add("hidden");
       }
@@ -590,6 +578,7 @@ async function renderAccountState() {
     accountGuest.classList.remove("hidden");
     accountSignedIn.classList.add("hidden");
     accountEmail.textContent = "";
+    cachedAccountPoints = null;
     if (accountPointsLine) {
       accountPointsLine.textContent = "";
       accountPointsLine.classList.add("hidden");
@@ -713,8 +702,8 @@ const builderStatus = document.getElementById("builderStatus");
 const builderCurrentSite = document.getElementById("builderCurrentSite");
 const stopPickingBtn = document.getElementById("stopPickingBtn");
 const stopPickingBtnActive = document.getElementById("stopPickingBtnActive");
-const exitBuilderBtnEmpty = document.getElementById("exitBuilderBtnEmpty");
-const exitBuilderBtnActive = document.getElementById("exitBuilderBtnActive");
+// const exitBuilderBtnEmpty = document.getElementById("exitBuilderBtnEmpty");
+// const exitBuilderBtnActive = document.getElementById("exitBuilderBtnActive");
 const builderPickHint = document.getElementById("builderPickHint");
 
 /** 同步当前标签页域名展示（不依赖隐藏区或未刷新的文案） */
@@ -1003,16 +992,16 @@ stopPickingBtnActive?.addEventListener("click", () => {
 
 submitAdapterBtn?.addEventListener("click", builderSubmit);
 
-function onExitBuilderEditClick() {
-  builderReset();
-  builderStatus.textContent = i18n("builderEditExited");
-  setTimeout(() => {
-    if (builderStatus.textContent === i18n("builderEditExited")) builderStatus.textContent = "";
-  }, 2000);
-}
+// function onExitBuilderEditClick() {
+//   builderReset();
+//   builderStatus.textContent = i18n("builderEditExited");
+//   setTimeout(() => {
+//     if (builderStatus.textContent === i18n("builderEditExited")) builderStatus.textContent = "";
+//   }, 2000);
+// }
 
-exitBuilderBtnEmpty?.addEventListener("click", onExitBuilderEditClick);
-exitBuilderBtnActive?.addEventListener("click", onExitBuilderEditClick);
+// exitBuilderBtnEmpty?.addEventListener("click", onExitBuilderEditClick);
+// exitBuilderBtnActive?.addEventListener("click", onExitBuilderEditClick);
 
 builderFeedbackInput?.addEventListener("input", () => {
   builderState.feedback = builderFeedbackInput.value || "";
@@ -1034,10 +1023,31 @@ setActiveTab = function(name) {
   prevPopupTabId = name;
 };
 
+async function refreshPopupLocaleUi() {
+  applyI18n();
+  PopupI18n.updateLocaleSwitcherUi(localeSwitcherEl);
+  renderHeaderUser(cachedHeaderUser);
+  renderWhitelistState();
+  renderThemeVariantRows();
+  if (cachedHeaderUser) void renderAccountAdaptersStrip();
+  if (loginBtn && !loginBtn.disabled) loginBtn.textContent = i18n("loginBtnOauth");
+  if (syncBtn && !syncBtn.disabled) syncBtn.textContent = i18n("syncBtn");
+  if (syncAdaptersBtn && !syncAdaptersBtn.disabled) syncAdaptersBtn.textContent = i18n("syncAdaptersBtn");
+  if (accountPointsLine && cachedAccountPoints !== null) {
+    accountPointsLine.textContent = i18n("accountPointsSummary", [String(cachedAccountPoints)]);
+  }
+  void updateBuilderSiteDisplay();
+}
+
 // ── Init ──
-applyI18n();
-setActiveTab("themes");
 void (async () => {
+  await PopupI18n.init();
+  PopupI18n.mountLocaleSwitcher(localeSwitcherEl);
+  PopupI18n.setOnLocaleChange(() => {
+    void refreshPopupLocaleUi();
+  });
+  applyI18n();
+  setActiveTab("themes");
   await renderAccountState();
   await loadCurrentMode();
 })();

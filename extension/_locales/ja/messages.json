@@ -8,6 +8,9 @@
   "extDescription": {
     "message": "お気に入りのライトまたはダークカラーテーマを任意のウェブサイトに適用できます。forcedskin.com にログインすると、カスタムテーマをデバイス間で同期できます。"
   },
+  "language": {
+    "message": "言語"
+  },
   "logoutTitle": {
     "message": "サインアウト"
   },
@@ -72,7 +75,7 @@
     "message": "認識できないウェブサイトです"
   },
   "loginPrompt": {
-    "message": "ログインしてテーマを同期"
+    "message": "forcedskin.com にログインするとテーマを同期できます"
   },
   "loginBtnOauth": {
     "message": "GitHub / Google で続行"
@@ -135,7 +138,7 @@
     "message": "アカウント"
   },
   "panelThemesLead": {
-    "message": "モードを選択してください（時間帯に応じた自動も含む）。ライト／ダークのシェブロンをクリックすると展開し、グリッドからパレットを選べます。"
+    "message": "モードを選択してください（時間帯に応じた自動も含む）。"
   },
   "panelWhitelistLead": {
     "message": "ホワイトリストに登録されたサイトは、元のスタイルのまま表示されます。"
@@ -213,7 +216,7 @@
     "message": "ビルダー"
   },
   "panelBuilderLead": {
-    "message": "ページ上の問題箇所を選択し、問題を説明してください。管理者がアダプターを実装します。"
+    "message": "ビルダーは特定サイトの適合問題を報告するためのツールです。手順："
   },
   "builderStep1": {
     "message": "下の「選択を開始」をクリックし、ページ上の要素にマウスを重ねてハイライトしてください"
@@ -222,22 +225,19 @@
     "message": "ページ上の問題箇所をクリックしてください（複数選択できます）"
   },
   "builderStep3": {
-    "message": "見えている問題と期待する結果をわかりやすい言葉で説明し、送信してください"
+    "message": "選択が終わったら、拡張機能のポップアップを再度開いてこの画面に戻ってください（ページをクリックするとポップアップは閉じます）"
+  },
+  "builderStep4": {
+    "message": "問題の内容と期待する結果を自然な言葉で記述し、送信してください"
   },
   "startPicking": {
     "message": "選択を開始"
   },
   "builderEscHint": {
-    "message": "選択中：Esc で終了するか、下の「選択モードを終了」をタップしてください。Esc はページにフォーカスがあるときに最も確実に動作します。"
+    "message": "選択中：Esc で終了するか、下の「選択モードを終了」をタップしてください。"
   },
   "stopPicking": {
     "message": "選択モードを終了"
-  },
-  "exitBuilderEdit": {
-    "message": "この編集を終了"
-  },
-  "builderEditExited": {
-    "message": "この編集を終了しました。選択した領域と説明はクリアされました。"
   },
   "builderPickCancelled": {
     "message": "選択モードを終了しました"

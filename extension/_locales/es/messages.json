@@ -8,6 +8,9 @@
   "extDescription": {
     "message": "Aplica tu tema claro u oscuro favorito en cualquier sitio web. Inicia sesión en forcedskin.com para sincronizar temas personalizados entre dispositivos."
   },
+  "language": {
+    "message": "Idioma"
+  },
   "logoutTitle": {
     "message": "Cerrar sesión"
   },
@@ -72,7 +75,7 @@
     "message": "No es un sitio web reconocido"
   },
   "loginPrompt": {
-    "message": "Inicia sesión para sincronizar temas"
+    "message": "Inicia sesión en forcedskin.com para sincronizar temas"
   },
   "loginBtnOauth": {
     "message": "Continuar con GitHub / Google"
@@ -135,7 +138,7 @@
     "message": "Cuenta"
   },
   "panelThemesLead": {
-    "message": "Elige un modo (incluido el automático por horario). Usa la flecha en Claro/Oscuro para expandir y elegir una paleta de la cuadrícula."
+    "message": "Elige un modo (incluido el automático por horario)."
   },
   "panelWhitelistLead": {
     "message": "Los sitios en la lista blanca conservan sus estilos originales."
@@ -213,7 +216,7 @@
     "message": "Constructor"
   },
   "panelBuilderLead": {
-    "message": "Selecciona las zonas problemáticas de la página y describe el problema. El administrador implementará el adaptador por ti."
+    "message": "El constructor te ayuda a informar problemas de adaptación en sitios concretos. Pasos:"
   },
   "builderStep1": {
     "message": "Haz clic en «Iniciar selección» abajo y pasa el cursor sobre los elementos de la página para resaltarlos"
@@ -222,22 +225,19 @@
     "message": "Haz clic en las zonas problemáticas de la página (puedes seleccionar varias)"
   },
   "builderStep3": {
-    "message": "Describe el problema visible y el resultado esperado en lenguaje sencillo y envía la solicitud"
+    "message": "Tras seleccionar, vuelve a abrir el popup de la extensión para regresar aquí (el popup se cierra al hacer clic en la página)"
+  },
+  "builderStep4": {
+    "message": "Describe el problema y el resultado esperado en lenguaje sencillo y envía la solicitud"
   },
   "startPicking": {
     "message": "Iniciar selección"
   },
   "builderEscHint": {
-    "message": "Selección: pulsa Esc para salir o «Salir del modo selección» abajo. Esc funciona mejor cuando el foco está en la página."
+    "message": "Selección: pulsa Esc para salir o «Salir del modo selección» abajo."
   },
   "stopPicking": {
     "message": "Salir del modo selección"
-  },
-  "exitBuilderEdit": {
-    "message": "Salir de esta edición"
-  },
-  "builderEditExited": {
-    "message": "Edición abandonada. Se han borrado las áreas seleccionadas y la descripción."
   },
   "builderPickCancelled": {
     "message": "Modo selección cerrado"

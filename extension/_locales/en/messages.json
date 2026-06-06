@@ -8,6 +8,9 @@
   "extDescription": {
     "message": "Apply your favorite light or dark color theme to any website. Log in to forcedskin.com to sync custom themes across devices."
   },
+  "language": {
+    "message": "Language"
+  },
   "logoutTitle": {
     "message": "Sign out"
   },
@@ -72,7 +75,7 @@
     "message": "Not a recognized website"
   },
   "loginPrompt": {
-    "message": "Login to sync themes"
+    "message": "Sign in to forcedskin.com to sync themes"
   },
   "loginBtnOauth": {
     "message": "Continue with GitHub / Google"
@@ -135,7 +138,7 @@
     "message": "Account"
   },
   "panelThemesLead": {
-    "message": "Pick a mode (including time-based auto). Use the chevron on Light/Dark to expand and pick a palette from the grid."
+    "message": "Pick a mode (including time-based auto)."
   },
   "panelWhitelistLead": {
     "message": "Sites on the whitelist keep their original styles."
@@ -213,7 +216,7 @@
     "message": "Builder"
   },
   "panelBuilderLead": {
-    "message": "Pick problematic areas on the page and describe the issue. Admin will implement the adapter for you."
+    "message": "The builder helps you report site-specific adapter issues. Steps:"
   },
   "builderStep1": {
     "message": "Click 'Start Picking' below, then hover elements on the page to highlight them"
@@ -222,22 +225,19 @@
     "message": "Click problematic areas on the page (you can select multiple)"
   },
   "builderStep3": {
-    "message": "Describe the visible issue and expected result in plain language, then submit"
+    "message": "After picking, reopen this extension popup to return here (the popup closes when you click the page)"
+  },
+  "builderStep4": {
+    "message": "Describe the issue and expected result in plain language, then submit"
   },
   "startPicking": {
     "message": "Start Picking"
   },
   "builderEscHint": {
-    "message": "Picking: press Esc to exit, or tap “Exit pick mode” below. Esc works best when focus is on the page."
+    "message": "Picking: press Esc to exit, or tap “Exit pick mode” below."
   },
   "stopPicking": {
     "message": "Exit pick mode"
-  },
-  "exitBuilderEdit": {
-    "message": "Exit this edit"
-  },
-  "builderEditExited": {
-    "message": "Exited this edit. Current picked areas and description are cleared."
   },
   "builderPickCancelled": {
     "message": "Exited pick mode"
