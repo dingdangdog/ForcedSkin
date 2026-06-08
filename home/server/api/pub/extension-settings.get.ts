@@ -30,8 +30,6 @@ const toClientOption = (t: ThemeRow) => {
 function buildModeOptions(
   mode: "light" | "dark",
   defaultTheme: ThemeRow | null,
-  selectedRow: ThemeRow | null,
-  selectedName: string | null,
   favoriteThemes: NonNullable<ThemeRow>[],
 ): ReturnType<typeof toClientOption>[] {
   const map = new Map<string, NonNullable<ThemeRow>>();
@@ -45,14 +43,9 @@ function buildModeOptions(
   for (const ft of favoriteThemes) {
     put(ft);
   }
-  put(selectedRow);
 
   const arr = Array.from(map.values());
   arr.sort((a, b) => {
-    if (selectedName) {
-      if (a.name === selectedName) return -1;
-      if (b.name === selectedName) return 1;
-    }
     const aDef = defaultTheme?.name === a.name ? 0 : 1;
     const bDef = defaultTheme?.name === b.name ? 0 : 1;
     if (aDef !== bDef) return aDef - bDef;
@@ -63,11 +56,12 @@ function buildModeOptions(
 }
 
 /**
- * 扩展专用接口：返回用户选定的亮/暗主题色值，以及各模式下可选主题列表。
+ * 扩展专用接口：返回系统默认亮/暗主题（供插件首次初始化）及各模式下可选主题列表。
+ * 插件当前应用的亮/暗主题由客户端本地存储，不与官网账号的 lightTheme/darkTheme 同步。
  * 鉴权优先级：
  *   1. NuxtAuth session（网页端登录状态）
  *   2. Authorization: Bearer <legacy-jwt>（扩展端登录状态，保持向后兼容）
- * 未登录时返回系统默认主题；已登录额外合并收藏主题进对应 mode 列表。
+ * 未登录时仅返回系统默认主题；已登录额外合并收藏主题进对应 mode 列表。
  */
 export default defineEventHandler(async (event) => {
   setResponseHeaders(event, {
@@ -89,18 +83,6 @@ export default defineEventHandler(async (event) => {
     if (!userId) {
       const payload = getAuthPayload(event);
       if (payload?.id) userId = payload.id;
-    }
-
-    let lightThemeName: string | null = null;
-    let darkThemeName: string | null = null;
-
-    if (userId) {
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { lightTheme: true, darkTheme: true },
-      });
-      lightThemeName = user?.lightTheme ?? null;
-      darkThemeName = user?.darkTheme ?? null;
     }
 
     const [defaultLight, defaultDark] = await Promise.all([
@@ -128,32 +110,21 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    const [selectedLightRow, selectedDarkRow] = await Promise.all([
-      lightThemeName
-        ? prisma.theme.findFirst({ where: { name: lightThemeName, mode: "light", isActive: true } })
-        : Promise.resolve(null),
-      darkThemeName
-        ? prisma.theme.findFirst({ where: { name: darkThemeName, mode: "dark", isActive: true } })
-        : Promise.resolve(null),
-    ]);
-
     const lightTheme =
-      selectedLightRow ||
       defaultLight ||
       (await prisma.theme.findFirst({
         where: { mode: "light", isActive: true },
         orderBy: { sortOrder: "asc" },
       }));
     const darkTheme =
-      selectedDarkRow ||
       defaultDark ||
       (await prisma.theme.findFirst({
         where: { mode: "dark", isActive: true },
         orderBy: { sortOrder: "asc" },
       }));
 
-    const lightOptions = buildModeOptions("light", defaultLight, selectedLightRow, lightThemeName, favoriteThemes);
-    const darkOptions = buildModeOptions("dark", defaultDark, selectedDarkRow, darkThemeName, favoriteThemes);
+    const lightOptions = buildModeOptions("light", defaultLight, favoriteThemes);
+    const darkOptions = buildModeOptions("dark", defaultDark, favoriteThemes);
 
     return success({
       isLoggedIn: !!userId,

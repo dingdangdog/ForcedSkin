@@ -318,7 +318,7 @@ function buildPaletteFromCatalog(catalog, pickLight, pickDark) {
   return Object.keys(palette).length ? palette : null;
 }
 
-/** 将接口结果写入 catalog / 当前选中 / palette；已登录以服务端选中为准，游客保留合法的本机选中 */
+/** 将接口结果写入 catalog / palette；当前亮暗主题始终以插件本地缓存为准，服务端仅提供候选列表 */
 async function persistThemeStateFromApi(settings) {
   const catalog = {
     light: Array.isArray(settings.lightOptions) ? settings.lightOptions : [],
@@ -330,12 +330,12 @@ async function persistThemeStateFromApi(settings) {
   let pickLight = prev[PICK_LIGHT_KEY];
   let pickDark = prev[PICK_DARK_KEY];
 
-  if (settings.isLoggedIn) {
-    pickLight = settings.light?.name || pickLight;
-    pickDark = settings.dark?.name || pickDark;
-  } else {
-    if (!catalog.light.some((t) => t.name === pickLight)) pickLight = settings.light?.name || catalog.light[0]?.name;
-    if (!catalog.dark.some((t) => t.name === pickDark)) pickDark = settings.dark?.name || catalog.dark[0]?.name;
+  // 本地选中优先；未设置或已不在候选列表（如取消收藏）时回退到系统默认
+  if (!pickLight || !catalog.light.some((t) => t.name === pickLight)) {
+    pickLight = settings.light?.name || catalog.light[0]?.name;
+  }
+  if (!pickDark || !catalog.dark.some((t) => t.name === pickDark)) {
+    pickDark = settings.dark?.name || catalog.dark[0]?.name;
   }
 
   if (!pickLight && catalog.light[0]) pickLight = catalog.light[0].name;
@@ -544,22 +544,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return;
       }
 
-      const { token, user } = await getStoredUser();
-      if (token) {
-        try {
-          const res = await fetch(`${API_BASE}/api/pub/extension-theme-select`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify(mode === THEME_MODES.LIGHT ? { lightTheme: themeName } : { darkTheme: themeName }),
-          });
-          const json = await res.json();
-          if (json.c !== 200) {
-            console.warn("[ForcedSkin] extension-theme-select:", json.m);
-          }
-        } catch (e) {
-          console.warn("[ForcedSkin] extension-theme-select:", e?.message || e);
-        }
-      }
+      const { user } = await getStoredUser();
 
       if (mode === THEME_MODES.LIGHT) {
         await chrome.storage.local.set({ [PICK_LIGHT_KEY]: themeName });
