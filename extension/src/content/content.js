@@ -4,6 +4,17 @@
   if (!api || !formulaKit || typeof formulaKit.install !== "function") return;
 
   let engineRef = null;
+  let storageRefreshTimer = null;
+
+  function refreshSettingsFromStorageDebounced() {
+    if (storageRefreshTimer) window.clearTimeout(storageRefreshTimer);
+    storageRefreshTimer = window.setTimeout(async () => {
+      if (!engineRef) return;
+      const { mode, whitelist, palette } = await engineRef.loadInitialSettings();
+      engineRef.setPalette(palette);
+      engineRef.applySettings(api.resolveStoredThemeMode(mode), whitelist);
+    }, 80);
+  }
 
   function runCachedAdapterFormulas() {
     api.clearAdapterPreQueue();
@@ -56,10 +67,22 @@
       }
       if (message.type === "THEME_MODE_UPDATE") {
         if (!engineRef) return;
-        engineRef.applySettings(api.resolveStoredThemeMode(message.mode || api.MODES.OFF), []);
+        engineRef.applySettings(
+          api.resolveStoredThemeMode(message.mode || api.MODES.OFF),
+          engineRef.activeWhitelist || []
+        );
       }
       if (message.type === "ADAPTERS_UPDATE") {
         void reloadAdaptersAndReapply();
+      }
+    });
+
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      if (areaName === "sync" && (changes.themeMode || changes.siteWhitelist)) {
+        refreshSettingsFromStorageDebounced();
+      }
+      if (areaName === "local" && changes.gtsPalette) {
+        refreshSettingsFromStorageDebounced();
       }
     });
 

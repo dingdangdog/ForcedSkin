@@ -63,7 +63,7 @@
   }
 
   function applyLayerSurface(ctx, layer, MARK_BG, MARK_TEXT, MARK_BORDER) {
-    const { queryAllDeep, palette, markApplied } = ctx;
+    const { queryAllDeep, palette, markApplied, setThemedStyle } = ctx;
     const sel = joinSelectors(layer.selectors);
     const skip = layer.skipOverlayLike ? shouldSkipOverlayLike : () => false;
     const bgKey =
@@ -74,9 +74,9 @@
     queryAllDeep(sel).forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
       if (skip(el)) return;
-      el.style.setProperty("background-color", bgVal, "important");
-      el.style.setProperty("border-color", palette.border, "important");
-      el.style.setProperty("color", palette.foreground, "important");
+      setThemedStyle(el, "background-color", bgVal);
+      setThemedStyle(el, "border-color", palette.border);
+      setThemedStyle(el, "color", palette.foreground);
       markApplied(el, MARK_BG);
       markApplied(el, MARK_BORDER);
       markApplied(el, MARK_TEXT);
@@ -84,13 +84,13 @@
   }
 
   function applyLayerAccent(ctx, layer, MARK_BG, MARK_TEXT, MARK_BORDER) {
-    const { queryAllDeep, palette, markApplied } = ctx;
+    const { queryAllDeep, palette, markApplied, setThemedStyle } = ctx;
     const sel = joinSelectors(layer.selectors);
     queryAllDeep(sel).forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
-      el.style.setProperty("background-color", palette.primary700, "important");
-      el.style.setProperty("border-color", palette.primary700, "important");
-      el.style.setProperty("color", palette.background, "important");
+      setThemedStyle(el, "background-color", palette.primary700);
+      setThemedStyle(el, "border-color", palette.primary700);
+      setThemedStyle(el, "color", palette.background);
       markApplied(el, MARK_BG);
       markApplied(el, MARK_BORDER);
       markApplied(el, MARK_TEXT);
@@ -98,42 +98,42 @@
   }
 
   function applyLayerCanvas(ctx, layer, MARK_BG) {
-    const { queryAllDeep, palette, markApplied } = ctx;
+    const { queryAllDeep, palette, markApplied, setThemedStyle } = ctx;
     const sel = joinSelectors(layer.selectors);
     queryAllDeep(sel).forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
-      el.style.setProperty("background-image", "none", "important");
-      el.style.setProperty("background-color", palette.background, "important");
+      setThemedStyle(el, "background-image", "none");
+      setThemedStyle(el, "background-color", palette.background);
       markApplied(el, MARK_BG);
     });
   }
 
   function applyLayerRichText(ctx, layer, MARK_TEXT) {
-    const { queryAllDeep, palette, markApplied } = ctx;
+    const { queryAllDeep, palette, markApplied, setThemedStyle } = ctx;
     const sel = joinSelectors(layer.selectors);
     const vars = layer.cssVars && typeof layer.cssVars === "object" ? layer.cssVars : {};
     queryAllDeep(sel).forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
       Object.entries(vars).forEach(([prop, pkey]) => {
-        el.style.setProperty(prop, pickPalette(palette, String(pkey)), "important");
+        setThemedStyle(el, prop, pickPalette(palette, String(pkey)));
       });
       if (layer.color) {
-        el.style.setProperty("color", pickPalette(palette, layer.color), "important");
+        setThemedStyle(el, "color", pickPalette(palette, layer.color));
       }
       markApplied(el, MARK_TEXT);
     });
   }
 
   function applyLayerSvgRecolor(ctx, layer) {
-    const { queryAllDeep, palette } = ctx;
+    const { queryAllDeep, palette, setThemedStyle } = ctx;
     const sel = joinSelectors(layer.selectors);
     const fillKey = typeof layer.fill === "string" && layer.fill.trim() ? layer.fill.trim() : null;
     const strokeKey = typeof layer.stroke === "string" && layer.stroke.trim() ? layer.stroke.trim() : null;
     const fillVal = fillKey ? pickPalette(palette, fillKey) : "currentColor";
     const strokeVal = strokeKey ? pickPalette(palette, strokeKey) : "currentColor";
     queryAllDeep(sel).forEach((shape) => {
-      shape.style.setProperty("fill", fillVal, "important");
-      shape.style.setProperty("stroke", strokeVal, "important");
+      setThemedStyle(shape, "fill", fillVal);
+      setThemedStyle(shape, "stroke", strokeVal);
     });
   }
 
