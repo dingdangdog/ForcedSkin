@@ -469,28 +469,6 @@
     return Array.from(roots);
   }
 
-  function rewriteRootColorVariables(palette, documentColor) {
-    const root = document.documentElement;
-    if (!root) return;
-    const computed = getComputedStyle(root);
-    for (let index = 0; index < computed.length; index += 1) {
-      const property = computed[index];
-      if (!property?.startsWith("--") || property.startsWith("--gts-")) continue;
-      const value = computed.getPropertyValue(property).trim();
-      const color = parseCssColor(value);
-      if (!color || color.a < 0.02) continue;
-      const name = property.toLowerCase();
-      let role;
-      if (/(?:border|divider|separator|stroke|line)/.test(name)) role = "border";
-      else if (/(?:muted|secondary|tertiary|subtle|disabled|placeholder)/.test(name)) role = "muted";
-      else if (/(?:primary|accent|brand|link|active|selected)/.test(name)) role = "primary500";
-      else if (/(?:text|foreground|\bfg\b|font|ink)/.test(name)) role = "foreground";
-      else if (documentColor && contrastRatio(color, documentColor) >= 3) role = "foreground";
-      else role = chooseBackgroundRole(root, color, documentColor);
-      setThemedStyle(root, property, withAlpha(palette[role], color.a));
-    }
-  }
-
   function getStyleElement() {
     return document.getElementById(THEME_STYLE_ID);
   }
@@ -536,18 +514,14 @@
       this.activeWhitelist = [];
       this.observers = new Map();
       this.pendingNodes = new Set();
+      this.pendingShallowNodes = new Set();
       this.rerenderTimer = null;
       this.adapterRefreshTimer = null;
       this.pendingAdapterElements = new Set();
       this.idleHandle = null;
+      this.removedCleanupHandle = null;
+      this.removedNodeQueue = [];
       this.rewriteGeneration = 0;
-      this.shadowEventHandler = (event) => {
-        const root = event.target?.shadowRoot;
-        if (this.activeMode === MODES.OFF || !root) return;
-        this.registerShadowRoot(root, PALETTE[this.activeMode]);
-        this.queueNodes([root]);
-      };
-      document.addEventListener("gts:shadow-attached", this.shadowEventHandler, true);
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", () => {
           if (this.activeMode !== MODES.OFF) this.run(this.activeMode);
@@ -592,10 +566,14 @@
     removeTheme() {
       this.rewriteGeneration += 1;
       cancelIdle(this.idleHandle);
+      cancelIdle(this.removedCleanupHandle);
       this.idleHandle = null;
+      this.removedCleanupHandle = null;
+      this.removedNodeQueue.length = 0;
       if (this.rerenderTimer) window.clearTimeout(this.rerenderTimer);
       if (this.adapterRefreshTimer) window.clearTimeout(this.adapterRefreshTimer);
       this.pendingNodes.clear();
+      this.pendingShallowNodes.clear();
       this.pendingAdapterElements.clear();
       this.observers.forEach((observer) => observer.disconnect());
       this.observers.clear();
@@ -674,6 +652,7 @@
       this.rerenderTimer = null;
       this.adapterRefreshTimer = null;
       this.pendingNodes.clear();
+      this.pendingShallowNodes.clear();
       this.pendingAdapterElements.clear();
       clearAppliedStyles();
       getStyleElement()?.remove();
@@ -684,22 +663,52 @@
       const documentColor = resolveDocumentBgColor();
       applyRootCss(mode);
       this.forceRootStyles(palette);
-      rewriteRootColorVariables(palette, documentColor);
       const elements = this.discoverAndRegisterRoots([document], palette);
       this.rewriteElements(elements, palette, documentColor);
       this.resolveAdapters().forEach((adapter) => adapter.apply?.(this.adapterContext(palette)));
     }
 
-    runIncremental(mode, changedNodes) {
+    queueRemovedNode(node) {
+      if (!(node instanceof Element)) return;
+      this.removedNodeQueue.push(node);
+      if (this.removedCleanupHandle != null) return;
+
+      const cleanup = (deadline) => {
+        this.removedCleanupHandle = null;
+        let processed = 0;
+        while (this.removedNodeQueue.length && processed < 400 && (deadline.didTimeout || deadline.timeRemaining() > 2)) {
+          const current = this.removedNodeQueue.pop();
+          if (!current || current.isConnected) {
+            processed += 1;
+            continue;
+          }
+          Array.from(current.children || []).forEach((child) => this.removedNodeQueue.push(child));
+          if (current.shadowRoot) {
+            Array.from(current.shadowRoot.children || []).forEach((child) => this.removedNodeQueue.push(child));
+          }
+          restoreElement(current);
+          processed += 1;
+        }
+        if (this.removedNodeQueue.length) this.removedCleanupHandle = scheduleInIdle(cleanup);
+      };
+
+      this.removedCleanupHandle = scheduleInIdle(cleanup);
+    }
+
+    runIncremental(mode, changedNodes, shallowNodes = []) {
       const palette = PALETTE[mode];
-      if (!palette || !changedNodes.length) return [];
-      this.forceRootStyles(palette);
-      const elements = this.discoverAndRegisterRoots(changedNodes, palette);
+      if (!palette || (!changedNodes.length && !shallowNodes.length)) return [];
+      const elements = new Set(this.discoverAndRegisterRoots(changedNodes, palette));
+      shallowNodes.forEach((node) => {
+        if (node instanceof Element) elements.add(node);
+        if (node?.shadowRoot) this.registerShadowRoot(node.shadowRoot, palette);
+      });
       elements.forEach((el) => {
         if (el !== document.documentElement && el !== document.body) restoreElement(el);
       });
-      this.rewriteElements(elements, palette, parseCssColor(palette.background), 320);
-      return elements;
+      const result = Array.from(elements);
+      this.rewriteElements(result, palette, parseCssColor(palette.background), 320);
+      return result;
     }
 
     refreshAdaptersDebounced(elements) {
@@ -714,34 +723,44 @@
       }, 360);
     }
 
-    queueNodes(nodes) {
+    queueNodes(nodes, shallowNodes = []) {
       nodes.forEach((node) => {
         if (node instanceof Element || node instanceof ShadowRoot || node instanceof DocumentFragment) this.pendingNodes.add(node);
       });
-      if (!this.pendingNodes.size) return;
+      shallowNodes.forEach((node) => {
+        if (node instanceof Element) this.pendingShallowNodes.add(node);
+      });
+      if (!this.pendingNodes.size && !this.pendingShallowNodes.size) {
+        if (this.pendingAdapterElements.size) this.refreshAdaptersDebounced([]);
+        return;
+      }
       if (this.rerenderTimer) window.clearTimeout(this.rerenderTimer);
       this.rerenderTimer = window.setTimeout(() => {
         const pending = Array.from(this.pendingNodes);
+        const shallow = Array.from(this.pendingShallowNodes);
         this.pendingNodes.clear();
-        const elements = this.runIncremental(this.activeMode, pending);
+        this.pendingShallowNodes.clear();
+        const elements = this.runIncremental(this.activeMode, pending, shallow);
         this.refreshAdaptersDebounced(elements);
       }, 72);
     }
 
     handleMutations(mutations) {
       if (this.activeMode === MODES.OFF) return;
-      const changed = [];
+      const added = [];
+      const shallow = [];
       mutations.forEach((mutation) => {
-        if (mutation.type === "attributes") changed.push(mutation.target);
-        if (mutation.type === "childList") changed.push(mutation.target);
-        mutation.addedNodes.forEach((node) => changed.push(node));
-        mutation.removedNodes.forEach((node) => {
-          if (!(node instanceof Element)) return;
-          restoreElement(node);
-          node.querySelectorAll?.("*").forEach(restoreElement);
-        });
+        if (mutation.type === "attributes") {
+          shallow.push(mutation.target);
+          this.pendingAdapterElements.add(mutation.target);
+        }
+        if (mutation.type === "childList" && mutation.target instanceof Element) {
+          this.pendingAdapterElements.add(mutation.target);
+        }
+        mutation.addedNodes.forEach((node) => added.push(node));
+        mutation.removedNodes.forEach((node) => this.queueRemovedNode(node));
       });
-      this.queueNodes(changed);
+      this.queueNodes(added, shallow);
     }
 
     setupObserver() {
