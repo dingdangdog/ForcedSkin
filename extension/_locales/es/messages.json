@@ -1,12 +1,12 @@
 {
   "extName": {
-    "message": "ForcedSkin — Cambiador de tema web"
+    "message": "ForcedSkin – Modo oscuro y temas web personalizados"
   },
   "extShortName": {
     "message": "ForcedSkin"
   },
   "extDescription": {
-    "message": "Aplica tu tema claro u oscuro favorito en cualquier sitio web. Inicia sesión en forcedskin.com para sincronizar temas personalizados entre dispositivos."
+    "message": "Aplica modo oscuro, claro o temas personalizados a cualquier sitio web. Cambia fondos, texto, enlaces, bordes y formularios."
   },
   "language": {
     "message": "Idioma"

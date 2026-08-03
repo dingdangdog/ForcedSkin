@@ -1,12 +1,12 @@
 {
   "extName": {
-    "message": "ForcedSkin — Web テーマ切り替え"
+    "message": "ForcedSkin – ダークモード＆カスタムWebテーマ"
   },
   "extShortName": {
     "message": "ForcedSkin"
   },
   "extDescription": {
-    "message": "お気に入りのライトまたはダークカラーテーマを任意のウェブサイトに適用できます。forcedskin.com にログインすると、カスタムテーマをデバイス間で同期できます。"
+    "message": "あらゆるWebサイトにダークモード、ライトモード、カスタム配色を適用。背景、文字、リンク、枠線、フォームの色を変更できます。"
   },
   "language": {
     "message": "言語"

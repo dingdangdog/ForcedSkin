@@ -1,12 +1,12 @@
 {
   "extName": {
-    "message": "ForcedSkin — 强制换肤"
+    "message": "ForcedSkin – 网站深色模式与自定义主题"
   },
   "extShortName": {
     "message": "ForcedSkin"
   },
   "extDescription": {
-    "message": "为任意网站强制应用你喜欢的亮色或暗色主题。登录 forcedskin.com 跨设备同步主题。"
+    "message": "为任意网站应用深色模式、浅色模式或自定义配色，一键修改背景、文字、链接、边框和表单颜色。"
   },
   "language": {
     "message": "语言"

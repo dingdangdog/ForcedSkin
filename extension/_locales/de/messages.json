@@ -1,12 +1,12 @@
 {
   "extName": {
-    "message": "ForcedSkin — Web-Theme-Umschalter"
+    "message": "ForcedSkin – Dunkelmodus & eigene Website-Themes"
   },
   "extShortName": {
     "message": "ForcedSkin"
   },
   "extDescription": {
-    "message": "Wende dein bevorzugtes helles oder dunkles Farbtheme auf jede Website an. Melde dich bei forcedskin.com an, um benutzerdefinierte Themes geräteübergreifend zu synchronisieren."
+    "message": "Wende Dunkelmodus, Hellmodus oder eigene Farbthemen auf Websites an. Färbe Hintergründe, Text, Links, Rahmen und Formulare neu."
   },
   "language": {
     "message": "Sprache"

@@ -1,82 +1,134 @@
-# 插件介绍
+# ForcedSkin – Dark Mode & Custom Website Themes
 
-## 简短说明
+ForcedSkin is a browser extension that applies dark mode, light mode, or a custom color theme to the websites you visit. It recolors page backgrounds, text, links, borders, forms, and other CSS-based interface elements while preserving photos, videos, and other image content.
 
-ForcedSkin 在任意网页上一键统一亮色或暗色配色，护眼、省眼疲劳；可设站点白名单，登录官网还能跨设备同步你喜欢的主题。
+Use one consistent website theme across the web, switch automatically between light and dark mode, or exclude websites that should keep their original appearance. ForcedSkin is designed for comfortable everyday browsing without changing page layouts or blocking normal website interactions.
 
-## 详细说明（商店「详细说明」正文建议）
+## Why ForcedSkin?
 
-### ForcedSkin 是做什么的？
+- **Dark mode for websites:** Give bright websites a consistent dark appearance, even when they do not provide a built-in night mode.
+- **Light mode when you need it:** Replace overly dark interfaces with a cleaner light color palette.
+- **Custom website themes:** Choose from multiple palettes and apply coordinated colors to backgrounds, text, links, controls, borders, and scrollbars.
+- **Automatic day and night themes:** Switch between light and dark mode based on local time.
+- **Per-site control:** Exclude websites that should keep their original design.
+- **Works with modern pages:** Supports dynamic websites, single-page applications, open Shadow DOM components, and ordinary web frames.
+- **Optional theme sync:** Sign in through [forcedskin.com](https://forcedskin.com) to keep selected themes available across devices.
+- **Image-friendly recoloring:** CSS-based interface colors are changed while photos, videos, canvas graphics, and bitmap backgrounds remain intact whenever possible.
 
-很多网站只有亮色或只有暗色，和系统/个人习惯不一致时容易刺眼或费眼。ForcedSkin 在浏览器里为访问的网页统一套上你选择的配色风格：亮色、暗色，或关闭效果（完全保留站点原样）。目标不是改排版，而是统一颜色观感，让日常浏览更舒服、更一致。
+## How It Works
 
-### 为什么值得安装？
+1. Install ForcedSkin and open the extension popup.
+2. Choose light mode, dark mode, automatic mode, or turn website theming off.
+3. Select a color theme from the available palette collection.
+4. Exclude individual websites whenever you want to preserve their original appearance.
 
-**one place 管全天下的网页样式**：不用每个站点单独找「夜间模式」，换设备前先在扩展里选好模式即可。
-按需生效：支持白名单，只对信任的域名启用，其它站点保持原样，兼顾习惯与可控性。
-和官网打通：扩展与 forcedskin.com 配套，可浏览主题与网站适配能力；登录后还能同步账号与主题偏好，多电脑、多浏览器环境更容易保持一致。
-操作简单：点击扩展图标即可切换模式、管理当前站点与白名单，无需复杂配置。
-若你希望夜间阅读更轻松、或希望所有常用站点的亮度风格一致，ForcedSkin 就是为这类日常需求准备的工具。
+ForcedSkin changes colors locally in the browser. It does not redesign page layouts, replace website content, or intentionally interfere with links and application navigation.
 
-英文版（若商店需英文或双语）
-What it does: ForcedSkin applies a consistent light or dark color theme across websites you visit—or you can turn it off per your preference. It focuses on harmonizing colors without restructuring pages.
+## Chrome Web Store Listing Copy
 
-Why install: One switch for eye-friendly reading; domain whitelist for control; works with forcedskin.com for themes and adapters; sign in to sync your theme choices across devices. Simple popup—no steep learning curve.
+The following copy is the recommended English listing for search visibility and conversion.
 
-# 插件应用商店：隐私 / 单一用途 / 权限说明（英文填报文案）
+### Extension Name
 
-## 如何使用
+**ForcedSkin – Dark Mode & Custom Website Themes**
 
-以下内容均为**英文**，可直接复制到 Chrome 网上应用店、Microsoft Edge 加载项中心等「单一用途」「权限用途说明」类字段。
+This name keeps the ForcedSkin brand while naturally including the strongest product-intent phrases: “dark mode,” “custom,” “website,” and “themes.”
 
-- **单一用途**：整段可复制到「Single purpose」或等价说明框（可按字数限制截取首句核心句）。
-- **各权限**：每段对应一项权限的名称；若商店要求分项填写，就只贴该段正文。
-- 若审核方要求「权限与实现一致」：当前仓库里的 `manifest.json` 已声明 `**scripting`**，但源码中未发现对 `chrome.scripting` 的调用；若审核反馈该权限冗余，可考虑从清单中移除 `scripting` 后再上架，或与审核说明保持一致。
+### Short Name
 
----
+**ForcedSkin**
 
-## 单一用途说明（英文）
+### Short Description
 
-### Single purpose
+> Apply dark mode, light mode, or custom color themes to any website. Recolor backgrounds, text, links, borders, and forms.
 
-ForcedSkin lets you apply a consistent **light / dark appearance** across websites by adjusting CSS colors (and related visuals) locally in the browser—without rewriting page layouts. You can optionally log in via the official site to sync your preferred theme palettes and related settings across devices, and disable or scope automatic theming using a simple site whitelist. The extension exists only to deliver this **readable, user-controlled unified theming** experience.
+### Detailed Description
 
----
+The web should not become uncomfortable just because every website chooses a different color scheme.
 
-## 需请求权限的理由（英文分项）
+ForcedSkin gives you one consistent way to control website colors across the browser. It can apply dark mode to bright pages, replace an overly dark interface with a light theme, or use a custom color palette that better matches your preferences. Instead of simply inverting the screen, ForcedSkin recolors CSS-based interface elements—including page backgrounds, surfaces, text, links, borders, buttons, forms, placeholders, scrollbars, and many dynamically loaded components—while preserving photos, videos, canvas graphics, and other image content whenever possible.
 
-以下各段可与商店表单项 **一一对应**。
+### What is ForcedSkin for?
 
-### `storage`
+Many websites still do not offer dark mode. Others provide a dark theme that is incomplete, inconsistent, or limited to certain pages. Even when individual websites support themes, switching and configuring them one by one is repetitive. ForcedSkin solves this by providing a single browser-level theme control for ordinary websites.
 
-The extension saves your preferences and cached data locally: theme mode (light / dark / off), per-site whitelist, signed-in profile metadata, authentication token issued after OAuth, downloaded theme catalogs and palette definitions, and cached site-adapter formulas fetched from ForcedSkin’s servers. `**storage` is required** so these settings persist between sessions and so the popup and content scripts can read the same data without transmitting browsing history.
+Use ForcedSkin when you want to:
 
-### `alarms`
+- browse bright websites with a calmer dark appearance;
+- make dark websites easier to use with a light color scheme;
+- keep frequently visited websites visually consistent;
+- personalize website colors beyond the themes offered by the site itself;
+- switch automatically between daytime and nighttime palettes;
+- preserve the original appearance of selected websites with per-site exclusions.
 
-Under **Manifest V3**, the background worker may be suspended when idle. When the user selects **automatic** theme mode, the extension switches between light and dark based on **local clock boundaries** (day vs night hours). `**chrome.alarms`** schedules a single named alarm for the **next** boundary so the worker can wake, re-evaluate the effective theme, and **broadcast updates** to open tabs—without keeping a persistent timer or polling. Alarms are cleared whenever automatic mode is not active; they are used **only** for this scheduled theme refresh, not for unrelated scheduling or background work.
+### Why install ForcedSkin?
 
-### `scripting`
+**One theme switch for the web.** Choose a light, dark, or automatic mode from a simple popup instead of searching for theme settings on every website.
 
-This extension targets **Manifest V3**. The `**scripting` permission** is declared so the extension may use Chrome’s programmatic script APIs when needed—for example to register content scripts programmatically or to inject scripts in coordination with tab lifecycle—alongside statically declared content scripts that apply universal theming. Use is limited to **theme and adapter orchestration**, not unrelated page modification.
+**More than a basic color inversion.** ForcedSkin maps interface colors to a coordinated palette. Backgrounds, content surfaces, text, borders, links, controls, and accent colors are handled as related parts of the same theme, helping pages remain recognizable and readable.
 
-*(若你从 `manifest.json` 中移除 `scripting`，请在本项填「不适用」或删除该权限声明后再提交商店。)*
+**Designed for modern websites.** The extension processes content added after the initial page load and supports many single-page applications, ordinary frames, and open Shadow DOM components. Its incremental engine updates newly added interface elements without intentionally changing page layouts or interfering with links and application navigation.
 
-### `tabs`
+**Your choice on every website.** If a website already looks right, exclude it and keep its original design. You can turn theming off at any time without permanently modifying the page.
 
-The background service worker needs `**chrome.tabs`** to enumerate regular browser tabs (`https` / `http`), listen for activation and navigation events, and **send one-way messages** so each tab’s content script receives updated theme mode, whitelist, palettes, or adapter-cache refresh signals. Tab URLs are inspected **only** to skip restricted schemes (for example non-web pages); the extension does not collect or upload your browsing history.
+**Automatic light and dark mode.** Automatic mode uses your local time to select a daytime or nighttime theme without continuously polling in the background.
 
-### `identity`
+**Optional theme synchronization.** You can use ForcedSkin without signing in. If you choose to connect an account through forcedskin.com, your selected themes can be synchronized across supported devices.
 
-`**identity`** is used solely for `**chrome.identity.launchWebAuthFlow**`—opening a bounded OAuth / session handshake with `**https://forcedskin.com**` and returning to the extension’s predefined redirect URL. This lets users sign in with the same account mechanism as the website and receive a bearer token stored locally for syncing theme selections. No third-party identity provider access beyond that official auth bridge is requested by this permission itself.
+**Local-first operation.** Theme application happens in your browser. ForcedSkin does not need to upload page contents or maintain a browsing-history service in order to recolor websites.
 
-### Host permissions (`<all_urls>`)
+### What ForcedSkin changes
 
-Universal **host access** matches where the extension is designed to operate: ordinary website documents on `http://*` and `https://*`. Manifest **content scripts** load at `**document_start`** on those origins so lightweight color overrides can run early. Narrowing host permissions would defeat the primary goal of consistent theming across sites the user chooses to browse. Sensitive internal controls (whitelist, optional login) remain **under the user’s control** inside the popup; the extension does not exfiltrate page content unrelated to delivering theming behaviour.
+ForcedSkin targets colors controlled through webpage CSS, including:
 
----
+- page and container backgrounds;
+- headings, paragraphs, labels, and muted text;
+- links, buttons, inputs, text areas, and selection colors;
+- borders, outlines, placeholders, and scrollbars;
+- CSS gradients, SVG interface icons, and many pseudo-elements;
+- dynamically inserted content and compatible web components.
 
-## 可选附加说明（数据与传输，英文短文）
+The extension is intentionally focused on color theming. It does not replace website content, redesign layouts, inject advertisements, or intentionally block clicks and navigation.
 
-以下为「隐私惯例 / 数据收集」类字段可参考的短文（按需裁剪）。
+### Limitations
 
-ForcedSkin operates primarily **on-device**: preferences and caches live in `**chrome.storage`**. Optional network calls go to `**https://forcedskin.com**` (authenticated theme/catalog sync after login, fetching public adapter definitions and palette metadata). Browser tabs are iterated locally to propagate settings; **URLs are not bulk-uploaded as browsing history.** Authentication uses the `**identity`** web-auth flow tied to ForcedSkin’s OAuth bridge endpoint.
+Browser extensions cannot modify protected browser pages such as the Chrome Web Store, Chrome settings, and some internal URLs. Colors embedded directly inside photos, videos, canvas drawings, cross-origin media, bitmap backgrounds, or closed Shadow DOM components may also remain unchanged. Website implementations vary, so individual sites can be excluded whenever their original appearance works better.
+
+Choose your preferred colors once, keep control over where they apply, and give everyday browsing a more consistent appearance with ForcedSkin.
+
+## Search Positioning Notes
+
+The store copy intentionally covers these search intents through readable sentences:
+
+- dark mode for websites
+- website dark mode extension
+- night mode browser extension
+- custom website themes
+- website theme changer
+- change website colors
+- light mode extension
+- eye-comfort browsing
+- custom color palette
+
+Do not paste these phrases into the store as a standalone keyword block. Chrome Web Store policies prohibit irrelevant or excessive keyword repetition, and natural product copy is more trustworthy for users.
+
+## Privacy and Permissions
+
+ForcedSkin operates primarily on-device. Theme preferences, site exclusions, and cached palettes are stored with `chrome.storage`. Optional network requests to `https://forcedskin.com` are used for account sign-in, theme catalog updates, theme selection sync, and public site-adapter definitions.
+
+### Single Purpose
+
+ForcedSkin applies user-selected light, dark, and custom color themes to ordinary websites. Its permissions support this single website-theming purpose and the optional synchronization of theme preferences.
+
+### Permission Usage
+
+- **`storage`:** Saves theme mode, selected palettes, site exclusions, account metadata, and cached theme or adapter data.
+- **`alarms`:** Schedules the next local-time boundary when automatic light/dark mode is enabled, without continuous polling.
+- **`tabs`:** Sends theme-setting updates to open web tabs and skips browser-protected URLs that extensions cannot modify.
+- **`identity`:** Opens the official ForcedSkin authentication flow for optional account and theme synchronization.
+- **`scripting`:** This permission is currently declared, but the present source does not directly call `chrome.scripting`. Remove it before store submission unless a concrete scripting API feature requires it; an unused permission should not be justified as necessary.
+- **`<all_urls>` host access:** Allows the core website-theme feature to work on ordinary HTTP and HTTPS pages. Page content is not collected as browsing history.
+
+## Product Scope
+
+ForcedSkin can recolor CSS-controlled interface elements. It cannot reliably recolor pixels embedded in photos, videos, canvas drawings, cross-origin media, browser-protected pages, or closed Shadow DOM components.

@@ -1,12 +1,12 @@
 {
   "extName": {
-    "message": "ForcedSkin — Web Theme Switcher"
+    "message": "ForcedSkin – Dark Mode & Custom Website Themes"
   },
   "extShortName": {
     "message": "ForcedSkin"
   },
   "extDescription": {
-    "message": "Apply your favorite light or dark color theme to any website. Log in to forcedskin.com to sync custom themes across devices."
+    "message": "Apply dark mode, light mode, or custom color themes to any website. Recolor backgrounds, text, links, borders, and forms."
   },
   "language": {
     "message": "Language"
